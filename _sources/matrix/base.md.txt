@@ -91,7 +91,6 @@ $$
    \det(\mathbf{A})=\prod_i^n a_{ii}
    $$
    
-
 8. 分块矩阵。
 
    
@@ -108,7 +107,6 @@ $$
    \det(\mathbf{A}^\top\mathbf{B})^2\le \det(\mathbf{A}^\top\mathbf{A})\det(\mathbf{B}^\top\mathbf{B})
    $$
    
-
 2. Hadamard不等式，对于$m\times m$矩阵$\mathbf{A}$有，
 
    
@@ -116,7 +114,6 @@ $$
    \det(\mathbf{A})\le \prod_{i=1}^m\left(\sum_{j=1}^m |a_{ij}|^2 \right)^{1/2}
    $$
    
-
 3. Fischer不等式，若$\mathbf{A}_{m\times m}, \mathbf{B}_{m\times n},\mathbf{C}_{n\times n}$，则有，
 
    
@@ -124,16 +121,135 @@ $$
    \det\left[\begin{array}{cc}\mathbf{A}&\mathbf{B}\\\mathbf{B}^\top&\mathbf{C} \end{array}\right]\le\det(\mathbf{A})\det(\mathbf{C})
    $$
    
-
 4.  Minkowski不等式，若$\mathbf{A}_{m\times m},\mathbf{B}_{m\times m}$半正定，则有，
 
-   
-   $$
+
+$$
    \sqrt[m]{\det(\mathbf{A}+\mathbf{B})}\ge\sqrt[m]{\det(\mathbf{A})}+\sqrt[m]{\det(\mathbf{B})}
-   $$
-   
+$$
+
 
 5. 正定矩阵$\mathbf{A}$的行列式大于0。
 
 6. 半正定矩阵$\mathbf{A}$的行列式大于等于0。
 
+
+
+#### 矩阵内积
+
+矩阵内积是指：
+
+
+$$
+\langle\mathbf{A},\mathbf{B}\rangle=vec(\mathbf{A})^\top vec(\mathbf{B})=tr (\mathbf{A}^\top\mathbf{B})
+$$
+
+
+
+#### 矩阵范数
+
+##### 向量范数
+
+1. $L_0$范数： $\lVert \mathbf{x}\rVert_0\triangleq$非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。
+
+2. $L_1$范数： $\lVert \mathbf{x}\rVert_1\triangleq\sum_i^n |x_i|=|x_1|+|x_2|+\dots+|x_n|$。
+
+3. $L_2$范数： $\lVert \mathbf{x}\rVert_2\triangleq\left(\sum_i^n x_i^2\right)=(x_1^2+x_2^2+\dots+x_n^2)^{1/2}$。
+
+4. $L_\infty$范数： $\lVert \mathbf{x}\rVert_\infty\triangleq\max\{|x_1|+|x_2|+\dots+|x_n|\}$。
+
+5. $L_p$范数：$\lVert \mathbf{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}$。
+
+##### 矩阵范数
+
+矩阵范数是矩阵的实值函数，且满足以下条件（与向量空间范数的定义类似），
+
+1. 非负性： $\lVert \mathbf{A}\rVert\ge 0$，$\lVert \mathbf{A}\rVert= 0$当且仅当$\mathbf{A}=0$。
+2. 正比例：$\lVert c\mathbf{A}\rVert=|c|\cdot\lVert\mathbf{A}\rVert$。
+3. 三角不等式：$\lVert \mathbf{A}+\mathbf{B}\rVert\le\lVert \mathbf{A}\rVert+\lVert\mathbf{B}\rVert$。
+4. $\lVert\mathbf{AB}\rVert\le\lVert\mathbf{A}\rVert\cdot\lVert\mathbf{B}\rVert$
+
+常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatter范数。
+
+##### 诱导范数
+
+假设有矩阵$\mathbf{A}\in \mathbb{R}^{m\times n}$，则有以下诱导范数定义。其实是一个向量范数的变形。
+
+1. 矩阵$\mathbf{A}$的诱导范数为，
+
+   
+
+
+$$
+\begin{split}
+\lVert \mathbf{A}\rVert_{(m,n)} &\triangleq \max\{\lVert \mathbf{Ax} \rVert :\mathbf{x}\in R^n, \lVert \mathbf{x}\rVert=1  \}\\
+&=\max\left\{\frac{\lVert \mathbf{Ax}_{(m)} \rVert}{\lVert \mathbf{x}_{(n)} \rVert}:\mathbf{x}\in R^n, \lVert \mathbf{x}\rVert=1\right\}
+\end{split}
+$$
+
+
+
+2. 矩阵$\mathbf{A}$的诱导p范数为，
+
+   
+   $$
+   \lVert \mathbf{A}\rVert_p\triangleq\max_{\mathbf{x}\neq 0}\frac{\lVert\mathbf{Ax}\rVert_p}{\lVert\mathbf{x}\rVert_p}
+   $$
+   
+
+   当取如下值时，
+
+   - $p=1$
+
+     
+     $$
+     \lVert \mathbf{A}\rVert_1\triangleq\max_{1\le j\le n}\sum_i^m|a_{ij}|
+     $$
+     
+
+     计算过程如下：$\lVert \mathbf{Ax}\rVert_1=\lVert \sum_j^nx_j\mathbf{a}_j\rVert_1\le\sum_j^n|x_j|\cdot\lVert\mathbf{a}_j\rVert_1\le\max_{1\le j\le n}\sum_i^m|a_{ij}|$ 。$\mathbf{a}_j$为矩阵$\mathbf{A}$的第$j$列。该范式计算结果等于矩阵$\mathbf{A}$最大绝对值和的列。
+
+   - $p=\infty$
+
+     
+     $$
+     \lVert \mathbf{A}\rVert_\infty\triangleq\max_{1\le i\le m}\sum_j^n|a_{ij}|
+     $$
+     
+
+     计算过程如下：$\lVert \mathbf{Ax}\rVert_\infty=\max_{1\le i\le m}\{\sum_{j=1}^n |a_{ij}x_j| \}  \le \max_{1\le i\le m}\sum_{j=1}^n|x_j|\cdot |a_{ij}|\le\max_{1\le i\le m}\sum_{j=1}^n|a_{ij}|$ 。该范式计算结果等于矩阵$\mathbf{A}$最大绝对值和的行。
+
+   - $p=2$
+
+     
+     $$
+     \lVert \mathbf{A}\rVert_2\triangleq\sqrt{\lambda_{\max}(\mathbf{A}^\top\mathbf{A})}=\sigma_{\max}(\mathbf{A})
+     $$
+     
+
+     计算结果为矩阵$\mathbf{A}$的最大奇异值。
+
+   
+
+   
+
+   
+
+3. 
+
+##### 元素形式范数
+
+xxx
+
+##### Schatter范数
+
+xxxxx
+
+#### 迹
+
+矩阵的迹是指$n\times n$矩阵$\mathbf{A}$的所有对角元素之和，记为$tr(\mathbf{A})$，即
+
+
+$$
+tr(\mathbf{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
+$$
