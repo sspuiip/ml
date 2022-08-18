@@ -18,8 +18,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'MLBOOK'
-copyright = '2022, Jimi.Law'
-author = 'Jimi.Law'
+copyright = '2022, SSPUIIP'
+author = 'SSPUIIP'
 
 # The full version, including alpha/beta/rc tags
 release = '1.0'
@@ -42,8 +42,8 @@ templates_path = ['_templates']
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases. 
-# 'zh_CN'
-language = 'en'
+# 'zh_CN', 'en'
+language = 'zh_CN'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -56,12 +56,17 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo'
-html_theme = 'furo'
+html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+#mathjax_options ={
+#    "math_number_all": "True",
+#    "math_eqref_format": "True"
+#}
 
 
 # -- Extension configuration -------------------------------------------------
