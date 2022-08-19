@@ -13,6 +13,7 @@ Welcome to MLBOOK's documentation!
 
    matrix/base.md
    matrix/vectorspace.md
+   matrix/matrixdiff.md
 
 
 
