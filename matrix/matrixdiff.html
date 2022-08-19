@@ -130,11 +130,43 @@
 </table>
 <section id="jacobian">
 <h2><span class="section-number">3.1. </span>Jacobian矩阵<a class="headerlink" href="#jacobian" title="此标题的永久链接"></a></h2>
-<p><span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span>偏导算子记为，</p>
+<p><span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span><strong>偏导算子</strong>记为，</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathbf{x}}\triangleq\frac{\partial}{\partial\mathbf{x}^\top}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]
 \]</div>
+<ol class="arabic simple">
+<li><p>标量函数偏导向量</p></li>
+</ol>
+<p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的偏导向量由如下<span class="math notranslate nohighlight">\(1\times m\)</span>行向量给出，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}=\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_m} \right]
+\]</div>
+<ol class="arabic" start="2">
+<li><p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的变元为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>时有，</p>
+<ul class="simple">
+<li><p>定义1 (Jacobian矩阵)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \mathbf{D}_{\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}^\top}=\left[\begin{array}{ccc} \frac{\partial f(\mathbf{X})}{\partial x_{11}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{m1}}\\ \vdots &amp;\ddots &amp; \vdots \\ \frac{\partial f(\mathbf{X})}{\partial x_{1n}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{mn}}\end{array} \right]\in \mathbb{R}^{n\times m}
+    \end{split}\]</div>
+<ul class="simple">
+<li><p>定义2 (行向量偏导)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+    \mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathrm{vec}^\top (\mathbf{X})}=\left[\frac{\partial f(\mathbf{X})}{\partial x_{11}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{m1}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{1n}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{mn}}    \right]
+    \]</div>
+</li>
+</ol>
+<p>两者之间的关系为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\left[\mathrm{vec}\left(\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})\right)\right]^\top
+\]</div>
+<p>即标量函数的行向量偏导<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>等于标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的Jacobian矩阵。</p>
 </section>
 </section>
 
