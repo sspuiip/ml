@@ -42,22 +42,22 @@ jobs:
         shell: bash
         run: |
           pip install --upgrade pip
-          pip install -r doc/requirements.txt
+          pip install -r docs/requirements.txt
 
       - name: 🔧 Build HTML
         run: |
-          cd doc
+          cd docs
           make html
 
       - name: 🔧 Clean up files
         run: |
-          rm -rf doc/build/doctrees
+          rm -rf docs/build/doctrees
 
 
       - name: 🚀 Deploy to GitHub pages
         uses: peaceiris/actions-gh-pages@v3.6.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: doc/build/html
+          publish_dir: docs/build/html
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
