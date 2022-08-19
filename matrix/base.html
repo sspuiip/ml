@@ -58,10 +58,18 @@
 <li class="toctree-l3"><a class="reference internal" href="#id11">1.4.2. 矩阵范数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id12">1.4.3. 诱导范数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id13">1.4.4. 元素形式范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#schatter">1.4.5. Schatter范数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#schatten">1.4.5. Schatten范数</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id14">1.4.5.1. 核范数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.4.5.2. Schatten范数</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id14">1.5. 迹</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id16">1.5. 迹</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id17">1.5.1. 性质一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id18">1.5.2. 性质二</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">2. 向量空间</a></li>
@@ -256,7 +264,7 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <li><p>三角不等式：<span class="math notranslate nohighlight">\(\lVert \mathbf{A}+\mathbf{B}\rVert\le\lVert \mathbf{A}\rVert+\lVert\mathbf{B}\rVert\)</span>。</p></li>
 <li><p><span class="math notranslate nohighlight">\(\lVert\mathbf{AB}\rVert\le\lVert\mathbf{A}\rVert\cdot\lVert\mathbf{B}\rVert\)</span></p></li>
 </ol>
-<p>常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatter范数。</p>
+<p>常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatten范数。</p>
 </section>
 <section id="id12">
 <h3><span class="section-number">1.4.3. </span>诱导范数<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h3>
@@ -302,25 +310,77 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 </li>
 </ul>
 </li>
-<li></li>
 </ol>
 </section>
 <section id="id13">
 <h3><span class="section-number">1.4.4. </span>元素形式范数<a class="headerlink" href="#id13" title="此标题的永久链接"></a></h3>
-<p>xxx</p>
+<p>元素形式范数就是将<span class="math notranslate nohighlight">\(m\times n\)</span>矩阵按列堆栈成<span class="math notranslate nohighlight">\(mn\times 1\)</span>维的向量，然后再使用向量形式的范数定义。</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(p\)</span>-矩阵范数</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\lVert \mathbf{A}\rVert_p = \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^p\right)^{1/p}
+\]</div>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(p=1\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_1=\sum_i\sum_j |a_{ij}|\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(p=\infty\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_\infty=\max_{ij} |a_{ij}|\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(p=2\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_2= \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^2\right)^{1/2}\)</span>。该范数也称之为Frobenius范数。并且有如下性质，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+   \lVert \mathbf{A}\rVert_2=\sqrt{tr(\mathbf{A}^\top\mathbf{A})}=\langle \mathbf{A},\mathbf{A}\rangle^{1/2}
+  \]</div>
 </section>
-<section id="schatter">
-<h3><span class="section-number">1.4.5. </span>Schatter范数<a class="headerlink" href="#schatter" title="此标题的永久链接"></a></h3>
-<p>xxxxx</p>
-</section>
-</section>
+<section id="schatten">
+<h3><span class="section-number">1.4.5. </span>Schatten范数<a class="headerlink" href="#schatten" title="此标题的永久链接"></a></h3>
+<p>Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问题：压缩感知、低秩矩阵与张量恢复等。</p>
 <section id="id14">
-<h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h2>
+<h4><span class="section-number">1.4.5.1. </span>核范数<a class="headerlink" href="#id14" title="此标题的永久链接"></a></h4>
+<p>核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个凸优化问题，所以这种等价可直接降低求解各类低秩问题的难度。</p>
+<p><strong>定义1</strong> (核范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n)\)</span>，且矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的核范数为，</p>
+<div class="math notranslate nohighlight">
+\[
+\lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r\]</div>
+</section>
+<section id="id15">
+<h4><span class="section-number">1.4.5.2. </span>Schatten范数<a class="headerlink" href="#id15" title="此标题的永久链接"></a></h4>
+<p>相比于核范数，Schatten范数多出了一个参数<span class="math notranslate nohighlight">\(p\)</span>。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多<a class="reference external" href="https://zhuanlan.zhihu.com/p/104402273">低秩问题</a>。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》.<a class="reference external" href="https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf">[pdf]</a><a class="reference external" href="https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery">[code]</a>。</p>
+<p><strong>定义2</strong> (Schatten范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n), p&gt;0\)</span>，且矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的Schatten范数为，</p>
+<div class="math notranslate nohighlight">
+\[
+\lVert \mathbf{X}\rVert_{Sp}=(\sigma_1^p+\sigma_2^p+\cdots+\sigma_r^p)^{1/p}
+\]</div>
+</section>
+</section>
+</section>
+<section id="id16">
+<h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id16" title="此标题的永久链接"></a></h2>
 <p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(tr(\mathbf{A})\)</span>，即</p>
 <div class="math notranslate nohighlight">
 \[
 tr(\mathbf{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 \]</div>
+<section id="id17">
+<h3><span class="section-number">1.5.1. </span>性质一<a class="headerlink" href="#id17" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(tr(c\mathbf{A}\pm d\mathbf{B})=tr(\mathbf{A})\pm tr(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^\top)=tr(\mathbf{A})^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{ABC})=tr(\mathbf{BCA})=tr(\mathbf{CAB})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{A}\mathbf{x}=tr(\mathbf{x}^\top\mathbf{A}\mathbf{x})\)</span>，特别地，<span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{y}=tr(\mathbf{yx}^\top)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A})=\lambda_1+\lambda_2+\cdots+\lambda_n\)</span>所有特征值之和。</p></li>
+<li><p><span class="math notranslate nohighlight">\(tr\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{B}\\\mathbf{C}&amp;\mathbf{D}\end{array}\right]=tr(\mathbf{A})+tr(\mathbf{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^k)=\sum_i \lambda_i^k\)</span></p></li>
+</ul>
+</section>
+<section id="id18">
+<h3><span class="section-number">1.5.2. </span>性质二<a class="headerlink" href="#id18" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^2)\le tr(\mathbf{A}^\top\mathbf{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr((\mathbf{A}+\mathbf{B})(\mathbf{A}+\mathbf{B})^\top)\le 2[tr(\mathbf{A}\mathbf{A}^\top)+tr(\mathbf{B}\mathbf{B}^\top)]\)</span></p></li>
+<li><p>若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是对称矩阵，则<span class="math notranslate nohighlight">\(tr(\mathbf{AB})\le \frac12 tr(\mathbf{A}^2+\mathbf{B}^2)\)</span></p></li>
+</ul>
+</section>
 </section>
 </section>
 
