@@ -169,7 +169,7 @@ $$
 3. 三角不等式：$\lVert \mathbf{A}+\mathbf{B}\rVert\le\lVert \mathbf{A}\rVert+\lVert\mathbf{B}\rVert$。
 4. $\lVert\mathbf{AB}\rVert\le\lVert\mathbf{A}\rVert\cdot\lVert\mathbf{B}\rVert$
 
-常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatter范数。
+常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatten范数。
 
 ##### 诱导范数
 
@@ -231,19 +231,53 @@ $$
 
    
 
-   
-
-   
-
-3. 
+             
 
 ##### 元素形式范数
 
-xxx
+元素形式范数就是将$m\times n$矩阵按列堆栈成$mn\times 1$维的向量，然后再使用向量形式的范数定义。
 
-##### Schatter范数
+- $p$-矩阵范数
 
-xxxxx
+$$
+\lVert \mathbf{A}\rVert_p = \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^p\right)^{1/p}
+$$
+
+  1. $p=1$时，$\lVert \mathbf{A}\rVert_1=\sum_i\sum_j |a_{ij}|$。
+  2. $p=\infty$时，$\lVert \mathbf{A}\rVert_\infty=\max_{ij} |a_{ij}|$。
+  3. $p=2$时，$\lVert \mathbf{A}\rVert_2= \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^2\right)^{1/2}$。该范数也称之为Frobenius范数。并且有如下性质，
+
+  $$
+   \lVert \mathbf{A}\rVert_2=\sqrt{tr(\mathbf{A}^\top\mathbf{A})}=\langle \mathbf{A},\mathbf{A}\rangle^{1/2}
+  $$
+
+
+
+
+##### Schatten范数
+
+Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问题：压缩感知、低秩矩阵与张量恢复等。
+
+###### 核范数
+
+核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个凸优化问题，所以这种等价可直接降低求解各类低秩问题的难度。
+
+**定义1** (核范数). 给定任意矩阵$\mathbf{A}\in \mathbb{R}^{m\times n}$, 以及$r=\min(m,n)$，且矩阵$\mathbf{A}$的奇异值为$\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r$，则矩阵$\mathbf{A}$的核范数为，
+
+$$
+\lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r
+
+$$
+
+###### Schatten范数
+
+相比于核范数，Schatten范数多出了一个参数$p$。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多[低秩问题](https://zhuanlan.zhihu.com/p/104402273)。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》.[[pdf]](https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf)[[code]](https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery)。
+
+**定义2** (Schatten范数). 给定任意矩阵$\mathbf{A}\in \mathbb{R}^{m\times n}$, 以及$r=\min(m,n), p>0$，且矩阵$\mathbf{A}$的奇异值为$\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r$，则矩阵$\mathbf{A}$的Schatten范数为，
+
+$$
+\lVert \mathbf{X}\rVert_{Sp}=(\sigma_1^p+\sigma_2^p+\cdots+\sigma_r^p)^{1/p}
+$$
 
 #### 迹
 
@@ -253,3 +287,20 @@ xxxxx
 $$
 tr(\mathbf{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 $$
+
+##### 性质一
+
+- $tr(c\mathbf{A}\pm d\mathbf{B})=tr(\mathbf{A})\pm tr(\mathbf{B})$
+- $tr(\mathbf{A}^\top)=tr(\mathbf{A})^\top$
+- $tr(\mathbf{ABC})=tr(\mathbf{BCA})=tr(\mathbf{CAB})$
+- $\mathbf{x}^\top\mathbf{A}\mathbf{x}=tr(\mathbf{x}^\top\mathbf{A}\mathbf{x})$，特别地，$\mathbf{x}^\top\mathbf{y}=tr(\mathbf{yx}^\top)$
+- $tr(\mathbf{A})=\lambda_1+\lambda_2+\cdots+\lambda_n$所有特征值之和。
+- $tr\left[\begin{array}{cc}\mathbf{A}&\mathbf{B}\\\mathbf{C}&\mathbf{D}\end{array}\right]=tr(\mathbf{A})+tr(\mathbf{D})$
+- $tr(\mathbf{A}^k)=\sum_i \lambda_i^k$
+
+
+##### 性质二
+
+- $tr(\mathbf{A}^2)\le tr(\mathbf{A}^\top\mathbf{A})$
+- $tr((\mathbf{A}+\mathbf{B})(\mathbf{A}+\mathbf{B})^\top)\le 2[tr(\mathbf{A}\mathbf{A}^\top)+tr(\mathbf{B}\mathbf{B}^\top)]$
+- 若$\mathbf{A,B}$都是对称矩阵，则$tr(\mathbf{AB})\le \frac12 tr(\mathbf{A}^2+\mathbf{B}^2)$
