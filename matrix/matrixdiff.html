@@ -130,30 +130,33 @@
 </table>
 <section id="jacobian">
 <h2><span class="section-number">3.1. </span>Jacobian矩阵<a class="headerlink" href="#jacobian" title="此标题的永久链接"></a></h2>
-<p><span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span><strong>偏导算子</strong>记为，</p>
+<ol class="arabic simple">
+<li><p><strong>向量偏导算子</strong>。
+<span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span><strong>偏导算子</strong>记为，</p></li>
+</ol>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathbf{x}}\triangleq\frac{\partial}{\partial\mathbf{x}^\top}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]
 \]</div>
-<ol class="arabic simple">
-<li><p>标量函数偏导向量</p></li>
+<ol class="arabic simple" start="2">
+<li><p><strong>标量函数偏导向量</strong>。
+标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的偏导向量由如下<span class="math notranslate nohighlight">\(1\times m\)</span>行向量给出，</p></li>
 </ol>
-<p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的偏导向量由如下<span class="math notranslate nohighlight">\(1\times m\)</span>行向量给出，</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}=\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_m} \right]
 \]</div>
-<ol class="arabic" start="2">
+<ol class="arabic" start="3">
 <li><p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的变元为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>时有，</p>
 <ul class="simple">
-<li><p>定义1 (Jacobian矩阵)</p></li>
+<li><p>定义1 (<strong>Jacobian矩阵</strong>)</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \mathbf{D}_{\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}^\top}=\left[\begin{array}{ccc} \frac{\partial f(\mathbf{X})}{\partial x_{11}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{m1}}\\ \vdots &amp;\ddots &amp; \vdots \\ \frac{\partial f(\mathbf{X})}{\partial x_{1n}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{mn}}\end{array} \right]\in \mathbb{R}^{n\times m}
     \end{split}\]</div>
 <ul class="simple">
-<li><p>定义2 (行向量偏导)</p></li>
+<li><p>定义2 (<strong>行向量偏导</strong>)</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
