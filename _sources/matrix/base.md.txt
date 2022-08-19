@@ -271,7 +271,7 @@ $$
 
 ###### Schatten范数
 
-相比于核范数，Schatten范数多出了一个参数$p$。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多[低秩问题](https://zhuanlan.zhihu.com/p/104402273)。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》.[[pdf]](https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf)[[code]](https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery)。
+相比于核范数，Schatten范数多出了一个参数$p$。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多[低秩问题](https://zhuanlan.zhihu.com/p/104402273)。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》[[pdf]](https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf)[[code]](https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery)。
 
 **定义2** (Schatten范数). 给定任意矩阵$\mathbf{A}\in \mathbb{R}^{m\times n}$, 以及$r=\min(m,n), p>0$，且矩阵$\mathbf{A}$的奇异值为$\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r$，则矩阵$\mathbf{A}$的Schatten范数为，
 
