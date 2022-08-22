@@ -46,6 +46,7 @@
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">2. 向量空间</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. 矩阵微分</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#jacobian">3.1. Jacobian矩阵</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.2. 梯度矩阵</a></li>
 </ul>
 </li>
 </ul>
@@ -170,6 +171,41 @@
 \mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\left[\mathrm{vec}\left(\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})\right)\right]^\top
 \]</div>
 <p>即标量函数的行向量偏导<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>等于标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的Jacobian矩阵。</p>
+</section>
+<section id="id2">
+<h2><span class="section-number">3.2. </span>梯度矩阵<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p><strong>梯度算子</strong>指的是以列向量形式<span class="math notranslate nohighlight">\(\mathbf{x}=[x_1,...,x_m]^\top\)</span>定义的偏导算子，记为<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}\)</span>，定义为</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\mathbf{x}}\triangleq\frac{\partial}{\partial \mathbf{x}}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]^\top
+\]</div>
+<ol class="arabic simple">
+<li><p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的<strong>梯度向量</strong><span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}f(\mathbf{x})\)</span>为1个与<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>同维度的列向量，即</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\mathbf{x}}f(\mathbf{x})\triangleq\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_m}\right]^\top=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}\neq \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}=\mathbf{D}_{\mathbf{x}}f(\mathbf{x})
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>当标量函数的变元为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>,并列向理化后，函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的<strong>梯度向量</strong>为，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathrm{vec}\mathbf{X}}=\left[\frac{\partial  f(\mathbf{X})}{\partial x_{11}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{m1}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{1n}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{mn}}\right]^\top
+\]</div>
+<ol class="arabic simple" start="3">
+<li><p>也可以直接定义<strong>梯度矩阵</strong></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla_{\mathbf{X}}f(\mathbf{X})=\left[\begin{array}{ccc} \frac{\partial f(\mathbf{X})}{\partial x_{11}} &amp;\cdots&amp;\frac{\partial f(\mathbf{X})}{\partial x_{1n}}\\\vdots&amp;\ddots&amp;\vdots\\ \frac{\partial f(\mathbf{X})}{\partial x_{m1}}&amp;\cdots &amp;\frac{\partial f(\mathbf{X})}{\partial x_{mn}} \end{array} \right]=\frac{\partial f(\mathbf{X})}{\partial \mathbf{x}}
+\end{split}\]</div>
+<p>可以看出，梯度矩阵<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}f(\mathbf{X})\)</span>是梯度向量<span class="math notranslate nohighlight">\(\nabla_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>的矩阵化，以及以下关系，</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\mathbf{X}}f(\mathbf{X})=\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})
+\]</div>
+<p>即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。</p>
 </section>
 </section>
 
