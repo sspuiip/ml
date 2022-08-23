@@ -47,6 +47,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">3. 矩阵微分</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#jacobian">3.1. Jacobian矩阵</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id2">3.2. 梯度矩阵</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.3. 偏导和梯度计算</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3.3.1. 基本规则</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -206,6 +210,54 @@
 \nabla_{\mathbf{X}}f(\mathbf{X})=\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})
 \]</div>
 <p>即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">3.3. </span>偏导和梯度计算<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<section id="id4">
+<h3><span class="section-number">3.3.1. </span>基本规则<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<p>假设<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>，<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>为一标量函数，则有以下偏导计算规则：</p>
+<ol class="arabic simple">
+<li><p>若<span class="math notranslate nohighlight">\(f(\mathbf{X})=c\)</span>为常数，则梯度<span class="math notranslate nohighlight">\(\frac{\partial c}{\partial \mathbf{X}}=\mathbf{0}_{m\times n}\)</span>。</p></li>
+<li><p><strong>线性规则</strong> 若<span class="math notranslate nohighlight">\(f(\mathbf{X}),g(\mathbf{X})\)</span>分别为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的实值函数,<span class="math notranslate nohighlight">\(c_1,c_2\)</span>为实常数，则有以下等式成立，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial [c_1f(\mathbf{X})+c_2g(\mathbf{X})]}{\partial \mathbf{X}}=c_1\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+c_2\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
+\]</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>乘法规则</strong> 若<span class="math notranslate nohighlight">\(f(\mathbf{X}),g(\mathbf{X}),h(\mathbf{X})\)</span>分别为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的实值函数，则有以下等式成立，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial [f(\mathbf{X})g(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
+\]</div>
+<p>和，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial [f(\mathbf{X})g(\mathbf{X})h(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})h(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+
+f(\mathbf{X})h(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}+
+f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
+\]</div>
+<ol class="arabic simple" start="4">
+<li><p><strong>商规则</strong> 若<span class="math notranslate nohighlight">\((\mathbf{X})\neq 0\)</span>，则有，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{f(\mathbf{X})}{\mathbf{X}}-f(\mathbf{X})\frac{g(\mathbf{X})}{\mathbf{X}}\right]
+\]</div>
+<ol class="arabic simple" start="5">
+<li><p><strong>链式规则</strong> 假设<span class="math notranslate nohighlight">\(y=f(\mathbf{X})\)</span>和<span class="math notranslate nohighlight">\(g(y)\)</span>分别是以矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>和标量<span class="math notranslate nohighlight">\(y\)</span>为变元的实值函数，则</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial g[f(\mathbf{X})]}{\partial \mathbf{X}}=\frac{dg(y)}{dy}\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}
+\]</div>
+<p>推广，记<span class="math notranslate nohighlight">\(g(\mathbf{F}(\mathbf{X}))=g(\mathbf{F})\)</span>，其中，<span class="math notranslate nohighlight">\(\mathbf{F}=[f_{kl}]\in \mathbb{R}^{p\times q}, \mathbf{X}\in \mathbb{R}^{m\times n}\)</span>，则链式法则为，</p>
+<div class="math notranslate nohighlight">
+\[
+\left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
+\]</div>
+</section>
 </section>
 </section>
 
