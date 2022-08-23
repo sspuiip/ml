@@ -84,3 +84,49 @@ $$
 $$
 
 即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。
+
+#### 偏导和梯度计算
+
+##### 基本规则
+
+假设$\mathbf{X}\in \mathbb{R}^{m\times n}$，$f(\mathbf{X})$为一标量函数，则有以下偏导计算规则：
+
+1. 若$f(\mathbf{X})=c$为常数，则梯度$\frac{\partial c}{\partial \mathbf{X}}=\mathbf{0}_{m\times n}$。
+
+2. **线性规则** 若$f(\mathbf{X}),g(\mathbf{X})$分别为矩阵$\mathbf{X}$的实值函数,$c_1,c_2$为实常数，则有以下等式成立，
+
+$$
+\frac{\partial [c_1f(\mathbf{X})+c_2g(\mathbf{X})]}{\partial \mathbf{X}}=c_1\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+c_2\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
+$$
+
+3. **乘法规则** 若$f(\mathbf{X}),g(\mathbf{X}),h(\mathbf{X})$分别为矩阵$\mathbf{X}$的实值函数，则有以下等式成立，
+
+$$
+\frac{\partial [f(\mathbf{X})g(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
+$$
+
+和，
+
+$$
+\frac{\partial [f(\mathbf{X})g(\mathbf{X})h(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})h(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+
+f(\mathbf{X})h(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}+
+f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
+$$
+
+4. **商规则** 若$(\mathbf{X})\neq 0$，则有，
+
+$$
+\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{f(\mathbf{X})}{\mathbf{X}}-f(\mathbf{X})\frac{g(\mathbf{X})}{\mathbf{X}}\right]
+$$
+
+5. **链式规则** 假设$y=f(\mathbf{X})$和$g(y)$分别是以矩阵$\mathbf{X}$和标量$y$为变元的实值函数，则
+
+$$
+\frac{\partial g[f(\mathbf{X})]}{\partial \mathbf{X}}=\frac{dg(y)}{dy}\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}
+$$
+
+推广，记$g(\mathbf{F}(\mathbf{X}))=g(\mathbf{F})$，其中，$\mathbf{F}=[f_{kl}]\in \mathbb{R}^{p\times q}, \mathbf{X}\in \mathbb{R}^{m\times n}$，则链式法则为，
+
+$$
+\left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
+$$
