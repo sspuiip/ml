@@ -116,7 +116,7 @@ $$
 4. **商规则** 若$(\mathbf{X})\neq 0$，则有，
 
 $$
-\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{f(\mathbf{X})}{\mathbf{X}}-f(\mathbf{X})\frac{g(\mathbf{X})}{\mathbf{X}}\right]
+\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}-f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial\mathbf{X}}\right]
 $$
 
 5. **链式规则** 假设$y=f(\mathbf{X})$和$g(y)$分别是以矩阵$\mathbf{X}$和标量$y$为变元的实值函数，则
@@ -129,4 +129,18 @@ $$
 
 $$
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
+$$
+
+##### 独立性假设
+
+假定实值函数的向量变元$\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m$或者矩阵变元$\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}$本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即
+
+$$
+\frac{\partial x_i}{\partial x_j}=\delta_{ij}=\left\{\begin{array}{ll}1,&i=j\\ 0,&i\neq j \end{array} \right.
+$$
+
+以及，
+
+$$
+\frac{\partial x_{kl}}{\partial x_{ij}}=\delta_{ki}\delta_{lj}=\left\{\begin{array}{ll}1,&k=i \wedge l=j\\ 0,&others \end{array} \right.
 $$

@@ -49,6 +49,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">3.2. 梯度矩阵</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">3.3. 偏导和梯度计算</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id4">3.3.1. 基本规则</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.3.2. 独立性假设</a></li>
 </ul>
 </li>
 </ul>
@@ -243,7 +244,7 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 </ol>
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{f(\mathbf{X})}{\mathbf{X}}-f(\mathbf{X})\frac{g(\mathbf{X})}{\mathbf{X}}\right]
+\frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}-f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial\mathbf{X}}\right]
 \]</div>
 <ol class="arabic simple" start="5">
 <li><p><strong>链式规则</strong> 假设<span class="math notranslate nohighlight">\(y=f(\mathbf{X})\)</span>和<span class="math notranslate nohighlight">\(g(y)\)</span>分别是以矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>和标量<span class="math notranslate nohighlight">\(y\)</span>为变元的实值函数，则</p></li>
@@ -257,6 +258,19 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 \[
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
 \]</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">3.3.2. </span>独立性假设<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<p>假定实值函数的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m\)</span>或者矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}\)</span>本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial x_i}{\partial x_j}=\delta_{ij}=\left\{\begin{array}{ll}1,&amp;i=j\\ 0,&amp;i\neq j \end{array} \right.
+\end{split}\]</div>
+<p>以及，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\frac{\partial x_{kl}}{\partial x_{ij}}=\delta_{ki}\delta_{lj}=\left\{\begin{array}{ll}1,&amp;k=i \wedge l=j\\ 0,&amp;others \end{array} \right.
+\end{split}\]</div>
 </section>
 </section>
 </section>
