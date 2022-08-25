@@ -362,3 +362,5 @@ $$
 \nabla_\mathbf{X}f(\mathbf{X})&=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}
 \end{split}
 $$
+
+总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。
