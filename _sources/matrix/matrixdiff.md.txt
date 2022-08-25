@@ -163,7 +163,7 @@ $$
 矩阵微分记为$\mathrm{d}\mathbf{X}$，其定义为，
 
 $$
-\mathrm{d}\mathbf{X}=[dX_{ij}]_{i=1,j=1}^{m,n}
+\mathrm{d}\mathbf{X}=[\mathrm{d}X_{ij}]_{i=1,j=1}^{m,n}
 $$
 
 ###### 性质
@@ -171,3 +171,115 @@ $$
 1. **转置不变** $\mathrm{d}(\mathbf{X}^\top)=(\mathrm{d}\mathbf{X})^\top$
 2. **线性** $\mathrm{d}(\alpha\mathbf{X}\pm\beta\mathbf{Y})=\alpha\mathrm{d}\mathbf{X}\pm\beta\mathrm{d}\mathbf{Y}$
 3. $\mathrm{d}(\mathbf{A})=\mathbf{0}$，常数矩阵$\mathbf{A}$。
+4. $\mathrm{d}(\mathrm{tr}\mathbf{X})=\mathrm{tr}(\mathrm{d}\mathbf{X})$
+5. $\mathrm{d}(\mathbf{AXB})=\mathbf{A}\mathrm{d}(\mathbf{X})\mathbf{B}$
+6. 若有矩阵函数$\mathbf{U}=\mathbf{F}(\mathbf{X}),\mathbf{V}=\mathbf{G}(\mathbf{X}),\mathbf{W}=\mathbf{H}(\mathbf{X})$，则以下等式成立，
+
+$$
+d(\mathbf{UV})=(\mathrm{d}\mathbf{U})\mathbf{V}+\mathbf{U}(\mathrm{d}\mathbf{V})
+$$
+
+和
+
+$$
+d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V})\mathbf{W}+\mathbf{U}\mathbf{V}(\mathrm{d}\mathbf{W})
+$$
+
+7. **迹不变性** 
+
+$$\mathrm{d}(\mathrm{tr}(\mathbf{X}))=\mathrm{tr}(\mathrm{d} \mathbf{X})$$
+
+8. **行列式微分** 
+
+$$\mathrm{d}|\mathbf{X}|=|\mathbf{X}|\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X})
+$$
+
+和
+
+$$
+\mathrm{d}\log|\mathbf{X}|=\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X})
+$$
+
+9. **Kronecker积**
+
+$$
+\mathrm{d}(\mathbf{U}\otimes\mathbf{V})=\mathrm{d}(\mathbf{U})\otimes\mathbf{V}+\mathbf{U}\otimes\mathrm{d}(\mathbf{V})
+$$
+
+10. **Hadamard**
+
+$$
+\mathrm{d}(\mathbf{U}*\mathbf{V})=\mathrm{d}(\mathbf{U})*\mathbf{V}+\mathbf{U}*\mathrm{d}(\mathbf{V})
+$$
+
+11. **向量化**
+
+$$\mathrm{d}(\mathrm{vec}(\mathbf{X}))=\mathrm{vec}(\mathrm{d}(\mathbf{X}))$$
+
+12. **对数函数**
+
+$$\mathrm{d}\log\mathbf{X}=\mathbf{X}^{-1} \mathrm{d}\mathbf{X}$$
+
+13. **逆**
+
+$$\mathrm{d}\mathbf{X}^{-1}=-\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}$$
+
+
+###### 标量函数$f(\mathbf{x})$的向量变元$\mathbf{x}$全微分求偏导方法
+
+考虑标量函数$f(\mathbf{x}),\mathbf{x}\in\mathbb{R}^n$的全微分，
+
+$$
+\mathrm{d}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial x_1}\mathrm{d}x_1+\cdots+\frac{\partial f(\mathbf{x})}{\partial x_n}\mathrm{d}x_n
+$$
+
+写成内积形式，即
+
+$$
+\mathrm{d}f(\mathbf{x})=\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_n}\right]\left[\begin{array}{cc}\mathrm{d}x_1\\\vdots\\\mathrm{d}x_n\end{array}\right]=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}=\mathrm{tr}\left(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\right)
+$$
+
+显然，如果函数$f(\mathbf{x})$的微分可以写成
+
+$$\mathrm{d}f(\mathbf{x})=\mathrm{tr}\left(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\right)$$
+
+的形式，则$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}$就是函数$f(\mathbf{x})$关于变元$\mathbf{x}$的Jacobian矩阵$\mathbf{D}_\mathbf{x}f(\mathbf{x})$，其转置$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]^\top$即为梯度$\nabla_\mathbf{x}f(\mathbf{x})$。
+
+###### 标量函数$f(\mathbf{X})$的矩阵量变元$\mathbf{X}$全微分求偏导方法
+
+和向量一样，把变元矩阵的每个元素看作是一个变量，则标量函数$f(\mathbf{X}),\mathbf{X}\in\mathbb{R}^{m\times n}$的全微分可以写成如下形式，
+
+$$
+\begin{split}
+\mathrm{d}f(\mathbf{X})&=\frac{\partial f(\mathbf{X})}{\partial \mathbf{x}_1}\mathrm{d}\mathbf{x}_1 +\cdots +\frac{\partial f(\mathbf{X})}{\partial \mathbf{x}_n}\mathrm{d}\mathbf{x}_n\\
+&=\left[\frac{\partial f(\mathbf{x})}{\partial x_{11}},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_{m1}}\right]\left[\begin{array}{cc}\mathrm{d}x_{11}\\\vdots\\\mathrm{d}x_{m1}\end{array}\right]+\cdots  + \left[\frac{\partial f(\mathbf{x})}{\partial x_{1n}},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_{mn}}\right]\left[\begin{array}{cc}\mathrm{d}x_{1n}\\\vdots\\\mathrm{d}x_{mn}\end{array}\right]\\
+&=\frac{\partial f(\mathbf{X})}{\partial \mathrm{vec}^\top(\mathbf{X})}\mathrm{d}(\mathrm{vec}(\mathbf{X}))\\
+&=\mathbf{D}_{\mathrm{vec}\mathbf{X}} f(\mathbf{X})\mathrm{d}(\mathrm{vec}(\mathbf{X}))\\
+&=[\mathrm{vec}(\mathbf{D}^\top_\mathbf{X}f(\mathbf{X}))]^\top  \mathrm{d}(\mathrm{vec}(\mathbf{X}))\\
+&=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}))\mathrm{d}\mathbf{X})
+\end{split}
+$$
+
+易知：$\nabla_\mathbf{X}f(\mathbf{X})=\mathbf{D}^\top_\mathbf{X}f(\mathbf{X})$，即可求出梯度矩阵。
+
+###### 求导方法
+
+综上所述，若标量函数$f(\mathbf{x}),f(\mathbf{X})$在$\mathbf{x},\mathbf{X}$可微，则Jacobin矩阵存在，且可以通过以下形式计算，
+
+$$
+\begin{split}
+\mathrm{d}f(\mathbf{x})&=\mathrm{tr}(\mathbf{D}_\mathbf{x}f(\mathbf{x}) \mathrm{d}\mathbf{x})=\mathrm{tr}(\nabla_\mathbf{x}f(\mathbf{x})^\top \mathrm{d}\mathbf{x})\\
+\mathrm{d}f(\mathbf{X})&=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}) \mathrm{d}\mathbf{X})=\mathrm{tr}(\nabla_\mathbf{X}f(\mathbf{X})^\top \mathrm{d}\mathbf{X})\\
+\end{split}
+$$
+
+因此有以下通过对函数微分求偏导数的方法：将函数$f(\mathbf{X}),f(\mathbf{x})$求关于变元$\mathbf{X},\mathbf{x}$的微分(利用第1小节的性质)，并将结果整理成规范形式$\mathrm{d}f(\mathbf{x})=\mathrm{tr}(\mathbf{D}_\mathbf{x}f(\mathbf{x}) \mathrm{d}\mathbf{x})$或$\mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}) \mathrm{d}\mathbf{X})$。Jacobian矩阵的转置即为梯度矩阵。
+
+因为最终要整理成规范形式，因此，需要用到迹的一些性质：
+
+1. $a=\mathrm{tr}(a)$
+2. $\mathrm{tr}(\mathbf{A}^\top)=\mathrm{tr}(\mathbf{A})$
+3. $\mathrm{tr}(\alpha\mathbf{A}\pm\beta\mathbf{B})=\alpha\mathrm{tr}(\mathbf{A})\pm\beta\mathrm{tr}(\mathbf{B})$
+4. $\mathrm{tr}(\mathbf{ABC})=\mathrm{tr}(\mathbf{BCA})=\mathrm{tr}(\mathbf{CAB})$
+5. $\mathrm{tr}(\mathbf{AB})=\sum_{ij}A_{ji}B_{ij}$
+6. $\mathrm{tr}(\mathbf{A^\top B})=\sum_{ij}A_{ij}B_{ij}=\mathrm{vec}(\mathbf{A})^\top\mathrm{vec}(\mathbf{B})$
