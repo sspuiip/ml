@@ -15,7 +15,7 @@
 
 #### Jacobian矩阵
 
-1. **向量偏导算子**。
+1. **向量偏导算子（分子布局）**。
 $1\times m$行向量$\mathbf{x}^\top$**偏导算子**记为，
 
 $$
@@ -53,7 +53,7 @@ $$
 
 #### 梯度矩阵
 
-**梯度算子**指的是以列向量形式$\mathbf{x}=[x_1,...,x_m]^\top$定义的偏导算子，记为$\nabla_{\mathbf{x}}$，定义为
+**梯度算子(分母布局)** 指的是以列向量形式$\mathbf{x}=[x_1,...,x_m]^\top$定义的偏导算子，记为$\nabla_{\mathbf{x}}$，定义为
 
 $$
 \nabla_{\mathbf{x}}\triangleq\frac{\partial}{\partial \mathbf{x}}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]^\top
@@ -131,7 +131,7 @@ $$
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
 $$
 
-##### 独立性假设
+###### 独立性假设
 
 假定实值函数的向量变元$\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m$或者矩阵变元$\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}$本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即
 
@@ -144,3 +144,30 @@ $$
 $$
 \frac{\partial x_{kl}}{\partial x_{ij}}=\delta_{ki}\delta_{lj}=\left\{\begin{array}{ll}1,&k=i \wedge l=j\\ 0,&others \end{array} \right.
 $$
+
+###### 案例
+
+1. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。由于$\mathbf{x}^\top\mathbf{A}\mathbf{x}=\sum_{k=1}^n\sum_{l=1}^n a_{kl}x_kx_l$，则根据$\mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}$可知第$i$分量为，
+
+$$
+\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]_i=\frac{\partial f(\mathbf{x})}{\partial x_i}=\sum_{k=1}^n\sum_{l=1}^n\frac{\partial a_{kl}x_kx_l}{\partial x_i}=\sum_{l=1}^na_{il}x_l+\sum_{i=1}^na_{ki}x_k=[\mathbf{x}^\top\mathbf{A}^\top_i]+[\mathbf{x}^\top\mathbf{A}_i]
+$$
+
+其中，$\mathbf{A}_i$为矩阵$\mathbf{A}$的第$i$列。可知，$\mathbf{D}f(\mathbf{x})=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)$(根据公式可知**标量函数对行向量求偏导的计算结果为一行向量**)， 同理可知梯度向量$\nabla_\mathbf{x}f(\mathbf{x})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}=\mathbf{D}^\top f(\mathbf{x})$ (根据公式可知**结果为一列向量**)
+
+从上述计算过程可以看出，根据$\frac{\partial x_{kl}}{\partial x_{ij}}$可以计算出大部分的矩阵函数的Jacobian矩阵和梯度矩阵，但是对于复杂的矩阵函数，偏导$\frac{\partial x_{kl}}{\partial x_{ij}}$的计算就会比较困难。因此，产生了一种相对简单计算的方法：使用矩阵微分计算(**标量、向量和矩阵**)函数关于(**向量或矩阵**)变元的偏导。
+
+
+##### 一阶实矩阵微分
+
+矩阵微分记为$\mathrm{d}\mathbf{X}$，其定义为，
+
+$$
+\mathrm{d}\mathbf{X}=[dX_{ij}]_{i=1,j=1}^{m,n}
+$$
+
+###### 性质
+
+1. **转置不变** $\mathrm{d}(\mathbf{X}^\top)=(\mathrm{d}\mathbf{X})^\top$
+2. **线性** $\mathrm{d}(\alpha\mathbf{X}\pm\beta\mathbf{Y})=\alpha\mathrm{d}\mathbf{X}\pm\beta\mathrm{d}\mathbf{Y}$
+3. $\mathrm{d}(\mathbf{A})=\mathbf{0}$，常数矩阵$\mathbf{A}$。
