@@ -283,3 +283,82 @@ $$
 4. $\mathrm{tr}(\mathbf{ABC})=\mathrm{tr}(\mathbf{BCA})=\mathrm{tr}(\mathbf{CAB})$
 5. $\mathrm{tr}(\mathbf{AB})=\sum_{ij}A_{ji}B_{ij}$
 6. $\mathrm{tr}(\mathbf{A^\top B})=\sum_{ij}A_{ij}B_{ij}=\mathrm{vec}(\mathbf{A})^\top\mathrm{vec}(\mathbf{B})$
+
+
+###### 案例
+
+1. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。
+
+使用微分法，凑规范形式如下，
+
+$$
+\begin{split}
+\mathrm{d}(\mathbf{x}^\top\mathbf{A}\mathbf{x})&=\mathrm{tr}\left[(\mathrm{d}\mathbf{x}^\top)\mathbf{Ax} + \mathbf{x}^\top\mathbf{A}\mathrm{d}\mathbf{x}\right]\\
+&=\mathrm{tr}[\mathbf{x}^\top\mathbf{A}^\top\mathrm{d}\mathbf{x}]+\mathrm{tr}[\mathbf{x}^\top\mathbf{A}\mathrm{d}\mathbf{x}]\\
+&=\mathrm{tr}[\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{x}]
+\end{split}
+$$
+
+因此可知，
+
+$$
+\begin{split}
+\mathbf{D}_\mathbf{x}f(\mathbf{x})&=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\\
+\nabla_\mathbf{x}f(\mathbf{x})&=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}
+\end{split}
+$$
+
+2. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{X})$的Jacobian矩阵和梯度矩阵
+
+$$
+\begin{split}
+\mathrm{d}[\mathrm{tr}(\mathbf{X}^\top\mathbf{X})]&=\mathrm{tr}[(\mathrm{d}\mathbf{X}^\top)\mathbf{X}+\mathbf{X}^\top\mathrm{d}\mathbf{X}]\\
+&=\mathrm{tr}[2\mathbf{X}^\top\mathrm{d}\mathbf{X}]
+\end{split}
+$$
+
+因此可知，
+
+$$
+\begin{split}
+\mathbf{D}_\mathbf{X}f(\mathbf{X})&=2\mathbf{X}^\top\\
+\nabla_\mathbf{X}f(\mathbf{X})&=2\mathbf{X}
+\end{split}
+$$
+
+3. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})$的Jacobian矩阵和梯度矩阵
+
+$$
+\begin{split}
+\mathrm{d}[\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})]&=\mathrm{tr}[(\mathrm{d}\mathbf{X}^\top)\mathbf{AX}+\mathbf{X}^\top\mathbf{A}\mathrm{d}\mathbf{X}]\\
+&=\mathrm{tr}[\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}]
+\end{split}
+$$
+
+因此可知，
+
+$$
+\begin{split}
+\mathbf{D}_\mathbf{X}f(\mathbf{X})&=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\\
+\nabla_\mathbf{X}f(\mathbf{X})&=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}
+\end{split}
+$$
+
+4. 求$\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})$的Jacobian矩阵和梯度矩阵
+
+$$
+\begin{split}
+\mathrm{d}[\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})]&=\mathrm{tr}[(\mathbf{A}\mathrm{d}\mathbf{X}^{-1}]\\
+&=-\mathrm{tr}[\mathbf{A}\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1}]\\
+&=\mathrm{tr}[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})]
+\end{split}
+$$
+
+因此可知，
+
+$$
+\begin{split}
+\mathbf{D}_\mathbf{X}f(\mathbf{X})&=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}\\
+\nabla_\mathbf{X}f(\mathbf{X})&=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}
+\end{split}
+$$
