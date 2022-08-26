@@ -349,7 +349,7 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 </ol>
 <div class="math notranslate nohighlight">
 \[
-\mathrm{d}(\mathbf{U}*\mathbf{V})=\mathrm{d}(\mathbf{U})*\mathbf{V}+\mathbf{U}*\mathrm{d}(\mathbf{V})
+\mathrm{d}(\mathbf{U}\odot\mathbf{V})=\mathrm{d}(\mathbf{U})\odot\mathbf{V}+\mathbf{U}\odot\mathrm{d}(\mathbf{V})
 \]</div>
 <ol class="arabic simple" start="11">
 <li><p><strong>向量化</strong></p></li>
@@ -366,6 +366,13 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 </ol>
 <div class="math notranslate nohighlight">
 \[\mathrm{d}\mathbf{X}^{-1}=-\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}\]</div>
+<ol class="arabic simple" start="14">
+<li><p><strong>逐元素函数</strong></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})\odot \mathrm{d}\mathbf{X}
+\]</div>
 </section>
 <section id="f-mathbf-x-mathbf-x">
 <h4><span class="section-number">3.3.2.2. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法<a class="headerlink" href="#f-mathbf-x-mathbf-x" title="此标题的永久链接"></a></h4>
@@ -419,13 +426,12 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 <li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{ABC})=\mathrm{tr}(\mathbf{BCA})=\mathrm{tr}(\mathbf{CAB})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{AB})=\sum_{ij}A_{ji}B_{ij}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A^\top B})=\sum_{ij}A_{ij}B_{ij}=\mathrm{vec}(\mathbf{A})^\top\mathrm{vec}(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}^\top(\mathbf{B}\odot\mathbf{C}))=\mathrm{tr}((\mathbf{A}\odot\mathbf{B})^\top\mathbf{C})=\sum_{ij}A_{ij}B_{ij}C_{ij}\)</span></p></li>
 </ol>
 </section>
 <section id="id11">
 <h4><span class="section-number">3.3.2.5. </span>案例<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h4>
-<ol class="arabic simple">
-<li><p>求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。</p></li>
-</ol>
+<p><strong>例1</strong>. 求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。</p>
 <p>使用微分法，凑规范形式如下，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -435,17 +441,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{x}]
 \end{split}
 \end{split}\]</div>
-<p>因此可知，</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{split}
-\mathbf{D}_\mathbf{x}f(\mathbf{x})&amp;=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\\
-\nabla_\mathbf{x}f(\mathbf{x})&amp;=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}
-\end{split}
-\end{split}\]</div>
-<ol class="arabic simple" start="2">
-<li><p>求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{X})\)</span>的Jacobian矩阵和梯度矩阵</p></li>
-</ol>
+<p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{x}f(\mathbf{x})=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{x}f(\mathbf{x})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}\)</span>。</p>
+<p><strong>例2</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{X})\)</span>的Jacobian矩阵和梯度矩阵</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -453,17 +450,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[2\mathbf{X}^\top\mathrm{d}\mathbf{X}]
 \end{split}
 \end{split}\]</div>
-<p>因此可知，</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&amp;=2\mathbf{X}^\top\\
-\nabla_\mathbf{X}f(\mathbf{X})&amp;=2\mathbf{X}
-\end{split}
-\end{split}\]</div>
-<ol class="arabic simple" start="3">
-<li><p>求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})\)</span>的Jacobian矩阵和梯度矩阵</p></li>
-</ol>
+<p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=2\mathbf{X}^\top\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=2\mathbf{X}\)</span>。</p>
+<p><strong>例3</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})\)</span>的Jacobian矩阵和梯度矩阵</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -471,17 +459,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}]
 \end{split}
 \end{split}\]</div>
-<p>因此可知，</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&amp;=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\\
-\nabla_\mathbf{X}f(\mathbf{X})&amp;=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}
-\end{split}
-\end{split}\]</div>
-<ol class="arabic simple" start="4">
-<li><p>求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})\)</span>的Jacobian矩阵和梯度矩阵</p></li>
-</ol>
+<p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}\)</span>。</p>
+<p><strong>例4</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})\)</span>的Jacobian矩阵和梯度矩阵</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -490,15 +469,51 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})]
 \end{split}
 \end{split}\]</div>
-<p>因此可知，</p>
+<p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}\)</span>，<span class="math notranslate nohighlight">\(
+\nabla_\mathbf{X}f(\mathbf{X})=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}\)</span>。</p>
+<p>总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。</p>
+<p><strong>例5</strong>. 求<span class="math notranslate nohighlight">\(f(\mathbf{w})=\lVert \mathbf{Xw}-\mathbf{y}\rVert_2^2\)</span>的偏导数。</p>
+<p>这是一个关于<span class="math notranslate nohighlight">\(\mathbf{w}\)</span>的标量函数，使用微分法凑规范型如下，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&amp;=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}\\
-\nabla_\mathbf{X}f(\mathbf{X})&amp;=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}
+\mathrm{d}f(\mathbf{w})&amp;=\mathrm{tr}\left[(\mathbf{X}\mathrm{d}\mathbf{w})^\top(\mathbf{Xw}-\mathbf{y})+ (\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]\\
+&amp;=\mathrm{tr}\left[(\mathbf{Xw}-\mathbf{y})^\top(\mathbf{X}\mathrm{d}\mathbf{w})+ (\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]\\
+&amp;=\mathrm{tr}\left[2(\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]
 \end{split}
 \end{split}\]</div>
-<p>总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。</p>
+<p>因此可知，<span class="math notranslate nohighlight">\(
+\nabla_\mathbf{w}f(\mathbf{w})=2\mathbf{X}^\top(\mathbf{Xw}-\mathbf{y})\)</span>。</p>
+<p><strong>例6</strong>. 求<span class="math notranslate nohighlight">\(f(\mathbf{W})=-\mathbf{y}^\top\log(\mathrm{softmax}(\mathbf{Wx}))\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{W}\)</span>的梯度，其中<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>是one-hot向量，<span class="math notranslate nohighlight">\(\mathbf{1}\)</span>为全1向量， <span class="math notranslate nohighlight">\(\mathrm{softmax}(\mathbf{a})=\frac{\exp{\mathbf{a}}}{\mathbf{1}^\top\exp{\mathbf{a}}}\)</span>，<span class="math notranslate nohighlight">\(\exp(\mathbf{a})\)</span>为逐元素求指数。</p>
+<p>首先化简，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\mathbf{1}^\top\exp(\mathbf{Wx}))]\\
+&amp;=-\mathbf{y}^\top\mathbf{Wx}+\log(\mathbf{1}^\top\exp(\mathbf{Wx}))
+\end{split}
+\end{split}\]</div>
+<p>此处用到2个公式如下，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\log(\mathbf{a}/c)&amp;=\log(\mathbf{a})-\mathbf{1}\log(c)\\
+\mathbf{y}^\top\mathbf{1}&amp;=1
+\end{split}
+\end{split}\]</div>
+<p>使用微分法，凑规范型，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathrm{d}f(\mathbf{W})&amp;=-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})+\frac{\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]}{\mathbf{1}^\top\exp(\mathbf{Wx})}\\
+&amp;=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&amp;=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[(\mathbf{1}\odot\exp(\mathbf{Wx}))^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&amp;=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&amp;=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \mathrm{tr}\left[\frac{\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})}{\mathbf{1}^\top\exp(\mathbf{Wx})}\right]\\
+&amp;=\mathrm{tr}\left[\mathbf{x}\left(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})^\top\right)\mathrm{d}\mathbf{W}\right]
+\end{split}
+\end{split}\]</div>
+<p>因此，<span class="math notranslate nohighlight">\(\nabla_\mathbf{W}f(\mathbf{W})=(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})\mathbf{x}^\top\)</span>。</p>
 </section>
 </section>
 </section>
