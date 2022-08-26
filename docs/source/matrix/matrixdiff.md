@@ -209,7 +209,7 @@ $$
 10. **Hadamard**
 
 $$
-\mathrm{d}(\mathbf{U}*\mathbf{V})=\mathrm{d}(\mathbf{U})*\mathbf{V}+\mathbf{U}*\mathrm{d}(\mathbf{V})
+\mathrm{d}(\mathbf{U}\odot\mathbf{V})=\mathrm{d}(\mathbf{U})\odot\mathbf{V}+\mathbf{U}\odot\mathrm{d}(\mathbf{V})
 $$
 
 11. **向量化**
@@ -224,6 +224,11 @@ $$\mathrm{d}\log\mathbf{X}=\mathbf{X}^{-1} \mathrm{d}\mathbf{X}$$
 
 $$\mathrm{d}\mathbf{X}^{-1}=-\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}$$
 
+14. **逐元素函数**
+
+$$
+\mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})\odot \mathrm{d}\mathbf{X}
+$$
 
 ###### 标量函数$f(\mathbf{x})$的向量变元$\mathbf{x}$全微分求偏导方法
 
@@ -283,11 +288,12 @@ $$
 4. $\mathrm{tr}(\mathbf{ABC})=\mathrm{tr}(\mathbf{BCA})=\mathrm{tr}(\mathbf{CAB})$
 5. $\mathrm{tr}(\mathbf{AB})=\sum_{ij}A_{ji}B_{ij}$
 6. $\mathrm{tr}(\mathbf{A^\top B})=\sum_{ij}A_{ij}B_{ij}=\mathrm{vec}(\mathbf{A})^\top\mathrm{vec}(\mathbf{B})$
+7. $\mathrm{tr}(\mathbf{A}^\top(\mathbf{B}\odot\mathbf{C}))=\mathrm{tr}((\mathbf{A}\odot\mathbf{B})^\top\mathbf{C})=\sum_{ij}A_{ij}B_{ij}C_{ij}$
 
 
 ###### 案例
 
-1. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。
+**例1**. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。
 
 使用微分法，凑规范形式如下，
 
@@ -299,16 +305,11 @@ $$
 \end{split}
 $$
 
-因此可知，
+因此可知，$\mathbf{D}_\mathbf{x}f(\mathbf{x})=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)$，$\nabla_\mathbf{x}f(\mathbf{x})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}$。
 
-$$
-\begin{split}
-\mathbf{D}_\mathbf{x}f(\mathbf{x})&=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\\
-\nabla_\mathbf{x}f(\mathbf{x})&=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}
-\end{split}
-$$
 
-2. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{X})$的Jacobian矩阵和梯度矩阵
+
+**例2**. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{X})$的Jacobian矩阵和梯度矩阵
 
 $$
 \begin{split}
@@ -317,16 +318,9 @@ $$
 \end{split}
 $$
 
-因此可知，
+因此可知，$\mathbf{D}_\mathbf{X}f(\mathbf{X})=2\mathbf{X}^\top$，$\nabla_\mathbf{X}f(\mathbf{X})=2\mathbf{X}$。
 
-$$
-\begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&=2\mathbf{X}^\top\\
-\nabla_\mathbf{X}f(\mathbf{X})&=2\mathbf{X}
-\end{split}
-$$
-
-3. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})$的Jacobian矩阵和梯度矩阵
+**例3**. 求$\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})$的Jacobian矩阵和梯度矩阵
 
 $$
 \begin{split}
@@ -335,16 +329,9 @@ $$
 \end{split}
 $$
 
-因此可知，
+因此可知，$\mathbf{D}_\mathbf{X}f(\mathbf{X})=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)$，$\nabla_\mathbf{X}f(\mathbf{X})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}$。
 
-$$
-\begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\\
-\nabla_\mathbf{X}f(\mathbf{X})&=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}
-\end{split}
-$$
-
-4. 求$\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})$的Jacobian矩阵和梯度矩阵
+**例4**. 求$\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})$的Jacobian矩阵和梯度矩阵
 
 $$
 \begin{split}
@@ -354,13 +341,58 @@ $$
 \end{split}
 $$
 
-因此可知，
+因此可知，$\mathbf{D}_\mathbf{X}f(\mathbf{X})=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}$，$
+\nabla_\mathbf{X}f(\mathbf{X})=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}$。
+
+总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。
+
+**例5**. 求$f(\mathbf{w})=\lVert \mathbf{Xw}-\mathbf{y}\rVert_2^2$的偏导数。
+
+这是一个关于$\mathbf{w}$的标量函数，使用微分法凑规范型如下，
 
 $$
 \begin{split}
-\mathbf{D}_\mathbf{X}f(\mathbf{X})&=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}\\
-\nabla_\mathbf{X}f(\mathbf{X})&=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}
+\mathrm{d}f(\mathbf{w})&=\mathrm{tr}\left[(\mathbf{X}\mathrm{d}\mathbf{w})^\top(\mathbf{Xw}-\mathbf{y})+ (\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]\\
+&=\mathrm{tr}\left[(\mathbf{Xw}-\mathbf{y})^\top(\mathbf{X}\mathrm{d}\mathbf{w})+ (\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]\\
+&=\mathrm{tr}\left[2(\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]
 \end{split}
 $$
 
-总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。
+因此可知，$
+\nabla_\mathbf{w}f(\mathbf{w})=2\mathbf{X}^\top(\mathbf{Xw}-\mathbf{y})$。
+
+
+**例6**. 求$f(\mathbf{W})=-\mathbf{y}^\top\log(\mathrm{softmax}(\mathbf{Wx}))$关于矩阵变元$\mathbf{W}$的梯度，其中$\mathbf{y}$是one-hot向量，$\mathbf{1}$为全1向量， $\mathrm{softmax}(\mathbf{a})=\frac{\exp{\mathbf{a}}}{\mathbf{1}^\top\exp{\mathbf{a}}}$，$\exp(\mathbf{a})$为逐元素求指数。
+
+首先化简，
+
+$$
+\begin{split}
+f(\mathbf{W})&=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\mathbf{1}^\top\exp(\mathbf{Wx}))]\\
+&=-\mathbf{y}^\top\mathbf{Wx}+\log(\mathbf{1}^\top\exp(\mathbf{Wx}))
+\end{split}
+$$
+
+此处用到2个公式如下，
+
+$$
+\begin{split}
+\log(\mathbf{a}/c)&=\log(\mathbf{a})-\mathbf{1}\log(c)\\
+\mathbf{y}^\top\mathbf{1}&=1
+\end{split}
+$$
+
+使用微分法，凑规范型，
+
+$$
+\begin{split}
+\mathrm{d}f(\mathbf{W})&=-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})+\frac{\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]}{\mathbf{1}^\top\exp(\mathbf{Wx})}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[(\mathbf{1}\odot\exp(\mathbf{Wx}))^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \mathrm{tr}\left[\frac{\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})}{\mathbf{1}^\top\exp(\mathbf{Wx})}\right]\\
+&=\mathrm{tr}\left[\mathbf{x}\left(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})^\top\right)\mathrm{d}\mathbf{W}\right]
+\end{split}
+$$
+
+因此，$\nabla_\mathbf{W}f(\mathbf{W})=(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})\mathbf{x}^\top$。
