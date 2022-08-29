@@ -209,7 +209,7 @@ $$
 10. **Hadamard**
 
 $$
-\mathrm{d}(\mathbf{U}\odot\mathbf{V})=\mathrm{d}(\mathbf{U})\odot\mathbf{V}+\mathbf{U}\odot\mathrm{d}(\mathbf{V})
+\mathrm{d}(\mathbf{U}*\mathbf{V})=\mathrm{d}(\mathbf{U})*\mathbf{V}+\mathbf{U}*\mathrm{d}(\mathbf{V})
 $$
 
 11. **向量化**
@@ -227,7 +227,7 @@ $$\mathrm{d}\mathbf{X}^{-1}=-\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-
 14. **逐元素函数**
 
 $$
-\mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})\odot \mathrm{d}\mathbf{X}
+\mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})* \mathrm{d}\mathbf{X}
 $$
 
 ###### 标量函数$f(\mathbf{x})$的向量变元$\mathbf{x}$全微分求偏导方法
@@ -288,7 +288,7 @@ $$
 4. $\mathrm{tr}(\mathbf{ABC})=\mathrm{tr}(\mathbf{BCA})=\mathrm{tr}(\mathbf{CAB})$
 5. $\mathrm{tr}(\mathbf{AB})=\sum_{ij}A_{ji}B_{ij}$
 6. $\mathrm{tr}(\mathbf{A^\top B})=\sum_{ij}A_{ij}B_{ij}=\mathrm{vec}(\mathbf{A})^\top\mathrm{vec}(\mathbf{B})$
-7. $\mathrm{tr}(\mathbf{A}^\top(\mathbf{B}\odot\mathbf{C}))=\mathrm{tr}((\mathbf{A}\odot\mathbf{B})^\top\mathbf{C})=\sum_{ij}A_{ij}B_{ij}C_{ij}$
+7. $\mathrm{tr}(\mathbf{A}^\top(\mathbf{B}*\mathbf{C}))=\mathrm{tr}((\mathbf{A}*\mathbf{B})^\top\mathbf{C})=\sum_{ij}A_{ij}B_{ij}C_{ij}$
 
 
 ###### 案例
@@ -386,9 +386,9 @@ $$
 
 $$
 \begin{split}
-\mathrm{d}f(\mathbf{W})&=-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})+\frac{\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]}{\mathbf{1}^\top\exp(\mathbf{Wx})}\\
-&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\mathbf{1}^\top[\exp(\mathbf{Wx})\odot\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
-&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[(\mathbf{1}\odot\exp(\mathbf{Wx}))^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+\mathrm{d}f(\mathbf{W})&=-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})+\frac{\mathbf{1}^\top[\exp(\mathbf{Wx})*\mathrm{d}(\mathbf{Wx})]}{\mathbf{1}^\top\exp(\mathbf{Wx})}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\mathbf{1}^\top[\exp(\mathbf{Wx})*\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
+&=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[(\mathbf{1}*\exp(\mathbf{Wx}))^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
 &=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \frac{\mathrm{tr}\left[\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})]\right]}{\mathrm{tr}\left[\mathbf{1}^\top\exp(\mathbf{Wx})\right]}\\
 &=\mathrm{tr}\left[-\mathbf{y}^\top \mathrm{d}(\mathbf{Wx})  \right] + \mathrm{tr}\left[\frac{\exp(\mathbf{Wx})^\top\mathrm{d}(\mathbf{Wx})}{\mathbf{1}^\top\exp(\mathbf{Wx})}\right]\\
 &=\mathrm{tr}\left[\mathbf{x}\left(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})^\top\right)\mathrm{d}\mathbf{W}\right]
