@@ -396,3 +396,94 @@ $$
 $$
 
 因此，$\nabla_\mathbf{W}f(\mathbf{W})=(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})\mathbf{x}^\top$。
+
+
+##### 实矩阵函数的偏导计算
+
+实值矩阵函数$\mathbf{F}(\mathbf{X})$的第$k$行,$j$列元素记为$f_{kl}$，则$\mathrm{d}f_{kl}(\mathbf{X})=[\mathrm{d}\mathbf{F}(\mathbf{X})]$表示为以$\mathbf{X}$为变元的标量函数微分，
+
+$$
+\mathrm{d}f_{kl}(\mathbf{X})=\left[\begin{array}{l}\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{11}}&,\cdots,&\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{m1}}&,\cdots,&\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{1n}} &,\cdots,&\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{mn}}\end{array}\right]\left[\begin{array}{c}\mathrm{d}x_{11}\\\vdots\\\mathrm{d}x_{m1}\\\vdots\\\mathrm{d}x_{1n}\\\vdots \\\mathrm{d}x_{mn} \end{array}\right]
+$$
+
+将$\mathbf{F}(\mathbf{X}),\mathbf{X}$向量化后再微分，可得Jacobian矩阵为，
+
+$$
+\begin{split}
+\mathrm{d}(\mathrm{vec}\mathbf{F(X)})&=\left[\begin{array}{ccccccc}
+\frac{\partial f_{11}(\mathbf{X})}{\partial x_{11}}&\cdots&\frac{\partial f_{11}(\mathbf{X})}{\partial x_{m1}}&\cdots&\frac{\partial f_{11}(\mathbf{X})}{\partial x_{1n}}&\cdots&\frac{\partial f_{11}(\mathbf{X})}{\partial x_{mn}}\\ \cdots&\cdots&\cdots&\cdots&\cdots&\cdots&\cdots\\
+\frac{\partial f_{p1}(\mathbf{X})}{\partial x_{11}}&\cdots&\frac{\partial f_{p1}(\mathbf{X})}{\partial x_{m1}}&\cdots&\frac{\partial f_{p1}(\mathbf{X})}{\partial x_{1n}}&\cdots&\frac{\partial f_{p1}(\mathbf{X})}{\partial x_{mn}}\\
+\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\vdots\\
+\frac{\partial f_{1q}(\mathbf{X})}{\partial x_{11}}&\cdots&\frac{\partial f_{1q}(\mathbf{X})}{\partial x_{m1}}&\cdots&\frac{\partial f_{1q}(\mathbf{X})}{\partial x_{1n}}&\cdots&\frac{\partial f_{1q}(\mathbf{X})}{\partial x_{mn}}\\ \cdots&\cdots&\cdots&\cdots&\cdots&\cdots&\cdots\\
+\frac{\partial f_{pq}(\mathbf{X})}{\partial x_{11}}&\cdots&\frac{\partial f_{pq}(\mathbf{X})}{\partial x_{m1}}&\cdots&\frac{\partial f_{pq}(\mathbf{X})}{\partial x_{1n}}&\cdots&\frac{\partial f_{pq}(\mathbf{X})}{\partial x_{mn}}\\
+\end{array}\right]  \left[\begin{array}{c}\mathrm{d}x_{11}\\\vdots\\\mathrm{d}x_{m1}\\\vdots\\\mathrm{d}x_{1n}\\\vdots \\\mathrm{d}x_{mn} \end{array}\right] \\
+&=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\partial (\mathrm{vec}\mathbf{X})^\top}\mathrm{d}(\mathrm{vec}\mathbf{X})\\
+&=\mathbf{D}_\mathbf{X}\mathbf{F}(\mathbf{X})\mathrm{d}(\mathrm{vec}\mathbf{X})
+\end{split}
+$$
+
+对于一个包含$\mathbf{X}$和$\mathbf{X}^\top$矩阵函数$\mathbf{F}(\mathbf{X})\in\mathbb{R}^{p\times q},\mathbf{X}\in\mathbb{R}^{m\times n}$，一阶矩阵微分为，
+
+$$
+\mathrm{d}(\mathrm{vec}\mathbf{F(X)})=\mathbf{A}\mathrm{d}(\mathrm{vec}\mathbf{X})+\mathbf{B}\mathrm{d}(\mathrm{vec}\mathbf{X}^\top)
+$$
+
+可改写为
+
+$$
+\mathrm{d}(\mathrm{vec}\mathbf{F(X)})=(\mathbf{A}+\mathbf{BK}_{mn})\mathrm{d}(\mathrm{vec}\mathbf{X})
+$$
+
+因为有$\mathrm{d}(\mathrm{vec}\mathbf{X}^\top)=\mathbf{K}_{mn}\mathrm{d}(\mathrm{vec}\mathbf{X})$。
+
+**<font color='red'>因此可知有如下求Jacobian矩阵的方法</font>**，
+
+矩阵函数$\mathbf{F}(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow\mathbb{R}^{p\times q}$的Jacobian矩阵可以通过以下形式计算，若对矩阵函数求微分后有如下形式，
+
+$$
+\mathrm{d}(\mathbf{F(X)})=\mathbf{A}\mathrm{d}(\mathbf{X})\mathbf{B}+\mathbf{C}\mathrm{d}(\mathbf{X}^\top)\mathbf{D}
+$$
+
+可得，
+
+$$
+D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\partial (\mathrm{vec}\mathbf{X})^\top}=(\mathbf{B}^\top\otimes\mathbf{A})+(\mathbf{D}^\top\otimes\mathbf{C})\mathbf{K}_{mn}
+$$
+
+转置后即为梯度矩阵$\nabla_{\mathbf{X}}\mathbf{F}(\mathbf{X})$。
+
+| **函数类型**  |   **矩阵微分**  |  **Jacobian矩阵**   |
+|:--|:--| :-- |
+|$f(\mathbf{x}): \mathbb{R}^n\rightarrow\mathbb{R}$ |   $\mathrm{d}f(\mathbf{x})=\mathbf{A}\mathrm{d}(\mathbf{x}) $   | $\mathbf{A}\in\mathbb{R}^{1\times n}$   |
+|$f(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow\mathbb{R}$  | $\mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{A}\mathrm{d}(\mathbf{X}))$    |  $\mathbf{A}\in\mathbb{R}^{n\times m}$  |
+|$\mathbf{f}(\mathbf{x}):\mathbb{R}^n\rightarrow \mathbb{R}^p$  | $\mathrm{d}\mathbf{f}(\mathbf{x})=\mathbf{A}\mathrm{d}\mathbf{x}$   | $\mathbf{A}\in\mathbb{R}^{p\times n}$   |
+|$\mathbf{f}(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow \mathbb{R}^p$  |$\mathrm{d}\mathbf{f}(\mathbf{X})=\mathbf{A}\mathrm{d}(\mathrm{vec}\mathbf{X})$    | $\mathbf{A}\in\mathbb{R}^{p\times mn}$   |
+|$\mathbf{F}(\mathbf{x}):\mathbb{R}^n\rightarrow \mathbb{R}^{p\times q}$  | $\mathrm{d}(\mathrm{vec}\mathbf{F}(\mathbf{x}))=\mathbf{A}\mathrm{d}(\mathbf{x})$     |$\mathbf{A}\in\mathbb{R}^{pq\times n}$    |
+|$\mathbf{F}(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow\mathbb{R}^{p\times q}$  | $\mathrm{d}\mathbf{F}(\mathbf{X})=\mathbf{A}(\mathrm{d}\mathbf{X})\mathbf{B}$    | $(\mathbf{B}^\top\otimes\mathbf{A})\in\mathbb{R}^{pq\times mn}$   |
+|$\mathbf{F}(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow\mathbb{R}^{p\times q}$  | $\mathrm{d}\mathbf{F}(\mathbf{X})=\mathbf{A}(\mathrm{d}\mathbf{X}^\top)\mathbf{B}$    | $(\mathbf{B}^\top\otimes\mathbf{A})\mathbf{K}_{mn}\in\mathbb{R}^{pq\times mn}$   |
+
+**例1**求矩阵函数$\mathbf{F}(\mathbf{X})=\mathbf{X}^\top\mathbf{X}$的Jacobian矩阵。
+
+对矩阵函数微分可知，
+
+$$
+\mathrm{d}\mathbf{F}(\mathbf{X})=\mathrm{d}(\mathbf{X}^\top)\mathbf{X}+\mathbf{X}^\top\mathrm{d}(\mathbf{X})
+$$
+
+由上述求导公式可知，
+
+$$
+D_\mathbf{X}\mathbf{F}(\mathbf{X})=(\mathbf{X}^\top\otimes\mathbf{I}_n)\mathbf{K}_{mn}+(\mathbf{I}_n\otimes\mathbf{X}^\top)
+$$
+
+**<font color="red">若不能展开成上述标准形式，则可以使用向量化形式求Jacobian矩阵</font>**。即
+
+$$
+\mathrm{d}(\mathrm{vec}\mathbf{F}(\mathbf{X}))=\mathbf{A}\mathrm{d}(\mathrm{vec}\mathbf{X})+\mathbf{B}\mathrm{d}(\mathrm{vec}\mathbf{X})^\top
+$$
+
+则，Jacobian矩阵可以得出为，
+
+$$
+D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\mathrm{d}(\mathrm{vec}\mathbf{X})^\top}=\mathbf{A}+\mathbf{BK}_{mn}
+$$
