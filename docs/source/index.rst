@@ -12,8 +12,10 @@ Welcome to MLBOOK's documentation!
    :numbered:
 
    matrix/base.md
+   matrix/matrixoper.md
    matrix/vectorspace.md
    matrix/matrixdiff.md
+   
 
 
 
