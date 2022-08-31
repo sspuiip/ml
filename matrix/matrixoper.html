@@ -47,6 +47,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2. 矩阵运算</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">2.1. 直和</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hadamard">2.2. Hadamard积</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kronecker">2.3. Kronecker积</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2.4. 向量化</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
@@ -114,9 +116,8 @@
 <li><p><strong>性质</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p><strong>正定性</strong>. 若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是正定（半正定）矩阵，则<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>也正定（半正定）。
-<font color="red"></p></li>
-<li><p><strong>迹相关</strong>. <span class="math notranslate nohighlight">\(\mathrm{tr}[\mathbf{A}^\top(\mathbf{B}*\mathbf{C})]=\mathrm{tr}[(\mathbf{A}*\mathbf{B})^\top\mathbf{C}]=\mathrm{tr}[(\mathbf{A}^\top*\mathbf{B}^\top)\mathbf{C}]\)</span>
+<li><p><strong>正定性</strong>. 若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是正定（半正定）矩阵，则<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>也正定（半正定）。</p></li>
+<li><p><strong>迹相关</strong>.<font color="red"> <span class="math notranslate nohighlight">\(\mathrm{tr}[\mathbf{A}^\top(\mathbf{B}*\mathbf{C})]=\mathrm{tr}[(\mathbf{A}*\mathbf{B})^\top\mathbf{C}]=\mathrm{tr}[(\mathbf{A}^\top*\mathbf{B}^\top)\mathbf{C}]\)</span>
 </font></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}=\mathbf{B}* \mathbf{A}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathbf{A}* (\mathbf{B}* \mathbf{C})=(\mathbf{A}* \mathbf{B})* \mathbf{C}\)</span></p></li>
@@ -126,6 +127,111 @@
 <li><p><span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})*(\mathbf{C}+\mathbf{D})=\mathbf{A}* \mathbf{C}+\mathbf{A}* \mathbf{D}+\mathbf{B}* \mathbf{C}+\mathbf{B}* \mathbf{D}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\((\mathbf{A}\oplus\mathbf{B})*(\mathbf{C}\oplus\mathbf{D})=(\mathbf{A}*\mathbf{C})\oplus(\mathbf{B}*\mathbf{D})\)</span></p></li>
 </ul>
+</section>
+<section id="kronecker">
+<h2><span class="section-number">2.3. </span>Kronecker积<a class="headerlink" href="#kronecker" title="此标题的永久链接"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>定义</strong></p></li>
+</ol>
+<p>对于任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times n}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{B}_{p\times q}\)</span>的Kronecker积定义为，</p>
+<ul class="simple">
+<li><p>右积</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A}\otimes\mathbf{B}=[\mathbf{a}_1\mathbf{B},\cdots,\mathbf{a}_n\mathbf{B}]= \begin{bmatrix}a_{11}\mathbf{B}&amp;a_{12}\mathbf{B}&amp;\cdots&amp;a_{1n}\mathbf{B}\\ a_{21}\mathbf{B}&amp;a_{22}\mathbf{B}&amp;\cdots&amp;a_{2n}\mathbf{B}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\a_{m1}\mathbf{B}&amp;a_{m2}\mathbf{B}&amp;\cdots&amp;a_{mn}\mathbf{B}\end{bmatrix}_{mp\times nq}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>左积</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+[\mathbf{A}\otimes\mathbf{B}]_{\mathrm{left}}=[\mathbf{A}\mathbf{b}_1,\cdots,\mathbf{A}\mathbf{b}_n]= \begin{bmatrix}\mathbf{A}b_{11}&amp;\mathbf{A}b_{12}&amp;\cdots&amp;\mathbf{A}b_{1q}\\ \mathbf{A}b_{21}&amp;\mathbf{A}b_{22}&amp;\cdots&amp;\mathbf{A}b_{2q}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\\mathbf{A}b_{p1}&amp;\mathbf{A}b_{p2}&amp;\cdots&amp;\mathbf{A}b_{pq}\\\end{bmatrix}_{mp\times nq}
+\end{split}\]</div>
+<p>无论左积还是右积都是同一个映射<span class="math notranslate nohighlight">\(\mathbb{R}^{m\times n}\times\mathbb{R}^{p\times q}\rightarrow\mathbb{R}^{mp\times nq}\)</span>。可以看出<span class="math notranslate nohighlight">\([\mathbf{A}\otimes\mathbf{B}]_{\mathrm{left}}=\mathbf{B}\otimes\mathbf{A}\)</span>，故默认采用右积。</p>
+<p>当<span class="math notranslate nohighlight">\(n=q=1\)</span>时，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{a}\otimes \mathbf{b}=\begin{bmatrix}a_1b_1\\a_1b_2\\\vdots\\a_mb_p \end{bmatrix}_{mp\times 1}
+\end{split}\]</div>
+<p>显然，向量外积<span class="math notranslate nohighlight">\(\mathbf{x}\mathbf{y}^\top\)</span>也可以写成Kronecker积的形式<span class="math notranslate nohighlight">\(\mathbf{x}\otimes\mathbf{y}^\top\)</span>，即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x}\mathbf{y}^\top=\begin{bmatrix}x_1\mathbf{y}^\top\\x_2\mathbf{y}^\top\\\vdots \\x_m\mathbf{y}^\top\\ \end{bmatrix}_{m\times p}=\mathbf{x}\otimes\mathbf{y}^\top
+\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>性质</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{B}\neq \mathbf{B}\otimes\mathbf{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{0}= \mathbf{0}\otimes\mathbf{A}=\mathbf{0}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(ab(\mathbf{A}\otimes\mathbf{B})=a\mathbf{A}\otimes b\mathbf{B}=b\mathbf{A}\otimes a\mathbf{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{I}_m\otimes\mathbf{I}_n=\mathbf{I}_{mn}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{AB})\otimes(\mathbf{CD})=(\mathbf{A}\otimes\mathbf{C})(\mathbf{B}\otimes\mathbf{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes(\mathbf{B}\pm\mathbf{C})=(\mathbf{A}\otimes\mathbf{B})\pm(\mathbf{A}\otimes\mathbf{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})^\top=\mathbf{A}^\top\otimes\mathbf{B}^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})^{-1}=\mathbf{A}^{-1}\otimes\mathbf{B}^{-1}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{rank}(\mathbf{A}\otimes\mathbf{B})=\mathrm{rank}(\mathbf{A})\mathrm{rank}(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\mathbf{A}_{n\times n}\otimes\mathbf{B}_{m\times m}|=|\mathbf{A}|^m|\mathbf{B}|^n\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\otimes\mathbf{B})=\mathrm{tr}(\mathbf{A})\mathrm{tr}(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})\otimes(\mathbf{C}+\mathbf{D})=\mathbf{A}\otimes\mathbf{C}+\mathbf{A}\otimes\mathbf{D}+\mathbf{B}\otimes\mathbf{C}+\mathbf{B}\otimes\mathbf{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})\otimes\mathbf{C}=\mathbf{A}\otimes(\mathbf{B}\otimes\mathbf{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})\otimes(\mathbf{C}\otimes\mathbf{D})=\mathbf{A}\otimes\mathbf{B}\otimes\mathbf{C}\otimes\mathbf{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})(\mathbf{C}\otimes\mathbf{D})(\mathbf{E}\otimes\mathbf{F})=(\mathbf{ACE})\otimes(\mathbf{BDF})\)</span>，特别地，<span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{D}=(\mathbf{AI}_p)\otimes(\mathbf{I}_q\mathbf{D})=(\mathbf{A}\otimes\mathbf{I}_q)(\mathbf{I}_p\otimes\mathbf{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\exp(\mathbf{A}\otimes\mathbf{B})=\exp(\mathbf{A})\otimes\exp(\mathbf{B})\)</span></p></li>
+</ul>
+</section>
+<section id="id3">
+<h2><span class="section-number">2.4. </span>向量化<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>定义</strong></p></li>
+</ol>
+<p>矩阵的向量化指的是将矩阵按列序排成一个向量的操作。如，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A}=\begin{bmatrix}a_{11}&amp;a_{12}\\a_{21}&amp;a_{22} \end{bmatrix}
+\end{split}\]</div>
+<p>列向量化后，结果为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathrm{vec}(\mathbf{A})=\begin{bmatrix}a_{11}\\a_{21}\\a_{12}\\a_{22} \end{bmatrix}
+\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>性质</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\mathbf{A}^\top)=\mathbf{K}_{mn}\mathrm{vec}(\mathbf{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\mathbf{A}+\mathbf{B})=\mathrm{vec}(\mathbf{A})+\mathrm{vec}(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}^\top\mathbf{B})=(\mathrm{vec}\mathbf{A})^\top\mathrm{vec}(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\mathbf{B}\mathbf{C})=[\mathrm{vec}(\mathbf{A}^\top)]^\top(\mathbf{I}_p\otimes\mathbf{B})\mathrm{vec}\mathbf{C}=[\mathrm{vec}(\mathbf{AB})^\top]^\top\mathrm{vec}(\mathbf{C})\)</span></p></li>
+<li><p>多矩阵相乘</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+ \mathrm{vec}(\mathbf{A}_{m\times p}\mathbf{B}_{p\times q}\mathbf{C}_{q\times n})=(\mathbf{C}^\top\otimes \mathbf{A})\mathrm{vec}(\mathbf{B})=(\mathbf{I}_q\otimes\mathbf{AB})\mathrm{vec}(\mathbf{C})=(\mathbf{C}^\top\mathbf{B}^\top\otimes\mathbf{I}_m)\mathrm{vec}(\mathbf{A})
+ \]</div>
+<ul class="simple">
+<li><p><font color="red">两矩阵乘积向量化</font></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+ \mathrm{vec}(\mathbf{A}\mathbf{C})=(\mathbf{I}_p\otimes \mathbf{A})\mathrm{vec}(\mathbf{C})=(\mathbf{C}^\top\otimes\mathbf{I}_m)\mathrm{vec}(\mathbf{A})
+ \]</div>
+<ol class="arabic simple" start="3">
+<li><p><strong>例</strong></p></li>
+</ol>
+<p>向量化求解矩阵方程<span class="math notranslate nohighlight">\(\mathbf{AX}+\mathbf{XB}=\mathbf{Y}\)</span>的解<span class="math notranslate nohighlight">\(\hat{\mathbf{X}}\)</span>，其中所有矩阵均为<span class="math notranslate nohighlight">\(n\times n\)</span>阶矩阵。</p>
+<p>对等式左右同时向量化，由向量化公式可知，</p>
+<div class="math notranslate nohighlight">
+\[
+(\mathbf{I}_n\otimes\mathbf{A}+\mathbf{B}^\top\otimes\mathbf{I}_n)\mathrm{vec}(\mathbf{X})=\mathrm{vec}(\mathbf{Y})
+ \]</div>
+<p>则，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{vec}(\mathbf{X})=(\mathbf{I}_n\otimes\mathbf{A}+\mathbf{B}^\top\otimes\mathbf{I}_n)^{\dagger}\mathrm{vec}(\mathbf{Y})
+ \]</div>
+<p>最后再矩阵化即为<span class="math notranslate nohighlight">\(\hat{\mathbf{X}}\)</span>的值。</p>
 </section>
 </section>
 

@@ -487,3 +487,115 @@ $$
 $$
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\mathrm{d}(\mathrm{vec}\mathbf{X})^\top}=\mathbf{A}+\mathbf{BK}_{mn}
 $$
+
+
+#### Hessian矩阵
+
+1. **定义**
+
+实值函数$f(\mathbf{x}),f(\mathbf{X})$对于变量$\mathbf{x},\mathbf{X}$的二阶偏导称为Hessian矩阵，记为$\mathbf{H}[f(\mathbf{x})],\mathbf{H}[f(\mathbf{x})]$，即
+
+$$
+\mathbf{H}[f(\mathbf{x})]\triangleq\frac{\partial}{\partial \mathbf{x}}\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top} \right]=\frac{\partial^2f(\mathbf{x})}{\partial \mathbf{x}\partial\mathbf{x}^\top}=\nabla_\mathbf{x}[D_\mathbf{x}f(\mathbf{x})]
+$$
+
+和
+
+$$
+\mathbf{H}[f(\mathbf{X})]\triangleq\frac{\partial^2f(\mathbf{X})}{\partial \mathrm{vec}(\mathbf{X})\partial \mathrm{vec}(\mathbf{X})^\top}
+$$
+根据定义可知，$\mathbf{H}$矩阵是一个实对称矩阵。
+
+
+2. **如何求解$\mathbf{H}$矩阵**
+
+很多时候，我们可以根据定义直接求解$\mathbf{H}$矩阵，但这样做比较麻烦。比较简单一点的方法是与一阶矩阵微分类似的求偏导方法：<font color="red">利用实函数的二阶实微分矩阵与$\mathbf{H}$矩阵的联系</font>求解。
+
+- 先考察标量函数$f(\mathbf{x})$的$\mathbf{H}$的求解。
+对函数进行二次微分可得，
+
+$$
+\begin{split}
+\mathrm{d}^2f(\mathbf{x})&=\mathrm{d}(\mathrm{d}f(\mathbf{x}))\\
+&=\mathrm{d}\left((\mathrm{d}\mathbf{x})^\top \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right)\\
+&=(\mathrm{d}\mathbf{x})^\top \mathrm{d}\left( \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right)\\
+&=(\mathrm{d}\mathbf{x})^\top \frac{\partial}{\partial\mathbf{x}} \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\\
+&=(\mathrm{d}\mathbf{x})^\top \mathbf{H}\mathrm{d}\mathbf{x}\\
+\end{split}
+$$
+
+注意：$\mathrm{d}\mathbf{x}$不是$\mathbf{x}$的函数。
+
+类似有，
+
+$$
+\mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{H}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]
+$$
+
+- 求解方法：若标量函数的具有二阶微分，则存在如下关系
+
+$$
+\begin{split}
+\mathrm{d}^2f(\mathbf{x})=(\mathrm{d}\mathbf{x})^\top \mathbf{B}\mathrm{d}\mathbf{x}&\Leftrightarrow \mathbf{H}[f(\mathbf{x})]=\frac{1}{2}(\mathbf{B}+\mathbf{B}^\top)\\
+\mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{B}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]&\Leftrightarrow \mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{B}+\mathbf{B}^\top)\\
+\end{split}
+$$
+
+- 若矩阵向量化比较麻烦，则可以使用以下方法避免向量化
+
+$$
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X}^\top)]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{U}^\top\otimes\mathbf{V}+\mathbf{U}\otimes\mathbf{V}^\top)
+$$
+
+或
+
+$$
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X})]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}\mathbf{K}_{nm}(\mathbf{C}^\top\otimes\mathbf{B}+\mathbf{B}^\top\otimes \mathbf{C})
+$$
+
+- **例1**
+
+$f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^{-1})$，其中$\mathbf{X}$是一个$n\times n$的矩阵。其一阶微分为，
+
+$$
+\mathrm{d}f(\mathbf{X})=-\mathrm{tr}(\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1})
+$$
+
+则其二阶微分为，
+
+$$
+\begin{split}
+\mathrm{d}^2f(\mathbf{X})&=-\mathrm{tr}((\mathrm{d}\mathbf{X}^{-1})(\mathrm{d}\mathbf{X})\mathbf{X}^{-1})-\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X} (\mathrm{d}\mathbf{X}^{-1}))\\
+&=2\mathrm{tr}[\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1}]\\
+&=2\mathrm{tr}[\mathbf{X}^{-2} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}(\mathrm{d}\mathbf{X}) ]
+\end{split}
+$$
+
+则有Hessian矩阵，
+
+$$
+\mathbf{H}=\mathbf{K}_{nn}(\mathbf{X}^{-\top}\otimes\mathbf{X}^{-2}+\mathbf{X}^{-2}\otimes\mathbf{X}^{-1})
+$$
+
+- **例2**
+
+对于$f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top\mathbf{A}\mathbf{X})$，其一阶微分为，
+
+$$
+\mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X})
+$$
+
+二阶微分为，
+
+$$
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}((\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}\mathrm{d}\mathbf{X}^\top)
+$$
+
+则Hessian矩阵为，
+
+$$
+\begin{split}
+\mathbf{H}&=\frac12(\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top)+\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top))\\
+&=\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top)
+\end{split}
+$$

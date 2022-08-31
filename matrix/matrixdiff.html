@@ -65,6 +65,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#id12">4.3.3. 实矩阵函数的偏导计算</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#hessian">4.4. Hessian矩阵</a></li>
 </ul>
 </li>
 </ul>
@@ -623,6 +624,112 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=(\mathbf{X}^\top\otimes\mathbf{I}_n)\mathbf{K
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\mathrm{d}(\mathrm{vec}\mathbf{X})^\top}=\mathbf{A}+\mathbf{BK}_{mn}
 \]</div>
 </section>
+</section>
+<section id="hessian">
+<h2><span class="section-number">4.4. </span>Hessian矩阵<a class="headerlink" href="#hessian" title="此标题的永久链接"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>定义</strong></p></li>
+</ol>
+<p>实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),f(\mathbf{X})\)</span>对于变量<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{X}\)</span>的二阶偏导称为Hessian矩阵，记为<span class="math notranslate nohighlight">\(\mathbf{H}[f(\mathbf{x})],\mathbf{H}[f(\mathbf{x})]\)</span>，即</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{H}[f(\mathbf{x})]\triangleq\frac{\partial}{\partial \mathbf{x}}\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top} \right]=\frac{\partial^2f(\mathbf{x})}{\partial \mathbf{x}\partial\mathbf{x}^\top}=\nabla_\mathbf{x}[D_\mathbf{x}f(\mathbf{x})]
+\]</div>
+<p>和</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{H}[f(\mathbf{X})]\triangleq\frac{\partial^2f(\mathbf{X})}{\partial \mathrm{vec}(\mathbf{X})\partial \mathrm{vec}(\mathbf{X})^\top}
+\]</div>
+<p>根据定义可知，<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵是一个实对称矩阵。</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>如何求解<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵</strong></p></li>
+</ol>
+<p>很多时候，我们可以根据定义直接求解<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵，但这样做比较麻烦。比较简单一点的方法是与一阶矩阵微分类似的求偏导方法：<font color="red">利用实函数的二阶实微分矩阵与<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵的联系</font>求解。</p>
+<ul class="simple">
+<li><p>先考察标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>的求解。
+对函数进行二次微分可得，</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathrm{d}^2f(\mathbf{x})&amp;=\mathrm{d}(\mathrm{d}f(\mathbf{x}))\\
+&amp;=\mathrm{d}\left((\mathrm{d}\mathbf{x})^\top \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right)\\
+&amp;=(\mathrm{d}\mathbf{x})^\top \mathrm{d}\left( \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right)\\
+&amp;=(\mathrm{d}\mathbf{x})^\top \frac{\partial}{\partial\mathbf{x}} \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\\
+&amp;=(\mathrm{d}\mathbf{x})^\top \mathbf{H}\mathrm{d}\mathbf{x}\\
+\end{split}
+\end{split}\]</div>
+<p>注意：<span class="math notranslate nohighlight">\(\mathrm{d}\mathbf{x}\)</span>不是<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的函数。</p>
+<p>类似有，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{H}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]
+\]</div>
+<ul class="simple">
+<li><p>求解方法：若标量函数的具有二阶微分，则存在如下关系</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathrm{d}^2f(\mathbf{x})=(\mathrm{d}\mathbf{x})^\top \mathbf{B}\mathrm{d}\mathbf{x}&amp;\Leftrightarrow \mathbf{H}[f(\mathbf{x})]=\frac{1}{2}(\mathbf{B}+\mathbf{B}^\top)\\
+\mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{B}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]&amp;\Leftrightarrow \mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{B}+\mathbf{B}^\top)\\
+\end{split}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>若矩阵向量化比较麻烦，则可以使用以下方法避免向量化</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X}^\top)]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{U}^\top\otimes\mathbf{V}+\mathbf{U}\otimes\mathbf{V}^\top)
+\]</div>
+<p>或</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X})]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}\mathbf{K}_{nm}(\mathbf{C}^\top\otimes\mathbf{B}+\mathbf{B}^\top\otimes \mathbf{C})
+\]</div>
+<ul class="simple">
+<li><p><strong>例1</strong></p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^{-1})\)</span>，其中<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>是一个<span class="math notranslate nohighlight">\(n\times n\)</span>的矩阵。其一阶微分为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}f(\mathbf{X})=-\mathrm{tr}(\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1})
+\]</div>
+<p>则其二阶微分为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathrm{d}^2f(\mathbf{X})&amp;=-\mathrm{tr}((\mathrm{d}\mathbf{X}^{-1})(\mathrm{d}\mathbf{X})\mathbf{X}^{-1})-\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X} (\mathrm{d}\mathbf{X}^{-1}))\\
+&amp;=2\mathrm{tr}[\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1}]\\
+&amp;=2\mathrm{tr}[\mathbf{X}^{-2} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}(\mathrm{d}\mathbf{X}) ]
+\end{split}
+\end{split}\]</div>
+<p>则有Hessian矩阵，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{H}=\mathbf{K}_{nn}(\mathbf{X}^{-\top}\otimes\mathbf{X}^{-2}+\mathbf{X}^{-2}\otimes\mathbf{X}^{-1})
+\]</div>
+<ul class="simple">
+<li><p><strong>例2</strong></p></li>
+</ul>
+<p>对于<span class="math notranslate nohighlight">\(f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top\mathbf{A}\mathbf{X})\)</span>，其一阶微分为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X})
+\]</div>
+<p>二阶微分为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{d}^2f(\mathbf{X})=\mathrm{tr}((\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}\mathrm{d}\mathbf{X}^\top)
+\]</div>
+<p>则Hessian矩阵为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathbf{H}&amp;=\frac12(\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top)+\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top))\\
+&amp;=\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top)
+\end{split}
+\end{split}\]</div>
 </section>
 </section>
 
