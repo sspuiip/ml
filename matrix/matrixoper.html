@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. 矩阵运算 &mdash; MLBOOK 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="3. 向量空间" href="vectorspace.html" />
+    <link rel="prev" title="1. 矩阵性能指标" href="base.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MLBOOK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 矩阵运算</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">2.1. 直和</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hadamard">2.2. Hadamard积</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLBOOK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">2. </span>矩阵运算</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/matrix/matrixoper.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">2. </span>矩阵运算<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<section id="id2">
+<h2><span class="section-number">2.1. </span>直和<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>定义</strong></p></li>
+</ol>
+<p>所谓直和运算是指定义在任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times m}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{B}_{n\times n}\)</span>的运算，其规则如下，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A}\oplus\mathbf{B}=\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{0}_{m\times n}\\ \mathbf{0}_{n\times m}&amp;\mathbf{B}\end{array}\right]
+\end{split}\]</div>
+<p>记为<span class="math notranslate nohighlight">\(\mathbf{A}\oplus\mathbf{B}\)</span>。</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>性质</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\oplus\mathbf{B}\neq\mathbf{B}\oplus\mathbf{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c(\mathbf{A}\oplus\mathbf{B})=c\mathbf{A}\oplus c\mathbf{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\pm\mathbf{B})\oplus(\mathbf{C}\pm\mathbf{D})=(\mathbf{A}\oplus \mathbf{C})\pm(\mathbf{B}\oplus \mathbf{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\oplus\mathbf{B})(\mathbf{C}\oplus\mathbf{D})=\mathbf{AC}\oplus \mathbf{BD}\)</span></p></li>
+</ul>
+</section>
+<section id="hadamard">
+<h2><span class="section-number">2.2. </span>Hadamard积<a class="headerlink" href="#hadamard" title="此标题的永久链接"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>定义</strong></p></li>
+</ol>
+<p>Hadamard积是定义在任意同维度矩阵<span class="math notranslate nohighlight">\(\mathbf{A,B}\in\mathbb{R}^{m\times n}\)</span>的运算，记为<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>，也称为逐元素乘法，运算规则如下，</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf{A}* \mathbf{B}]_{ij}=a_{ij}b_{ij}
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p><strong>性质</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>正定性</strong>. 若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是正定（半正定）矩阵，则<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>也正定（半正定）。
+<font color="red"></p></li>
+<li><p><strong>迹相关</strong>. <span class="math notranslate nohighlight">\(\mathrm{tr}[\mathbf{A}^\top(\mathbf{B}*\mathbf{C})]=\mathrm{tr}[(\mathbf{A}*\mathbf{B})^\top\mathbf{C}]=\mathrm{tr}[(\mathbf{A}^\top*\mathbf{B}^\top)\mathbf{C}]\)</span>
+</font></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}=\mathbf{B}* \mathbf{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* (\mathbf{B}* \mathbf{C})=(\mathbf{A}* \mathbf{B})* \mathbf{C}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* (\mathbf{B}\pm \mathbf{C})=(\mathbf{A}* \mathbf{B})\pm (\mathbf{A}* \mathbf{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}* \mathbf{B})^\top=\mathbf{A}^\top* \mathbf{B}^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c(\mathbf{A}*\mathbf{B})=c\mathbf{A}* \mathbf{B}=\mathbf{A}* c\mathbf{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})*(\mathbf{C}+\mathbf{D})=\mathbf{A}* \mathbf{C}+\mathbf{A}* \mathbf{D}+\mathbf{B}* \mathbf{C}+\mathbf{B}* \mathbf{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\oplus\mathbf{B})*(\mathbf{C}\oplus\mathbf{D})=(\mathbf{A}*\mathbf{C})\oplus(\mathbf{B}*\mathbf{D})\)</span></p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="base.html" class="btn btn-neutral float-left" title="1. 矩阵性能指标" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="vectorspace.html" class="btn btn-neutral float-right" title="3. 向量空间" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2022, SSPUIIP.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

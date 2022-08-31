@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>2. 向量空间 &mdash; MLBOOK 1.0 文档</title>
+  <title>3. 向量空间 &mdash; MLBOOK 1.0 文档</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -22,8 +22,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 矩阵微分" href="matrixdiff.html" />
-    <link rel="prev" title="1. 矩阵性能指标" href="base.html" /> 
+    <link rel="next" title="4. 矩阵微分" href="matrixdiff.html" />
+    <link rel="prev" title="2. 矩阵运算" href="matrixoper.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,28 +44,29 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 向量空间</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">2.1. 子空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">2.2. 线性映射</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">2.3. 内积空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">2.3.1. 内积</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">2.3.2. 加权内积</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 向量空间</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1. 子空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">3.2. 线性映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3.3. 内积空间</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">3.3.1. 内积</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">3.3.2. 加权内积</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">2.4. 赋范空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id8">2.4.1. 范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id9">2.4.2. 范数性质</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">3.4. 赋范空间</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">3.4.1. 范数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">3.4.2. 范数性质</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id10">2.5. 完备向量空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#cauchy">2.5.1. Cauchy序列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">3.5. 完备向量空间</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cauchy">3.5.1. Cauchy序列</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#banach">2.6. Banach空间</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#hilbert">2.7. Hilbert空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#banach">3.6. Banach空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hilbert">3.7. Hilbert空间</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">3. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
 </ul>
 
         </div>
@@ -82,7 +83,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li><span class="section-number">2. </span>向量空间</li>
+      <li><span class="section-number">3. </span>向量空间</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/matrix/vectorspace.md.txt" rel="nofollow"> 查看页面源码</a>
       </li>
@@ -93,7 +94,7 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1><span class="section-number">2. </span>向量空间<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<h1><span class="section-number">3. </span>向量空间<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
 <p>以向量为元素的集合称为<strong>向量空间</strong>。向量集合需要满足以下条件才能称之为向量空间：</p>
 <ol class="arabic simple">
 <li><p>元素加法、标量乘法的<strong>封闭性</strong>。</p>
@@ -132,7 +133,7 @@
 </table>
 <p>由于向量空间服从向量加法的交换律、结合律以及数乘的结合律、分配律，所以也称之为<strong>线性空间</strong>。</p>
 <section id="id2">
-<h2><span class="section-number">2.1. </span>子空间<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.1. </span>子空间<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
 <ol class="arabic simple">
 <li><p>若<span class="math notranslate nohighlight">\(V,W\)</span>是两个向量空间，<span class="math notranslate nohighlight">\(W\subseteq V\)</span>，则称子集<span class="math notranslate nohighlight">\(W\)</span>是<span class="math notranslate nohighlight">\(V\)</span>的一个<strong>子空间</strong>，如果满足以下条件：</p></li>
 </ol>
@@ -148,7 +149,7 @@
 </ol>
 </section>
 <section id="id3">
-<h2><span class="section-number">2.2. </span>线性映射<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.2. </span>线性映射<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
 <ol class="arabic">
 <li><p>若<span class="math notranslate nohighlight">\(V,W\)</span>是<span class="math notranslate nohighlight">\(\mathcal{R}^n\)</span>两个子空间，则</p>
 <div class="math notranslate nohighlight">
@@ -167,10 +168,10 @@
 </ol>
 </section>
 <section id="id4">
-<h2><span class="section-number">2.3. </span>内积空间<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.3. </span>内积空间<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
 <p>在向量空间的基础上，增加向量乘法（内积）操作，即为内积空间。</p>
 <section id="id5">
-<h3><span class="section-number">2.3.1. </span>内积<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">3.3.1. </span>内积<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
 <p>若<span class="math notranslate nohighlight">\(\forall \mathbf{x,y,z}\in V\)</span>和<span class="math notranslate nohighlight">\(\forall a,b\in R\)</span>，映射<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle: V\times V \rightarrow R\)</span>满足以下3个公理：</p>
 <ul class="simple">
 <li><p>共轭对称性：<span class="math notranslate nohighlight">\(\langle\mathbf{x},\mathbf{y}\rangle=\langle\mathbf{y},\mathbf{x}\rangle\)</span></p></li>
@@ -181,7 +182,7 @@
 <p>特别地，如果向量内积<span class="math notranslate nohighlight">\(\langle\mathbf{x},\mathbf{y}\rangle\)</span>为0，则该对向量正交，即夹角为<span class="math notranslate nohighlight">\(90^。\)</span>，两向量互不干扰。</p>
 </section>
 <section id="id6">
-<h3><span class="section-number">2.3.2. </span>加权内积<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">3.3.2. </span>加权内积<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
 <p>若<span class="math notranslate nohighlight">\(\forall G\succeq 0\)</span>，则向量<span class="math notranslate nohighlight">\(\mathbf{x,y}\)</span>的加权内积为，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -190,10 +191,10 @@
 </section>
 </section>
 <section id="id7">
-<h2><span class="section-number">2.4. </span>赋范空间<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.4. </span>赋范空间<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h2>
 <p>在内积空间的基础上，新增向量长度、距离和领域等测度，即为赋范空间。</p>
 <section id="id8">
-<h3><span class="section-number">2.4.1. </span>范数<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">3.4.1. </span>范数<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h3>
 <p>令<span class="math notranslate nohighlight">\(V\)</span>是一个向量空间，向量<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的范数是一个实函数<span class="math notranslate nohighlight">\(p(\mathbf{x}):\mathbf{x}\rightarrow \mathbb{R}\)</span>且满足以下3个条件：</p>
 <ul class="simple">
 <li><p>非负性： <span class="math notranslate nohighlight">\(p(\mathbf{x})\ge 0\)</span>且<span class="math notranslate nohighlight">\(p(\mathbf{x})=0\Leftrightarrow \mathbf{x}=0\)</span>；</p></li>
@@ -203,7 +204,7 @@
 <p><span class="math notranslate nohighlight">\(V\)</span>也称之为赋范向量空间(normed vector space)。</p>
 </section>
 <section id="id9">
-<h3><span class="section-number">2.4.2. </span>范数性质<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">3.4.2. </span>范数性质<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h3>
 <ul class="simple">
 <li><p>极化恒等式：<span class="math notranslate nohighlight">\(\langle\mathbf{x},\mathbf{y}\rangle=\frac14\left(\lVert\mathbf{x}+\mathbf{y}\rVert^2-\lVert\mathbf{x}-\mathbf{y}\rVert^2\right)\)</span></p></li>
 <li><p>平行四边形法则：<span class="math notranslate nohighlight">\(\lVert\mathbf{x}+\mathbf{y}\rVert^2+\lVert\mathbf{x}-\mathbf{y}\rVert^2=2\left(\lVert\mathbf{x}\rVert^2+\lVert\mathbf{y}\rVert^2\right)\)</span></p></li>
@@ -213,7 +214,7 @@
 </section>
 </section>
 <section id="id10">
-<h2><span class="section-number">2.5. </span>完备向量空间<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.5. </span>完备向量空间<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h2>
 <p>若对向量空间<span class="math notranslate nohighlight">\(V\)</span>中每一个Cauchy序列<span class="math notranslate nohighlight">\(\{\mathbf{v}_n\}_{n=1}^\infty\)</span>，在空间<span class="math notranslate nohighlight">\(V\)</span>都存在一个元素<span class="math notranslate nohighlight">\(\mathbf{v}\)</span>使之，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -226,12 +227,12 @@
 \]</div>
 <p>则称该向量空间<span class="math notranslate nohighlight">\(V\)</span>为<strong>相对于范数完备的向量空间</strong>（范数收敛）。</p>
 <section id="cauchy">
-<h3><span class="section-number">2.5.1. </span>Cauchy序列<a class="headerlink" href="#cauchy" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">3.5.1. </span>Cauchy序列<a class="headerlink" href="#cauchy" title="此标题的永久链接"></a></h3>
 <p>对于任意序列<span class="math notranslate nohighlight">\(\{v_i\}_{i=1}^\infty\)</span>，若<span class="math notranslate nohighlight">\(\forall \epsilon &gt;0\)</span>，总存在<span class="math notranslate nohighlight">\(\exists N\)</span>，当<span class="math notranslate nohighlight">\(m,n&gt;N\)</span>时，<span class="math notranslate nohighlight">\(|x_n-x_m|&lt;\epsilon\)</span>成立，则称序列<span class="math notranslate nohighlight">\(\{v_i\}\)</span>为一个Cauchy序列。换句话说，去掉有限个元素后，余下序列中的任意元素之间的距离都不超过给定的数<span class="math notranslate nohighlight">\(\epsilon\)</span>。</p>
 </section>
 </section>
 <section id="banach">
-<h2><span class="section-number">2.6. </span>Banach空间<a class="headerlink" href="#banach" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.6. </span>Banach空间<a class="headerlink" href="#banach" title="此标题的永久链接"></a></h2>
 <p>满足以下条件，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -240,7 +241,7 @@
 <p>的完备赋范向量空间，称为Banach空间。</p>
 </section>
 <section id="hilbert">
-<h2><span class="section-number">2.7. </span>Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">3.7. </span>Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接"></a></h2>
 <p>满足以下条件，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -254,8 +255,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="base.html" class="btn btn-neutral float-left" title="1. 矩阵性能指标" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="matrixdiff.html" class="btn btn-neutral float-right" title="3. 矩阵微分" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="matrixoper.html" class="btn btn-neutral float-left" title="2. 矩阵运算" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="matrixdiff.html" class="btn btn-neutral float-right" title="4. 矩阵微分" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
