@@ -3,18 +3,25 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MLBOOK's documentation!
-==================================
+机器学习基础
+============
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: 矩阵分析
    :numbered:
 
    matrix/base.md
    matrix/matrixoper.md
    matrix/vectorspace.md
    matrix/matrixdiff.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 最优化
+   :numbered:
+
+   optimization/convex_opt.md
    
 
 
