@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. 凸优化 &mdash; MLBOOK 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="4. 矩阵微分" href="../matrix/matrixdiff.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MLBOOK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 凸优化</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1.1. 凸函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">1.1.1. 判定方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.1.2. 保凸运算与性质判定</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">1.2. 凸优化问题</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLBOOK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">1. </span>凸优化</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/optimization/convex_opt.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">1. </span>凸优化<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<section id="id2">
+<h2><span class="section-number">1.1. </span>凸函数<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<p>所谓的凸函数是指：定义在凸集<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>的任意变量<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\)</span>，函数<span class="math notranslate nohighlight">\(f:\mathbb{R}^n\rightarrow \mathbb{R}\)</span>对任意<span class="math notranslate nohighlight">\(0\le\theta\le 1\)</span>都有以下不等式成立，</p>
+<div class="math notranslate nohighlight">
+\[
+f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\mathbf{y})
+\]</div>
+<p>，则该函数<span class="math notranslate nohighlight">\(f\)</span>是凸函数。</p>
+<p>凸集指的是：集合<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>中任意两点<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\in\mathcal{S}\)</span>，连接它们的线段也在集合集合<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>内，则该集合为凸集，即</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x,y}\in \mathcal{S},\quad \theta\in[0,1]\quad\Rightarrow \theta\mathbf{x}+(1-\theta)\mathbf{y}\in\mathcal{S}
+\]</div>
+<section id="id3">
+<h3><span class="section-number">1.1.1. </span>判定方法<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ul>
+<li><p><strong>一阶充要条件</strong></p>
+<ol class="arabic simple">
+<li><p>若定义在凸集<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>上的函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>一阶可微且满足以下条件，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+    f(\mathbf{y})\ge f(\mathbf{x})+\langle\nabla_\mathbf{x} f(\mathbf{x}),\mathbf{y}-\mathbf{x}\rangle
+    \]</div>
+<p>则<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>为凸函数。</p>
+<ol class="arabic simple" start="2">
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \langle\nabla_\mathbf{x}f(\mathbf{x})-\nabla_\mathbf{x}f(\mathbf{y}),\mathbf{x}-\mathbf{y}\rangle\ge 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>严凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \langle\nabla_\mathbf{x}f(\mathbf{x})-\nabla_\mathbf{x}f(\mathbf{y}),\mathbf{x}-\mathbf{y}\rangle&gt; 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>强凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \langle\nabla_\mathbf{x}f(\mathbf{x})-\nabla_\mathbf{x}f(\mathbf{y}),\mathbf{x}-\mathbf{y}\rangle\ge \mu\lVert \mathbf{x}-\mathbf{y} \rVert_2^2\)</span></p></li>
+</ol>
+</li>
+<li><p><strong>二阶充要条件</strong></p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \mathbf{H}[f(\mathbf{x})]\succeq 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>严凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \mathbf{H}[f(\mathbf{x})]\succ 0\)</span></p></li>
+</ol>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3><span class="section-number">1.1.2. </span>保凸运算与性质判定<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>是凸函数，当且仅当它在所有线段上是凸的。</p></li>
+<li><p>非负线性运算仍为凸函数：若<span class="math notranslate nohighlight">\(a,b\ge 0\)</span>，<span class="math notranslate nohighlight">\(f_1(\mathbf{x}), f_2(\mathbf{x})\)</span>是凸函数，则<span class="math notranslate nohighlight">\(af_1(\mathbf{x})+bf_2(\mathbf{x})\)</span>仍为凸函数。</p></li>
+<li><p>凸函数的无穷求和、积分仍是凸函数。</p></li>
+<li><p>凸函数各点的上确界为凸函数：<span class="math notranslate nohighlight">\(f_a(\mathbf{x})\)</span>凸<span class="math notranslate nohighlight">\(\quad\Rightarrow \sup f_a(\mathbf{x})\)</span>仍为凸函数。</p></li>
+<li><p>凸函数的仿射变换仍为凸函数：<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>凸<span class="math notranslate nohighlight">\(\quad\Rightarrow  f(\mathbf{Ax}+\mathbf{b})\)</span>仍为凸函数。</p></li>
+<li><p>向量的所有范数除<span class="math notranslate nohighlight">\(L_0\)</span>外都是凸函数。</p></li>
+</ol>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">1.2. </span>凸优化问题<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h2>
+<p>凸优化问题是形如，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min\limits_{\mathbf{x}} \quad &amp;f_0(\mathbf{x})\\
+\mathrm{s.t.}\quad &amp;f_i(\mathbf{x})\leq0,i=1,...,m\\
+\qquad &amp;h_i(\mathbf{x})=0,i=1,...,p
+\end{split}
+\end{split}\]</div>
+<p>的问题，其中<span class="math notranslate nohighlight">\(f_0,...,f_m\)</span>是凸函数。对比优化问题，凸优化有3个附加的要求：</p>
+<ol class="arabic simple">
+<li><p>目标函数必须是凸的</p></li>
+<li><p>不等式约束函数必须是凸的</p></li>
+<li><p>等式约束必须是仿射的</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../matrix/matrixdiff.html" class="btn btn-neutral float-left" title="4. 矩阵微分" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2022, SSPUIIP.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
