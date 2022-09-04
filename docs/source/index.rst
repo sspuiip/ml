@@ -21,7 +21,8 @@
    :caption: 最优化
    :numbered:
 
-   optimization/convex_opt.md
+   optimization/convex_prob.md
+   optimization/convex_solve.md
    
 
 
