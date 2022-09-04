@@ -145,4 +145,96 @@ $$
 p^*=J_P(\mathbf{x})=\min\limits_{\mathbf{x}}f_0(\mathbf{x})=f_0(\mathbf{x}^*)
 $$
 
+##### 对偶问题
+
+极小-极大问题仍然存在问题：一个非凸目标函数(前一节的假设3)的极小化不能转换成另一个凸函数的极小化。
+
+我们知道凸函数$f(\mathbf{x})$的极小化与凹函数$-f(\mathbf{x})$的极大化等价。基于这一对偶关系，可以将非凸目标函数的极小化转化为凹函数的极大化。这一方法也称为**Lagrangian对偶法**。
+
+首先，将Lagrangian函数构造一个极小化目标函数，
+
+$$
+J_2(\mathbf{\lambda,\nu})=\min\limits_{\mathbf{x}}\left(f_0(\mathbf{x})+\sum_{i=1}^m\lambda_if_i(\mathbf{x})+\sum_{i=1}^p\nu_ih_i(\mathbf{x}) \right)
+$$
+
+与上一节类型，该函数的极小值为，
+
+$$
+\min\limits_{\mathbf{x}}L(\mathbf{x,\lambda,\nu})=\left\{\begin{array}{ll}\min\limits_{\mathbf{x}}f_0(\mathbf{x}),&\mathbf{x}\mathrm{满足所有约束}\\(-\infty,\min\limits_{\mathbf{x}}f_0(\mathbf{x}),&其它.\end{array}\right.
+$$
+
+其极大化函数为，
+
+$$
+J_D(\mathbf{\lambda,\nu})=\max\limits_{\mathbf{\lambda}\succeq0,\mathbf{\nu}}J_2(\mathbf{\lambda,\nu})=\max\limits_{\mathbf{\lambda}\succeq0,\mathbf{\nu}}\min\limits_{\mathbf{x}}L(\mathbf{x,\lambda,\nu})
+$$
+
+称为原问题的对偶目标函数，它是Lagrangian函数的极大-极小问题。其解为该函数的下确界（最大下界）。
+
+<font color="red">注意</font>：对偶目标函数$J_D(\mathbf{\lambda,\nu})$是下无界的（下界为$-\infty$），因此$J_D(\mathbf{\lambda,\nu})$是变元$\mathbf{x}$的凹函数（<font color="#feda0f">因为对偶函数是一族关于$(\lambda,\nu)$的仿射函数的逐点下确界</font>），即使$f_0(\mathbf{x})$不是凸函数。
+
+对偶目标函数的最优值为，
+
+$$
+d^*=J_D(\mathbf{\lambda^*,\nu^*})\le\min\limits_{\mathbf{x}}f_0(\mathbf{x})=p^*
+$$
+
+最优原始值与最优对偶值之差$d^*-p^*$称为原问题与对偶问题之间的**对偶间隙**，最优对偶值是原始最优值的下界。
+
+- $d^*\le p^*$：弱对偶性
+- $d^*= p^*$：强对偶性
+
+
+##### KKT条件
+
+假设$\mathbf{x}^*,\mathbf{\lambda^*,\nu^*}$分别为具有对偶间隙$\epsilon=0$的原始最优点和对偶最优点。
+
+由于$\mathbf{x}^*$使得Lagrangian目标函数$L(\mathbf{x},\mathbf{\lambda}^*,\mathbf{\nu}^*)$在所有原始可行点$\mathbf{x}$中最小化，所以Lagrangian目标函数$L(\mathbf{x},\mathbf{\lambda}^*,\mathbf{\nu}^*)$在点点$\mathbf{x}^*$的梯度向量必为0，
+
+$$
+\nabla f_0(\mathbf{x}^*)+\sum_i\lambda_i^*\nabla f_i(\mathbf{x}^*)+\sum_i\nu_i^*\nabla h_i(\mathbf{x}^*)=\mathbf{0}
+$$
+
+因此，Lagrangian对偶无约束优化问题的KKT条件（局部极小解的一阶必要条件）为，
+
+$$
+\begin{split}
+f_i(\mathbf{x}^*)&\le0, \quad i=1,\cdots,m\\
+h_i(\mathbf{x}^*)&=0, \quad i=1,\cdots,p\\
+\lambda_i^*&\ge0, \quad i=1,\cdots,m\\
+\lambda_i^*f_i(\mathbf{x}^*)&=0, \quad i=1,\cdots,m\\
+\nabla f_0(\mathbf{x}^*)+\sum_i\lambda_i^*&\nabla f_i(\mathbf{x}^*)+\sum_i\nu_i^*\nabla h_i(\mathbf{x}^*)=\mathbf{0}
+\end{split}
+$$
+
+- 前2个条件为约束条件。
+
+- 第3个条件是Lagrangian乘子的非负约束，是Lagrangian乘子法的关键约束。
+
+- 第4个条件是Lagrangian对偶法的另一个关键约束。这意味着对于$f_i(\mathbf{x})>0$的约束，Lagrangian乘子$\lambda_i$必须等于0。
+
+
+##### 强对偶性（Slater定理）
+
+判别强对偶性是否成立的一种简单方法是Slater定理。
+
+**定义**:原始不等式约束的可行域的相对内域为
+
+$$
+\mathrm{relint}(\mathcal{F})=\{\mathbf{x}|f_i(\mathbf{x})<0,i=1,\cdots,m;h_i(\mathbf{x})=0,i=1,\cdots,p \}
+$$
+
+**Slater条件**：优化过程中，迭代点位于可行域的内域的约束规定称为Slater条件。
+
+**Slater定理**：如果Slater条件满足，并且原始不等式优化问题是凸优化问题，则对偶无约束优化问题的最优值$d^*$与原始优化问题的最优值$p^*$相等，
+
+$$
+d^*=p^*
+$$
+
+即强对偶性成立。
+
+
+
+
 
