@@ -86,5 +86,5 @@ $$
 - 到超平面$\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}$的投影，
 
 $$
-abc
+abcdefg
 $$
