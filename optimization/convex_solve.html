@@ -220,7 +220,35 @@ f(\mathbf{x}_{k+1})\approx f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mat
 </ul>
 <div class="math notranslate nohighlight">
 \[
-abcdefg
+\mathcal{P}_\mathcal{C}(\mathbf{x})=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\lVert\mathbf{a}\rVert_2^2}\mathbf{a}
+\]</div>
+<p>求解过程：投影问题为如下优化问题，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{P}_\mathcal{C}(\mathbf{x})=\arg\min\limits_{\mathbf{z}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2 \quad s.t.\quad \mathbf{a}^\top\mathbf{x}-b=0
+\]</div>
+<p>则Lagrangian函数为，</p>
+<div class="math notranslate nohighlight">
+\[
+L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \mathbf{a}^\top\mathbf{z}-b)
+\]</div>
+<p>对Lagrangian函数求偏导并令其等于0，可得</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\frac{\partial L}{\partial \mathbf{z}}&amp;=\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0\\
+\frac{\partial L}{\partial \lambda}&amp;=\mathbf{a}^\top\mathbf{z}-b=0\\
+\end{split}
+\end{split}\]</div>
+<p>解上述方程组，将<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{x}-\lambda \mathbf{a}\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{a}^\top\mathbf{z}-b=0\)</span>，可得，</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda = \frac{\mathbf{a}^\top\mathbf{x}-b}{\mathbf{a}^\top\mathbf{a}}
+\]</div>
+<p>再将<span class="math notranslate nohighlight">\(\lambda\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0\)</span>，可得</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{z}=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\mathbf{a}^\top\mathbf{a}}\mathbf{a}
 \]</div>
 </section>
 </section>
