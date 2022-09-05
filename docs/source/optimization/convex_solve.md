@@ -86,5 +86,38 @@ $$
 - 到超平面$\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}$的投影，
 
 $$
-abcdefg
+\mathcal{P}_\mathcal{C}(\mathbf{x})=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\lVert\mathbf{a}\rVert_2^2}\mathbf{a}
+$$ 
+
+求解过程：投影问题为如下优化问题，
+
+$$
+\mathcal{P}_\mathcal{C}(\mathbf{x})=\arg\min\limits_{\mathbf{z}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2 \quad s.t.\quad \mathbf{a}^\top\mathbf{x}-b=0
+$$
+
+则Lagrangian函数为，
+
+$$
+L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \mathbf{a}^\top\mathbf{z}-b)
+$$
+
+对Lagrangian函数求偏导并令其等于0，可得
+
+$$
+\begin{split}
+\frac{\partial L}{\partial \mathbf{z}}&=\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0\\
+\frac{\partial L}{\partial \lambda}&=\mathbf{a}^\top\mathbf{z}-b=0\\
+\end{split}
+$$
+
+解上述方程组，将$\mathbf{z}=\mathbf{x}-\lambda \mathbf{a}$代入$\mathbf{a}^\top\mathbf{z}-b=0$，可得，
+
+$$
+\lambda = \frac{\mathbf{a}^\top\mathbf{x}-b}{\mathbf{a}^\top\mathbf{a}}
+$$
+
+再将$\lambda$代入$\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0$，可得
+
+$$
+\mathbf{z}=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\mathbf{a}^\top\mathbf{a}}\mathbf{a}
 $$
