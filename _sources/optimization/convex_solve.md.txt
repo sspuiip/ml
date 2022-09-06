@@ -81,13 +81,11 @@ $$
 \mathcal{P}_\mathcal{C}(\mathbf{y})=\arg\min\limits_{\mathbf{x}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{y}\rVert_2^2\tag{10}
 $$
 
-**例**. 
-
-- 到超平面$\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}$的投影，
+**例**. 到超平面$\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}$的投影，
 
 $$
 \mathcal{P}_\mathcal{C}(\mathbf{x})=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\lVert\mathbf{a}\rVert_2^2}\mathbf{a}
-$$ 
+$$
 
 求解过程：投影问题为如下优化问题，
 
