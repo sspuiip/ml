@@ -119,3 +119,12 @@ $$
 $$
 \mathbf{z}=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\mathbf{a}^\top\mathbf{a}}\mathbf{a}
 $$
+
+
+#### 共轭梯度下降法
+
+![alt Conjugate Gradient Descent](../img/conj_desc.png)
+
+
+
+
