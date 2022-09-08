@@ -123,6 +123,13 @@ $$
 
 #### 共轭梯度下降法
 
+最速下降法的存在一个问题就是收敛速度过慢，因为已迭代的$\mathbf{x}$会来回振荡，从而导致收敛太慢。
+
+Newton法虽然收收敛较快，但仍需要计算Hessian矩阵的逆，因此计算代价太高。
+
+
+为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。
+
 ![alt Conjugate Gradient Descent](../img/conj_desc.png)
 
 
