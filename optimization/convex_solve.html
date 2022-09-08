@@ -254,6 +254,66 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <p>Newton法虽然收收敛较快，但仍需要计算Hessian矩阵的逆，因此计算代价太高。</p>
 <p>为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。</p>
 <p><img alt="alt Conjugate Gradient Descent" src="../_images/conj_desc.png" /></p>
+<p>与前面两种下降方法类似，共轭梯度下降也是通过迭代来寻找最优点，即</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_{k+1}=\mathbf{x}_k+\alpha_k\mathbf{d}_k\tag{11}
+\]</div>
+<p><strong>不同之处</strong>在于，每次迭代的下降方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>与其它任何一次方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_j,j\neq i\)</span>都是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的；此外，<span class="math notranslate nohighlight">\(\alpha_i\)</span>是<span class="math notranslate nohighlight">\(\min\limits_{\alpha}f(\mathbf{x}_{i-1}+\alpha\mathbf{d}_i)\)</span>的最优值。</p>
+<p>为了简要描述共轭的思想，以上图为例，坐标轴可以指定为搜索方向。第一步沿着水平方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_1\)</span>分量部分。第二步没着垂直方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_2\)</span>分量部分，然后结束搜索过程就可以确定<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的值。如果定义<span class="math notranslate nohighlight">\(\mathbf{e}_i=\mathbf{x}^*-\mathbf{x}_i\)</span>，则可以发现,</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{d}_i^\top\mathbf{e}_{i+1}=0
+\]</div>
+<p>共轭梯度下降法源于二次规划问题的求解，即</p>
+<div class="math notranslate nohighlight">
+\[
+\min\limits_{\mathbf{x}}\quad \frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}-\mathbf{b}^\top\mathbf{x}\quad(\mathbf{A}\succeq0)
+\]</div>
+<p>其梯度为<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})=\mathbf{Ax}-b\triangleq r(\mathbf{x})\)</span>，则求解最优值<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>等价于求解方程组<span class="math notranslate nohighlight">\(\mathbf{Ax}-\mathbf{b}=\mathbf{0}\)</span>。如果<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么必然可以构建一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，显然基的每个向量与其它基向量是共轭的。</p>
+<p>下降方向能不能和这些基向量建立联系呢？答案是肯定的。易知，最优解<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span>可以表示为</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}^*=\sum_{i=0}^{n-1}\alpha_i\mathbf{d}_i\tag{12}
+\]</div>
+<p>如果<span class="math notranslate nohighlight">\(\alpha_i,\mathbf{d}_i\)</span>都已知，则<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>可通过上式确定。</p>
+<section id="mathbf-a">
+<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="此标题的永久链接">¶</a></h3>
+<p><strong>定义1</strong>.假设<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么称向量<span class="math notranslate nohighlight">\(\mathbf{d}_i,\mathbf{d}_j\)</span>是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的，如果满足，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{d}_i^\top\mathbf{A}\mathbf{d}_j=0,\quad i\neq j.
+\]</div>
+<p><strong>定理1</strong>. 两两向量相互<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量集<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>构成了一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，即<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>线性无关。</p>
+<p>有了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭就可以来确定式(12)的各参数值了。</p>
+<ul class="simple">
+<li><p>首先求<span class="math notranslate nohighlight">\(\alpha_i\)</span>的表达式。</p></li>
+</ul>
+<p>对式(12)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>，利用<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可得</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathbf{d}_k^\top\mathbf{A}\mathbf{x}^*&amp;=\sum_{i=0}^{n-1}\alpha_i\mathbf{d}_k^\top\mathbf{Ad}_i\\
+\Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{b}}{\mathbf{d}_k^\top\mathbf{Ad}_k}
+\end{split}
+\end{split}\]</div>
+<p>可以看出，<span class="math notranslate nohighlight">\(\alpha_k\)</span>只与搜索方向<span class="math notranslate nohighlight">\(\mathbf{d}_k\)</span>有关，因此，只需要迭代<span class="math notranslate nohighlight">\(n\)</span>次就可以计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，即</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}^*=\sum_{i=0}^{n-1}\frac{\mathbf{d}_i^\top\mathbf{b}}{\mathbf{d}_i^\top\mathbf{Ad}_i}\mathbf{d}_i
+\]</div>
+<p>为了演示上述过程在<span class="math notranslate nohighlight">\(n\)</span>步计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，引入如下定理。</p>
+<p><strong>定理2</strong>. 假设<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量，<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>是初使点，令</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathbf{x}_{k+1}&amp;=\mathbf{x}_k+\alpha_k\mathbf{d}_k\\
+\mathbf{g}_k&amp;=\mathbf{b}-\mathbf{Ax}_k\\
+\alpha_k&amp;=\frac{\mathbf{g}_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}=\frac{(\mathbf{b}-\mathbf{Ax})_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}
+\end{split}
+\end{split}\]</div>
+<p>则迭代<span class="math notranslate nohighlight">\(n\)</span>次后，<span class="math notranslate nohighlight">\(\mathbf{x}_n=\mathbf{x}^*\)</span>。</p>
+</section>
 </section>
 </section>
 
@@ -278,7 +338,10 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 </ul>
 </li>
 <li><a class="reference internal" href="#id4">2.2. 梯度投影法</a></li>
-<li><a class="reference internal" href="#id5">2.3. 共轭梯度下降法</a></li>
+<li><a class="reference internal" href="#id5">2.3. 共轭梯度下降法</a><ul>
+<li><a class="reference internal" href="#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
