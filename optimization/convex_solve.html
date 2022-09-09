@@ -1,150 +1,392 @@
 
 <!DOCTYPE html>
 
-<html lang="zh-CN">
+<html lang="zh_CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
     <title>2. 优化问题求解 &#8212; MLBOOK 1.0 文档</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/basic_mod.css?v=0.7.0-1" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
     <script src="../_static/translations.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <script src="../_static/js/petite-vue.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="prev" title="1. 凸优化问题" href="convex_prob.html" /> 
-  </head><body>
-
-<div id="top_nav">
+    <link rel="prev" title="1. 凸优化问题" href="convex_prob.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="zh_CN">
     
 
-    <nav>
-        <p id="toggle_sidebar">
-            <a href="#" title="Toggle sidebar">|||</a>
-        </p>
-        <h1><a href="../index.html" title="Go to homepage">MLBOOK 1.0 文档</a></h1>
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
 
-        <a id="mode_toggle" href="#" @click.prevent="handleClick" :title="mode">
-    <template v-if="mode == 'light'">
-        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_light"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M67.48,18.073c1.913,-1.912 1.913,-5.018 0,-6.931c-1.912,-1.912 -5.018,-1.912 -6.931,0l-6.798,6.799c-1.912,1.912 -1.912,5.018 0,6.931c1.913,1.912 5.018,1.912 6.931,-0l6.798,-6.799Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.728,61.108c1.912,-1.913 1.912,-5.018 -0,-6.931c-1.913,-1.913 -5.019,-1.913 -6.931,-0l-6.799,6.798c-1.912,1.913 -1.912,5.019 0,6.931c1.913,1.913 5.019,1.913 6.931,0l6.799,-6.798Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.682,54.177c-1.913,-1.913 -5.018,-1.913 -6.931,-0c-1.912,1.913 -1.912,5.018 0,6.931l6.798,6.798c1.913,1.913 5.019,1.913 6.931,0c1.913,-1.912 1.913,-5.018 0,-6.931l-6.798,-6.798Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M4.901,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901l-0,9.614c-0,2.705 2.196,4.901 4.9,4.901c2.705,-0 4.901,-2.196 4.901,-4.901l0,-9.614Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M18.929,11.142c-1.912,-1.912 -5.018,-1.912 -6.931,0c-1.912,1.913 -1.912,5.019 0,6.931l6.799,6.799c1.912,1.912 5.018,1.912 6.931,-0c1.912,-1.913 1.912,-5.019 -0,-6.931l-6.799,-6.799Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.108,34.623c-2.705,0 -4.901,2.196 -4.901,4.901c-0,2.705 2.196,4.901 4.901,4.901l9.614,0c2.705,0 4.901,-2.196 4.901,-4.901c-0,-2.705 -2.196,-4.901 -4.901,-4.901l-9.614,0Z" style="fill:#fff;"/></g></g></g></svg>
-    </template>
+    
+    <div class="container-fluid" id="banner"></div>
 
-    <template v-if="mode == 'dark'">
-        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_dark"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><circle cx="39.311" cy="39.524" r="15.734" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.212,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.901,2.196 -4.901,4.901c0,2.705 2.197,4.901 4.901,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.662,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.989,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.732,61.103c1.91,-1.91 1.91,-5.011 0,-6.921l-0.009,-0.01c-1.91,-1.91 -5.012,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.909,1.91 5.011,1.91 6.92,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.672,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.52,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l-0,-0.01c-0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.212,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.901,2.196 -4.901,4.901c0,2.704 2.197,4.9 4.901,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.73,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 -0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.098,34.623c-2.699,0 -4.891,2.192 -4.891,4.892l-0,0.019c-0,2.699 2.192,4.891 4.891,4.891c2.7,0 4.892,-2.192 4.892,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.892,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
-    </template>
+    
 
-    <template v-if="mode == 'darkest'">
-        <svg width="100%" height="100%" viewBox="0 0 79 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"><g id="mode_darkest"><rect id="Bounds" x="0" y="-0" width="78.623" height="79.049" style="fill:none;"/><path d="M39.315,23.791c8.684,-0 15.734,7.05 15.734,15.733c0,8.684 -7.05,15.734 -15.734,15.734c-8.683,0 -15.733,-7.05 -15.733,-15.734c-0,-8.683 7.05,-15.733 15.733,-15.733Zm0,4.737c6.069,0 10.997,4.927 10.997,10.996c-0,6.069 -4.928,10.996 -10.997,10.996c-6.068,0 -10.996,-4.927 -10.996,-10.996c0,-6.069 4.928,-10.996 10.996,-10.996Z" style="fill:#fff;"/><g id="beams"><g id="beam"><path id="beam1" serif:id="beam" d="M44.216,14.515c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,0 -4.9,2.196 -4.9,4.901c-0,2.705 2.196,4.901 4.9,4.901c2.705,0 4.901,-2.196 4.901,-4.901Z" style="fill:#fff;"/></g><g id="beam2" serif:id="beam"><path id="beam3" serif:id="beam" d="M60.666,24.892c1.902,-1.902 1.902,-4.99 0,-6.892l-0.04,-0.039c-1.901,-1.902 -4.989,-1.902 -6.891,-0c-1.901,1.901 -1.901,4.989 0,6.891l0.04,0.04c1.902,1.901 4.99,1.901 6.891,-0Z" style="fill:#fff;"/></g><g id="beam4" serif:id="beam"><path id="beam5" serif:id="beam" d="M25.737,61.103c1.909,-1.91 1.909,-5.011 -0,-6.921l-0.01,-0.01c-1.91,-1.91 -5.011,-1.91 -6.921,-0c-1.91,1.91 -1.91,5.011 -0,6.921l0.01,0.01c1.91,1.91 5.011,1.91 6.921,-0Z" style="fill:#fff;"/></g><g id="beam6" serif:id="beam"><path id="beam7" serif:id="beam" d="M60.676,54.167c-1.907,-1.907 -5.004,-1.907 -6.911,0l-0.02,0.02c-1.907,1.907 -1.907,5.004 0,6.911c1.907,1.907 5.004,1.907 6.911,-0l0.02,-0.02c1.907,-1.907 1.907,-5.004 0,-6.911Z" style="fill:#fff;"/></g><g id="beam8" serif:id="beam"><path id="beam9" serif:id="beam" d="M14.524,34.623c-2.702,0 -4.896,2.194 -4.896,4.896l0,0.01c0,2.702 2.194,4.896 4.896,4.896c2.702,0 4.896,-2.194 4.896,-4.896l0,-0.01c0,-2.702 -2.194,-4.896 -4.896,-4.896Z" style="fill:#fff;"/></g><g id="beam10" serif:id="beam"><path id="beam11" serif:id="beam" d="M44.216,64.534c0,-2.705 -2.196,-4.901 -4.901,-4.901c-2.704,-0 -4.9,2.196 -4.9,4.901c-0,2.704 2.196,4.9 4.9,4.9c2.705,0 4.901,-2.196 4.901,-4.9Z" style="fill:#fff;"/></g><g id="beam12" serif:id="beam"><path id="beam13" serif:id="beam" d="M25.734,17.943c-1.911,-1.911 -5.015,-1.911 -6.926,0l-0.005,0.005c-1.911,1.911 -1.911,5.015 0,6.926c1.911,1.911 5.015,1.911 6.926,0l0.005,-0.005c1.911,-1.911 1.911,-5.014 0,-6.926Z" style="fill:#fff;"/></g><g id="beam14" serif:id="beam"><path id="beam15" serif:id="beam" d="M64.103,34.623c-2.7,0 -4.892,2.192 -4.892,4.892l-0,0.019c-0,2.699 2.192,4.891 4.892,4.891c2.699,0 4.891,-2.192 4.891,-4.891l0,-0.019c0,-2.7 -2.192,-4.892 -4.891,-4.892Z" style="fill:#fff;"/></g></g></g></svg>
-    </template>
-</a>
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">MLBOOK 1.0 文档</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search the docs ..." aria-label="Search the docs ..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  矩阵分析
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../matrix/base.html">
+   1. 矩阵性能指标
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../matrix/matrixoper.html">
+   2. 矩阵运算
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../matrix/vectorspace.html">
+   3. 向量空间
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../matrix/matrixdiff.html">
+   4. 矩阵微分
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  最优化
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="convex_prob.html">
+   1. 凸优化问题
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   2. 优化问题求解
+  </a>
+ </li>
+</ul>
 
-<script>
-(function() {
-    const LOCAL_STORAGE_KEY = 'piccoloThemeMode'
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Theme by the <a href="https://ebp.jupyterbook.org">Executable Book Project</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
 
-    var initialMode = localStorage.getItem(LOCAL_STORAGE_KEY)
 
-    if (initialMode) {
-        // Make sure the value in local storage is valid
-        if (['light', 'dark', 'darkest'].indexOf(initialMode) == -1) {
-            initialMode = 'light'
-            localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
-        }
-    } else {
-        // Check if the client prefers dark mode
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            initialMode = 'dark'
-        } else {
-            initialMode = 'light'
-        }
-        localStorage.setItem(LOCAL_STORAGE_KEY, initialMode)
-    }
+          
 
-    document.documentElement.dataset.mode = initialMode
 
-    PetiteVue.createApp({
-        'mode': initialMode,
-        handleClick() {
-            let currentMode = this.mode
-
-            if (currentMode == 'light') {
-                this.mode = 'dark'
-            } else if (currentMode == 'dark') {
-                this.mode = 'darkest'
-            } else if (currentMode == 'darkest') {
-                this.mode = 'light'
-            }
-
-            document.documentElement.dataset.mode = this.mode
-            localStorage.setItem(LOCAL_STORAGE_KEY, this.mode)
-
-            console.log(this.mode)
-        }
-    }).mount('#mode_toggle')
-})()
-</script>
-            <p class="mobile_search_link">
-                <a href="../search.html" title="Search">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 65 64" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
-                        <path d="M14.873 40.009c-2.315-3.943-3.642-8.532-3.642-13.429C11.231 11.91 23.141 0 37.811 0s26.58 11.91 26.58 26.58-11.91 26.58-26.58 26.58a26.44 26.44 0 0 1-14.277-4.161L9.739 62.794a3.12 3.12 0 0 1-4.413 0L.913 58.382c-1.217-1.218-1.217-3.196 0-4.413l13.96-13.96zM37.811 8.054c10.225 0 18.526 8.301 18.526 18.526s-8.301 18.526-18.526 18.526-18.526-8.301-18.526-18.526S27.586 8.054 37.811 8.054z" fill="#fff" />
-                    </svg>
-                </a>
-            </p>
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
         
 
-        <div class="searchbox_wrapper">
-            
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/optimization/convex_solve.md.txt"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
     </div>
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1. 下降法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1.1. 最速下降法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton">
+     2.1.2. Newton法
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.2. 梯度投影法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   2.3. 共轭梯度下降法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mathbf-a">
+     2.3.1.
+     <span class="math notranslate nohighlight">
+      \(\mathbf{A}\)
+     </span>
+     -共轭
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     2.3.2. 共轭梯度法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.3.3. 案例
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
     </nav>
 </div>
-
-    
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>优化问题求解</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   2.1. 下降法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     2.1.1. 最速下降法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#newton">
+     2.1.2. Newton法
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   2.2. 梯度投影法
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id5">
+   2.3. 共轭梯度下降法
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#mathbf-a">
+     2.3.1.
+     <span class="math notranslate nohighlight">
+      \(\mathbf{A}\)
+     </span>
+     -共轭
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     2.3.2. 共轭梯度法
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id7">
+     2.3.3. 案例
+    </a>
+   </li>
+  </ul>
+ </li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2. 优化问题求解</a></li>
-</ul>
 
-        </div>
-      </div>
-
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
   <section id="id1">
-<h1><span class="section-number">2. </span>优化问题求解<a class="headerlink" href="#id1" title="此标题的永久链接">¶</a></h1>
+<h1><span class="section-number">2. </span>优化问题求解<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="此标题的永久链接">¶</a></h2>
+<h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>基本思想：利用优化序列</p>
 <div class="math notranslate nohighlight">
 \[
@@ -157,7 +399,7 @@ f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)
 \]</div>
 <p>所以该方法称为<font color='red'><strong>下降法</strong></font>。</p>
 <section id="id3">
-<h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="此标题的永久链接">¶</a></h3>
+<h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
 <p>由Taylor公式可知，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -178,7 +420,7 @@ f(\mathbf{x}_{k+1})- f(\mathbf{x}_k)\approx\nabla f(\mathbf{x}_k)^\top\Delta\mat
 \]</div>
 </section>
 <section id="newton">
-<h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="此标题的永久链接">¶</a></h3>
+<h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="永久链接至标题">#</a></h3>
 <p>Taylor公式展开至二阶有，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -203,7 +445,7 @@ f(\mathbf{x}_{k+1})\approx f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mat
 </section>
 </section>
 <section id="id4">
-<h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="此标题的永久链接">¶</a></h2>
+<h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
 <p>梯度下降法中变元是无约束的。若有约束<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{C}\)</span>，则梯度下降法中的更新公式应用投影代替，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -249,7 +491,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \]</div>
 </section>
 <section id="id5">
-<h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="此标题的永久链接">¶</a></h2>
+<h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p>最速下降法的存在一个问题就是收敛速度过慢，因为已迭代的<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>会来回振荡，从而导致收敛太慢。</p>
 <p>Newton法虽然收收敛较快，但仍需要计算Hessian矩阵的逆，因此计算代价太高。</p>
 <p>为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。</p>
@@ -278,7 +520,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \]</div>
 <p>如果<span class="math notranslate nohighlight">\(\alpha_i,\mathbf{d}_i\)</span>都已知，则<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>可通过上式确定。</p>
 <section id="mathbf-a">
-<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="此标题的永久链接">¶</a></h3>
+<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="永久链接至标题">#</a></h3>
 <p><strong>定义1</strong>.假设<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么称向量<span class="math notranslate nohighlight">\(\mathbf{d}_i,\mathbf{d}_j\)</span>是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的，如果满足，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -313,66 +555,156 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \end{split}
 \end{split}\]</div>
 <p>则迭代<span class="math notranslate nohighlight">\(n\)</span>次后，<span class="math notranslate nohighlight">\(\mathbf{x}_n=\mathbf{x}^*\)</span>。</p>
+<p><strong>证明</strong>. 从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的误差<span class="math notranslate nohighlight">\(\mathbf{e}_0\)</span>为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}^*-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1}
+\]</div>
+<p>从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>可以表示为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_k-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{k-1}\mathbf{d}_{k-1}
+\]</div>
+<p><span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>的残差为</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{g}_k=\mathbf{b}-\mathbf{Ax}_k=\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
+\]</div>
+<p>因此可得<span class="math notranslate nohighlight">\(\alpha_k\)</span>如下，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)&amp;=\mathbf{d}_k^\top\mathbf{A}( \alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1})=\alpha_k\mathbf{d}_k^\top\mathbf{Ad}_k\\
+\Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)}{\mathbf{d}_k^\top\mathbf{Ad}_k}
+\end{split}
+\end{split}\]</div>
+<p>但仍然需要提前知道<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>才能计算<span class="math notranslate nohighlight">\(\alpha_k\)</span>。下面分析一下分子项。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)&amp;=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k+\mathbf{x}_k-\mathbf{x}_0)\\
+&amp;=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
+\end{split}
+\end{split}\]</div>
+<p>上式中，用到了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性，因此可以得知<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}_k-\mathbf{x}_0)=0\)</span>。</p>
+<p>最终有，</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha_k=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)}{\mathbf{d}_k^\top\mathbf{Ad}_k}=\frac{\mathbf{d}_k^\top\mathbf{g}_k}{\mathbf{d}_k^\top\mathbf{Ad}_k}\tag{13}
+\]</div>
+</section>
+<section id="id6">
+<h3><span class="section-number">2.3.2. </span>共轭梯度法<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
+<p>共轭梯度法是一种共轭方向方法。该方法选择的相继的方向向量被视为方法执行时相继获得的梯度的共轭版本。共轭方向并不是提前指定的，而是在每次序贯迭代时确定的。</p>
+<p>假设有<span class="math notranslate nohighlight">\(D=\{\mathbf{d}_1,...,\mathbf{d}_n\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭向量集，则函数<span class="math notranslate nohighlight">\(f(\mathbf{x}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_n\mathbf{d}_n)\)</span>的最小化可以从<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_1\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，然后从<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_2\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>，如此继续就可以达到函数的最小值点。这种优化方法称之为共轭梯度法。</p>
+<p>上一节根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭已解决了<span class="math notranslate nohighlight">\(\alpha_i\)</span>的计算问题，剩下的工作就是要解决<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>的计算问题。</p>
+<p>线性共轭梯度法一般使用以下规则来确定共轭方向<span class="math notranslate nohighlight">\(\mathbf{d}_{k+1}\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{d}_{k+1}=\mathbf{g}_k+\beta_k\mathbf{d}_{k}\tag{14}
+\]</div>
+<p>即，下一个搜索方向是上一个搜索方向与负梯度的线性组合。那么，<span class="math notranslate nohighlight">\(\beta_k\)</span>怎么确定呢？</p>
+<p>显然，根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可知，<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=0\)</span>，因此，对式(14)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>可得，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}+\beta_k\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}=0
+\]</div>
+<p>整理可得，</p>
+<div class="math notranslate nohighlight">
+\[
+\beta_k=-\frac{\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}}\tag{15}
+\]</div>
+<p>至此，线性共轭梯度算法的所有参数<span class="math notranslate nohighlight">\((\alpha_i,\beta_i)\)</span>已确定。</p>
+</section>
+<section id="id7">
+<h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
+<p><strong>例1</strong>. 考虑如下二次规划，</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{x}
+\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{A}=\left[\begin{array}{cc}\frac12&amp;\frac12\\\frac12&amp;1\end{array}\right],\quad\mathbf{b}=\left[\begin{array}{c}0\\2\end{array}\right]
+\end{split}\]</div>
+<p>求函数最小值，以及变量最优解<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">linear_conj_desc</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">epsilon</span><span class="p">):</span>
+    <span class="n">g</span><span class="o">=</span><span class="n">b</span><span class="o">-</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">g</span> <span class="c1"># negative descent direction</span>
+    
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">&lt;=</span><span class="n">epsilon</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">alpha</span><span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">g</span><span class="p">)</span><span class="o">/</span><span class="n">d</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">alpha</span><span class="o">*</span><span class="n">d</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">b</span><span class="o">-</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">beta</span> <span class="o">=</span> <span class="o">-</span><span class="n">d</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">g</span><span class="p">))</span><span class="o">/</span><span class="n">d</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">g</span><span class="o">+</span><span class="n">beta</span><span class="o">*</span><span class="n">d</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">A</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">2.</span><span class="p">])</span>
+    <span class="n">x_</span><span class="p">,</span><span class="n">f_</span><span class="o">=</span><span class="n">linear_conj_desc</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.3</span><span class="p">,</span><span class="o">-</span><span class="mf">2.2</span><span class="p">]),</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="mi">10</span><span class="o">**-</span><span class="mi">5</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x=&quot;</span><span class="p">,</span><span class="n">x_</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">f_=&quot;</span><span class="p">,</span><span class="n">f_</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>最后输出为，</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">4.</span>  <span class="mf">4.</span><span class="p">]</span>
+<span class="n">f_</span><span class="o">=</span> <span class="o">-</span><span class="mf">1.7763568394002505e-15</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="convex_prob.html" title="上一页 页">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">上一页</p>
+            <p class="prev-next-title"><span class="section-number">1. </span>凸优化问题</p>
         </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By SSPUIIP<br/>
+  
+      &copy; Copyright 2022, SSPUIIP.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
       </div>
-    
-        <div id="show_right_sidebar">
-            <p><a class="toggle_right_sidebar" href="#"><span class="icon"><</span><span>Page contents<span></a></p>
-        </div>
-
-        <div id="right_sidebar">
-            <p><a class="toggle_right_sidebar" href="#"><span class="icon">></span><span>Page contents:<span></a></p>
-            <div class="page_toc">
-                <ul>
-<li><a class="reference internal" href="#">2. 优化问题求解</a><ul>
-<li><a class="reference internal" href="#id2">2.1. 下降法</a><ul>
-<li><a class="reference internal" href="#id3">2.1.1. 最速下降法</a></li>
-<li><a class="reference internal" href="#newton">2.1.2. Newton法</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id4">2.2. 梯度投影法</a></li>
-<li><a class="reference internal" href="#id5">2.3. 共轭梯度下降法</a><ul>
-<li><a class="reference internal" href="#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-            </div>
-        </div>
-    
-
-      <div class="clearer"></div>
     </div>
-    <div class="button_nav_wrapper">
-        <div class="button_nav">
-            <div class="left">
-                
-                <a href="convex_prob.html">
-                    <span class="icon"><</span><span><span class="section-number">1. </span>凸优化问题</span></a>
-                
-            </div>
-
-            <div class="right">
-                
-            </div>
-        </div>
-    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
 
 
-    <div class="footer" role="contentinfo">
-        &#169; 版权所有 2022, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.1.1创建。
-    </div>
-
-<p id="theme_credit">Styled using the <a href="https://github.com/piccolo-orm/piccolo_theme">Piccolo Theme</a></p>
   </body>
 </html>
