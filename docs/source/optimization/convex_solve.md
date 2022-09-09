@@ -205,6 +205,131 @@ $$
 
 则迭代$n$次后，$\mathbf{x}_n=\mathbf{x}^*$。
 
+**证明**. 从起始点$\mathbf{x}_0$到$\mathbf{x}^*$的误差$\mathbf{e}_0$为，
 
+$$
+\mathbf{x}^*-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1}
+$$
+
+从起始点$\mathbf{x}_0$到$\mathbf{x}_k$可以表示为，
+
+$$
+\mathbf{x}_k-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{k-1}\mathbf{d}_{k-1}
+$$
+
+$\mathbf{x}_k$的残差为
+
+$$
+\mathbf{g}_k=\mathbf{b}-\mathbf{Ax}_k=\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
+$$
+
+因此可得$\alpha_k$如下，
+
+$$
+\begin{split}
+\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)&=\mathbf{d}_k^\top\mathbf{A}( \alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1})=\alpha_k\mathbf{d}_k^\top\mathbf{Ad}_k\\
+\Rightarrow\alpha_k&=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)}{\mathbf{d}_k^\top\mathbf{Ad}_k}
+\end{split}
+$$
+
+但仍然需要提前知道$\mathbf{x}^*$才能计算$\alpha_k$。下面分析一下分子项。
+
+$$
+\begin{split}
+\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)&=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k+\mathbf{x}_k-\mathbf{x}_0)\\
+&=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
+\end{split}
+$$
+
+上式中，用到了$\mathbf{A}$-共轭性，因此可以得知$\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}_k-\mathbf{x}_0)=0$。
+
+最终有，
+
+$$
+\alpha_k=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)}{\mathbf{d}_k^\top\mathbf{Ad}_k}=\frac{\mathbf{d}_k^\top\mathbf{g}_k}{\mathbf{d}_k^\top\mathbf{Ad}_k}\tag{13}
+$$
+
+##### 共轭梯度法
+
+共轭梯度法是一种共轭方向方法。该方法选择的相继的方向向量被视为方法执行时相继获得的梯度的共轭版本。共轭方向并不是提前指定的，而是在每次序贯迭代时确定的。
+
+假设有$D=\{\mathbf{d}_1,...,\mathbf{d}_n\}$是$n$个$\mathbf{A}$-共轭向量集，则函数$f(\mathbf{x}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_n\mathbf{d}_n)$的最小化可以从$\mathbf{x}_0$出发沿着$\mathbf{d}_1$的方向到达极小值点$\mathbf{x}_1$，然后从$\mathbf{x}_1$出发沿着$\mathbf{d}_2$的方向到达极小值点$\mathbf{x}_2$，如此继续就可以达到函数的最小值点。这种优化方法称之为共轭梯度法。
+
+上一节根据$\mathbf{A}$-共轭已解决了$\alpha_i$的计算问题，剩下的工作就是要解决$\mathbf{d}_i$的计算问题。
+
+线性共轭梯度法一般使用以下规则来确定共轭方向$\mathbf{d}_{k+1}$，
+
+$$
+\mathbf{d}_{k+1}=\mathbf{g}_k+\beta_k\mathbf{d}_{k}\tag{14}
+$$
+
+即，下一个搜索方向是上一个搜索方向与负梯度的线性组合。那么，$\beta_k$怎么确定呢？
+
+显然，根据$\mathbf{A}$-共轭性可知，$\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=0$，因此，对式(14)左右同时乘上$\mathbf{d}_k^\top\mathbf{A}$可得，
+
+$$
+\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}+\beta_k\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}=0
+$$
+
+整理可得，
+
+$$
+\beta_k=-\frac{\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}}\tag{15}
+$$
+
+至此，线性共轭梯度算法的所有参数$(\alpha_i,\beta_i)$已确定。
+
+
+##### 案例
+
+**例1**. 考虑如下二次规划，
+
+$$
+f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{x}
+$$
+
+其中，
+
+$$
+\mathbf{A}=\left[\begin{array}{cc}\frac12&\frac12\\\frac12&1\end{array}\right],\quad\mathbf{b}=\left[\begin{array}{c}0\\2\end{array}\right]
+$$
+
+求函数最小值，以及变量最优解$\mathbf{x}^*$。
+
+```python
+import numpy as np
+
+
+def f(x):
+    return x[0]**2/2+x[0]*x[1]+x[1]**2-2*x[1]
+
+def linear_conj_desc(x,A,b,epsilon):
+    g=b-A.dot(x)
+    d = g # negative descent direction
+    
+    while True:
+        if(np.linalg.norm(g)<=epsilon):
+            return x, f(x)
+
+        alpha= d.dot(g)/d.dot(A.dot(d))
+        x = x + alpha*d
+        g = b-A.dot(x)
+        beta = -d.dot(A.dot(g))/d.dot(A.dot(d))
+        d = g+beta*d
+
+
+if __name__=='__main__':
+    A=np.array([[1/2,1/2],[1/2,1]], dtype=float)
+    b=np.array([0.,2.])
+    x_,f_=linear_conj_desc(np.array([2.3,-2.2]),A,b,10**-5)
+    print("x=",x_)
+    print("\nf_=",f_)
+```
+最后输出为，
+
+```python
+x= [-4.  4.]
+f_= -1.7763568394002505e-15
+```
 
 
