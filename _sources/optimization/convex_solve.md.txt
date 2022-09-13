@@ -280,6 +280,14 @@ $$
 至此，线性共轭梯度算法的所有参数$(\alpha_i,\beta_i)$已确定。
 
 
+对于二次凸函数，共轭梯度法的计算步骤如下：
+
+1. 给定初使点$\mathbf{x}_0,k=0$
+2. 计算梯度$\mathbf{g}_k=-\nabla f(\mathbf{x}_k)$，若$\lVert\mathbf{g}_k\rVert=0$，则停止计算，否则下一步
+3. 构造搜索方向$\mathbf{d}_k=\mathbf{g}_k+\alpha_{k-1}\mathbf{d}_{k-1}$
+4. 求下一个迭代点$\mathbf{x}_{k+1}=\mathbf{x}_k+\beta_k\mathbf{d}_k$
+5. 若$k=n$，则停止计算，返回点$\mathbf{x}_k$,否则继续回到第2步。
+
 ##### 案例
 
 **例1**. 考虑如下二次规划，
@@ -331,5 +339,44 @@ if __name__=='__main__':
 x= [-4.  4.]
 f_= -1.7763568394002505e-15
 ```
+
+
+##### 一般函数的共轭梯度法
+
+一般函数的共轭梯度与二次函数梯度法的主要区别在于：步长$\alpha_i$不能再用原有方式计算须使用其它方法来确定；凡是用到矩阵$\mathbf{A}$的地方都需要用当前迭代点的Hessian矩阵来替代。这样就可以将共轭梯度法扩展到一般函数。
+
+一般来说，使用这种方法来求任意函数的极小点，用有限步迭代是达不到的。迭代的方案可以有：直接延续使用原有共轭方向构造；或者$n$步作为一轮，每轮结束后取一次最速下降方向，开始下一轮。
+
+对于一般函数，共轭梯度法的计算步骤如下：
+
+1. 给定初使点$\mathbf{x}_0$，允许误差$\epsilon>0$。
+
+$$
+\mathbf{y}_0=\mathbf{x}_0,\mathbf{d}_0=-\nabla f(\mathbf{y}_0),k=1,j=1
+$$
+
+2. 若$\lVert\nabla f(\mathbf{y}_j)\rVert<\epsilon$则停止计算。否则一维搜索，求$\alpha_j$满足下式，
+
+$$
+f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alpha\mathbf{d}_j)
+$$
+
+令
+
+$$
+\mathbf{y}_{j+1}=\mathbf{y}_j+\alpha_j\mathbf{d}_j
+$$
+
+3. 如果$j<n$，则进行步骤4；否则进行步骤5.
+
+4. 令$\mathbf{d}_{j+1}=-\nabla f(\mathbf{y}_{j+1})+\beta_j\mathbf{d}_j$，$j=j+1;$转步骤2。 其中，
+
+$$
+\beta_j=\frac{\lVert\nabla f(\mathbf{y}_{j+1})\rVert^2}{\lVert\nabla f(\mathbf{y}_{j})\rVert^2}
+$$
+
+5. 令$\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1$转步骤2.
+
+
 
 

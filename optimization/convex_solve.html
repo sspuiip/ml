@@ -304,6 +304,11 @@ title="Print to PDF"
      2.3.3. 案例
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     2.3.4. 一般函数的共轭梯度法
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -369,6 +374,11 @@ title="Print to PDF"
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id7">
      2.3.3. 案例
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id8">
+     2.3.4. 一般函数的共轭梯度法
     </a>
    </li>
   </ul>
@@ -615,6 +625,14 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \beta_k=-\frac{\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}}\tag{15}
 \]</div>
 <p>至此，线性共轭梯度算法的所有参数<span class="math notranslate nohighlight">\((\alpha_i,\beta_i)\)</span>已确定。</p>
+<p>对于二次凸函数，共轭梯度法的计算步骤如下：</p>
+<ol class="arabic simple">
+<li><p>给定初使点<span class="math notranslate nohighlight">\(\mathbf{x}_0,k=0\)</span></p></li>
+<li><p>计算梯度<span class="math notranslate nohighlight">\(\mathbf{g}_k=-\nabla f(\mathbf{x}_k)\)</span>，若<span class="math notranslate nohighlight">\(\lVert\mathbf{g}_k\rVert=0\)</span>，则停止计算，否则下一步</p></li>
+<li><p>构造搜索方向<span class="math notranslate nohighlight">\(\mathbf{d}_k=\mathbf{g}_k+\alpha_{k-1}\mathbf{d}_{k-1}\)</span></p></li>
+<li><p>求下一个迭代点<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1}=\mathbf{x}_k+\beta_k\mathbf{d}_k\)</span></p></li>
+<li><p>若<span class="math notranslate nohighlight">\(k=n\)</span>，则停止计算，返回点<span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>,否则继续回到第2步。</p></li>
+</ol>
 </section>
 <section id="id7">
 <h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
@@ -663,6 +681,42 @@ f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{
 <span class="n">f_</span><span class="o">=</span> <span class="o">-</span><span class="mf">1.7763568394002505e-15</span>
 </pre></div>
 </div>
+</section>
+<section id="id8">
+<h3><span class="section-number">2.3.4. </span>一般函数的共轭梯度法<a class="headerlink" href="#id8" title="永久链接至标题">#</a></h3>
+<p>一般函数的共轭梯度与二次函数梯度法的主要区别在于：步长<span class="math notranslate nohighlight">\(\alpha_i\)</span>不能再用原有方式计算须使用其它方法来确定；凡是用到矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的地方都需要用当前迭代点的Hessian矩阵来替代。这样就可以将共轭梯度法扩展到一般函数。</p>
+<p>一般来说，使用这种方法来求任意函数的极小点，用有限步迭代是达不到的。迭代的方案可以有：直接延续使用原有共轭方向构造；或者<span class="math notranslate nohighlight">\(n\)</span>步作为一轮，每轮结束后取一次最速下降方向，开始下一轮。</p>
+<p>对于一般函数，共轭梯度法的计算步骤如下：</p>
+<ol class="arabic simple">
+<li><p>给定初使点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>，允许误差<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>。</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y}_0=\mathbf{x}_0,\mathbf{d}_0=-\nabla f(\mathbf{y}_0),k=1,j=1
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>若<span class="math notranslate nohighlight">\(\lVert\nabla f(\mathbf{y}_j)\rVert&lt;\epsilon\)</span>则停止计算。否则一维搜索，求<span class="math notranslate nohighlight">\(\alpha_j\)</span>满足下式，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alpha\mathbf{d}_j)
+\]</div>
+<p>令</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{y}_{j+1}=\mathbf{y}_j+\alpha_j\mathbf{d}_j
+\]</div>
+<ol class="arabic simple" start="3">
+<li><p>如果<span class="math notranslate nohighlight">\(j&lt;n\)</span>，则进行步骤4；否则进行步骤5.</p></li>
+<li><p>令<span class="math notranslate nohighlight">\(\mathbf{d}_{j+1}=-\nabla f(\mathbf{y}_{j+1})+\beta_j\mathbf{d}_j\)</span>，<span class="math notranslate nohighlight">\(j=j+1;\)</span>转步骤2。 其中，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\beta_j=\frac{\lVert\nabla f(\mathbf{y}_{j+1})\rVert^2}{\lVert\nabla f(\mathbf{y}_{j})\rVert^2}
+\]</div>
+<ol class="arabic simple" start="5">
+<li><p>令<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1\)</span>转步骤2.</p></li>
+</ol>
 </section>
 </section>
 </section>
