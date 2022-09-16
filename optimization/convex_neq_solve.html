@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. 优化问题求解(2) &mdash; MLBOOK 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="2. 优化问题求解(1)" href="convex_solve.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MLBOOK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. 优化问题求解(2)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">3.1. 内点法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.1.1. 障碍法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLBOOK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><span class="section-number">3. </span>优化问题求解(2)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/optimization/convex_neq_solve.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="永久链接至标题"></a></h1>
+<p>  对于不含有不等式约束的优化问题，可以先将不等式约束问题转化为等式约束问题再求解。</p>
+<section id="id2">
+<h2><span class="section-number">3.1. </span>内点法<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
+<section id="id3">
+<h3><span class="section-number">3.1.1. </span>障碍法<a class="headerlink" href="#id3" title="永久链接至标题"></a></h3>
+<p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{equation}
+\begin{split}
+\min \quad &amp;f_0(\mathbf{x})\\
+s.t.\quad &amp;f_i(\mathbf{x})\leq 0,i=1,2,...,N\\
+&amp;\mathbf{Ax}=\mathbf{b}
+\end{split}
+\end{equation}
+\end{split}\]</div>
+<p>可以转化为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{equation}
+\begin{split}
+\min\quad &amp;f_0(\mathbf{x})+\sum_{i=1}^N I_{-}(f_i(\mathbf{x}))\\
+s.t.\quad &amp;\mathbf{Ax}=0\\
+\end{split}
+\end{equation}
+\end{split}\]</div>
+<p>其中<span class="math notranslate nohighlight">\(I_{-}(u)\)</span>是指示性函数，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array} \right.
+\end{split}\]</div>
+<p>这样，我们就可以转化为等式约束的优化问题，但<span class="math notranslate nohighlight">\(I_{-}(u)\)</span>不可微，因此不能使用需要梯度的下降方法。</p>
+<ul class="simple">
+<li><p><strong>对数障碍</strong></p></li>
+</ul>
+<p>  指示函数不可微，可以使用一个近似的可微函数来代替：</p>
+<div class="math notranslate nohighlight">
+\[
+  \hat{I}_{-}(u)=-(1/t)\log(-u),\quad t&gt;0
+  \]</div>
+<p><img alt="barier function" src="../_images/barier_fun.png" /></p>
+<p>  观察函数图像，可以发现对数障碍函数是非减函数，且当<span class="math notranslate nohighlight">\(u&gt;0\)</span>时函数取值为<span class="math notranslate nohighlight">\(\infty\)</span>。因此，定义对数障碍函数为,</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(\mathbf{x})=-\sum_{i=1}^m\log(-f_i(\mathbf{x}))
+\]</div>
+<p>  对数障碍函数的梯度和Hessian矩阵为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}
+  \begin{split}
+  \nabla \phi(\mathbf{x})&amp;=\sum_{i=1}^m\frac{1}{-f_i(\mathbf{x})}\nabla f_i(\mathbf{x})\\
+  \nabla^2\phi(\mathbf{x})&amp;=\sum_{i=1}^m\frac{1}{f_i(\mathbf{x})^2}\nabla f_i(\mathbf{x})\nabla f_i(\mathbf{x})^\top+\sum_{i=1}^m \frac{1}{-f_i(\mathbf{x})}\nabla^2 f_i(\mathbf{x})
+  \end{split}
+  \end{equation}
+  \end{split}\]</div>
+<p>  用<span class="math notranslate nohighlight">\(\hat{I}_{-}\)</span>替换<span class="math notranslate nohighlight">\(I_{-}\)</span>可得到以下近似，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}
+  \begin{split}
+  \min\limits_{\mathbf{x}}\quad &amp;f_0(\mathbf{x})+\sum_{i=1}^m-(1/t)\log(-f_i(\mathbf{x}))\\
+  s.t.\quad &amp;\mathbf{A}\mathbf{x}=\mathbf{b}
+  \end{split}
+  \end{equation}
+  \end{split}\]</div>
+<p>  由于<span class="math notranslate nohighlight">\(-(1/t)\log(-u)\)</span>是<span class="math notranslate nohighlight">\(u\)</span>的单增凸函数，上式上的目标函数是可微凸函数。假定恰当的闭性条件成立，则可以用Newton方法来求解。上式等价于以下问题，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}
+  \begin{split}
+  \min\quad &amp;tf_0(\mathbf{x})+\phi(\mathbf{x})\\
+  s.t.\quad &amp;\mathbf{A}\mathbf{x}=\mathbf{b}
+  \end{split}
+  \end{equation}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><strong>Central Path</strong></p></li>
+</ul>
+<p>  针对不同的<span class="math notranslate nohighlight">\(t&gt;0\)</span>值，我们定义<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>为相应优化问题的解，那么，Central path就是指所有点<span class="math notranslate nohighlight">\(\mathbf{x}^*(t),t&gt;0\)</span>的集合，其中的点被称为central points。所有中心路径上的点由以下充要条件所界定：<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>是严格可行的，即满足，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{Ax}^*(t)=\mathbf{b},\quad f_i(\mathbf{x}^*(t))&lt;0,\quad i=1,...,m
+\]</div>
+<p>并且存在<span class="math notranslate nohighlight">\(\hat{\nu}\in\mathbb{R}^p\)</span>使得（<strong>中心路径条件</strong>）</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}
+  \begin{split}
+  0&amp;=t\nabla f_0(\mathbf{x}^*(t))+\nabla \phi(\mathbf{x}^*(t))+A^\top\hat{\nu}\\
+  &amp;=t\nabla f_0(\mathbf{x}^*(t))+\sum_{i=1}^m\frac{1}{-f_i(\mathbf{x}^*(t))}\nabla f_i(\mathbf{x}^*(t))+A^T\hat{\nu}
+  \end{split}
+  \end{equation}
+  \end{split}\]</div>
+<p>成立。</p>
+<ul class="simple">
+<li><p><strong>中心路径条件的KKT条件解释</strong>。点<span class="math notranslate nohighlight">\(x\)</span>等于<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>的充要条件是存在<span class="math notranslate nohighlight">\(\lambda,\nu\)</span>满足</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{equation}
+    \begin{split}
+    Ax=b,f_i(\mathbf{x})&amp;\leq 0,i=1,...,m\\
+    \lambda&amp;\succeq 0\\
+    -\lambda_if_i(\mathbf{x})&amp;=1/t,i=1,...,m\\
+    \nabla f_0(\mathbf{x})+\sum_{i=1}^m\lambda_i\nabla f_i(\mathbf{x})+A^T\nu&amp;=0\\
+    \end{split}
+    \end{equation}
+\end{split}\]</div>
+<p>  KKT条件和中心条件的唯一不同在于<span class="math notranslate nohighlight">\(\lambda_if_i(\mathbf{x})=0\)</span>被条件<span class="math notranslate nohighlight">\(-\lambda_if_i(\mathbf{x})=1/t\)</span>所替换。从上式可以导出中心路径的一个重要性质：<strong>每次个中心点产生对偶可行解，因而给出最优值<span class="math notranslate nohighlight">\(\mathbf{p}^*\)</span>的一个下界</strong>。</p>
+<p>  解释：先定义</p>
+<div class="math notranslate nohighlight">
+\[
+  \lambda^*(t)=-\frac{1}{tf_i(\mathbf{x}^*(t))},i=1,...,m,\quad \nu^*(t)=\hat{\nu}/t
+\]</div>
+<p>，那么<span class="math notranslate nohighlight">\(\lambda^*(t)\)</span>和<span class="math notranslate nohighlight">\(\nu^*(t)\)</span>是对偶可行解。原式可以表示成，</p>
+<div class="math notranslate nohighlight">
+\[
+  \nabla f_0(\mathbf{x}^*(t))+\sum_{i=1}^m \lambda^*(t)\nabla f_i(\mathbf{x}^*(t))+\mathbf{A}^\top\nu^*(t)
+  \]</div>
+<p>可以看出，<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>使<span class="math notranslate nohighlight">\(\lambda=\lambda^*(t),\nu=\nu^*(t)\)</span>时的Lagrange函数，</p>
+<div class="math notranslate nohighlight">
+\[
+  L(\mathbf{x},\lambda,\nu)=f_0(\mathbf{x})+\sum_{i=1}^m\lambda f_i(\mathbf{x})+\nu^\top(\mathbf{A}\mathbf{x}-b)
+  \]</div>
+<p>达到最小，这意味着和<span class="math notranslate nohighlight">\(\nu^*(t)\)</span>是对偶可行解。因此，对偶函数是有限的，并且，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}
+  \begin{split}
+  g(\lambda^*(t),\nu^*(t))&amp;=f_0(\mathbf{x}^*(t))+\sum_{i=1}^m\lambda_i^*f_i(\mathbf{x})+\nu^*(t)^\top(\mathbf{A}\mathbf{x}^*(t)-b)\\
+  &amp;=f_0(\mathbf{x}^*(t))-m/t
+  \end{split}
+  \end{equation}
+  \end{split}\]</div>
+<p>这表明<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>和对偶可行解<span class="math notranslate nohighlight">\(\lambda^*(t),\nu^*(t)\)</span>之间的对偶间隙就是<span class="math notranslate nohighlight">\(m/t\)</span>。作为一个重要的结果，我们有，</p>
+<div class="math notranslate nohighlight">
+\[
+  f_0(\mathbf{x}^*(t))-p^*\leq m/t
+  \]</div>
+<p>即<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>是和最优值偏差在<span class="math notranslate nohighlight">\(m/t\)</span>之内的次优解。也证实了<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>随着<span class="math notranslate nohighlight">\(t\rightarrow \infty\)</span>而收敛于最优解。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="convex_solve.html" class="btn btn-neutral float-left" title="2. 优化问题求解(1)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2022, SSPUIIP.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
