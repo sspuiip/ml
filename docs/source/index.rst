@@ -23,6 +23,7 @@
 
    optimization/convex_prob.md
    optimization/convex_solve.md
+   optimization/convex_neq_solve.md
    
 
 
