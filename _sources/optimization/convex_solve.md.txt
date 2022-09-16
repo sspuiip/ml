@@ -378,5 +378,99 @@ $$
 5. 令$\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1$转步骤2.
 
 
+#### Newton方法
 
++ **Newton步径**.  对于$x\in \mathbf{dom}f$，我们称向量
+
+  $$
+  \Delta \mathbf{x}_{nt}=-\nabla^2f(\mathbf{x})^{-1}\nabla f(\mathbf{x})
+  $$
+
+  为$f$在$x$处的Newton步径。该步径是下降方向（除非$\mathbf{x}$是最优点）。由$\nabla^2f( \mathbf{x})$的正定性可知，除非$\nabla f( \mathbf{x})=0$，否则就有，$\nabla f( \mathbf{x})^\top\Delta  \mathbf{x}_{nt}=-\nabla f( \mathbf{x})^\top\nabla^2f( \mathbf{x})^{-1}\nabla f( \mathbf{x})<0$。
+
+|Newton方法(阻尼Newton)|
+  |:---|
+  |1. 给定初使点$x\in\mathbf{dom}f$，误差阈值$\epsilon>0。$<br />2. 重复进行<br />&emsp;&emsp;2.1 计算Newton步径和减量。$\Delta x_{nt}:=-\nabla^2 f(x)^{-1}\nabla f(x),\lambda^2:=\nabla f(x)^\top\nabla^2f(x)^{-1}\nabla f(x)$。<br />&emsp;&emsp;2.2 停止准则。如果$\lambda^2/2\leq\epsilon$，退出。<br />&emsp;&emsp;2.3 直线搜索。通过精确或回溯直线搜索确定步长$t$。<br />&emsp;&emsp;2.4 修改。 $x:=x+t\Delta x_{nt}$。<br />直到满足停止准则。|
+
+  这实际上是通用下降方法，只是采用Newton步径为搜索方向。
+
+  + **Newton步的由来**. 函数$f(\mathbf{x})$在第$n$步点$\mathbf{x}_n$处Taylor展开至第2阶近似，
+
+  $$
+  f(\mathbf{x})=f(\mathbf{x}_n)+\nabla f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)+\frac{1}{2}\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)^2
+  $$
+
+  使用$f(\mathbf{x})$的最小点为新的探索点$\mathbf{x}_{n+1}$，因此，对式(67)左右同时求导，并令：
+
+  $$
+  \nabla f(\mathbf{x})=\nabla f(\mathbf{x}_n)+\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)=0
+  $$
+
+  从而求得迭代公式：
+  
+  $$
+  \mathbf{x}=\mathbf{x}_n-\nabla^2 f(\mathbf{x}_n)^{-1}\nabla f(\mathbf{x}_n)=\mathbf{x}_n+\Delta \mathbf{x}_{nt}
+  $$
+
+  + Newton方法**示例**
+
+```python
+import numpy as np
+a=2
+b=3
+c=4
+d=5
+def f(x):
+    return a*x**3+b*x**2+c*x+d
+def nablaf(x):
+    return 3*a*x**2+2*b*x+c
+def nabla2f(x):
+    return 3*2*a*x+2*b
+def newton(x=10000,epsilon=1e-4,t=1):
+    while True:
+        lambda2=nablaf(x)/(nabla2f(x)+1e-4)*nablaf(x)
+        newton_step=-nablaf(x)/(nabla2f(x)+1e-4)
+        if lambda2/2 <= epsilon:
+            return x
+        x=x+newton_step
+        print("x=(%10.2f)\tf(x)=(%10.2f\tlambda2=(%10.2f))" %(x,f(x),lambda2/2))   
+
+if __name__ == "__main__":
+    x=10000
+    y=newton(x)
+    print("x=%10.2f"%y)
+```
+
+
++ 使用Newton方法求方程的解
+
+```c
+//使用Newton方法求ax^3+bx^2+cx+d=0的解
+#include <iostream> 
+#include <cmath>
+using namespace std;
+double newton(double, double, double, double, double);
+int main()
+{
+	double a,b,c,d;
+	double x=10000.0;
+	cout<<"请依次输入方程4个系数：\n";
+	cin>>a>>b>>c>>d;
+	x=diedai(a,b,c,d,x);
+	cout<<"x="<<x<<endl;
+	cout<<"a^2="<<pow(a,3);
+	return 0;
+}
+double newton(double a, double b, double c, double d, double x)
+{
+	int cnt=0;
+	while(abs(a*pow(x,3)+b*pow(x,2)+c*x+d)>0.000001){
+		x=x-(a*pow(x,3)+b*pow(x,2)+c*x+d)/(3*a*pow(x,2)+2*b*x+c);
+		cnt++;
+		cout<<"第"<<cnt<<"次迭代\tx="<<x<<"\t函数f(x)="<<a*pow(x,3)+b*pow(x,2)+c*x+d<<endl;
+	}
+	
+	return x;
+}
+```
 
