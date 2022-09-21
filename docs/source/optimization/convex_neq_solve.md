@@ -185,4 +185,95 @@ $$
   \end{equation}
   $$
   
- 
+ ##### **原对偶内点法**
+
+ &emsp; &emsp;原对偶内点法和障碍方法非常相似，但也有一些差别。
+  + 仅有一层迭代，没有障碍方法的内部迭代和外部迭代的区分。每次迭代时同时更新原对偶变量。
+  + 通过将Newton方法应用于修改的KKT方程（即对障碍中心点问题的最优性条件）确定原对偶内点法的搜索方向。原对偶搜索方向和障碍方法导出的搜索方向相似，但不完全相同。
+  + 在原对偶内点法中，原对偶迭代值不需要是可行的。
+
+ &emsp; &emsp;原对偶方法经常比障碍方法有效，特别是高精度场合，因为它们可以展现超线性收敛性质。原对偶内点法相对于障碍方法所具有的另一个优点是，它们可以有效处理可行但不严格可行的问题。
+
+###### **原对偶搜索方向**
+
+&emsp;&emsp;如同障碍方法，我们从修改KKT条件开始，该条件可以表述为$r_t(\mathbf{x},\lambda,\nu)=0, t>0$，其中
+
+$$
+r_t(\mathbf{x},\mathbf{\lambda,\nu})=\begin{bmatrix} \nabla f_0(\mathbf{x})+D\mathbf{f}(\mathbf{x})^\top\mathbf{\lambda}+\mathbf{A}^\top\mathbf{\nu}\\-\mathbf{diag}(\mathbf{\lambda})\mathbf{f}(\mathbf{x})-(1/t)\mathbf{1}\\\mathbf{Ax-b} \end{bmatrix}
+$$
+
+此处的$\mathbf{f}:\mathbb{R}^n\rightarrow\mathbb{R}^m$和它的导数矩阵$D\mathbf{f}$由下式给出，
+
+$$
+\mathbf{f}(\mathbf{x})=\begin{bmatrix} f_1(\mathbf{x})\\ \vdots\\f_m(\mathbf{x})\end{bmatrix},\quad D\mathbf{f}=\begin{bmatrix} \nabla f_1(\mathbf{x})^\top\\ \vdots\\\nabla f_m(\mathbf{x})^\top\end{bmatrix}
+$$
+
+&emsp;&emsp;如果$\mathbf{x,\lambda,\nu}$满足$r_t(\mathbf{x,\lambda,\nu})=0$（且$f_i(\mathbf{x})<0)$，则$\mathbf{x}=\mathbf{x}^*(t),\lambda=\lambda^*(t),\nu=\nu^*(t)$。特别地$\mathbf{x}$是**原可行的**，$\lambda,\nu$是**对偶可行的**，对偶间隙为$m/t$。
+
+&emsp;&emsp;我们将$r_t$的成分命名为如下：
+
+1. **对偶残差**
+
+$$
+r_{dual}=\nabla f_0(\mathbf{x})+D\mathbf{f}(\mathbf{x})^\top\lambda+\mathbf{A}^\top\nu
+$$
+
+2. **原残差**
+
+$$
+r_{pri}=\mathbf{Ax-b}
+$$
+
+3. **中心残差**(修改的互补性条件)
+
+$$
+r_{cent}=-\mathbf{diag}(\lambda)\mathbf{f}(\mathbf{x})-(1/t)\mathbf{1}
+$$
+
++ 先固定$t$，考虑从满足$\mathbf{f}(\mathbf{x})\prec 0,\lambda \succ0$的点$(\mathbf{x},\lambda,\nu)$开始求解非线性方程$r_t(\mathbf{x},\lambda,\nu)=0$的Newton步径。将当前点和Newton步径分别记为，
+
+  $$
+  \mathbf{y}=(\mathbf{x},\lambda,\nu),\quad \Delta \mathbf{y}=(\Delta \mathbf{x},\Delta\lambda,\Delta \nu)
+  $$
+
+  决定Newton步径的线性方程为，
+
+  $$
+  r_t(\mathbf{y}+\Delta \mathbf{y})\approx r_t(\mathbf{y})+Dr_t(\mathbf{y})\Delta \mathbf{y}=0
+  $$
+
+  即，$\Delta \mathbf{y}=-Dr_t(\mathbf{y})^{-1}r_t(\mathbf{y})$。于是我们有，
+
+  $$
+  \begin{bmatrix} \nabla^2 f_0(\mathbf{x})+\sum_{i=1}^m\lambda_i\nabla^2f_i(\mathbf{x})&D\mathbf{f}(\mathbf{x})^\top&\mathbf{A}^\top\\
+  -\mathbf{diag}(\lambda)D\mathbf{f}(\mathbf{x})&-\mathbf{diag}(\mathbf{f}(\mathbf{x}))&0\\
+  \mathbf{A}&0&0
+  \end{bmatrix}
+  \begin{bmatrix} 
+  \Delta \mathbf{x}\\ \Delta\lambda\\ \Delta\nu
+  \end{bmatrix}
+  =-\begin{bmatrix}
+  r_{dual}\\r_{cent}\\r_{pri}
+  \end{bmatrix}
+  $$
+
+  所谓**原对偶搜索方向**$\Delta y_{pd}=(\Delta x_{pd},\Delta\lambda_{pd},\Delta\nu_{pd})$就是上式的解。
+
+###### **代理对偶间隙**
+
+&emsp;&emsp;在原-对偶内点法中，迭代点$\mathbf{x}_k,\lambda_k,\nu_k$不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤$k$计算对偶间隙$\eta_k$。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，
+
+$$
+\hat{\eta}(\mathbf{x},\lambda)=-\mathbf{f}(\mathbf{x})^\top\lambda
+$$
+
+该代理间隙有可能成为对偶间隙，当$\mathbf{x}$是原问题可行且$\lambda,\nu$是对偶可行时（即，$r_{\mathrm{pri}}=0 \wedge r_{\mathrm{dual}}=0$）。注意：参数$t$对应的代理间隙为$\hat{\eta}=m/\hat{\eta}$.
+
+
+
++ **原-对偶方法**
+  
+  | 算法：原-对偶方法                                               |
+  | :----------------------------------------------------------- |
+  | <br />1. 给定满足$f_1(\mathbf{x})<0,\cdots f_m(\mathbf{x})<0，\lambda\succ 0, \mu>1$，误差阈值$\epsilon_{\mathrm{feas}}>0, \epsilon>0。$<br />2. 重复进行<br />&emsp;&emsp;2.1 设置$t$。$t:= \mu m/\hat{\eta}.$<br />&emsp;&emsp;2.2 计算原-对偶方法$\Delta\mathbf{y}_{pd}$<br />&emsp;&emsp;2.3 线性搜索并更新。求得步长$s>0$，并设置$\mathbf{y}=\mathbf{y}+s\Delta\mathbf{y}_{\mathrm{pd}}$<br />3 until ($\lVert r_{\mathrm{pri}}\rVert_2\le \epsilon_{\mathrm{feas}}, \lVert r_{\mathrm{dual}}\rVert_2\le \epsilon_{\mathrm{feas}}$ and $\hat{\eta}\le\epsilon$).<br /> |
+  
