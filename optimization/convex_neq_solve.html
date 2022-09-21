@@ -227,6 +227,35 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   f_0(\mathbf{x}^*(t))-p^*\leq m/t
   \]</div>
 <p>即<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>是和最优值偏差在<span class="math notranslate nohighlight">\(m/t\)</span>之内的次优解。也证实了<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>随着<span class="math notranslate nohighlight">\(t\rightarrow \infty\)</span>而收敛于最优解。</p>
+<ul class="simple">
+<li><p><strong>障碍函数方法</strong></p></li>
+</ul>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-left head"><p>算法：障碍法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><br />1. 给定严格可行点<span class="math notranslate nohighlight">\(\mathbf{x}，t:=t^{(0)},\mu&gt;1\)</span>，误差阈值<span class="math notranslate nohighlight">\(\epsilon&gt;0。\)</span><br />2. 重复进行<br />  2.1 中心点步骤。从<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>开始，在<span class="math notranslate nohighlight">\(\mathbf{Ax}=\mathbf{b}\)</span>的约束下极小化<span class="math notranslate nohighlight">\(tf_0+\phi(\mathbf{x})\)</span>，最终确定<span class="math notranslate nohighlight">\(\mathbf{x}^*(t)\)</span>（<span class="math notranslate nohighlight">\(\color{red}{极小化二次可微凸函数：Newton方法求解}\)</span>)。<br />  2.2 改进。<span class="math notranslate nohighlight">\(\mathbf{x}:=\mathbf{x}^*(t)\)</span>。<br />  2.3 停止准则。如果<span class="math notranslate nohighlight">\(m/t&lt;\epsilon\)</span>则退出。<br />  2.4 增加<span class="math notranslate nohighlight">\(t\)</span>。 <span class="math notranslate nohighlight">\(t:=\mu t\)</span>。<br /></p></td>
+</tr>
+</tbody>
+</table>
+<p>  Newton步径<span class="math notranslate nohighlight">\(\Delta \mathbf{x}_{nt}\)</span>以及相关的对偶变量由以下线性方程确定，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \begin{equation}\begin{bmatrix}
+  t\nabla^2f_0(\mathbf{x})+\nabla^2\phi(\mathbf{x})&amp;\mathbf{A}^\top\\
+  \mathbf{A}&amp;0\\
+  \end{bmatrix}
+  \begin{bmatrix}
+  \Delta \mathbf{x}_{nt}\\
+  \nu_{nt}
+  \end{bmatrix}
+  =-\begin{bmatrix}
+  t\nabla f_0(\mathbf{x})+\nabla\phi(\mathbf{x})\\0
+  \end{bmatrix}
+  \end{equation}
+  \end{split}\]</div>
 </section>
 </section>
 </section>

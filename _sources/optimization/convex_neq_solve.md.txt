@@ -161,3 +161,28 @@ $$
   $$
 
   即$\mathbf{x}^*(t)$是和最优值偏差在$m/t$之内的次优解。也证实了$\mathbf{x}^*(t)$随着$t\rightarrow \infty$而收敛于最优解。
+
+  + **障碍函数方法**
+  
+  | 算法：障碍法                                               |
+  | :----------------------------------------------------------- |
+  | <br />1. 给定严格可行点$\mathbf{x}，t:=t^{(0)},\mu>1$，误差阈值$\epsilon>0。$<br />2. 重复进行<br />&emsp;&emsp;2.1 中心点步骤。从$\mathbf{x}$开始，在$\mathbf{Ax}=\mathbf{b}$的约束下极小化$tf_0+\phi(\mathbf{x})$，最终确定$\mathbf{x}^*(t)$（$\color{red}{极小化二次可微凸函数：Newton方法求解}$)。<br />&emsp;&emsp;2.2 改进。$\mathbf{x}:=\mathbf{x}^*(t)$。<br />&emsp;&emsp;2.3 停止准则。如果$m/t<\epsilon$则退出。<br />&emsp;&emsp;2.4 增加$t$。 $t:=\mu t$。<br /> |
+
+&emsp;&emsp;Newton步径$\Delta \mathbf{x}_{nt}$以及相关的对偶变量由以下线性方程确定，
+
+  $$
+  \begin{equation}\begin{bmatrix}
+  t\nabla^2f_0(\mathbf{x})+\nabla^2\phi(\mathbf{x})&\mathbf{A}^\top\\
+  \mathbf{A}&0\\
+  \end{bmatrix}
+  \begin{bmatrix}
+  \Delta \mathbf{x}_{nt}\\
+  \nu_{nt}
+  \end{bmatrix}
+  =-\begin{bmatrix}
+  t\nabla f_0(\mathbf{x})+\nabla\phi(\mathbf{x})\\0
+  \end{bmatrix}
+  \end{equation}
+  $$
+  
+ 
