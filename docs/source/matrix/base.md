@@ -260,14 +260,44 @@ Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问
 
 ###### 核范数
 
-核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个凸优化问题，所以这种等价可直接降低求解各类低秩问题的难度。
+核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个**凸优化**问题，所以这种等价可直接降低求解各类**低秩问题**的难度。
 
 **定义1** (核范数). 给定任意矩阵$\mathbf{A}\in \mathbb{R}^{m\times n}$, 以及$r=\min(m,n)$，且矩阵$\mathbf{A}$的奇异值为$\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r$，则矩阵$\mathbf{A}$的核范数为，
 
 $$
 \lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r
+$$
+
+通过SVD分解，即$\mathbf{X}=\mathbf{U\Sigma V}^\top$，则有
 
 $$
+\begin{split}
+\lVert \mathbf{X} \rVert_* &= \mathrm{tr}\left(\sqrt{\mathbf{X}^\top\mathbf{X}}\right)\\
+&=\mathrm{tr}(\mathbf{\Sigma})
+\end{split}
+$$
+
+
+
+- **核范数的偏导数**
+
+$$
+\begin{split}
+d\lVert \mathbf{X} \rVert_*&=d\mathrm{tr}(\mathbf{\Sigma})\\
+&=\mathrm{tr}d(\mathbf{\Sigma})\\
+&=\mathrm{tr}(\mathbf{U}^\top d\mathbf{X}\mathbf{V})\\
+&=\mathrm{tr}(\mathbf{V}\mathbf{U}^\top d\mathbf{X})\\
+\end{split}
+$$
+
+由此可知，
+
+$$
+\frac{\partial \lVert \mathbf{X} \rVert_*}{\partial \mathbf{X}}=\mathbf{UV}^\top
+$$
+
+注意：$d\mathbf{X}=\mathbf{U}(d\mathbf{\Sigma})\mathbf{V}^\top$可得到，$d\mathbf{\mathbf{\Sigma}}=\mathbf{U}^\top (d\mathbf{X})\mathbf{V}$。
+
 
 ###### Schatten范数
 
