@@ -344,11 +344,38 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <p>Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问题：压缩感知、低秩矩阵与张量恢复等。</p>
 <section id="id14">
 <h4><span class="section-number">1.4.5.1. </span>核范数<a class="headerlink" href="#id14" title="永久链接至标题"></a></h4>
-<p>核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个凸优化问题，所以这种等价可直接降低求解各类低秩问题的难度。</p>
+<p>核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个<strong>凸优化</strong>问题，所以这种等价可直接降低求解各类<strong>低秩问题</strong>的难度。</p>
 <p><strong>定义1</strong> (核范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n)\)</span>，且矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的核范数为，</p>
 <div class="math notranslate nohighlight">
 \[
-\lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r\]</div>
+\lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r
+\]</div>
+<p>通过SVD分解，即<span class="math notranslate nohighlight">\(\mathbf{X}=\mathbf{U\Sigma V}^\top\)</span>，则有</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\lVert \mathbf{X} \rVert_* &amp;= \mathrm{tr}\left(\sqrt{\mathbf{X}^\top\mathbf{X}}\right)\\
+&amp;=\mathrm{tr}(\mathbf{\Sigma})
+\end{split}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><strong>核范数的偏导数</strong></p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+d\lVert \mathbf{X} \rVert_*&amp;=d\mathrm{tr}(\mathbf{\Sigma})\\
+&amp;=\mathrm{tr}d(\mathbf{\Sigma})\\
+&amp;=\mathrm{tr}(\mathbf{U}^\top d\mathbf{X}\mathbf{V})\\
+&amp;=\mathrm{tr}(\mathbf{V}\mathbf{U}^\top d\mathbf{X})\\
+\end{split}
+\end{split}\]</div>
+<p>由此可知，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \lVert \mathbf{X} \rVert_*}{\partial \mathbf{X}}=\mathbf{UV}^\top
+\]</div>
+<p>注意：<span class="math notranslate nohighlight">\(d\mathbf{X}=\mathbf{U}(d\mathbf{\Sigma})\mathbf{V}^\top\)</span>可得到，<span class="math notranslate nohighlight">\(d\mathbf{\mathbf{\Sigma}}=\mathbf{U}^\top (d\mathbf{X})\mathbf{V}\)</span>。</p>
 </section>
 <section id="id15">
 <h4><span class="section-number">1.4.5.2. </span>Schatten范数<a class="headerlink" href="#id15" title="永久链接至标题"></a></h4>
