@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. 子空间分析 &mdash; MLBOOK 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/translations.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" />
+    <link rel="prev" title="4. 矩阵微分" href="matrixdiff.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> MLBOOK
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="搜索文档" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
+              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. 子空间分析</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">5.1. 什么是子空间</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">5.1.1. 概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">5.1.2. 正交补</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MLBOOK</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="页面导航">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active"><span class="section-number">5. </span>子空间分析</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/matrix/subspace.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">5. </span>子空间分析<a class="headerlink" href="#id1" title="永久链接至标题"></a></h1>
+<section id="id2">
+<h2><span class="section-number">5.1. </span>什么是子空间<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<section id="id3">
+<h3><span class="section-number">5.1.1. </span>概念<a class="headerlink" href="#id3" title="永久链接至标题"></a></h3>
+<p>  <strong>定义</strong>  假设<span class="math notranslate nohighlight">\(S=\{\mathbf{u}_1,...,\mathbf{u}_m\}\)</span>是向量空间<span class="math notranslate nohighlight">\(V\)</span>的向量子集，则<span class="math notranslate nohighlight">\(\mathbf{u}_1,...,\mathbf{u}_m\)</span>的所有线性组合的集合<span class="math notranslate nohighlight">\(W\)</span>称为由<span class="math notranslate nohighlight">\(\mathbf{u}_1,...,\mathbf{u}_m\)</span>张成的<strong>子空间</strong>，即</p>
+<div class="math notranslate nohighlight">
+\[
+W=\mathrm{span}(\mathbf{u}_1,...,\mathbf{u}_m)=\{\mathbf{u}|\mathbf{u}=a_1\mathbf{u}_1+...+a_m\mathbf{u}_m\}
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(W\)</span>称为子空间的<strong>张成集</strong>，每个向量称为<span class="math notranslate nohighlight">\(W\)</span>的<strong>生成元</strong>。</p>
+</section>
+<section id="id4">
+<h3><span class="section-number">5.1.2. </span>正交补<a class="headerlink" href="#id4" title="永久链接至标题"></a></h3>
+<p>  子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>的交</p>
+<div class="math notranslate nohighlight">
+\[
+S=S_1\cap S_2\cap ... \cap S_n
+\]</div>
+<p>是所有子空间共有的向量组成的集合。</p>
+<p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(S=\{\mathbf{0}\}\)</span>，则称子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>为<strong>无交连</strong>。</p>
+<p>  <strong>定义</strong> 无交连的子空间并集<span class="math notranslate nohighlight">\(S=S_1\cup S_2\cup ... \cup S_n\)</span>称为<strong>子空间的直和</strong>，记为，</p>
+<div class="math notranslate nohighlight">
+\[
+S=S_1 \oplus S_2 \oplus ... \oplus S_n
+\]</div>
+<p>  <strong>定义</strong> 子空间<span class="math notranslate nohighlight">\(S\)</span>正交的所有向量的集合组成一个向量子空间，称为<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交补</strong>空间，记为<span class="math notranslate nohighlight">\(S^\bot\)</span>。</p>
+<p>  1.  正交连的两个子空间不一定正交，但正交的两个子空间必定是无交连。</p>
+<p>  2.  正交补空间是比正交空间更严格的概念。</p>
+<p>  <strong>定义</strong> 若下式成立，则称子空间为相对于<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>不变的，</p>
+<div class="math notranslate nohighlight">
+\[
+\forall\mathbf{x}\in S \quad\Rightarrow\quad \mathbf{Ax}\in S
+\]</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
+        <a href="matrixdiff.html" class="btn btn-neutral float-left" title="4. 矩阵微分" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../optimization/convex_prob.html" class="btn btn-neutral float-right" title="1. 凸优化问题" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2022, SSPUIIP.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
