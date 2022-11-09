@@ -15,6 +15,7 @@
    matrix/matrixoper.md
    matrix/vectorspace.md
    matrix/matrixdiff.md
+   matrix/subspace.md
 
 .. toctree::
    :maxdepth: 2
