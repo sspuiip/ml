@@ -65,4 +65,20 @@ $$
 \mathbf{x}_h=(\mathbf{I}-\mathbf{P})\mathbf{x}
 $$
 
-即，$\mathbf{I}-\mathbf{P}$是沿着子空间$S$到子空间$H$的投影算子。
+即，$\mathbf{I}-\mathbf{P}$是沿着子空间$S$到子空间$H$的投影算子。因此，可知，
+
+$$
+\mathbf{x}=\mathbf{Px}+(\mathbf{I}-\mathbf{P})\mathbf{x}
+$$
+
+以及，子空间的内部向量投影就是其本身，即$\mathbf{Px}_1=\mathbf{x}_1$,从而有，
+
+$$
+\mathbf{P}^2\mathbf{x}_1=\mathbf{Px}_1=\mathbf{x}_1
+$$
+
+也就是幂等性，
+
+$$
+\mathbf{P}^2=\mathbf{P}
+$$
