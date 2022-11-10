@@ -50,6 +50,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">5.1. 什么是子空间</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id3">5.1.1. 概念</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id4">5.1.2. 正交补</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5.1.3. 正交投影</a></li>
 </ul>
 </li>
 </ul>
@@ -121,6 +122,26 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \[
 \forall\mathbf{x}\in S \quad\Rightarrow\quad \mathbf{Ax}\in S
 \]</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">5.1.3. </span>正交投影<a class="headerlink" href="#id5" title="永久链接至标题"></a></h3>
+<p>  <strong>定义</strong> 假设有两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>，如果有线性变换矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>，将<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>映射为子空间<span class="math notranslate nohighlight">\(S\)</span>的向量<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，则这种线性变换称为沿着<span class="math notranslate nohighlight">\(H\)</span>的方向到<span class="math notranslate nohighlight">\(S\)</span>的<strong>投影算子</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>。特别地，若<span class="math notranslate nohighlight">\(S,H\)</span>是正交补，则<span class="math notranslate nohighlight">\(\mathbf{P}_{S|S^\bot}\)</span>是将<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>沿着与子空间<span class="math notranslate nohighlight">\(S\)</span>垂直方向的投影，称为子空间的<strong>正交投影</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_S\)</span>。</p>
+<p>  假设两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>其交集为空<span class="math notranslate nohighlight">\(\{\mathbf{0}\}\)</span>，其直和空间为<span class="math notranslate nohighlight">\(V=S\oplus H\)</span>，则直和空间向量可分解为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}=\mathbf{x}_s+\mathbf{x}_h
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\mathbf{x}_s\in S, \mathbf{x}_h\in H\)</span>。由于<span class="math notranslate nohighlight">\(S\cap H=\{\mathbf{0}\}\)</span>，则该分解唯一。定义一个沿着子空间<span class="math notranslate nohighlight">\(H\)</span>到子空间<span class="math notranslate nohighlight">\(S\)</span>的投影算子<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>，即，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{Px}=\mathbf{x}_s
+\]</div>
+<p>代入直和分解向量，则有，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x}_h=(\mathbf{I}-\mathbf{P})\mathbf{x}
+\]</div>
+<p>即，<span class="math notranslate nohighlight">\(\mathbf{I}-\mathbf{P}\)</span>是沿着子空间<span class="math notranslate nohighlight">\(S\)</span>到子空间<span class="math notranslate nohighlight">\(H\)</span>的投影算子。</p>
 </section>
 </section>
 </section>
