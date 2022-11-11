@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" /><link rel="prev" title="5. 特殊矩阵" href="special_matrix.html" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="6. 子空间分析" href="subspace.html" /><link rel="prev" title="4. 矩阵微分" href="matrixdiff.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
-        <title>6. 子空间分析 - MLBOOK 1.0 文档</title>
+        <title>5. 特殊矩阵 - MLBOOK 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -160,8 +160,8 @@
 <li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">6. 子空间分析</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subspace.html">6. 子空间分析</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul>
@@ -203,104 +203,58 @@
         </div>
         <article role="main">
           <section id="id1">
-<h1><span class="section-number">6. </span>子空间分析<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
+<h1><span class="section-number">5. </span>特殊矩阵<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
+<section id="hermitian">
+<h2><span class="section-number">5.1. </span>Hermitian矩阵<a class="headerlink" href="#hermitian" title="永久链接至标题">#</a></h2>
+<p>  <strong>定义 (Hermitian矩阵).</strong> 对于矩阵<span class="math notranslate nohighlight">\(A\in \mathbb{C}^{m\times m}\)</span>，若<span class="math notranslate nohighlight">\(a_{ij}=a^*_{ij}(\forall i,j | 1\le i&lt;j \le m) \)</span>，即复矩阵的共轭转置<span class="math notranslate nohighlight">\(A^H=A\)</span>，则称矩阵<span class="math notranslate nohighlight">\(A\)</span>为Hermitian矩阵。</p>
+<p>  <strong>定义 (共轭).</strong> 两个实部相等，虚部相反的复数互为共轭复数。如<span class="math notranslate nohighlight">\(z=a+bi,\bar{z}=a-bi\)</span>。</p>
+<p>简言之，矩阵对称元素共轭即为Hermitian矩阵，若矩阵为实矩阵，则该Hermitian矩阵为实对称矩阵。</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-center head"><p></p></th>
+<th class="text-center head"><p>Hermitain矩阵</p></th>
+<th class="text-center head"><p>实对称矩阵</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>对称元素</p></td>
+<td class="text-center"><p>共轭</p></td>
+<td class="text-center"><p>相等</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>  <strong>例1</strong>：</p>
+<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">=</span><span class="w"></span>
+<span class="w">   </span><span class="mf">1.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+<span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+<span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">3.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+
+<span class="n">A</span><span class="o">&#39;</span><span class="p">=</span><span class="w"></span>
+<span class="w">   </span><span class="mf">1.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+<span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+<span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">3.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w"></span>
+
+<span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">A</span><span class="o">&#39;</span><span class="w"></span>
+<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w"></span>
+<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
 <section id="id2">
-<h2><span class="section-number">6.1. </span>什么是子空间<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">5.2. </span>酉矩阵<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<p>  <strong>定义（酉矩阵）</strong> 复正方矩阵<span class="math notranslate nohighlight">\(U\in \mathbb{C}^{n\times n}\)</span>，若<span class="math notranslate nohighlight">\(UU^H=U^HU=I\)</span>，则该矩阵为酉矩阵。</p>
+<p>  <strong>性质</strong></p>
+<p>  1. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A^H,A^{-1},A^\top,A^i,A^*\)</span>均为酉矩阵，且<span class="math notranslate nohighlight">\(|\mathrm{det}(A)|=1,\mathrm{rank}(A)=m\)</span>。</p>
+<p>  2. 若<span class="math notranslate nohighlight">\(A_{m\times m},B_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(AB\)</span>为酉矩阵。</p>
+<p>  3. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则有<span class="math notranslate nohighlight">\(\forall B_{m\times n}\)</span>有，<span class="math notranslate nohighlight">\(\lVert AB\rVert_F=\lVert B\rVert_F\)</span>；对于<span class="math notranslate nohighlight">\(\forall B_{n\times m}\)</span>有，<span class="math notranslate nohighlight">\(\lVert BA\rVert_F=\lVert B\rVert_F\)</span>；对于<span class="math notranslate nohighlight">\(\forall x_{m\times 1}\)</span>有，<span class="math notranslate nohighlight">\(\lVert Ax\rVert_F=\lVert x\rVert_F\)</span>。</p>
+<p>  4. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A\)</span>的所有行组成标准正交组；所有列组成标准正交组；<span class="math notranslate nohighlight">\(A\)</span>非奇异且<span class="math notranslate nohighlight">\(U^H=U^{-1}\)</span>。</p>
+</section>
 <section id="id3">
-<h3><span class="section-number">6.1.1. </span>概念<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
-<p>  <strong>定义</strong>  假设<span class="math notranslate nohighlight">\(S=\{\mathbf{u}_1,...,\mathbf{u}_m\}\)</span>是向量空间<span class="math notranslate nohighlight">\(V\)</span>的向量子集，则<span class="math notranslate nohighlight">\(\mathbf{u}_1,...,\mathbf{u}_m\)</span>的所有线性组合的集合<span class="math notranslate nohighlight">\(W\)</span>称为由<span class="math notranslate nohighlight">\(\mathbf{u}_1,...,\mathbf{u}_m\)</span>张成的<strong>子空间</strong>，即</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-W=\mathrm{span}(\mathbf{u}_1,...,\mathbf{u}_m)=\{\mathbf{u}|\mathbf{u}=a_1\mathbf{u}_1+...+a_m\mathbf{u}_m\}
-\]</div>
-</div>
-<p>其中<span class="math notranslate nohighlight">\(W\)</span>称为子空间的<strong>张成集</strong>，每个向量称为<span class="math notranslate nohighlight">\(W\)</span>的<strong>生成元</strong>。</p>
-</section>
-<section id="id4">
-<h3><span class="section-number">6.1.2. </span>正交补<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
-<p>  子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>的交</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-S=S_1\cap S_2\cap ... \cap S_n
-\]</div>
-</div>
-<p>是所有子空间共有的向量组成的集合。</p>
-<p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(S=\{\mathbf{0}\}\)</span>，则称子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>为<strong>无交连</strong>。</p>
-<p>  <strong>定义</strong> 无交连的子空间并集<span class="math notranslate nohighlight">\(S=S_1\cup S_2\cup ... \cup S_n\)</span>称为<strong>子空间的直和</strong>，记为，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-S=S_1 \oplus S_2 \oplus ... \oplus S_n
-\]</div>
-</div>
-<p>  <strong>定义</strong> 子空间<span class="math notranslate nohighlight">\(S\)</span>正交的所有向量的集合组成一个向量子空间，称为<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交补</strong>空间，记为<span class="math notranslate nohighlight">\(S^\bot\)</span>。</p>
-<p>  1.  正交连的两个子空间不一定正交，但正交的两个子空间必定是无交连。</p>
-<p>  2.  正交补空间是比正交空间更严格的概念。</p>
-<p>  <strong>定义</strong> 若下式成立，则称子空间为相对于<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>不变的，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\forall\mathbf{x}\in S \quad\Rightarrow\quad \mathbf{Ax}\in S
-\]</div>
-</div>
-</section>
-<section id="id5">
-<h3><span class="section-number">6.1.3. </span>正交投影<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h3>
-<p>  假设有两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>，如果有线性变换矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>，将<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>映射为子空间<span class="math notranslate nohighlight">\(S\)</span>的向量<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，则这种线性变换称为沿着<span class="math notranslate nohighlight">\(H\)</span>的方向到<span class="math notranslate nohighlight">\(S\)</span>的<strong>投影算子</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>。特别地，若<span class="math notranslate nohighlight">\(S,H\)</span>是正交补，则<span class="math notranslate nohighlight">\(\mathbf{P}_{S|S^\bot}\)</span>是将<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>沿着与子空间<span class="math notranslate nohighlight">\(S\)</span>垂直方向的投影，称为子空间的<strong>正交投影</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_S\)</span>。</p>
-<p>  假设两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>其交集为空<span class="math notranslate nohighlight">\(\{\mathbf{0}\}\)</span>，其直和空间为<span class="math notranslate nohighlight">\(V=S\oplus H\)</span>，则直和空间向量可分解为，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{x}=\mathbf{x}_s+\mathbf{x}_h
-\]</div>
-</div>
-<p>其中，<span class="math notranslate nohighlight">\(\mathbf{x}_s\in S, \mathbf{x}_h\in H\)</span>。由于<span class="math notranslate nohighlight">\(S\cap H=\{\mathbf{0}\}\)</span>，则该分解唯一。定义一个沿着子空间<span class="math notranslate nohighlight">\(H\)</span>到子空间<span class="math notranslate nohighlight">\(S\)</span>的投影算子<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>，即，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{Px}=\mathbf{x}_s
-\]</div>
-</div>
-<p>代入直和分解向量，则有，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{x}_h=(\mathbf{I}-\mathbf{P})\mathbf{x}
-\]</div>
-</div>
-<p>即，<span class="math notranslate nohighlight">\(\mathbf{I}-\mathbf{P}\)</span>是沿着子空间<span class="math notranslate nohighlight">\(S\)</span>到子空间<span class="math notranslate nohighlight">\(H\)</span>的投影算子。因此，可知，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{x}=\mathbf{Px}+(\mathbf{I}-\mathbf{P})\mathbf{x}
-\]</div>
-</div>
-<p>以及，子空间的内部向量投影就是其本身，即<span class="math notranslate nohighlight">\(\mathbf{Px}_1=\mathbf{x}_1\)</span>,从而有，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}^2\mathbf{x}_1=\mathbf{Px}_1=\mathbf{x}_1
-\]</div>
-</div>
-<p>也就是幂等性，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}^2=\mathbf{P}
-\]</div>
-</div>
-<p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(Range(\mathbf{P})=S,\mathbf{P}^2=\mathbf{P}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{P}^\top=\mathbf{P}\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>称为到子空间<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交投影</strong>。</p>
-<p>  观察可知，线性变换矩阵，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[
-\mathbf{P}_S=\mathbf{A}(\mathbf{A}^\mathrm{H}\mathbf{A})^{-1}\mathbf{A}^\mathrm{H}
-\]</div>
-</div>
-<p>满足正交投影算子定义的幂等性和Hermitian性，且<span class="math notranslate nohighlight">\(\mathbf{P}_S\mathbf{A}=\mathbf{A}\)</span>即满足<span class="math notranslate nohighlight">\(Range(\mathbf{P})=S\)</span><span class="math notranslate nohighlight">\(=Span(\mathbf{A})\)</span>。因此该矩阵是到由<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的列向量生成的子空间<span class="math notranslate nohighlight">\(S\)</span>上的正交投影算子。</p>
-</section>
+<h2><span class="section-number">5.3. </span>正交矩阵<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
+<p>  <strong>定义（正交矩阵）</strong> 实矩阵<span class="math notranslate nohighlight">\(Q\in\mathbb{R}^{n\times n}\)</span>，若有<span class="math notranslate nohighlight">\(QQ^\top=Q^\top Q=I\)</span>，则该矩阵为正交矩阵。正交矩阵是酉矩阵的特例，即矩阵元素为实值的酉矩阵。</p>
 </section>
 </section>
 
@@ -309,23 +263,23 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../optimization/convex_prob.html">
+          <a class="next-page" href="subspace.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title"><span class="section-number">1. </span>凸优化问题</div>
+                <div class="title"><span class="section-number">6. </span>子空间分析</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="special_matrix.html">
+          <a class="prev-page" href="matrixdiff.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">5. </span>特殊矩阵</div>
+                <div class="title"><span class="section-number">4. </span>矩阵微分</div>
                 
               </div>
             </a>
@@ -361,13 +315,10 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">6. 子空间分析</a><ul>
-<li><a class="reference internal" href="#id2">6.1. 什么是子空间</a><ul>
-<li><a class="reference internal" href="#id3">6.1.1. 概念</a></li>
-<li><a class="reference internal" href="#id4">6.1.2. 正交补</a></li>
-<li><a class="reference internal" href="#id5">6.1.3. 正交投影</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#">5. 特殊矩阵</a><ul>
+<li><a class="reference internal" href="#hermitian">5.1. Hermitian矩阵</a></li>
+<li><a class="reference internal" href="#id2">5.2. 酉矩阵</a></li>
+<li><a class="reference internal" href="#id3">5.3. 正交矩阵</a></li>
 </ul>
 </li>
 </ul>

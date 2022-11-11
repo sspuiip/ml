@@ -1,127 +1,242 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="zh-CN" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<!doctype html>
+<html class="no-js" lang="zh_CN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="2. 优化问题求解(1)" href="convex_solve.html" /><link rel="prev" title="6. 子空间分析" href="../matrix/subspace.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1. 凸优化问题 &mdash; MLBOOK 1.0 文档</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+        <title>1. 凸优化问题 - MLBOOK 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/translations.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script src="../_static/js/theme.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="2. 优化问题求解(1)" href="convex_solve.html" />
-    <link rel="prev" title="5. 子空间分析" href="../matrix/subspace.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> MLBOOK
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="搜索文档" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">MLBOOK 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  
+  <span class="sidebar-brand-text">MLBOOK 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder=搜索 name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">5. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">1. 凸优化问题</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">1.1. 凸函数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">1.1.1. 判定方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">1.1.2. 保凸运算与性质判定</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">1.2. 凸优化问题</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#lagrangian">1.2.1. Lagrangian乘子法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">1.2.2. 对偶问题</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#kkt">1.2.3. KKT条件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#slater">1.2.4. 强对偶性（Slater定理）</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convex_solve.html">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">MLBOOK</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="页面导航">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">1. </span>凸优化问题</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/optimization/convex_prob.md.txt" rel="nofollow"> 查看页面源码</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="id1">
-<h1><span class="section-number">1. </span>凸优化问题<a class="headerlink" href="#id1" title="永久链接至标题"></a></h1>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="id1">
+<h1><span class="section-number">1. </span>凸优化问题<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>凸函数<a class="headerlink" href="#id2" title="永久链接至标题"></a></h2>
+<h2><span class="section-number">1.1. </span>凸函数<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
 <p>所谓的凸函数是指：定义在凸集<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>的任意变量<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\)</span>，函数<span class="math notranslate nohighlight">\(f:\mathbb{R}^n\rightarrow \mathbb{R}\)</span>对任意<span class="math notranslate nohighlight">\(0\le\theta\le 1\)</span>都有以下不等式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\mathbf{y})
 \tag{1}
 \]</div>
+</div>
 <p>，则该函数<span class="math notranslate nohighlight">\(f\)</span>是凸函数。</p>
 <p>凸集指的是：集合<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>中任意两点<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{y}\in\mathcal{S}\)</span>，连接它们的线段也在集合集合<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>内，则该集合为凸集，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x,y}\in \mathcal{S},\quad \theta\in[0,1]\quad\Rightarrow \theta\mathbf{x}+(1-\theta)\mathbf{y}\in\mathcal{S}
 \tag{2}
 \]</div>
+</div>
 <section id="id3">
-<h3><span class="section-number">1.1.1. </span>判定方法<a class="headerlink" href="#id3" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.1.1. </span>判定方法<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
 <ul>
 <li><p><strong>一阶充要条件</strong></p>
 <ol class="arabic simple">
 <li><p>若定义在凸集<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>上的函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>一阶可微且满足以下条件，</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
     f(\mathbf{y})\ge f(\mathbf{x})+\langle\nabla_\mathbf{x} f(\mathbf{x}),\mathbf{y}-\mathbf{x}\rangle
     \tag{3}
     \]</div>
+</div>
 <p>则<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>为凸函数。</p>
 <ol class="arabic simple" start="2">
 <li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>凸<span class="math notranslate nohighlight">\(\quad\Leftrightarrow\quad \langle\nabla_\mathbf{x}f(\mathbf{x})-\nabla_\mathbf{x}f(\mathbf{y}),\mathbf{x}-\mathbf{y}\rangle\ge 0\)</span></p></li>
@@ -138,7 +253,7 @@ f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\ma
 </ul>
 </section>
 <section id="id4">
-<h3><span class="section-number">1.1.2. </span>保凸运算与性质判定<a class="headerlink" href="#id4" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.1.2. </span>保凸运算与性质判定<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>是凸函数，当且仅当它在所有线段上是凸的。</p></li>
 <li><p>非负线性运算仍为凸函数：若<span class="math notranslate nohighlight">\(a,b\ge 0\)</span>，<span class="math notranslate nohighlight">\(f_1(\mathbf{x}), f_2(\mathbf{x})\)</span>是凸函数，则<span class="math notranslate nohighlight">\(af_1(\mathbf{x})+bf_2(\mathbf{x})\)</span>仍为凸函数。</p></li>
@@ -150,9 +265,10 @@ f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\ma
 </section>
 </section>
 <section id="id5">
-<h2><span class="section-number">1.2. </span>凸优化问题<a class="headerlink" href="#id5" title="永久链接至标题"></a></h2>
+<h2><span class="section-number">1.2. </span>凸优化问题<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
 <p><strong>无约束凸函数优化问题</strong>是指：优化目标为凸函数且定义域为凸集的优化问题。</p>
 <p><strong>带约束凸优化问题</strong>是形如，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{equation}
@@ -164,6 +280,7 @@ f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\ma
 \tag{4}
 \end{equation}
 \end{split}\]</div>
+</div>
 <p>的问题，其中<span class="math notranslate nohighlight">\(f_0,...,f_m\)</span>是凸函数。对比优化问题，凸优化有3个附加的要求：</p>
 <ol class="arabic simple">
 <li><p>目标函数必须是凸的</p></li>
@@ -173,14 +290,16 @@ f(\theta \mathbf{x}+(1-\theta)\mathbf{y})\le\theta f(\mathbf{x})+(1-\theta)f(\ma
 <p><strong>定理</strong>：无约束凸函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的任何局部极小点<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>都是该函数的一个全局最小点。若<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>可微，则<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial\mathbf{x}}=0\)</span>的平稳点<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>是<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的一个全局最小点。</p>
 <p>该定理表明：如果任何一个约束极小化问题可以<em>转换</em>为一个无约束凸优化问题，则无约束凸优化问题的任何一个局部极小点都是原约束极小化问题的一个全局极小点。</p>
 <p><strong>引理</strong>：若<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>强凸，则最小化问题<span class="math notranslate nohighlight">\(\min\limits_{\mathbf{x}}f(\mathbf{x})\)</span>是可解的，且惟一，并有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\tag{5}
 f(\mathbf{x})\ge f(\mathbf{x}^*)+\frac12\mu\lVert\mathbf{x}-\mathbf{x}^*\rVert_2^2,\quad\forall \mathbf{x}\in\mathcal{S}
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\mu\)</span>是强凸函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的凸性参数。</p>
 <p>以上定理说明，约束优化问题的解决方向是：<font color="blue">将约束优化问题转换成无约束的凸优化问题</font>。</p>
 <section id="lagrangian">
-<h3><span class="section-number">1.2.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.2.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="永久链接至标题">#</a></h3>
 <p>现<strong>假设</strong>约束极小化问题如下：</p>
 <ol class="arabic simple">
 <li><p>不等式约束均为凸函数</p></li>
@@ -188,11 +307,13 @@ f(\mathbf{x})\ge f(\mathbf{x}^*)+\frac12\mu\lVert\mathbf{x}-\mathbf{x}^*\rVert_2
 <li><p><span class="math notranslate nohighlight">\(f_0(\mathbf{x})\)</span>可微，但不是凸函数。</p></li>
 </ol>
 <p>使用<strong>Lagrangian乘子法</strong>，可以将约束优化问题转换为无约束优化问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min L(\mathbf{x},\mathbf{\lambda},\mathbf{\nu})=f_0(\mathbf{x})+\sum_{i=1}^m\lambda_if_i(\mathbf{x})+\sum_{i=1}^p\nu_ih_i(\mathbf{x})
 \tag{6}
 \]</div>
+</div>
 <p>其中：</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(L(\mathbf{x},\mathbf{\lambda},\mathbf{\nu})\)</span>为Lagrangian函数</p></li>
@@ -203,53 +324,69 @@ f(\mathbf{x})\ge f(\mathbf{x}^*)+\frac12\mu\lVert\mathbf{x}-\mathbf{x}^*\rVert_2
 <li><p>使用乘子法转换的无约束优化问题(6)称为对偶问题。</p></li>
 </ul>
 <p>在式(6)中，当<span class="math notranslate nohighlight">\(\lambda_i\)</span>取较大值时，该式第2项可能趋于负无穷大，从而导致<span class="math notranslate nohighlight">\(L(\mathbf{x},\mathbf{\lambda},\mathbf{\nu})\)</span>趋于负无穷大。因此，需要将Lagrangian函数极大化，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 J_1(\mathbf{x})=\max\limits_{\mathbf{\lambda}\succeq 0,\mathbf{\nu}}L(\mathbf{x,\lambda,\nu})=\max\limits_{\mathbf{\lambda}\succeq 0,\mathbf{\nu}}\left( f_0(\mathbf{x})+\sum_{i=1}^m\lambda_if_i(\mathbf{x})+\sum_{i=1}^p\nu_ih_i(\mathbf{x})\right)\tag{7}
 \]</div>
+</div>
 <p>但<span class="math notranslate nohighlight">\(J_1(\mathbf{x})\)</span>仍存在一个问题：无法避免约束<span class="math notranslate nohighlight">\(f_i(\mathbf{x})&gt;0\)</span>，这将导致<span class="math notranslate nohighlight">\(J_1(\mathbf{x})\)</span>正无穷大，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 J_1(\mathbf{x})=\left\{ \begin{array}{ll}f_0(\mathbf{x}),&amp; 若\mathbf{x}满足原始全部约束\\(f_0(\mathbf{x}),+\infty),&amp; 其它 \end{array}\right.
 \end{split}\]</div>
+</div>
 <p>因此，为得到约束优化的极小解<span class="math notranslate nohighlight">\(\min\limits_{\mathbf{x}}f_0(\mathbf{x})=f_0(\mathbf{x}^*)\)</span>，必须将<span class="math notranslate nohighlight">\(J_1(\mathbf{x})\)</span>极小化，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 J_P(\mathbf{x})=\min\limits_{\mathbf{x}}J_i(\mathbf{x})=\min\limits_{\mathbf{x}}\max\limits_{\mathbf{\lambda}\succeq 0,\mathbf{\nu}}L(\mathbf{x,\lambda,\nu})
 \]</div>
+</div>
 <p>这是一个极小-极大问题，解为<span class="math notranslate nohighlight">\(L(\mathbf{x,\lambda,\nu})\)</span>的上确界(supremum)即最小上界。</p>
 <p>综上可知，原始约束极小化问题的最优值为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p^*=J_P(\mathbf{x})=\min\limits_{\mathbf{x}}f_0(\mathbf{x})=f_0(\mathbf{x}^*)
 \]</div>
+</div>
 </section>
 <section id="id6">
-<h3><span class="section-number">1.2.2. </span>对偶问题<a class="headerlink" href="#id6" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.2.2. </span>对偶问题<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
 <p>极小-极大问题仍然存在问题：一个非凸目标函数(前一节的假设3)的极小化不能转换成另一个凸函数的极小化。</p>
 <p>我们知道凸函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的极小化与凹函数<span class="math notranslate nohighlight">\(-f(\mathbf{x})\)</span>的极大化等价。基于这一对偶关系，可以将非凸目标函数的极小化转化为凹函数的极大化。这一方法也称为<strong>Lagrangian对偶法</strong>。</p>
 <p>首先，将Lagrangian函数构造一个极小化目标函数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 J_2(\mathbf{\lambda,\nu})=\min\limits_{\mathbf{x}}\left(f_0(\mathbf{x})+\sum_{i=1}^m\lambda_if_i(\mathbf{x})+\sum_{i=1}^p\nu_ih_i(\mathbf{x}) \right)
 \]</div>
+</div>
 <p>与上一节类型，该函数的极小值为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \min\limits_{\mathbf{x}}L(\mathbf{x,\lambda,\nu})=\left\{\begin{array}{ll}\min\limits_{\mathbf{x}}f_0(\mathbf{x}),&amp;\mathbf{x}\mathrm{满足所有约束}\\(-\infty,\min\limits_{\mathbf{x}}f_0(\mathbf{x}),&amp;其它.\end{array}\right.
 \end{split}\]</div>
+</div>
 <p>其极大化函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 J_D(\mathbf{\lambda,\nu})=\max\limits_{\mathbf{\lambda}\succeq0,\mathbf{\nu}}J_2(\mathbf{\lambda,\nu})=\max\limits_{\mathbf{\lambda}\succeq0,\mathbf{\nu}}\min\limits_{\mathbf{x}}L(\mathbf{x,\lambda,\nu})
 \]</div>
+</div>
 <p>称为原问题的对偶目标函数，它是Lagrangian函数的极大-极小问题。其解为该函数的下确界（最大下界）。</p>
 <p><font color="red">注意</font>：对偶目标函数<span class="math notranslate nohighlight">\(J_D(\mathbf{\lambda,\nu})\)</span>是下无界的（下界为<span class="math notranslate nohighlight">\(-\infty\)</span>），因此<span class="math notranslate nohighlight">\(J_D(\mathbf{\lambda,\nu})\)</span>是变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的凹函数（<font color="#feda0f">因为对偶函数是一族关于<span class="math notranslate nohighlight">\((\lambda,\nu)\)</span>的仿射函数的逐点下确界</font>），即使<span class="math notranslate nohighlight">\(f_0(\mathbf{x})\)</span>不是凸函数。</p>
 <p>对偶目标函数的最优值为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d^*=J_D(\mathbf{\lambda^*,\nu^*})\le\min\limits_{\mathbf{x}}f_0(\mathbf{x})=p^*
 \]</div>
+</div>
 <p>最优原始值与最优对偶值之差<span class="math notranslate nohighlight">\(d^*-p^*\)</span>称为原问题与对偶问题之间的<strong>对偶间隙</strong>，最优对偶值是原始最优值的下界。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(d^*\le p^*\)</span>：弱对偶性</p></li>
@@ -257,14 +394,17 @@ d^*=J_D(\mathbf{\lambda^*,\nu^*})\le\min\limits_{\mathbf{x}}f_0(\mathbf{x})=p^*
 </ul>
 </section>
 <section id="kkt">
-<h3><span class="section-number">1.2.3. </span>KKT条件<a class="headerlink" href="#kkt" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.2.3. </span>KKT条件<a class="headerlink" href="#kkt" title="永久链接至标题">#</a></h3>
 <p>假设<span class="math notranslate nohighlight">\(\mathbf{x}^*,\mathbf{\lambda^*,\nu^*}\)</span>分别为具有对偶间隙<span class="math notranslate nohighlight">\(\epsilon=0\)</span>的原始最优点和对偶最优点。</p>
 <p>由于<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>使得Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\mathbf{x},\mathbf{\lambda}^*,\mathbf{\nu}^*)\)</span>在所有原始可行点<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>中最小化，所以Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\mathbf{x},\mathbf{\lambda}^*,\mathbf{\nu}^*)\)</span>在点点<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的梯度向量必为0，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \nabla f_0(\mathbf{x}^*)+\sum_i\lambda_i^*\nabla f_i(\mathbf{x}^*)+\sum_i\nu_i^*\nabla h_i(\mathbf{x}^*)=\mathbf{0}
 \]</div>
+</div>
 <p>因此，Lagrangian对偶无约束优化问题的KKT条件（局部极小解的一阶必要条件）为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -275,6 +415,7 @@ h_i(\mathbf{x}^*)&amp;=0, \quad i=1,\cdots,p\\
 \nabla f_0(\mathbf{x}^*)+\sum_i\lambda_i^*&amp;\nabla f_i(\mathbf{x}^*)+\sum_i\nu_i^*\nabla h_i(\mathbf{x}^*)=\mathbf{0}
 \end{split}
 \end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p>前2个条件为约束条件。</p></li>
 <li><p>第3个条件是Lagrangian乘子的非负约束，是Lagrangian乘子法的关键约束。</p></li>
@@ -282,53 +423,116 @@ h_i(\mathbf{x}^*)&amp;=0, \quad i=1,\cdots,p\\
 </ul>
 </section>
 <section id="slater">
-<h3><span class="section-number">1.2.4. </span>强对偶性（Slater定理）<a class="headerlink" href="#slater" title="永久链接至标题"></a></h3>
+<h3><span class="section-number">1.2.4. </span>强对偶性（Slater定理）<a class="headerlink" href="#slater" title="永久链接至标题">#</a></h3>
 <p>判别强对偶性是否成立的一种简单方法是Slater定理。</p>
 <p><strong>定义</strong>:原始不等式约束的可行域的相对内域为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{relint}(\mathcal{F})=\{\mathbf{x}|f_i(\mathbf{x})&lt;0,i=1,\cdots,m;h_i(\mathbf{x})=0,i=1,\cdots,p \}
 \]</div>
+</div>
 <p><strong>Slater条件</strong>：优化过程中，迭代点位于可行域的内域的约束规定称为Slater条件。</p>
 <p><strong>Slater定理</strong>：如果Slater条件满足，并且原始不等式优化问题是凸优化问题，则对偶无约束优化问题的最优值<span class="math notranslate nohighlight">\(d^*\)</span>与原始优化问题的最优值<span class="math notranslate nohighlight">\(p^*\)</span>相等，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d^*=p^*
 \]</div>
+</div>
 <p>即强对偶性成立。</p>
 </section>
 </section>
 </section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="convex_solve.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">2. </span>优化问题求解(1)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../matrix/subspace.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">6. </span>子空间分析</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="../matrix/subspace.html" class="btn btn-neutral float-left" title="5. 子空间分析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="convex_solve.html" class="btn btn-neutral float-right" title="2. 优化问题求解(1)" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">1. 凸优化问题</a><ul>
+<li><a class="reference internal" href="#id2">1.1. 凸函数</a><ul>
+<li><a class="reference internal" href="#id3">1.1.1. 判定方法</a></li>
+<li><a class="reference internal" href="#id4">1.1.2. 保凸运算与性质判定</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">1.2. 凸优化问题</a><ul>
+<li><a class="reference internal" href="#lagrangian">1.2.1. Lagrangian乘子法</a></li>
+<li><a class="reference internal" href="#id6">1.2.2. 对偶问题</a></li>
+<li><a class="reference internal" href="#kkt">1.2.3. KKT条件</a></li>
+<li><a class="reference internal" href="#slater">1.2.4. 强对偶性（Slater定理）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; 版权所有 2022, SSPUIIP.</p>
-  </div>
-
-  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
-    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>
