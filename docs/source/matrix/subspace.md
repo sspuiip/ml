@@ -44,7 +44,7 @@ $$
 
 ##### 正交投影
 
-&emsp;&emsp;**定义** 假设有两个子空间$S,H$，如果有线性变换矩阵$\mathbf{P}$，将$\mathbf{x}\in\mathbb{R}^n$映射为子空间$S$的向量$\mathbf{x}_1$，则这种线性变换称为沿着$H$的方向到$S$的**投影算子**，记为$\mathbf{P}_{S|H}$。特别地，若$S,H$是正交补，则$\mathbf{P}_{S|S^\bot}$是将$\mathbf{x}$沿着与子空间$S$垂直方向的投影，称为子空间的**正交投影**，记为$\mathbf{P}_S$。
+&emsp;&emsp;假设有两个子空间$S,H$，如果有线性变换矩阵$\mathbf{P}$，将$\mathbf{x}\in\mathbb{R}^n$映射为子空间$S$的向量$\mathbf{x}_1$，则这种线性变换称为沿着$H$的方向到$S$的**投影算子**，记为$\mathbf{P}_{S|H}$。特别地，若$S,H$是正交补，则$\mathbf{P}_{S|S^\bot}$是将$\mathbf{x}$沿着与子空间$S$垂直方向的投影，称为子空间的**正交投影**，记为$\mathbf{P}_S$。
 
 
 &emsp;&emsp;假设两个子空间$S,H$其交集为空$\{\mathbf{0}\}$，其直和空间为$V=S\oplus H$，则直和空间向量可分解为，
@@ -82,3 +82,14 @@ $$
 $$
 \mathbf{P}^2=\mathbf{P}
 $$
+
+&emsp;&emsp;**定义** 若$Range(\mathbf{P})=S,\mathbf{P}^2=\mathbf{P}$和$\mathbf{P}^\top=\mathbf{P}$，则矩阵$\mathbf{P}$称为到子空间$S$的**正交投影**。
+
+&emsp;&emsp;观察可知，线性变换矩阵，
+
+$$
+\mathbf{P}_S=\mathbf{A}(\mathbf{A}^\mathrm{H}\mathbf{A})^{-1}\mathbf{A}^\mathrm{H}
+$$
+
+满足正交投影算子定义的幂等性和Hermitian性，且$\mathbf{P}_S\mathbf{A}=\mathbf{A}$即满足$Range(\mathbf{P})=S$$=Span(\mathbf{A})$。因此该矩阵是到由$\mathbf{A}$的列向量生成的子空间$S$上的正交投影算子。
+
