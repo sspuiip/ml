@@ -125,7 +125,7 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 </section>
 <section id="id5">
 <h3><span class="section-number">5.1.3. </span>正交投影<a class="headerlink" href="#id5" title="永久链接至标题"></a></h3>
-<p>  <strong>定义</strong> 假设有两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>，如果有线性变换矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>，将<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>映射为子空间<span class="math notranslate nohighlight">\(S\)</span>的向量<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，则这种线性变换称为沿着<span class="math notranslate nohighlight">\(H\)</span>的方向到<span class="math notranslate nohighlight">\(S\)</span>的<strong>投影算子</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>。特别地，若<span class="math notranslate nohighlight">\(S,H\)</span>是正交补，则<span class="math notranslate nohighlight">\(\mathbf{P}_{S|S^\bot}\)</span>是将<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>沿着与子空间<span class="math notranslate nohighlight">\(S\)</span>垂直方向的投影，称为子空间的<strong>正交投影</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_S\)</span>。</p>
+<p>  假设有两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>，如果有线性变换矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>，将<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathbb{R}^n\)</span>映射为子空间<span class="math notranslate nohighlight">\(S\)</span>的向量<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，则这种线性变换称为沿着<span class="math notranslate nohighlight">\(H\)</span>的方向到<span class="math notranslate nohighlight">\(S\)</span>的<strong>投影算子</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_{S|H}\)</span>。特别地，若<span class="math notranslate nohighlight">\(S,H\)</span>是正交补，则<span class="math notranslate nohighlight">\(\mathbf{P}_{S|S^\bot}\)</span>是将<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>沿着与子空间<span class="math notranslate nohighlight">\(S\)</span>垂直方向的投影，称为子空间的<strong>正交投影</strong>，记为<span class="math notranslate nohighlight">\(\mathbf{P}_S\)</span>。</p>
 <p>  假设两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>其交集为空<span class="math notranslate nohighlight">\(\{\mathbf{0}\}\)</span>，其直和空间为<span class="math notranslate nohighlight">\(V=S\oplus H\)</span>，则直和空间向量可分解为，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -156,6 +156,13 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \[
 \mathbf{P}^2=\mathbf{P}
 \]</div>
+<p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(Range(\mathbf{P})=S,\mathbf{P}^2=\mathbf{P}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{P}^\top=\mathbf{P}\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{P}\)</span>称为到子空间<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交投影</strong>。</p>
+<p>  观察可知，线性变换矩阵，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{P}_S=\mathbf{A}(\mathbf{A}^\mathrm{H}\mathbf{A})^{-1}\mathbf{A}^\mathrm{H}
+\]</div>
+<p>满足正交投影算子定义的幂等性和Hermitian性，且<span class="math notranslate nohighlight">\(\mathbf{P}_S\mathbf{A}=\mathbf{A}\)</span>即满足<span class="math notranslate nohighlight">\(Range(\mathbf{P})=S\)</span><span class="math notranslate nohighlight">\(=Span(\mathbf{A})\)</span>。因此该矩阵是到由<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的列向量生成的子空间<span class="math notranslate nohighlight">\(S\)</span>上的正交投影算子。</p>
 </section>
 </section>
 </section>
