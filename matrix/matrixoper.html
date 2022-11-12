@@ -209,22 +209,22 @@
 <ol class="arabic simple">
 <li><p><strong>定义</strong></p></li>
 </ol>
-<p>所谓直和运算是指定义在任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times m}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{B}_{n\times n}\)</span>的运算，其规则如下，</p>
+<p>所谓直和运算是指定义在任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m}\)</span>和<span class="math notranslate nohighlight">\(\pmb{B}_{n\times n}\)</span>的运算，其规则如下，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{A}\oplus\mathbf{B}=\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{0}_{m\times n}\\ \mathbf{0}_{n\times m}&amp;\mathbf{B}\end{array}\right]
+\pmb{A}\oplus\pmb{B}=\left[\begin{array}{cc}\pmb{A}&amp;\pmb{0}_{m\times n}\\ \pmb{0}_{n\times m}&amp;\pmb{B}\end{array}\right]
 \end{split}\]</div>
 </div>
-<p>记为<span class="math notranslate nohighlight">\(\mathbf{A}\oplus\mathbf{B}\)</span>。</p>
+<p>记为<span class="math notranslate nohighlight">\(\pmb{A}\oplus\pmb{B}\)</span>。</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\oplus\mathbf{B}\neq\mathbf{B}\oplus\mathbf{A}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(c(\mathbf{A}\oplus\mathbf{B})=c\mathbf{A}\oplus c\mathbf{B}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\pm\mathbf{B})\oplus(\mathbf{C}\pm\mathbf{D})=(\mathbf{A}\oplus \mathbf{C})\pm(\mathbf{B}\oplus \mathbf{D})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\oplus\mathbf{B})(\mathbf{C}\oplus\mathbf{D})=\mathbf{AC}\oplus \mathbf{BD}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}\oplus\pmb{B}\neq\pmb{B}\oplus\pmb{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c(\pmb{A}\oplus\pmb{B})=c\pmb{A}\oplus c\pmb{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\pm\pmb{B})\oplus(\pmb{C}\pm\pmb{D})=(\pmb{A}\oplus \pmb{C})\pm(\pmb{B}\oplus \pmb{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\oplus\pmb{B})(\pmb{C}\oplus\pmb{D})=\pmb{AC}\oplus \pmb{BD}\)</span></p></li>
 </ul>
 </section>
 <section id="hadamard">
@@ -232,27 +232,27 @@
 <ol class="arabic simple">
 <li><p><strong>定义</strong></p></li>
 </ol>
-<p>Hadamard积是定义在任意同维度矩阵<span class="math notranslate nohighlight">\(\mathbf{A,B}\in\mathbb{R}^{m\times n}\)</span>的运算，记为<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>，也称为逐元素乘法，运算规则如下，</p>
+<p>Hadamard积是定义在任意同维度矩阵<span class="math notranslate nohighlight">\(\pmb{A,B}\in\mathbb{R}^{m\times n}\)</span>的运算，记为<span class="math notranslate nohighlight">\(\pmb{A}* \pmb{B}\)</span>，也称为逐元素乘法，运算规则如下，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-[\mathbf{A}* \mathbf{B}]_{ij}=a_{ij}b_{ij}
+[\pmb{A}* \pmb{B}]_{ij}=a_{ij}b_{ij}
 \]</div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p><strong>正定性</strong>. 若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是正定（半正定）矩阵，则<span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}\)</span>也正定（半正定）。</p></li>
-<li><p><strong>迹相关</strong>.<font color="red"> <span class="math notranslate nohighlight">\(\mathrm{tr}[\mathbf{A}^\top(\mathbf{B}*\mathbf{C})]=\mathrm{tr}[(\mathbf{A}*\mathbf{B})^\top\mathbf{C}]=\mathrm{tr}[(\mathbf{A}^\top*\mathbf{B}^\top)\mathbf{C}]\)</span>
+<li><p><strong>正定性</strong>. 若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是正定（半正定）矩阵，则<span class="math notranslate nohighlight">\(\pmb{A}* \pmb{B}\)</span>也正定（半正定）。</p></li>
+<li><p><strong>迹相关</strong>.<font color="red"> <span class="math notranslate nohighlight">\(\mathrm{tr}[\pmb{A}^\top(\pmb{B}*\pmb{C})]=\mathrm{tr}[(\pmb{A}*\pmb{B})^\top\pmb{C}]=\mathrm{tr}[(\pmb{A}^\top*\pmb{B}^\top)\pmb{C}]\)</span>
 </font></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* \mathbf{B}=\mathbf{B}* \mathbf{A}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* (\mathbf{B}* \mathbf{C})=(\mathbf{A}* \mathbf{B})* \mathbf{C}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}* (\mathbf{B}\pm \mathbf{C})=(\mathbf{A}* \mathbf{B})\pm (\mathbf{A}* \mathbf{C})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}* \mathbf{B})^\top=\mathbf{A}^\top* \mathbf{B}^\top\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(c(\mathbf{A}*\mathbf{B})=c\mathbf{A}* \mathbf{B}=\mathbf{A}* c\mathbf{B}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})*(\mathbf{C}+\mathbf{D})=\mathbf{A}* \mathbf{C}+\mathbf{A}* \mathbf{D}+\mathbf{B}* \mathbf{C}+\mathbf{B}* \mathbf{D}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\oplus\mathbf{B})*(\mathbf{C}\oplus\mathbf{D})=(\mathbf{A}*\mathbf{C})\oplus(\mathbf{B}*\mathbf{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}* \pmb{B}=\pmb{B}* \pmb{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}* (\pmb{B}* \pmb{C})=(\pmb{A}* \pmb{B})* \pmb{C}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}* (\pmb{B}\pm \pmb{C})=(\pmb{A}* \pmb{B})\pm (\pmb{A}* \pmb{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}* \pmb{B})^\top=\pmb{A}^\top* \pmb{B}^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c(\pmb{A}*\pmb{B})=c\pmb{A}* \pmb{B}=\pmb{A}* c\pmb{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}+\pmb{B})*(\pmb{C}+\pmb{D})=\pmb{A}* \pmb{C}+\pmb{A}* \pmb{D}+\pmb{B}* \pmb{C}+\pmb{B}* \pmb{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\oplus\pmb{B})*(\pmb{C}\oplus\pmb{D})=(\pmb{A}*\pmb{C})\oplus(\pmb{B}*\pmb{D})\)</span></p></li>
 </ul>
 </section>
 <section id="kronecker">
@@ -260,14 +260,14 @@
 <ol class="arabic simple">
 <li><p><strong>定义</strong></p></li>
 </ol>
-<p>对于任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times n}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{B}_{p\times q}\)</span>的Kronecker积定义为，</p>
+<p>对于任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}\)</span>和<span class="math notranslate nohighlight">\(\pmb{B}_{p\times q}\)</span>的Kronecker积定义为，</p>
 <ul class="simple">
 <li><p>右积</p></li>
 </ul>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{A}\otimes\mathbf{B}=[\mathbf{a}_1\mathbf{B},\cdots,\mathbf{a}_n\mathbf{B}]= \begin{bmatrix}a_{11}\mathbf{B}&amp;a_{12}\mathbf{B}&amp;\cdots&amp;a_{1n}\mathbf{B}\\ a_{21}\mathbf{B}&amp;a_{22}\mathbf{B}&amp;\cdots&amp;a_{2n}\mathbf{B}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\a_{m1}\mathbf{B}&amp;a_{m2}\mathbf{B}&amp;\cdots&amp;a_{mn}\mathbf{B}\end{bmatrix}_{mp\times nq}
+\pmb{A}\otimes\pmb{B}=[\pmb{a}_1\pmb{B},\cdots,\pmb{a}_n\pmb{B}]= \begin{bmatrix}a_{11}\pmb{B}&amp;a_{12}\pmb{B}&amp;\cdots&amp;a_{1n}\pmb{B}\\ a_{21}\pmb{B}&amp;a_{22}\pmb{B}&amp;\cdots&amp;a_{2n}\pmb{B}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\a_{m1}\pmb{B}&amp;a_{m2}\pmb{B}&amp;\cdots&amp;a_{mn}\pmb{B}\end{bmatrix}_{mp\times nq}
 \end{split}\]</div>
 </div>
 <ul class="simple">
@@ -276,44 +276,44 @@
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-[\mathbf{A}\otimes\mathbf{B}]_{\mathrm{left}}=[\mathbf{A}\mathbf{b}_1,\cdots,\mathbf{A}\mathbf{b}_n]= \begin{bmatrix}\mathbf{A}b_{11}&amp;\mathbf{A}b_{12}&amp;\cdots&amp;\mathbf{A}b_{1q}\\ \mathbf{A}b_{21}&amp;\mathbf{A}b_{22}&amp;\cdots&amp;\mathbf{A}b_{2q}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\\mathbf{A}b_{p1}&amp;\mathbf{A}b_{p2}&amp;\cdots&amp;\mathbf{A}b_{pq}\\\end{bmatrix}_{mp\times nq}
+[\pmb{A}\otimes\pmb{B}]_{\mathrm{left}}=[\pmb{A}\pmb{b}_1,\cdots,\pmb{A}\pmb{b}_n]= \begin{bmatrix}\pmb{A}b_{11}&amp;\pmb{A}b_{12}&amp;\cdots&amp;\pmb{A}b_{1q}\\ \pmb{A}b_{21}&amp;\pmb{A}b_{22}&amp;\cdots&amp;\pmb{A}b_{2q}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\\pmb{A}b_{p1}&amp;\pmb{A}b_{p2}&amp;\cdots&amp;\pmb{A}b_{pq}\\\end{bmatrix}_{mp\times nq}
 \end{split}\]</div>
 </div>
-<p>无论左积还是右积都是同一个映射<span class="math notranslate nohighlight">\(\mathbb{R}^{m\times n}\times\mathbb{R}^{p\times q}\rightarrow\mathbb{R}^{mp\times nq}\)</span>。可以看出<span class="math notranslate nohighlight">\([\mathbf{A}\otimes\mathbf{B}]_{\mathrm{left}}=\mathbf{B}\otimes\mathbf{A}\)</span>，故默认采用右积。</p>
+<p>无论左积还是右积都是同一个映射<span class="math notranslate nohighlight">\(\mathbb{R}^{m\times n}\times\mathbb{R}^{p\times q}\rightarrow\mathbb{R}^{mp\times nq}\)</span>。可以看出<span class="math notranslate nohighlight">\([\pmb{A}\otimes\pmb{B}]_{\mathrm{left}}=\pmb{B}\otimes\pmb{A}\)</span>，故默认采用右积。</p>
 <p>当<span class="math notranslate nohighlight">\(n=q=1\)</span>时，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{a}\otimes \mathbf{b}=\begin{bmatrix}a_1b_1\\a_1b_2\\\vdots\\a_mb_p \end{bmatrix}_{mp\times 1}
+\pmb{a}\otimes \pmb{b}=\begin{bmatrix}a_1b_1\\a_1b_2\\\vdots\\a_mb_p \end{bmatrix}_{mp\times 1}
 \end{split}\]</div>
 </div>
-<p>显然，向量外积<span class="math notranslate nohighlight">\(\mathbf{x}\mathbf{y}^\top\)</span>也可以写成Kronecker积的形式<span class="math notranslate nohighlight">\(\mathbf{x}\otimes\mathbf{y}^\top\)</span>，即</p>
+<p>显然，向量外积<span class="math notranslate nohighlight">\(\pmb{x}\pmb{y}^\top\)</span>也可以写成Kronecker积的形式<span class="math notranslate nohighlight">\(\pmb{x}\otimes\pmb{y}^\top\)</span>，即</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{x}\mathbf{y}^\top=\begin{bmatrix}x_1\mathbf{y}^\top\\x_2\mathbf{y}^\top\\\vdots \\x_m\mathbf{y}^\top\\ \end{bmatrix}_{m\times p}=\mathbf{x}\otimes\mathbf{y}^\top
+\pmb{x}\pmb{y}^\top=\begin{bmatrix}x_1\pmb{y}^\top\\x_2\pmb{y}^\top\\\vdots \\x_m\pmb{y}^\top\\ \end{bmatrix}_{m\times p}=\pmb{x}\otimes\pmb{y}^\top
 \end{split}\]</div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{B}\neq \mathbf{B}\otimes\mathbf{A}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{0}= \mathbf{0}\otimes\mathbf{A}=\mathbf{0}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(ab(\mathbf{A}\otimes\mathbf{B})=a\mathbf{A}\otimes b\mathbf{B}=b\mathbf{A}\otimes a\mathbf{B}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{I}_m\otimes\mathbf{I}_n=\mathbf{I}_{mn}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{AB})\otimes(\mathbf{CD})=(\mathbf{A}\otimes\mathbf{C})(\mathbf{B}\otimes\mathbf{D})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{A}\otimes(\mathbf{B}\pm\mathbf{C})=(\mathbf{A}\otimes\mathbf{B})\pm(\mathbf{A}\otimes\mathbf{C})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})^\top=\mathbf{A}^\top\otimes\mathbf{B}^\top\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})^{-1}=\mathbf{A}^{-1}\otimes\mathbf{B}^{-1}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{rank}(\mathbf{A}\otimes\mathbf{B})=\mathrm{rank}(\mathbf{A})\mathrm{rank}(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(|\mathbf{A}_{n\times n}\otimes\mathbf{B}_{m\times m}|=|\mathbf{A}|^m|\mathbf{B}|^n\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\otimes\mathbf{B})=\mathrm{tr}(\mathbf{A})\mathrm{tr}(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}+\mathbf{B})\otimes(\mathbf{C}+\mathbf{D})=\mathbf{A}\otimes\mathbf{C}+\mathbf{A}\otimes\mathbf{D}+\mathbf{B}\otimes\mathbf{C}+\mathbf{B}\otimes\mathbf{D}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})\otimes\mathbf{C}=\mathbf{A}\otimes(\mathbf{B}\otimes\mathbf{C})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})\otimes(\mathbf{C}\otimes\mathbf{D})=\mathbf{A}\otimes\mathbf{B}\otimes\mathbf{C}\otimes\mathbf{D}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\((\mathbf{A}\otimes\mathbf{B})(\mathbf{C}\otimes\mathbf{D})(\mathbf{E}\otimes\mathbf{F})=(\mathbf{ACE})\otimes(\mathbf{BDF})\)</span>，特别地，<span class="math notranslate nohighlight">\(\mathbf{A}\otimes\mathbf{D}=(\mathbf{AI}_p)\otimes(\mathbf{I}_q\mathbf{D})=(\mathbf{A}\otimes\mathbf{I}_q)(\mathbf{I}_p\otimes\mathbf{D})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\exp(\mathbf{A}\otimes\mathbf{B})=\exp(\mathbf{A})\otimes\exp(\mathbf{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}\otimes\pmb{B}\neq \pmb{B}\otimes\pmb{A}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}\otimes\pmb{0}= \pmb{0}\otimes\pmb{A}=\pmb{0}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(ab(\pmb{A}\otimes\pmb{B})=a\pmb{A}\otimes b\pmb{B}=b\pmb{A}\otimes a\pmb{B}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{I}_m\otimes\pmb{I}_n=\pmb{I}_{mn}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{AB})\otimes(\pmb{CD})=(\pmb{A}\otimes\pmb{C})(\pmb{B}\otimes\pmb{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{A}\otimes(\pmb{B}\pm\pmb{C})=(\pmb{A}\otimes\pmb{B})\pm(\pmb{A}\otimes\pmb{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\otimes\pmb{B})^\top=\pmb{A}^\top\otimes\pmb{B}^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\otimes\pmb{B})^{-1}=\pmb{A}^{-1}\otimes\pmb{B}^{-1}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{rank}(\pmb{A}\otimes\pmb{B})=\mathrm{rank}(\pmb{A})\mathrm{rank}(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(|\pmb{A}_{n\times n}\otimes\pmb{B}_{m\times m}|=|\pmb{A}|^m|\pmb{B}|^n\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\pmb{A}\otimes\pmb{B})=\mathrm{tr}(\pmb{A})\mathrm{tr}(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}+\pmb{B})\otimes(\pmb{C}+\pmb{D})=\pmb{A}\otimes\pmb{C}+\pmb{A}\otimes\pmb{D}+\pmb{B}\otimes\pmb{C}+\pmb{B}\otimes\pmb{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\otimes\pmb{B})\otimes\pmb{C}=\pmb{A}\otimes(\pmb{B}\otimes\pmb{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\otimes\pmb{B})\otimes(\pmb{C}\otimes\pmb{D})=\pmb{A}\otimes\pmb{B}\otimes\pmb{C}\otimes\pmb{D}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\((\pmb{A}\otimes\pmb{B})(\pmb{C}\otimes\pmb{D})(\pmb{E}\otimes\pmb{F})=(\pmb{ACE})\otimes(\pmb{BDF})\)</span>，特别地，<span class="math notranslate nohighlight">\(\pmb{A}\otimes\pmb{D}=(\pmb{AI}_p)\otimes(\pmb{I}_q\pmb{D})=(\pmb{A}\otimes\pmb{I}_q)(\pmb{I}_p\otimes\pmb{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\exp(\pmb{A}\otimes\pmb{B})=\exp(\pmb{A})\otimes\exp(\pmb{B})\)</span></p></li>
 </ul>
 </section>
 <section id="id3">
@@ -325,30 +325,30 @@
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf{A}=\begin{bmatrix}a_{11}&amp;a_{12}\\a_{21}&amp;a_{22} \end{bmatrix}
+\pmb{A}=\begin{bmatrix}a_{11}&amp;a_{12}\\a_{21}&amp;a_{22} \end{bmatrix}
 \end{split}\]</div>
 </div>
 <p>列向量化后，结果为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathrm{vec}(\mathbf{A})=\begin{bmatrix}a_{11}\\a_{21}\\a_{12}\\a_{22} \end{bmatrix}
+\mathrm{vec}(\pmb{A})=\begin{bmatrix}a_{11}\\a_{21}\\a_{12}\\a_{22} \end{bmatrix}
 \end{split}\]</div>
 </div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\mathbf{A}^\top)=\mathbf{K}_{mn}\mathrm{vec}(\mathbf{A})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\mathbf{A}+\mathbf{B})=\mathrm{vec}(\mathbf{A})+\mathrm{vec}(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}^\top\mathbf{B})=(\mathrm{vec}\mathbf{A})^\top\mathrm{vec}(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\mathbf{B}\mathbf{C})=[\mathrm{vec}(\mathbf{A}^\top)]^\top(\mathbf{I}_p\otimes\mathbf{B})\mathrm{vec}\mathbf{C}=[\mathrm{vec}(\mathbf{AB})^\top]^\top\mathrm{vec}(\mathbf{C})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\pmb{A}^\top)=\pmb{K}_{mn}\mathrm{vec}(\pmb{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{vec}(\pmb{A}+\pmb{B})=\mathrm{vec}(\pmb{A})+\mathrm{vec}(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\pmb{A}^\top\pmb{B})=(\mathrm{vec}\pmb{A})^\top\mathrm{vec}(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\pmb{A}\pmb{B}\pmb{C})=[\mathrm{vec}(\pmb{A}^\top)]^\top(\pmb{I}_p\otimes\pmb{B})\mathrm{vec}\pmb{C}=[\mathrm{vec}(\pmb{AB})^\top]^\top\mathrm{vec}(\pmb{C})\)</span></p></li>
 <li><p>多矩阵相乘</p></li>
 </ul>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
- \mathrm{vec}(\mathbf{A}_{m\times p}\mathbf{B}_{p\times q}\mathbf{C}_{q\times n})=(\mathbf{C}^\top\otimes \mathbf{A})\mathrm{vec}(\mathbf{B})=(\mathbf{I}_q\otimes\mathbf{AB})\mathrm{vec}(\mathbf{C})=(\mathbf{C}^\top\mathbf{B}^\top\otimes\mathbf{I}_m)\mathrm{vec}(\mathbf{A})
+ \mathrm{vec}(\pmb{A}_{m\times p}\pmb{B}_{p\times q}\pmb{C}_{q\times n})=(\pmb{C}^\top\otimes \pmb{A})\mathrm{vec}(\pmb{B})=(\pmb{I}_q\otimes\pmb{AB})\mathrm{vec}(\pmb{C})=(\pmb{C}^\top\pmb{B}^\top\otimes\pmb{I}_m)\mathrm{vec}(\pmb{A})
  \]</div>
 </div>
 <ul class="simple">
@@ -357,28 +357,28 @@
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
- \mathrm{vec}(\mathbf{A}\mathbf{C})=(\mathbf{I}_p\otimes \mathbf{A})\mathrm{vec}(\mathbf{C})=(\mathbf{C}^\top\otimes\mathbf{I}_m)\mathrm{vec}(\mathbf{A})
+ \mathrm{vec}(\pmb{A}\pmb{C})=(\pmb{I}_p\otimes \pmb{A})\mathrm{vec}(\pmb{C})=(\pmb{C}^\top\otimes\pmb{I}_m)\mathrm{vec}(\pmb{A})
  \]</div>
 </div>
 <ol class="arabic simple" start="3">
 <li><p><strong>例</strong></p></li>
 </ol>
-<p>向量化求解矩阵方程<span class="math notranslate nohighlight">\(\mathbf{AX}+\mathbf{XB}=\mathbf{Y}\)</span>的解<span class="math notranslate nohighlight">\(\hat{\mathbf{X}}\)</span>，其中所有矩阵均为<span class="math notranslate nohighlight">\(n\times n\)</span>阶矩阵。</p>
+<p>向量化求解矩阵方程<span class="math notranslate nohighlight">\(\pmb{AX}+\pmb{XB}=\pmb{Y}\)</span>的解<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>，其中所有矩阵均为<span class="math notranslate nohighlight">\(n\times n\)</span>阶矩阵。</p>
 <p>对等式左右同时向量化，由向量化公式可知，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-(\mathbf{I}_n\otimes\mathbf{A}+\mathbf{B}^\top\otimes\mathbf{I}_n)\mathrm{vec}(\mathbf{X})=\mathrm{vec}(\mathbf{Y})
+(\pmb{I}_n\otimes\pmb{A}+\pmb{B}^\top\otimes\pmb{I}_n)\mathrm{vec}(\pmb{X})=\mathrm{vec}(\pmb{Y})
  \]</div>
 </div>
 <p>则，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\mathrm{vec}(\mathbf{X})=(\mathbf{I}_n\otimes\mathbf{A}+\mathbf{B}^\top\otimes\mathbf{I}_n)^{\dagger}\mathrm{vec}(\mathbf{Y})
+\mathrm{vec}(\pmb{X})=(\pmb{I}_n\otimes\pmb{A}+\pmb{B}^\top\otimes\pmb{I}_n)^{\dagger}\mathrm{vec}(\pmb{Y})
  \]</div>
 </div>
-<p>最后再矩阵化即为<span class="math notranslate nohighlight">\(\hat{\mathbf{X}}\)</span>的值。</p>
+<p>最后再矩阵化即为<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>的值。</p>
 </section>
 </section>
 

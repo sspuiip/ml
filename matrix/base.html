@@ -207,23 +207,23 @@
 <p>一个<span class="math notranslate nohighlight">\(m\times n\)</span>的矩阵可以看成是一种具有<span class="math notranslate nohighlight">\(mn\)</span>个元素的多变量。如果需要使用一个标量来概括多变量，可以使用矩阵的性能指标来表示。矩阵的性能指标一般有：二次型、行列式、特征值、迹和秩等。</p>
 <section id="id2">
 <h2><span class="section-number">1.1. </span>二次型<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
-<p>任意方阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的<strong>二次型</strong>为<span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{A}\mathbf{x}\)</span>，其中<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>为任意非零向量。</p>
+<p>任意方阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的<strong>二次型</strong>为<span class="math notranslate nohighlight">\(\pmb{x}^\top \pmb{A}\pmb{x}\)</span>，其中<span class="math notranslate nohighlight">\(\pmb{x}\)</span>为任意非零向量。</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{equation}
 \begin{split}
-\mathbf{x}^\top \mathbf{A}\mathbf{x}&amp;=\sum_i\sum_j a_{ij}x_ix_j\\
+\pmb{x}^\top \pmb{A}\pmb{x}&amp;=\sum_i\sum_j a_{ij}x_ix_j\\
 &amp;=\sum_i a_{ii}x_i^2 +\sum_i^{n-1}\sum_{j=i+1}^n(a_{ij}+a_{ji})x_ix_j
 \end{split}
 \end{equation}
 \end{split}\]</div>
 </div>
-<p>如果将大于0的二次型<span class="math notranslate nohighlight">\(\mathbf{x}^\top \mathbf{A}\mathbf{x}\)</span>称为<strong>正定的二次型</strong>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>称为<strong>正定矩阵</strong>，即</p>
+<p>如果将大于0的二次型<span class="math notranslate nohighlight">\(\pmb{x}^\top \pmb{A}\pmb{x}\)</span>称为<strong>正定的二次型</strong>，则矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>称为<strong>正定矩阵</strong>，即</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}&gt;0
+\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}&gt;0
 \]</div>
 </div>
 <p>成立。根据二次型的计算结果，可以进一步区分以下矩阵类型。</p>
@@ -237,24 +237,24 @@
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-center"><p>正定矩阵</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{A}\succ 0\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}&gt;0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{A}\succ 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}&gt;0\)</span></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>半正定矩阵</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{A}\succeq 0\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}\ge 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{A}\succeq 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}\ge 0\)</span></p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>负定矩阵</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{A}\prec 0\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}&lt;0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{A}\prec 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}&lt;0\)</span></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p>半负定矩阵</p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\mathbf{A}\preceq 0\)</span></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}\le 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{A}\preceq 0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}\le 0\)</span></p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p>不定矩阵</p></td>
 <td class="text-center"><p></p></td>
-<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \mathbf{x}\neq 0,\quad \mathbf{x}^\top \mathbf{A}\mathbf{x}\)</span>既有正值又有负值</p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}\)</span>既有正值又有负值</p></td>
 </tr>
 </tbody>
 </table>
@@ -264,22 +264,22 @@
 <h2><span class="section-number">1.2. </span>行列式<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
 <section id="id4">
 <h3><span class="section-number">1.2.1. </span>定义<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
-<p>一个<span class="math notranslate nohighlight">\(n\times n\)</span>的方阵的<strong>行列式</strong>记为<span class="math notranslate nohighlight">\(\det(\mathbf{A})\)</span>或<span class="math notranslate nohighlight">\(|\mathbf{A}|\)</span>，其定义为，</p>
+<p>一个<span class="math notranslate nohighlight">\(n\times n\)</span>的方阵的<strong>行列式</strong>记为<span class="math notranslate nohighlight">\(\det(\pmb{A})\)</span>或<span class="math notranslate nohighlight">\(|\pmb{A}|\)</span>，其定义为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\det(\mathbf{A})=\left\lvert \begin{array}{cccc}a_{11}&amp;a_{12}&amp;\cdots &amp; a_{1n}\\ a_{21}&amp;a_{22}&amp;\cdots &amp; a_{2n}\\ \vdots&amp;\vdots&amp;\vdots &amp; \vdots\\a_{n1}&amp;a_{n2}&amp;\cdots &amp; a_{nn}\\ \end{array} \right\rvert
+\det(\pmb{A})=\left\lvert \begin{array}{cccc}a_{11}&amp;a_{12}&amp;\cdots &amp; a_{1n}\\ a_{21}&amp;a_{22}&amp;\cdots &amp; a_{2n}\\ \vdots&amp;\vdots&amp;\vdots &amp; \vdots\\a_{n1}&amp;a_{n2}&amp;\cdots &amp; a_{nn}\\ \end{array} \right\rvert
 \end{split}\]</div>
 </div>
 <p>行列式不为0的矩阵称为<strong>非奇异矩阵</strong>。</p>
 </section>
 <section id="id5">
 <h3><span class="section-number">1.2.2. </span>余子式<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h3>
-<p>去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余行列式记为<span class="math notranslate nohighlight">\(A_{ij}\)</span>，称为矩阵元素<span class="math notranslate nohighlight">\(a_{ij}\)</span>的<strong>余子式</strong>。若去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余<strong>子矩阵</strong>记为<span class="math notranslate nohighlight">\(\mathbf{A}_{ij}\)</span>，则有，</p>
+<p>去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余行列式记为<span class="math notranslate nohighlight">\(A_{ij}\)</span>，称为矩阵元素<span class="math notranslate nohighlight">\(a_{ij}\)</span>的<strong>余子式</strong>。若去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余<strong>子矩阵</strong>记为<span class="math notranslate nohighlight">\(\pmb{A}_{ij}\)</span>，则有，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
+A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 \]</div>
 </div>
 <p>任意一个方阵的行列式等于其任意行（列）元素与相对应余子式乘积之和，即，</p>
@@ -287,8 +287,8 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\det(\mathbf{A})&amp;=a_{i1}A_{i1}+\cdots+a_{in}A_{in}=\sum_j a_{ij}\cdot(-1)^{i+j}\det(\mathbf{A}_{ij})\\
-&amp;=a_{1j}A_{1j}+\cdots+a_{nj}A_{nj}=\sum_i a_{ij}\cdot(-1)^{i+j}\det(\mathbf{A}_{ij})
+\det(\pmb{A})&amp;=a_{i1}A_{i1}+\cdots+a_{in}A_{in}=\sum_j a_{ij}\cdot(-1)^{i+j}\det(\pmb{A}_{ij})\\
+&amp;=a_{1j}A_{1j}+\cdots+a_{nj}A_{nj}=\sum_i a_{ij}\cdot(-1)^{i+j}\det(\pmb{A}_{ij})
 \end{split}
 \end{split}\]</div>
 </div>
@@ -299,15 +299,15 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <ol class="arabic">
 <li><p>行列式的两行（列）交换位置，则行列式的值不变，但符号改变。</p></li>
 <li><p>若矩阵的行（列）向量线性相关，则行列式为0。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{A})=\det(\mathbf{A}^\top)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\det(\mathbf{AB})=\det(\mathbf{A})\det(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\det(c\mathbf{A})=c^n\det(\mathbf{A})\)</span></p></li>
-<li><p>若<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>非奇异，则<span class="math notranslate nohighlight">\(\det(\mathbf{A}^{-1})=1/\det(\mathbf{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(\pmb{A})=\det(\pmb{A}^\top)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(\pmb{AB})=\det(\pmb{A})\det(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\det(c\pmb{A})=c^n\det(\pmb{A})\)</span></p></li>
+<li><p>若<span class="math notranslate nohighlight">\(\pmb{A}\)</span>非奇异，则<span class="math notranslate nohighlight">\(\det(\pmb{A}^{-1})=1/\det(\pmb{A})\)</span></p></li>
 <li><p>三角矩阵、对角矩阵的行列式等于主对角线元素乘积。</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \det(\mathbf{A})=\prod_i^n a_{ii}
+   \det(\pmb{A})=\prod_i^n a_{ii}
    \]</div>
 </div>
 </li>
@@ -315,7 +315,7 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-   \mathbf{A}非奇异\Leftrightarrow\det\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{B}\\\mathbf{C}&amp;\mathbf{D} \end{array}\right]=\det(\mathbf{A})\det(\mathbf{D}-\mathbf{C}\mathbf{A}^{-1}\mathbf{B})
+   \pmb{A}非奇异\Leftrightarrow\det\left[\begin{array}{cc}\pmb{A}&amp;\pmb{B}\\\pmb{C}&amp;\pmb{D} \end{array}\right]=\det(\pmb{A})\det(\pmb{D}-\pmb{C}\pmb{A}^{-1}\pmb{B})
    \end{split}\]</div>
 </div>
 </li>
@@ -324,41 +324,41 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <section id="id7">
 <h3><span class="section-number">1.2.4. </span>性质二<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
 <ol class="arabic">
-<li><p>Cauchy-Schwartz不等式，若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是<span class="math notranslate nohighlight">\(m\times n\)</span>矩阵，则</p>
+<li><p>Cauchy-Schwartz不等式，若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是<span class="math notranslate nohighlight">\(m\times n\)</span>矩阵，则</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \det(\mathbf{A}^\top\mathbf{B})^2\le \det(\mathbf{A}^\top\mathbf{A})\det(\mathbf{B}^\top\mathbf{B})
+   \det(\pmb{A}^\top\pmb{B})^2\le \det(\pmb{A}^\top\pmb{A})\det(\pmb{B}^\top\pmb{B})
    \]</div>
 </div>
 </li>
-<li><p>Hadamard不等式，对于<span class="math notranslate nohighlight">\(m\times m\)</span>矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>有，</p>
+<li><p>Hadamard不等式，对于<span class="math notranslate nohighlight">\(m\times m\)</span>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>有，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \det(\mathbf{A})\le \prod_{i=1}^m\left(\sum_{j=1}^m |a_{ij}|^2 \right)^{1/2}
+   \det(\pmb{A})\le \prod_{i=1}^m\left(\sum_{j=1}^m |a_{ij}|^2 \right)^{1/2}
    \]</div>
 </div>
 </li>
-<li><p>Fischer不等式，若<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times m}, \mathbf{B}_{m\times n},\mathbf{C}_{n\times n}\)</span>，则有，</p>
+<li><p>Fischer不等式，若<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m}, \pmb{B}_{m\times n},\pmb{C}_{n\times n}\)</span>，则有，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
-   \det\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{B}\\\mathbf{B}^\top&amp;\mathbf{C} \end{array}\right]\le\det(\mathbf{A})\det(\mathbf{C})
+   \det\left[\begin{array}{cc}\pmb{A}&amp;\pmb{B}\\\pmb{B}^\top&amp;\pmb{C} \end{array}\right]\le\det(\pmb{A})\det(\pmb{C})
    \end{split}\]</div>
 </div>
 </li>
-<li><p>Minkowski不等式，若<span class="math notranslate nohighlight">\(\mathbf{A}_{m\times m},\mathbf{B}_{m\times m}\)</span>半正定，则有，</p></li>
+<li><p>Minkowski不等式，若<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m},\pmb{B}_{m\times m}\)</span>半正定，则有，</p></li>
 </ol>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \sqrt[m]{\det(\mathbf{A}+\mathbf{B})}\ge\sqrt[m]{\det(\mathbf{A})}+\sqrt[m]{\det(\mathbf{B})}
+   \sqrt[m]{\det(\pmb{A}+\pmb{B})}\ge\sqrt[m]{\det(\pmb{A})}+\sqrt[m]{\det(\pmb{B})}
 \]</div>
 </div>
 <ol class="arabic simple" start="5">
-<li><p>正定矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的行列式大于0。</p></li>
-<li><p>半正定矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的行列式大于等于0。</p></li>
+<li><p>正定矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的行列式大于0。</p></li>
+<li><p>半正定矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的行列式大于等于0。</p></li>
 </ol>
 </section>
 </section>
@@ -368,7 +368,7 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\langle\mathbf{A},\mathbf{B}\rangle=vec(\mathbf{A})^\top vec(\mathbf{B})=tr (\mathbf{A}^\top\mathbf{B})
+\langle\pmb{A},\pmb{B}\rangle=vec(\pmb{A})^\top vec(\pmb{B})=tr (\pmb{A}^\top\pmb{B})
 \]</div>
 </div>
 </section>
@@ -377,45 +377,45 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <section id="id10">
 <h3><span class="section-number">1.4.1. </span>向量范数<a class="headerlink" href="#id10" title="永久链接至标题">#</a></h3>
 <ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(L_0\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \mathbf{x}\rVert_0\triangleq\)</span>非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。</p></li>
-<li><p><span class="math notranslate nohighlight">\(L_1\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \mathbf{x}\rVert_1\triangleq\sum_i^n |x_i|=|x_1|+|x_2|+\dots+|x_n|\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(L_2\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \mathbf{x}\rVert_2\triangleq\left(\sum_i^n x_i^2\right)=(x_1^2+x_2^2+\dots+x_n^2)^{1/2}\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(L_\infty\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \mathbf{x}\rVert_\infty\triangleq\max\{|x_1|+|x_2|+\dots+|x_n|\}\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(L_p\)</span>范数：<span class="math notranslate nohighlight">\(\lVert \mathbf{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_0\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_0\triangleq\)</span>非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_1\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_1\triangleq\sum_i^n |x_i|=|x_1|+|x_2|+\dots+|x_n|\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_2\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_2\triangleq\left(\sum_i^n x_i^2\right)=(x_1^2+x_2^2+\dots+x_n^2)^{1/2}\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_\infty\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_\infty\triangleq\max\{|x_1|+|x_2|+\dots+|x_n|\}\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_p\)</span>范数：<span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}\)</span>。</p></li>
 </ol>
 </section>
 <section id="id11">
 <h3><span class="section-number">1.4.2. </span>矩阵范数<a class="headerlink" href="#id11" title="永久链接至标题">#</a></h3>
 <p>矩阵范数是矩阵的实值函数，且满足以下条件（与向量空间范数的定义类似），</p>
 <ol class="arabic simple">
-<li><p>非负性： <span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert\ge 0\)</span>，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert= 0\)</span>当且仅当<span class="math notranslate nohighlight">\(\mathbf{A}=0\)</span>。</p></li>
-<li><p>正比例：<span class="math notranslate nohighlight">\(\lVert c\mathbf{A}\rVert=|c|\cdot\lVert\mathbf{A}\rVert\)</span>。</p></li>
-<li><p>三角不等式：<span class="math notranslate nohighlight">\(\lVert \mathbf{A}+\mathbf{B}\rVert\le\lVert \mathbf{A}\rVert+\lVert\mathbf{B}\rVert\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(\lVert\mathbf{AB}\rVert\le\lVert\mathbf{A}\rVert\cdot\lVert\mathbf{B}\rVert\)</span></p></li>
+<li><p>非负性： <span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert\ge 0\)</span>，<span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert= 0\)</span>当且仅当<span class="math notranslate nohighlight">\(\pmb{A}=0\)</span>。</p></li>
+<li><p>正比例：<span class="math notranslate nohighlight">\(\lVert c\pmb{A}\rVert=|c|\cdot\lVert\pmb{A}\rVert\)</span>。</p></li>
+<li><p>三角不等式：<span class="math notranslate nohighlight">\(\lVert \pmb{A}+\pmb{B}\rVert\le\lVert \pmb{A}\rVert+\lVert\pmb{B}\rVert\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lVert\pmb{AB}\rVert\le\lVert\pmb{A}\rVert\cdot\lVert\pmb{B}\rVert\)</span></p></li>
 </ol>
 <p>常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatten范数。</p>
 </section>
 <section id="id12">
 <h3><span class="section-number">1.4.3. </span>诱导范数<a class="headerlink" href="#id12" title="永久链接至标题">#</a></h3>
-<p>假设有矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>，则有以下诱导范数定义。其实是一个向量范数的变形。</p>
+<p>假设有矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>，则有以下诱导范数定义。其实是一个向量范数的变形。</p>
 <ol class="arabic simple">
-<li><p>矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的诱导范数为，</p></li>
+<li><p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的诱导范数为，</p></li>
 </ol>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\lVert \mathbf{A}\rVert_{(m,n)} &amp;\triangleq \max\{\lVert \mathbf{Ax} \rVert :\mathbf{x}\in R^n, \lVert \mathbf{x}\rVert=1  \}\\
-&amp;=\max\left\{\frac{\lVert \mathbf{Ax}_{(m)} \rVert}{\lVert \mathbf{x}_{(n)} \rVert}:\mathbf{x}\in R^n, \lVert \mathbf{x}\rVert=1\right\}
+\lVert \pmb{A}\rVert_{(m,n)} &amp;\triangleq \max\{\lVert \pmb{Ax} \rVert :\pmb{x}\in R^n, \lVert \pmb{x}\rVert=1  \}\\
+&amp;=\max\left\{\frac{\lVert \pmb{Ax}_{(m)} \rVert}{\lVert \pmb{x}_{(n)} \rVert}:\pmb{x}\in R^n, \lVert \pmb{x}\rVert=1\right\}
 \end{split}
 \end{split}\]</div>
 </div>
 <ol class="arabic" start="2">
-<li><p>矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的诱导p范数为，</p>
+<li><p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的诱导p范数为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \lVert \mathbf{A}\rVert_p\triangleq\max_{\mathbf{x}\neq 0}\frac{\lVert\mathbf{Ax}\rVert_p}{\lVert\mathbf{x}\rVert_p}
+   \lVert \pmb{A}\rVert_p\triangleq\max_{\pmb{x}\neq 0}\frac{\lVert\pmb{Ax}\rVert_p}{\lVert\pmb{x}\rVert_p}
    \]</div>
 </div>
 <p>当取如下值时，</p>
@@ -424,28 +424,28 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-     \lVert \mathbf{A}\rVert_1\triangleq\max_{1\le j\le n}\sum_i^m|a_{ij}|
+     \lVert \pmb{A}\rVert_1\triangleq\max_{1\le j\le n}\sum_i^m|a_{ij}|
      \]</div>
 </div>
-<p>计算过程如下：<span class="math notranslate nohighlight">\(\lVert \mathbf{Ax}\rVert_1=\lVert \sum_j^nx_j\mathbf{a}_j\rVert_1\le\sum_j^n|x_j|\cdot\lVert\mathbf{a}_j\rVert_1\le\max_{1\le j\le n}\sum_i^m|a_{ij}|\)</span> 。<span class="math notranslate nohighlight">\(\mathbf{a}_j\)</span>为矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的第<span class="math notranslate nohighlight">\(j\)</span>列。该范式计算结果等于矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>最大绝对值和的列。</p>
+<p>计算过程如下：<span class="math notranslate nohighlight">\(\lVert \pmb{Ax}\rVert_1=\lVert \sum_j^nx_j\pmb{a}_j\rVert_1\le\sum_j^n|x_j|\cdot\lVert\pmb{a}_j\rVert_1\le\max_{1\le j\le n}\sum_i^m|a_{ij}|\)</span> 。<span class="math notranslate nohighlight">\(\pmb{a}_j\)</span>为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的第<span class="math notranslate nohighlight">\(j\)</span>列。该范式计算结果等于矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>最大绝对值和的列。</p>
 </li>
 <li><p><span class="math notranslate nohighlight">\(p=\infty\)</span></p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-     \lVert \mathbf{A}\rVert_\infty\triangleq\max_{1\le i\le m}\sum_j^n|a_{ij}|
+     \lVert \pmb{A}\rVert_\infty\triangleq\max_{1\le i\le m}\sum_j^n|a_{ij}|
      \]</div>
 </div>
-<p>计算过程如下：<span class="math notranslate nohighlight">\(\lVert \mathbf{Ax}\rVert_\infty=\max_{1\le i\le m}\{\sum_{j=1}^n |a_{ij}x_j| \}  \le \max_{1\le i\le m}\sum_{j=1}^n|x_j|\cdot |a_{ij}|\le\max_{1\le i\le m}\sum_{j=1}^n|a_{ij}|\)</span> 。该范式计算结果等于矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>最大绝对值和的行。</p>
+<p>计算过程如下：<span class="math notranslate nohighlight">\(\lVert \pmb{Ax}\rVert_\infty=\max_{1\le i\le m}\{\sum_{j=1}^n |a_{ij}x_j| \}  \le \max_{1\le i\le m}\sum_{j=1}^n|x_j|\cdot |a_{ij}|\le\max_{1\le i\le m}\sum_{j=1}^n|a_{ij}|\)</span> 。该范式计算结果等于矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>最大绝对值和的行。</p>
 </li>
 <li><p><span class="math notranslate nohighlight">\(p=2\)</span></p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-     \lVert \mathbf{A}\rVert_2\triangleq\sqrt{\lambda_{\max}(\mathbf{A}^\top\mathbf{A})}=\sigma_{\max}(\mathbf{A})
+     \lVert \pmb{A}\rVert_2\triangleq\sqrt{\lambda_{\max}(\pmb{A}^\top\pmb{A})}=\sigma_{\max}(\pmb{A})
      \]</div>
 </div>
-<p>计算结果为矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的最大奇异值。</p>
+<p>计算结果为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的最大奇异值。</p>
 </li>
 </ul>
 </li>
@@ -460,18 +460,18 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\lVert \mathbf{A}\rVert_p = \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^p\right)^{1/p}
+\lVert \pmb{A}\rVert_p = \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^p\right)^{1/p}
 \]</div>
 </div>
 <ol class="arabic simple">
-<li><p><span class="math notranslate nohighlight">\(p=1\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_1=\sum_i\sum_j |a_{ij}|\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(p=\infty\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_\infty=\max_{ij} |a_{ij}|\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(p=2\)</span>时，<span class="math notranslate nohighlight">\(\lVert \mathbf{A}\rVert_2= \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^2\right)^{1/2}\)</span>。该范数也称之为Frobenius范数。并且有如下性质，</p></li>
+<li><p><span class="math notranslate nohighlight">\(p=1\)</span>时，<span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert_1=\sum_i\sum_j |a_{ij}|\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(p=\infty\)</span>时，<span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert_\infty=\max_{ij} |a_{ij}|\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(p=2\)</span>时，<span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert_2= \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^2\right)^{1/2}\)</span>。该范数也称之为Frobenius范数。并且有如下性质，</p></li>
 </ol>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-   \lVert \mathbf{A}\rVert_2=\sqrt{tr(\mathbf{A}^\top\mathbf{A})}=\langle \mathbf{A},\mathbf{A}\rangle^{1/2}
+   \lVert \pmb{A}\rVert_2=\sqrt{tr(\pmb{A}^\top\pmb{A})}=\langle \pmb{A},\pmb{A}\rangle^{1/2}
   \]</div>
 </div>
 </section>
@@ -481,20 +481,20 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <section id="id14">
 <h4><span class="section-number">1.4.5.1. </span>核范数<a class="headerlink" href="#id14" title="永久链接至标题">#</a></h4>
 <p>核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个<strong>凸优化</strong>问题，所以这种等价可直接降低求解各类<strong>低秩问题</strong>的难度。</p>
-<p><strong>定义1</strong> (核范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n)\)</span>，且矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的核范数为，</p>
+<p><strong>定义1</strong> (核范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n)\)</span>，且矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的核范数为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\lVert \mathbf{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r
+\lVert \pmb{X}\rVert_*=\sigma_1+\sigma_2+\cdots+\sigma_r
 \]</div>
 </div>
-<p>通过SVD分解，即<span class="math notranslate nohighlight">\(\mathbf{X}=\mathbf{U\Sigma V}^\top\)</span>，则有</p>
+<p>通过SVD分解，即<span class="math notranslate nohighlight">\(\pmb{X}=\pmb{U\Sigma V}^\top\)</span>，则有</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-\lVert \mathbf{X} \rVert_* &amp;= \mathrm{tr}\left(\sqrt{\mathbf{X}^\top\mathbf{X}}\right)\\
-&amp;=\mathrm{tr}(\mathbf{\Sigma})
+\lVert \pmb{X} \rVert_* &amp;= \mathrm{tr}\left(\sqrt{\pmb{X}^\top\pmb{X}}\right)\\
+&amp;=\mathrm{tr}(\pmb{\Sigma})
 \end{split}
 \end{split}\]</div>
 </div>
@@ -505,10 +505,10 @@ A_{ij}=(-1)^{i+j}\det(\mathbf{A}_{ij})
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-d\lVert \mathbf{X} \rVert_*&amp;=d\mathrm{tr}(\mathbf{\Sigma})\\
-&amp;=\mathrm{tr}d(\mathbf{\Sigma})\\
-&amp;=\mathrm{tr}(\mathbf{U}^\top d\mathbf{X}\mathbf{V})\\
-&amp;=\mathrm{tr}(\mathbf{V}\mathbf{U}^\top d\mathbf{X})\\
+d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
+&amp;=\mathrm{tr}d(\pmb{\Sigma})\\
+&amp;=\mathrm{tr}(\pmb{U}^\top d\pmb{X}\pmb{V})\\
+&amp;=\mathrm{tr}(\pmb{V}\pmb{U}^\top d\pmb{X})\\
 \end{split}
 \end{split}\]</div>
 </div>
@@ -516,19 +516,19 @@ d\lVert \mathbf{X} \rVert_*&amp;=d\mathrm{tr}(\mathbf{\Sigma})\\
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\frac{\partial \lVert \mathbf{X} \rVert_*}{\partial \mathbf{X}}=\mathbf{UV}^\top
+\frac{\partial \lVert \pmb{X} \rVert_*}{\partial \pmb{X}}=\pmb{UV}^\top
 \]</div>
 </div>
-<p>注意：<span class="math notranslate nohighlight">\(d\mathbf{X}=\mathbf{U}(d\mathbf{\Sigma})\mathbf{V}^\top\)</span>可得到，<span class="math notranslate nohighlight">\(d\mathbf{\mathbf{\Sigma}}=\mathbf{U}^\top (d\mathbf{X})\mathbf{V}\)</span>。</p>
+<p>注意：<span class="math notranslate nohighlight">\(d\pmb{X}=\pmb{U}(d\pmb{\Sigma})\pmb{V}^\top\)</span>可得到，<span class="math notranslate nohighlight">\(d\pmb{\pmb{\Sigma}}=\pmb{U}^\top (d\pmb{X})\pmb{V}\)</span>。</p>
 </section>
 <section id="id15">
 <h4><span class="section-number">1.4.5.2. </span>Schatten范数<a class="headerlink" href="#id15" title="永久链接至标题">#</a></h4>
 <p>相比于核范数，Schatten范数多出了一个参数<span class="math notranslate nohighlight">\(p\)</span>。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多<a class="reference external" href="https://zhuanlan.zhihu.com/p/104402273">低秩问题</a>。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》<a class="reference external" href="https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf">[pdf]</a><a class="reference external" href="https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery">[code]</a>。</p>
-<p><strong>定义2</strong> (Schatten范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n), p&gt;0\)</span>，且矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的Schatten范数为，</p>
+<p><strong>定义2</strong> (Schatten范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n), p&gt;0\)</span>，且矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的Schatten范数为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\lVert \mathbf{X}\rVert_{Sp}=(\sigma_1^p+\sigma_2^p+\cdots+\sigma_r^p)^{1/p}
+\lVert \pmb{X}\rVert_{Sp}=(\sigma_1^p+\sigma_2^p+\cdots+\sigma_r^p)^{1/p}
 \]</div>
 </div>
 </section>
@@ -536,31 +536,31 @@ d\lVert \mathbf{X} \rVert_*&amp;=d\mathrm{tr}(\mathbf{\Sigma})\\
 </section>
 <section id="id16">
 <h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id16" title="永久链接至标题">#</a></h2>
-<p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(tr(\mathbf{A})\)</span>，即</p>
+<p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(tr(\pmb{A})\)</span>，即</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-tr(\mathbf{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
+tr(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 \]</div>
 </div>
 <section id="id17">
 <h3><span class="section-number">1.5.1. </span>性质一<a class="headerlink" href="#id17" title="永久链接至标题">#</a></h3>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(tr(c\mathbf{A}\pm d\mathbf{B})=tr(\mathbf{A})\pm tr(\mathbf{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^\top)=tr(\mathbf{A})^\top\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{ABC})=tr(\mathbf{BCA})=tr(\mathbf{CAB})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{A}\mathbf{x}=tr(\mathbf{x}^\top\mathbf{A}\mathbf{x})\)</span>，特别地，<span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{y}=tr(\mathbf{yx}^\top)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A})=\lambda_1+\lambda_2+\cdots+\lambda_n\)</span>所有特征值之和。</p></li>
-<li><p><span class="math notranslate nohighlight">\(tr\left[\begin{array}{cc}\mathbf{A}&amp;\mathbf{B}\\\mathbf{C}&amp;\mathbf{D}\end{array}\right]=tr(\mathbf{A})+tr(\mathbf{D})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^k)=\sum_i \lambda_i^k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(c\pmb{A}\pm d\pmb{B})=tr(\pmb{A})\pm tr(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^\top)=tr(\pmb{A})^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\pmb{ABC})=tr(\pmb{BCA})=tr(\pmb{CAB})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{A}\pmb{x}=tr(\pmb{x}^\top\pmb{A}\pmb{x})\)</span>，特别地，<span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{y}=tr(\pmb{yx}^\top)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A})=\lambda_1+\lambda_2+\cdots+\lambda_n\)</span>所有特征值之和。</p></li>
+<li><p><span class="math notranslate nohighlight">\(tr\left[\begin{array}{cc}\pmb{A}&amp;\pmb{B}\\\pmb{C}&amp;\pmb{D}\end{array}\right]=tr(\pmb{A})+tr(\pmb{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^k)=\sum_i \lambda_i^k\)</span></p></li>
 </ul>
 </section>
 <section id="id18">
 <h3><span class="section-number">1.5.2. </span>性质二<a class="headerlink" href="#id18" title="永久链接至标题">#</a></h3>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(tr(\mathbf{A}^2)\le tr(\mathbf{A}^\top\mathbf{A})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr((\mathbf{A}+\mathbf{B})(\mathbf{A}+\mathbf{B})^\top)\le 2[tr(\mathbf{A}\mathbf{A}^\top)+tr(\mathbf{B}\mathbf{B}^\top)]\)</span></p></li>
-<li><p>若<span class="math notranslate nohighlight">\(\mathbf{A,B}\)</span>都是对称矩阵，则<span class="math notranslate nohighlight">\(tr(\mathbf{AB})\le \frac12 tr(\mathbf{A}^2+\mathbf{B}^2)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^2)\le tr(\pmb{A}^\top\pmb{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(tr((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[tr(\pmb{A}\pmb{A}^\top)+tr(\pmb{B}\pmb{B}^\top)]\)</span></p></li>
+<li><p>若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是对称矩阵，则<span class="math notranslate nohighlight">\(tr(\pmb{AB})\le \frac12 tr(\pmb{A}^2+\pmb{B}^2)\)</span></p></li>
 </ul>
 </section>
 </section>
