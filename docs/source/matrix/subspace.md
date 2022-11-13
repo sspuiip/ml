@@ -112,7 +112,7 @@ $$
 
 &emsp;&emsp;列（行）空间是直接针对矩阵$A_{m\times n}$本身定义的向量子空间。此外还有通过矩阵变换$\pmb{Ax}$定义的子空间：变换的值域和零空间。
 
-&emsp;&emsp;**定义 [值域，零空间]** 若$\pmb{A}$是一个复矩阵，则$\pmb{A}$的值域(range)定义为，
+&emsp;&emsp;**定义. [值域，零空间]** 若$\pmb{A}$是一个复矩阵，则$\pmb{A}$的值域(range)定义为，
 
 $$
 \mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m | \pmb{Ax}=\pmb{y},\quad \pmb{x}\in\mathbb{C}^n\}
@@ -130,7 +130,7 @@ $$
 \mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m | \pmb{Ax}=\pmb{y}=\sum_j x_j \pmb{a}_j,\quad \pmb{x}\in\mathbb{C}^n\}=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)
 $$
 
-&emsp;&emsp;**性质**
+&emsp;&emsp;**性质.**
 
 &emsp;&emsp;1. $\mathrm{Range}(\pmb{A})=\mathrm{Col}(\pmb{A})=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)$
 
@@ -139,3 +139,63 @@ $$
 &emsp;&emsp;3. 零空间与行空间正交。$\mathrm{Row}(\pmb{A})^\bot=\mathrm{Null}(\pmb{A})$
 
 &emsp;&emsp;4. $\mathrm{Col}(\pmb{A})^\bot=\mathrm{Null}(\pmb{A})$
+
+##### 子空间基的构造
+
+&emsp;&emsp;**定理.** 矩阵$\pmb{A}_{m\times n}$的列空间与行空间的维数相等。该维数就是$\pmb{A}$的秩$\mathrm{rank}(\pmb{A})$，且有如下关系，
+
+$$
+\mathrm{rank}(\pmb{A})+\mathrm{dim}[\mathrm{Null}(\pmb{A})]=n
+$$
+
+&emsp;&emsp;**定理.** 若$\pmb{A}_{m\times n}=\pmb{QR}$是一个列满秩矩阵的分解，则有，
+
+$$
+\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_k)=\mathrm{Span}(\pmb{q}_1,...,\pmb{q}_k)\quad k=1,...,n
+$$
+
+&emsp;&emsp;下面介绍奇异值分解的基空间标准正交基的构造方法。任意一个矩阵$\pmb{A}_{m\times n}$可以分解为以下形式，
+
+$$
+\pmb{A}=\pmb{U\Sigma V^H}
+$$
+
+其中，$\pmb{U}=[\pmb{U}_r,\tilde{\pmb{U}}_r]$，$\pmb{V}=[\pmb{V}_r,\tilde{\pmb{V}}_r]$，以及，
+
+$$
+\pmb{\Sigma}=\begin{bmatrix}\pmb{\Sigma}_r & \pmb{0}\\ \pmb{0}&\pmb{0} \end{bmatrix}_{n\times n}
+$$
+
+&emsp;&emsp;因此，可以得到以下等式，
+
+$$
+\begin{split}
+\pmb{A}&=\pmb{U}_r\pmb{\Sigma}_r\pmb{V}_r^H=\sum_{i=1}^r\sigma_i\pmb{u}_i\pmb{v}_i^H\\
+\pmb{A}^H&=\pmb{V}_r\pmb{\Sigma}_r\pmb{U}_r^H=\sum_{i=1}^r\sigma_i\pmb{v}_i\pmb{u}_i^H\\
+\end{split}
+$$
+
+&emsp;&emsp;**空间基构造的奇异值分解方法**
+
+&emsp;&emsp;列空间基$\mathrm{Col}(\pmb{A})$为$r$个非零奇异值对应的左奇异向量$\pmb{u}_1,...,\pmb{u}_r$构成的空间。
+
+$$
+\begin{split}
+\mathrm{Col}(\pmb{A})&=\mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m|\pmb{y=Ax},\pmb{x}\in\mathbb{C}^n \}\\
+&=\{\pmb{y}\in\mathbb{C}^m|\pmb{y}=\sum_{i=1}^r \pmb{u}_i(\sigma_i\pmb{v}_i^H\pmb{x}),\pmb{x}\in\mathbb{C}^n \}
+\\
+&=\mathrm{Span}(\pmb{u}_1,...,\pmb{u}_r)
+\end{split}
+$$
+
+&emsp;&emsp;行空间基$\mathrm{Col}(\pmb{A})$为$r$个非零奇异值对应的右奇异向量$\pmb{v}_1,...,\pmb{v}_r$构成的空间，即
+
+$$
+\mathrm{Row}(\pmb{A})=\mathrm{Col}(\pmb{A}^H)=\mathrm{Span}(\pmb{v}_1,...,\pmb{v}_r)
+$$
+
+&emsp;&emsp;零空间基$\mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot$，因此，零空间的基与行空间的基正交。由右奇异向量性质可知，
+
+$$
+\mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot=\mathrm{Span}(\pmb{v}_{r+1},...,\pmb{v}_n)
+$$
