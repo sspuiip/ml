@@ -175,7 +175,7 @@ $$
 \end{split}
 $$
 
-&emsp;&emsp;**空间基构造的奇异值分解方法**
+###### **空间基构造的奇异值分解方法**
 
 &emsp;&emsp;列空间基$\mathrm{Col}(\pmb{A})$为$r$个非零奇异值对应的左奇异向量$\pmb{u}_1,...,\pmb{u}_r$构成的空间。
 
@@ -199,3 +199,4 @@ $$
 $$
 \mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot=\mathrm{Span}(\pmb{v}_{r+1},...,\pmb{v}_n)
 $$
+
