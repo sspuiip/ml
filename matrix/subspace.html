@@ -322,7 +322,7 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \]</div>
 </div>
 <p>  列（行）空间是直接针对矩阵<span class="math notranslate nohighlight">\(A_{m\times n}\)</span>本身定义的向量子空间。此外还有通过矩阵变换<span class="math notranslate nohighlight">\(\pmb{Ax}\)</span>定义的子空间：变换的值域和零空间。</p>
-<p>  <strong>定义 [值域，零空间]</strong> 若<span class="math notranslate nohighlight">\(\pmb{A}\)</span>是一个复矩阵，则<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的值域(range)定义为，</p>
+<p>  <strong>定义. [值域，零空间]</strong> 若<span class="math notranslate nohighlight">\(\pmb{A}\)</span>是一个复矩阵，则<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的值域(range)定义为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
@@ -343,11 +343,79 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m | \pmb{Ax}=\pmb{y}=\sum_j x_j \pmb{a}_j,\quad \pmb{x}\in\mathbb{C}^n\}=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)
 \]</div>
 </div>
-<p>  <strong>性质</strong></p>
+<p>  <strong>性质.</strong></p>
 <p>  1. <span class="math notranslate nohighlight">\(\mathrm{Range}(\pmb{A})=\mathrm{Col}(\pmb{A})=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)\)</span></p>
 <p>  2. <span class="math notranslate nohighlight">\(\mathrm{Row}(\pmb{A})=\mathrm{Col}(\pmb{A}^H)=\mathrm{Range}(\pmb{A}^H)\)</span></p>
 <p>  3. 零空间与行空间正交。<span class="math notranslate nohighlight">\(\mathrm{Row}(\pmb{A})^\bot=\mathrm{Null}(\pmb{A})\)</span></p>
 <p>  4. <span class="math notranslate nohighlight">\(\mathrm{Col}(\pmb{A})^\bot=\mathrm{Null}(\pmb{A})\)</span></p>
+<section id="id7">
+<h3><span class="section-number">6.2.1. </span>子空间基的构造<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
+<p>  <strong>定理.</strong> 矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}\)</span>的列空间与行空间的维数相等。该维数就是<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的秩<span class="math notranslate nohighlight">\(\mathrm{rank}(\pmb{A})\)</span>，且有如下关系，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{rank}(\pmb{A})+\mathrm{dim}[\mathrm{Null}(\pmb{A})]=n
+\]</div>
+</div>
+<p>  <strong>定理.</strong> 若<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}=\pmb{QR}\)</span>是一个列满秩矩阵的分解，则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_k)=\mathrm{Span}(\pmb{q}_1,...,\pmb{q}_k)\quad k=1,...,n
+\]</div>
+</div>
+<p>  下面介绍奇异值分解的基空间标准正交基的构造方法。任意一个矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}\)</span>可以分解为以下形式，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\pmb{A}=\pmb{U\Sigma V^H}
+\]</div>
+</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{U}=[\pmb{U}_r,\tilde{\pmb{U}}_r]\)</span>，<span class="math notranslate nohighlight">\(\pmb{V}=[\pmb{V}_r,\tilde{\pmb{V}}_r]\)</span>，以及，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{\Sigma}=\begin{bmatrix}\pmb{\Sigma}_r &amp; \pmb{0}\\ \pmb{0}&amp;\pmb{0} \end{bmatrix}_{n\times n}
+\end{split}\]</div>
+</div>
+<p>  因此，可以得到以下等式，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{A}&amp;=\pmb{U}_r\pmb{\Sigma}_r\pmb{V}_r^H=\sum_{i=1}^r\sigma_i\pmb{u}_i\pmb{v}_i^H\\
+\pmb{A}^H&amp;=\pmb{V}_r\pmb{\Sigma}_r\pmb{U}_r^H=\sum_{i=1}^r\sigma_i\pmb{v}_i\pmb{u}_i^H\\
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  <strong>空间基构造的奇异值分解方法</strong></p>
+<p>  列空间基<span class="math notranslate nohighlight">\(\mathrm{Col}(\pmb{A})\)</span>为<span class="math notranslate nohighlight">\(r\)</span>个非零奇异值对应的左奇异向量<span class="math notranslate nohighlight">\(\pmb{u}_1,...,\pmb{u}_r\)</span>构成的空间。</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathrm{Col}(\pmb{A})&amp;=\mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m|\pmb{y=Ax},\pmb{x}\in\mathbb{C}^n \}\\
+&amp;=\{\pmb{y}\in\mathbb{C}^m|\pmb{y}=\sum_{i=1}^r \pmb{u}_i(\sigma_i\pmb{v}_i^H\pmb{x}),\pmb{x}\in\mathbb{C}^n \}
+\\
+&amp;=\mathrm{Span}(\pmb{u}_1,...,\pmb{u}_r)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  行空间基<span class="math notranslate nohighlight">\(\mathrm{Col}(\pmb{A})\)</span>为<span class="math notranslate nohighlight">\(r\)</span>个非零奇异值对应的右奇异向量<span class="math notranslate nohighlight">\(\pmb{v}_1,...,\pmb{v}_r\)</span>构成的空间，即</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Row}(\pmb{A})=\mathrm{Col}(\pmb{A}^H)=\mathrm{Span}(\pmb{v}_1,...,\pmb{v}_r)
+\]</div>
+</div>
+<p>  零空间基<span class="math notranslate nohighlight">\(\mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot\)</span>，因此，零空间的基与行空间的基正交。由右奇异向量性质可知，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot=\mathrm{Span}(\pmb{v}_{r+1},...,\pmb{v}_n)
+\]</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -415,7 +483,10 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 <li><a class="reference internal" href="#id5">6.1.3. 正交投影</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">6.2. 列（行）空间与零空间</a></li>
+<li><a class="reference internal" href="#id6">6.2. 列（行）空间与零空间</a><ul>
+<li><a class="reference internal" href="#id7">6.2.1. 子空间基的构造</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
