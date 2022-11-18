@@ -26,7 +26,7 @@ $$
 \begin{split}
 g(\pmb{\lambda})&=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 {\lambda})\\
-&=-\sup\limits_{\pmb{x}}(-(\pmb{A}^\top\pmb{\lambda})^\top\pmb{x}-f(\pmb{x}))-\pmb{b}^\top\pmb{\lambda}\\
+&=-\sup\limits_{\pmb{x}}\left(-(\pmb{A}^\top\pmb{\lambda})^\top\pmb{x}-f(\pmb{x})\right)-\pmb{b}^\top\pmb{\lambda}\\
 &=-f^*(-\pmb{A}^\top\pmb{\lambda})-\pmb{b}^\top\pmb{\lambda}
 \end{split}
 $$
@@ -49,6 +49,86 @@ $$
 \begin{split}
 \pmb{x}_{k+1}&=\arg\min\limits_{\pmb{x}}L(\pmb{x},\pmb{\lambda}_k)\\
 \pmb{\lambda}_{k+1}&=\pmb{\lambda}_k+\mu_k(\pmb{Ax}_{k+1}-\pmb{b})
+\end{split}
+$$
+
+
+#### 增广Lagrangian乘子法
+
+&emsp;&emsp;将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。
+
+##### 等式约束
+
+&emsp;&emsp;考虑等式约束优化问题。记$\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top$。对Lagrangian目标函数$L(\pmb{x},\pmb{\lambda})$加惩罚函数，即，
+
+$$
+\begin{split}
+L_\rho (\pmb{x},\pmb{\lambda})&=f_0(\pmb{x})+\pmb{\lambda}^\top \pmb{h}(\pmb{x})+\rho \phi(\pmb{h}(\pmb{x}))\\
+&=f_0(\pmb{x})+\sum_{i=1}^q \lambda_i h_i(\pmb{x})+\rho\sum_{i=1}^q \phi(h_i(\pmb{x}))
+\end{split}
+$$
+
+其中$\rho$为惩罚参数。这种将罚函数与Lagrangian函数相结合，构造出更合适的目标函数的方法称为增广Lagrangian乘子法。
+
+&emsp;&emsp;求解无约束优化问题$\min L_\rho (\pmb{x},\pmb{\lambda})$的对偶上升法由以下两个更新组成，
+
+$$
+\begin{split}
+\pmb{x}_{k+1}&=\arg\min\limits_{\pmb{x}} L_\rho (\pmb{x},\pmb{\lambda}_k)\\
+\pmb{\lambda}_{k+1}&=\pmb{\lambda}_k + \rho_k\nabla_{\pmb{\lambda}} L_\rho (\pmb{x}_{k+1},\pmb{\lambda}_k)
+\end{split}
+$$
+
+可以看出，
+
+&emsp;&emsp;1. 若$\rho=0$，则退化为标准的Lagrangian乘子法。
+
+&emsp;&emsp;2. 若$\pmb{\lambda}=0$，退化为标准罚函数法。
+
+&emsp;&emsp;**例**：若取$\pmb{h}(\pmb{x})=\pmb{Ax}-\pmb{b}$， $\phi(\pmb{h}(\pmb{x}))=\frac12\lVert \pmb{Ax}-\pmb{b}\rVert_2^2$，则增广函数为，
+
+$$
+L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})+\frac{\rho}{2}\lVert \pmb{Ax}-\pmb{b}\rVert_2^2
+$$
+
+对应的对偶上升法更新为，
+
+$$
+\begin{split}
+\pmb{x}_{k+1}&=\arg\min\limits_{\pmb{x}} L_\rho (\pmb{x},\pmb{\lambda}_k)\\
+\pmb{\lambda}_{k+1}&=\pmb{\lambda}_k + \rho_k (\pmb{Ax}_{k+1}-\pmb{b})
+\end{split}
+$$
+
+##### 混合约束
+
+&emsp;&emsp;考虑不等式和等式约束同时存在的混合约束问题，
+
+$$
+\begin{split}
+\min\limits_{\pmb{x}} \quad &f(\pmb{x})\\
+\mathrm{s.t.}\quad &\pmb{Ax}=\pmb{b}\\
+ &\pmb{Bx}\preceq \pmb{h}
+\end{split}
+$$
+
+令非负向量$\pmb{s}\succeq 0$为松驰变量，使得$\pmb{Bx}+\pmb{s}=\pmb{h}$；以及罚函数$\phi(\pmb{g}(\pmb{x}))=\frac12 \lVert \pmb{g}(\pmb{x})\rVert_2^2$，则增广目标函数为，
+
+$$
+\begin{split}
+L_\rho (\pmb{x,s,\lambda,\nu})&=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})+\pmb{\nu}^\top(\pmb{Bx}+\pmb{s}-\pmb{h})\\
+&+\frac{\rho}{2}(\lVert \pmb{Ax-b}\rVert_2^2+\lVert \pmb{Bx}+\pmb{s}-\pmb{h}\rVert_2^2)
+\end{split}
+$$
+
+对应的对偶上升法更新为，
+
+$$
+\begin{split}
+\pmb{x}_{k+1}&=\arg\min\limits_{\pmb{x}}L_\rho (\pmb{x},\pmb{s}_k,\pmb{\lambda}_k,\pmb{\nu}_k)\\
+\pmb{s}_{k+1}&=\arg\min\limits_{\pmb{x}}L_\rho (\pmb{x}_{k+1},\pmb{s},\pmb{\lambda}_k,\pmb{\nu}_k)\\
+\pmb{\lambda}_{k+1}&=\pmb{\lambda}_k + \rho_k (\pmb{Ax}_{k+1}-\pmb{b})\\
+\pmb{\nu}_{k+1}&=\pmb{\nu}_k + \rho_k (\pmb{Bx}_{k+1}+\pmb{s}_{k+1}-\pmb{h})
 \end{split}
 $$
 
