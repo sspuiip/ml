@@ -231,7 +231,7 @@ L(\pmb{x},\pmb{\lambda})=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})
 \begin{split}
 g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 {\lambda})\\
-&amp;=-\sup\limits_{\pmb{x}}(-(\pmb{A}^\top\pmb{\lambda})^\top\pmb{x}-f(\pmb{x}))-\pmb{b}^\top\pmb{\lambda}\\
+&amp;=-\sup\limits_{\pmb{x}}\left(-(\pmb{A}^\top\pmb{\lambda})^\top\pmb{x}-f(\pmb{x})\right)-\pmb{b}^\top\pmb{\lambda}\\
 &amp;=-f^*(-\pmb{A}^\top\pmb{\lambda})-\pmb{b}^\top\pmb{\lambda}
 \end{split}
 \end{split}\]</div>
@@ -262,10 +262,94 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 </div>
 </section>
 <section id="id2">
-<h2><span class="section-number">3.2. </span>内点法<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
-<p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
+<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<p>  将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。</p>
 <section id="id3">
-<h3><span class="section-number">3.2.1. </span>障碍法<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
+<p>  考虑等式约束优化问题。记<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top\)</span>。对Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda})\)</span>加惩罚函数，即，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+L_\rho (\pmb{x},\pmb{\lambda})&amp;=f_0(\pmb{x})+\pmb{\lambda}^\top \pmb{h}(\pmb{x})+\rho \phi(\pmb{h}(\pmb{x}))\\
+&amp;=f_0(\pmb{x})+\sum_{i=1}^q \lambda_i h_i(\pmb{x})+\rho\sum_{i=1}^q \phi(h_i(\pmb{x}))
+\end{split}
+\end{split}\]</div>
+</div>
+<p>其中<span class="math notranslate nohighlight">\(\rho\)</span>为惩罚参数。这种将罚函数与Lagrangian函数相结合，构造出更合适的目标函数的方法称为增广Lagrangian乘子法。</p>
+<p>  求解无约束优化问题<span class="math notranslate nohighlight">\(\min L_\rho (\pmb{x},\pmb{\lambda})\)</span>的对偶上升法由以下两个更新组成，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{x}_{k+1}&amp;=\arg\min\limits_{\pmb{x}} L_\rho (\pmb{x},\pmb{\lambda}_k)\\
+\pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k + \rho_k\nabla_{\pmb{\lambda}} L_\rho (\pmb{x}_{k+1},\pmb{\lambda}_k)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>可以看出，</p>
+<p>  1. 若<span class="math notranslate nohighlight">\(\rho=0\)</span>，则退化为标准的Lagrangian乘子法。</p>
+<p>  2. 若<span class="math notranslate nohighlight">\(\pmb{\lambda}=0\)</span>，退化为标准罚函数法。</p>
+<p>  <strong>例</strong>：若取<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=\pmb{Ax}-\pmb{b}\)</span>， <span class="math notranslate nohighlight">\(\phi(\pmb{h}(\pmb{x}))=\frac12\lVert \pmb{Ax}-\pmb{b}\rVert_2^2\)</span>，则增广函数为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})+\frac{\rho}{2}\lVert \pmb{Ax}-\pmb{b}\rVert_2^2
+\]</div>
+</div>
+<p>对应的对偶上升法更新为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{x}_{k+1}&amp;=\arg\min\limits_{\pmb{x}} L_\rho (\pmb{x},\pmb{\lambda}_k)\\
+\pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k + \rho_k (\pmb{Ax}_{k+1}-\pmb{b})
+\end{split}
+\end{split}\]</div>
+</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
+<p>  考虑不等式和等式约束同时存在的混合约束问题，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min\limits_{\pmb{x}} \quad &amp;f(\pmb{x})\\
+\mathrm{s.t.}\quad &amp;\pmb{Ax}=\pmb{b}\\
+ &amp;\pmb{Bx}\preceq \pmb{h}
+\end{split}
+\end{split}\]</div>
+</div>
+<p>令非负向量<span class="math notranslate nohighlight">\(\pmb{s}\succeq 0\)</span>为松驰变量，使得<span class="math notranslate nohighlight">\(\pmb{Bx}+\pmb{s}=\pmb{h}\)</span>；以及罚函数<span class="math notranslate nohighlight">\(\phi(\pmb{g}(\pmb{x}))=\frac12 \lVert \pmb{g}(\pmb{x})\rVert_2^2\)</span>，则增广目标函数为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})+\pmb{\nu}^\top(\pmb{Bx}+\pmb{s}-\pmb{h})\\
+&amp;+\frac{\rho}{2}(\lVert \pmb{Ax-b}\rVert_2^2+\lVert \pmb{Bx}+\pmb{s}-\pmb{h}\rVert_2^2)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>对应的对偶上升法更新为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{x}_{k+1}&amp;=\arg\min\limits_{\pmb{x}}L_\rho (\pmb{x},\pmb{s}_k,\pmb{\lambda}_k,\pmb{\nu}_k)\\
+\pmb{s}_{k+1}&amp;=\arg\min\limits_{\pmb{x}}L_\rho (\pmb{x}_{k+1},\pmb{s},\pmb{\lambda}_k,\pmb{\nu}_k)\\
+\pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k + \rho_k (\pmb{Ax}_{k+1}-\pmb{b})\\
+\pmb{\nu}_{k+1}&amp;=\pmb{\nu}_k + \rho_k (\pmb{Bx}_{k+1}+\pmb{s}_{k+1}-\pmb{h})
+\end{split}
+\end{split}\]</div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">3.3. </span>内点法<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
+<p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
+<section id="id6">
+<h3><span class="section-number">3.3.1. </span>障碍法<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
 <p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -468,8 +552,8 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}\]</div>
 </div>
 </section>
-<section id="id4">
-<h3><span class="section-number">3.2.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id4" title="永久链接至标题">#</a></h3>
+<section id="id7">
+<h3><span class="section-number">3.3.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
 <p>   原对偶内点法和障碍方法非常相似，但也有一些差别。</p>
 <ul class="simple">
 <li><p>仅有一层迭代，没有障碍方法的内部迭代和外部迭代的区分。每次迭代时同时更新原对偶变量。</p></li>
@@ -477,8 +561,8 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 <li><p>在原对偶内点法中，原对偶迭代值不需要是可行的。</p></li>
 </ul>
 <p>   原对偶方法经常比障碍方法有效，特别是高精度场合，因为它们可以展现超线性收敛性质。原对偶内点法相对于障碍方法所具有的另一个优点是，它们可以有效处理可行但不严格可行的问题。</p>
-<section id="id5">
-<h4><span class="section-number">3.2.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id5" title="永久链接至标题">#</a></h4>
+<section id="id8">
+<h4><span class="section-number">3.3.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id8" title="永久链接至标题">#</a></h4>
 <p>  如同障碍方法，我们从修改KKT条件开始，该条件可以表述为<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0, t&gt;0\)</span>，其中</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -557,8 +641,8 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </li>
 </ul>
 </section>
-<section id="id6">
-<h4><span class="section-number">3.2.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id6" title="永久链接至标题">#</a></h4>
+<section id="id9">
+<h4><span class="section-number">3.3.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id9" title="永久链接至标题">#</a></h4>
 <p>  在原-对偶内点法中，迭代点<span class="math notranslate nohighlight">\(\pmb{x}_k,\lambda_k,\nu_k\)</span>不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤<span class="math notranslate nohighlight">\(k\)</span>计算对偶间隙<span class="math notranslate nohighlight">\(\eta_k\)</span>。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -639,11 +723,16 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
             <ul>
 <li><a class="reference internal" href="#">3. 优化问题求解(2)</a><ul>
 <li><a class="reference internal" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li><a class="reference internal" href="#id2">3.2. 内点法</a><ul>
-<li><a class="reference internal" href="#id3">3.2.1. 障碍法</a></li>
-<li><a class="reference internal" href="#id4">3.2.2. <strong>原对偶内点法</strong></a><ul>
-<li><a class="reference internal" href="#id5">3.2.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li><a class="reference internal" href="#id6">3.2.2.2. <strong>代理对偶间隙</strong></a></li>
+<li><a class="reference internal" href="#id2">3.2. 增广Lagrangian乘子法</a><ul>
+<li><a class="reference internal" href="#id3">3.2.1. 等式约束</a></li>
+<li><a class="reference internal" href="#id4">3.2.2. 混合约束</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">3.3. 内点法</a><ul>
+<li><a class="reference internal" href="#id6">3.3.1. 障碍法</a></li>
+<li><a class="reference internal" href="#id7">3.3.2. <strong>原对偶内点法</strong></a><ul>
+<li><a class="reference internal" href="#id8">3.3.2.1. <strong>原对偶搜索方向</strong></a></li>
+<li><a class="reference internal" href="#id9">3.3.2.2. <strong>代理对偶间隙</strong></a></li>
 </ul>
 </li>
 </ul>

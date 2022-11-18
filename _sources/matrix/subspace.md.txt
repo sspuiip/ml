@@ -99,7 +99,11 @@ $$
 
 $$
 \begin{split}
-\mathrm{Col}(A)&=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)\\
+\mathrm{Col}(A)&=\mathrm{Span}(\pmb{a}_1,...,\
+
+
+
+{a}_n)\\
 \mathrm{Row}(A)&=\mathrm{Span}(\pmb{r}_1,...,\pmb{r}_n)\\
 \end{split}
 $$
