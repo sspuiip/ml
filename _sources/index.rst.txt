@@ -28,7 +28,12 @@
    optimization/convex_neq_solve.md
    
 
+.. toctree::
+   :maxdepth: 2
+   :caption: 机器学习
+   :numbered:
 
+   ml/dimension_reduce.md
 
 Indices and tables
 ==================
