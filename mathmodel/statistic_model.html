@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 不确定模型" href="../mathmodel/statistic_model.html" /><link rel="prev" title="3. 优化问题求解(2)" href="../optimization/convex_neq_solve.html" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="prev" title="1. 表示学习" href="../ml/dimension_reduce.html" />
 
     <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
-        <title>1. 表示学习 - MLBOOK 1.0 文档</title>
+        <title>1. 不确定模型 - MLBOOK 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -170,12 +170,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 表示学习</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 表示学习</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 不确定模型</a></li>
 </ul>
 
 </div>
@@ -211,28 +211,90 @@
         </div>
         <article role="main">
           <section id="id1">
-<h1><span class="section-number">1. </span>表示学习<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
-<p>  一般来说，机器学习中的原始数据是高维数据。高维数据往往具有复杂性、冗余性等特点。高维空间会有很多不一样的特征，也称之为维度灾难。</p>
-<p>  - 大多数数据对象之间相距都很远(高维数据有很大可能非常稀疏)</p>
-<p>  - 理论上，通过增大训练集，使训练集达到足够密度，是可以避免维度灾难的。但实践中，要达到给定密度，所需的训练数据随着维度的增加呈指数式上升</p>
-<p>  为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题，这一过程也称之为<strong>表示学习</strong>。</p>
+<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
+<p>  <strong>数学模型</strong>是一种用变量和数学符号建立起来的等式、不等式集，用于描述客观事物的特征、内在联系的模型。若客观事物的特征具有某种不确定性，此类模型也称为<strong>随机模型</strong>。</p>
+<p>  随机变量的数字特征一般有：均值、方差、中位数、众数等。</p>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>主成分分析<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
-<p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，</p>
-<div class="math-wrapper docutils container">
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\pmb{X}=\begin{pmatrix}|&amp;|&amp;\cdots &amp;| \\
-\pmb{x}_1 &amp; \pmb{x}_2 &amp;  \cdots &amp; \pmb{x}_m\\ |&amp;|&amp;\cdots &amp;|\end{pmatrix}
-\end{split}\]</div>
-</div>
-<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的目标是找到一个变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}_{n\times d}\)</span>使得,</p>
+<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<p>  从整体<span class="math notranslate nohighlight">\(\pmb{X}\)</span>抽取一个样本<span class="math notranslate nohighlight">\((\pmb{X}_1,...,\pmb{X}_n)\)</span>，则样本服从特定的分布，一般有：卡方分布、t分布、F分布等。</p>
+<p>  - <strong>卡方分布</strong></p>
+<p>  若<span class="math notranslate nohighlight">\(\pmb{X}_i \sim \mathcal{N}(0,1)\)</span>，且<span class="math notranslate nohighlight">\(\pmb{X}_i\)</span>相互独立，则统计量</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\min\limits_{\pmb{W}}\quad \lVert\pmb{X}_{new}-\pmb{X}\pmb{W}\rVert
+\chi=\sum_i^n\pmb{X}_i^2\sim \chi^2(n)
 \]</div>
 </div>
+<p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的<span class="math notranslate nohighlight">\(\chi^2\)</span>分分布。</p>
+<p>  - <strong>t分布</strong></p>
+<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(0,1), \pmb{Y}\sim \chi^2(n)\)</span>，则统计量，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+T = \frac{\pmb{X}}{\sqrt{\pmb{Y}/n}}\sim t(n)
+\]</div>
+</div>
+<p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的t分布。</p>
+<p>  - <strong>F分布</strong></p>
+<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \chi^2(n_1), \pmb{Y}\sim \chi^2(n_2)\)</span>，则统计量，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
+\]</div>
+</div>
+<p>服从第一自由度为<span class="math notranslate nohighlight">\(n_1\)</span>和第二自由度为<span class="math notranslate nohighlight">\(n_2\)</span>的F分布。</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
+<p>  参数的区间估计与假设检验可以看成一个问题的两个方面（都需要假设样本的分布）。<strong>区间估计</strong>是用统计量构建一个区间来估计未知参数，并指明此区间可以覆盖住这个参数的可靠程度。<strong>假设检验</strong>则利用样本数据对某个事先做出的统计假设按照某种设计好的方法（符合某种抽样分布）进行检验，判断假设是否正确。</p>
+<section id="mu">
+<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="永久链接至标题">#</a></h3>
+<section id="id4">
+<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h4>
+<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(\mu,\sigma^2)\)</span>，则样本均值为<span class="math notranslate nohighlight">\(\bar{\pmb{X}}=\frac1n \sum_{i=1}^n \pmb{X}_i\)</span>，样本方差为<span class="math notranslate nohighlight">\(\pmb{S}^2=\frac{1}{n-1}\sum_{i=1}^n (\pmb{X}_i-\bar{\pmb{X}})^2\)</span>。</p>
+<p>  <strong>重要结论</strong></p>
+<p>  1. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>，即<span class="math notranslate nohighlight">\(E[\bar{\pmb{X}}]=\mu, D[\pmb{\bar{X}}]=\sigma/\sqrt{n}, E[S^2]=\sigma^2\)</span>。</p>
+<p>  2. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim \mathcal{t}(n-1)\)</span></p>
+<p>  3. <span class="math notranslate nohighlight">\(\frac{(n-1)S^2}{\sigma^2}\sim \mathcal{\chi}^2(n-1)\)</span></p>
+<p>  4. <span class="math notranslate nohighlight">\(\bar{\pmb{X}}\)</span>与<span class="math notranslate nohighlight">\(S^2\)</span>相互独立。</p>
+<ol class="arabic simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>未知，使用t分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\frac{a}{2}}(n-1)  \right\}=1-a
+\]</div>
+</div>
+<p>  即置信区间为<span class="math notranslate nohighlight">\([\bar{\pmb{X}}-\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1),\bar{\pmb{X}}+\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1)]\)</span></p>
+<ol class="arabic simple" start="2">
+<li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>已知，使用正态分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
+</ol>
+<p>  方法与t检验相似。</p>
+</section>
+<section id="id5">
+<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{S_w\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2),\quad S_w=\frac{(n-1)S_1^2}{\sigma^2}+\frac{(n-1)S_2^2}{\sigma^2}
+\]</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2\neq\sigma_2^2\neq\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}}}\sim t(\tilde{\nu}),\quad \tilde{\nu}=\left(\frac{S_1^2}{\sigma^2}+\frac{S_2^2}{\sigma^2}\right)^2\left/\left(\frac{(S_1^2)^2}{n_1^2(n_1-1)}+ \frac{(S_2^2)^2}{n_2^2(n_2-1)}\right)\right.
+\]</div>
+</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -241,23 +303,15 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="../mathmodel/statistic_model.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title"><span class="section-number">1. </span>不确定模型</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="../optimization/convex_neq_solve.html">
+          
+          <a class="prev-page" href="../ml/dimension_reduce.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">3. </span>优化问题求解(2)</div>
+                <div class="title"><span class="section-number">1. </span>表示学习</div>
                 
               </div>
             </a>
@@ -293,8 +347,16 @@
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">1. 表示学习</a><ul>
-<li><a class="reference internal" href="#id2">1.1. 主成分分析</a></li>
+<li><a class="reference internal" href="#">1. 不确定模型</a><ul>
+<li><a class="reference internal" href="#id2">1.1. 抽样分布</a></li>
+<li><a class="reference internal" href="#id3">1.2. 参数区间估计与假设检验</a><ul>
+<li><a class="reference internal" href="#mu">1.2.1. <span class="math notranslate nohighlight">\(\mu\)</span>均值检测</a><ul>
+<li><a class="reference internal" href="#id4">1.2.1.1. 单个总体</a></li>
+<li><a class="reference internal" href="#id5">1.2.1.2. 两个总体</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
