@@ -83,3 +83,6 @@ $$
 $$
 \frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}}}\sim t(\tilde{\nu}),\quad \tilde{\nu}=\left(\frac{S_1^2}{\sigma^2}+\frac{S_2^2}{\sigma^2}\right)^2\left/\left(\frac{(S_1^2)^2}{n_1^2(n_1-1)}+ \frac{(S_2^2)^2}{n_2^2(n_2-1)}\right)\right.
 $$
+
+
+##### $\sigma$方差比检测
