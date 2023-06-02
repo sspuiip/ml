@@ -6,7 +6,7 @@
 <link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 不确定模型" href="../mathmodel/statistic_model.html" /><link rel="prev" title="1. 表示学习" href="../ml/dimension_reduce.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>1. 核函数的基本运算 - MLBOOK 1.0 文档</title>
+        <title>1. 核函数基础 - MLBOOK 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -175,7 +175,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">核函数</span></p>
 <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 核函数的基本运算</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 核函数基础</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul>
@@ -208,14 +208,16 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
           <section id="id1">
-<h1><span class="section-number">1. </span>核函数的基本运算<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">1. </span>核函数基础<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">1.1. </span>核函数的基本运算<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <ol class="arabic simple">
 <li><p>模长</p></li>
 </ol>
@@ -240,6 +242,95 @@
 \hat{\kappa}(\pmb{x},\pmb{z})=\frac{\kappa(\pmb{x},\pmb{z})}{\sqrt{\kappa(\pmb{x},\pmb{x})\kappa(\pmb{z},\pmb{z})}}
 \]</div>
 </div>
+<ol class="arabic simple" start="3">
+<li><p>线性组合S</p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\left\Vert \sum_{i=1}^la_i\phi(\pmb{x}_i)\right\Vert^2=\sum_{i,j=1}^l a_ia_j\kappa(\pmb{x}_i\pmb{x}_j)
+\]</div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>距离</p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\left\Vert \phi(\pmb{x})-\phi(\pmb{z})\right\Vert^2=\kappa(\pmb{x},\pmb{x})-2\kappa(\pmb{x},\pmb{z})+\kappa(\pmb{z},\pmb{z})
+\]</div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>均值</p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\left\Vert \phi_S \right\Vert^2=\left\Vert \frac{1}{l}\sum_{i=1}^l\phi(\pmb{x}) \right\Vert^2=\frac1l\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
+\]</div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>样本均值距离</p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\left\Vert \phi(\pmb{x})-\phi_S\right\Vert^2=\kappa(\pmb{x},\pmb{x})-\frac2l\sum_{i=1}^l\kappa(\pmb{x},\pmb{x}_i)+\frac{1}{l^2}\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
+\]</div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>平均样本均值距离</p></li>
+</ol>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\frac1l\sum_{i=1}^l\left\Vert \phi(\pmb{x}_i)-\phi_S\right\Vert^2=\frac1l\sum_{i=1}\kappa(\pmb{x}_i,\pmb{x}_j)-\frac{1}{l^2}\sum_{i=1}\sum_{j=1}\kappa(\pmb{x}_i,\pmb{x}_j)
+\]</div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>中心化</p></li>
+</ol>
+<ul class="simple">
+<li><p>样本中心化</p></li>
+</ul>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\tilde{\phi}(\pmb{x})=\phi(\pmb{x})-\phi_S
+\]</div>
+</div>
+<ul class="simple">
+<li><p>核函数中心化</p></li>
+</ul>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\tilde{\kappa}(\pmb{x},\pmb{z})&amp;=\langle\phi(\pmb{x})-\phi_S,\phi(\pmb{x})-\phi_S\rangle\\
+&amp;=\kappa(\pmb{x},\pmb{z})-\frac1l\sum_{i=1}\kappa(\pmb{x}_i,\pmb{z})-\frac{1}{l}\kappa\sum_{i=1}\kappa(\pmb{x}_i,\pmb{x})+\frac{1}{l^2}\sum_{i,j=1}\kappa(\pmb{x}_i,\pmb{x}_j)\\
+\tilde{\pmb{K}}&amp;=\pmb{K}-\frac1l\pmb{K11}^\top-\frac1l\pmb{11}^\top\pmb{K}+\frac{1}{l^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top
+\end{split}
+\end{split}\]</div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">1.2. </span>投影<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<p><span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的投影<span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
+\]</div>
+</div>
+<p>如果<span class="math notranslate nohighlight">\(\pmb{w}\)</span>已单位化，则有，
+$<span class="math notranslate nohighlight">\(
+P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
+\)</span><span class="math notranslate nohighlight">\(
+即，正交投影\)</span>P_{\pmb{w}}^\bot\phi(\pmb{x})<span class="math notranslate nohighlight">\(为，
+\)</span><span class="math notranslate nohighlight">\(
+P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
+\)</span>$</p>
+</section>
 </section>
 
         </article>
@@ -285,8 +376,28 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">1. 核函数基础</a><ul>
+<li><a class="reference internal" href="#id2">1.1. 核函数的基本运算</a></li>
+<li><a class="reference internal" href="#id3">1.2. 投影</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>
