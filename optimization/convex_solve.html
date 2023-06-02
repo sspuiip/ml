@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js" lang="zh_CN">
+<html class="no-js" lang="zh-CN">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 <link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="3. 优化问题求解(2)" href="convex_neq_solve.html" /><link rel="prev" title="1. 凸优化问题" href="convex_prob.html" />
 
-    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
         <title>2. 优化问题求解(1) - MLBOOK 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -149,7 +149,7 @@
   <span class="sidebar-brand-text">MLBOOK 1.0 文档</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=搜索 name="q" aria-label="搜索">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -172,6 +172,10 @@
 <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数的基本运算</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul>
@@ -211,9 +215,9 @@
         </div>
         <article role="main">
           <section id="id1">
-<h1><span class="section-number">2. </span>优化问题求解(1)<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
+<h1><span class="section-number">2. </span>优化问题求解(1)<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <p>  基本思想：利用优化序列</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -230,7 +234,7 @@ f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)
 </div>
 <p>所以该方法称为<font color='red'><strong>下降法</strong></font>。</p>
 <section id="id3">
-<h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  由Taylor公式可知，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -257,7 +261,7 @@ f(\mathbf{x}_{k+1})- f(\mathbf{x}_k)\approx\nabla f(\mathbf{x}_k)^\top\Delta\mat
 </div>
 </section>
 <section id="newton">
-<h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="此标题的永久链接">#</a></h3>
 <p>  Taylor公式展开至二阶有，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -290,7 +294,7 @@ f(\mathbf{x}_{k+1})\approx f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mat
 </section>
 </section>
 <section id="id4">
-<h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h2>
 <p>  梯度下降法中变元是无约束的。若有约束<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{C}\)</span>，则梯度下降法中的更新公式应用投影代替，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -352,7 +356,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 </div>
 </section>
 <section id="id5">
-<h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
 <p>  最速下降法的存在一个问题就是收敛速度过慢，因为已迭代的<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>会来回振荡，从而导致收敛太慢。</p>
 <p>  Newton法虽然收收敛较快，但仍需要计算Hessian矩阵的逆，因此计算代价太高。</p>
 <p>  为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。</p>
@@ -389,7 +393,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 </div>
 <p>如果<span class="math notranslate nohighlight">\(\alpha_i,\mathbf{d}_i\)</span>都已知，则<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>可通过上式确定。</p>
 <section id="mathbf-a">
-<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="此标题的永久链接">#</a></h3>
 <p>  <strong>定义1</strong>.假设<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么称向量<span class="math notranslate nohighlight">\(\mathbf{d}_i,\mathbf{d}_j\)</span>是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的，如果满足，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -483,7 +487,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 </div>
 </section>
 <section id="id6">
-<h3><span class="section-number">2.3.2. </span>共轭梯度法<a class="headerlink" href="#id6" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.3.2. </span>共轭梯度法<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
 <p>  共轭梯度法是一种共轭方向方法。该方法选择的相继的方向向量被视为方法执行时相继获得的梯度的共轭版本。共轭方向并不是提前指定的，而是在每次序贯迭代时确定的。</p>
 <p>  假设有<span class="math notranslate nohighlight">\(D=\{\mathbf{d}_1,...,\mathbf{d}_n\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭向量集，则函数<span class="math notranslate nohighlight">\(f(\mathbf{x}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_n\mathbf{d}_n)\)</span>的最小化可以从<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_1\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，然后从<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_2\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>，如此继续就可以达到函数的最小值点。这种优化方法称之为共轭梯度法。</p>
 <p>  上一节根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭已解决了<span class="math notranslate nohighlight">\(\alpha_i\)</span>的计算问题，剩下的工作就是要解决<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>的计算问题。</p>
@@ -520,7 +524,7 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 </ol>
 </section>
 <section id="id7">
-<h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
 <p>  <strong>例1</strong>. 考虑如下二次规划，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -572,7 +576,7 @@ f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{
 </div>
 </section>
 <section id="id8">
-<h3><span class="section-number">2.3.4. </span>一般函数的共轭梯度法<a class="headerlink" href="#id8" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">2.3.4. </span>一般函数的共轭梯度法<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h3>
 <p>  一般函数的共轭梯度与二次函数梯度法的主要区别在于：步长<span class="math notranslate nohighlight">\(\alpha_i\)</span>不能再用原有方式计算须使用其它方法来确定；凡是用到矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的地方都需要用当前迭代点的Hessian矩阵来替代。这样就可以将共轭梯度法扩展到一般函数。</p>
 <p>  一般来说，使用这种方法来求任意函数的极小点，用有限步迭代是达不到的。迭代的方案可以有：直接延续使用原有共轭方向构造；或者<span class="math notranslate nohighlight">\(n\)</span>步作为一轮，每轮结束后取一次最速下降方向，开始下一轮。</p>
 <p>  对于一般函数，共轭梯度法的计算步骤如下：</p>
@@ -617,7 +621,7 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 </section>
 </section>
 <section id="id9">
-<h2><span class="section-number">2.4. </span>Newton方法<a class="headerlink" href="#id9" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">2.4. </span>Newton方法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h2>
 <ul>
 <li><p><strong>Newton步径</strong>.  对于<span class="math notranslate nohighlight">\(x\in \mathbf{dom}f\)</span>，我们称向量</p>
 <div class="math-wrapper docutils container">
@@ -630,9 +634,9 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 </li>
 </ul>
 <div class="table-wrapper colwidths-auto docutils container">
-<table class="colwidths-auto docutils align-default">
+<table class="docutils align-default">
 <thead>
-<tr class="row-odd"><th class="text-left head"><p>Newton方法(阻尼Newton)</p></th>
+<tr class="row-odd"><th class="head text-left"><p>Newton方法(阻尼Newton)</p></th>
 </tr>
 </thead>
 <tbody>
@@ -699,41 +703,41 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 <li><p>使用Newton方法求方程的解</p></li>
 </ul>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="c1">//使用Newton方法求ax^3+bx^2+cx+d=0的解</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cmath&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;cmath&gt;</span>
 
-<span class="n">using</span><span class="w"> </span><span class="n">namespace</span><span class="w"> </span><span class="n">std</span><span class="p">;</span><span class="w"></span>
-<span class="kt">double</span><span class="w"> </span><span class="nf">newton</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="kt">double</span><span class="p">);</span><span class="w"></span>
+<span class="n">using</span><span class="w"> </span><span class="n">namespace</span><span class="w"> </span><span class="n">std</span><span class="p">;</span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">newton</span><span class="p">(</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="kt">double</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="p">,</span><span class="kt">double</span><span class="p">);</span>
 
 <span class="c1">//f(x)=a*x^3+b*x^2+c*x+d</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span><span class="w"></span>
-<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">;</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span>
+<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="mf">10000.0</span><span class="p">;</span>
 <span class="w">	</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;请输入4个系数：&quot;</span><span class="p">;</span><span class="w"> </span><span class="c1">//a=2,b=3,c=4,d=5</span>
-<span class="w">	</span><span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">a</span><span class="o">&gt;&gt;</span><span class="n">b</span><span class="o">&gt;&gt;</span><span class="n">c</span><span class="o">&gt;&gt;</span><span class="n">d</span><span class="p">;</span><span class="w"></span>
+<span class="w">	</span><span class="n">cin</span><span class="o">&gt;&gt;</span><span class="n">a</span><span class="o">&gt;&gt;</span><span class="n">b</span><span class="o">&gt;&gt;</span><span class="n">c</span><span class="o">&gt;&gt;</span><span class="n">d</span><span class="p">;</span>
 <span class="w">	</span>
-<span class="w">	</span><span class="n">x</span><span class="o">=</span><span class="n">newton</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">x</span><span class="p">);</span><span class="w"></span>
-<span class="w">	</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;x=&quot;</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">	</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;a^2=&quot;</span><span class="o">&lt;&lt;</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span><span class="w"></span>
-<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">	</span><span class="n">x</span><span class="o">=</span><span class="n">newton</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">x</span><span class="p">);</span>
+<span class="w">	</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;x=&quot;</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">	</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;a^2=&quot;</span><span class="o">&lt;&lt;</span><span class="n">pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="kt">double</span><span class="w"> </span><span class="nf">newton</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="kt">double</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">	</span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="w"></span>
-<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">lambda2</span><span class="p">;</span><span class="w"></span>
+<span class="kt">double</span><span class="w"> </span><span class="nf">newton</span><span class="p">(</span><span class="kt">double</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="kt">double</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="kt">double</span><span class="w"> </span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">	</span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+<span class="w">	</span><span class="kt">double</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">lambda2</span><span class="p">;</span>
 <span class="w">	</span><span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">){</span><span class="w">  </span><span class="c1">//abs(a*pow(x,3)+b*pow(x,2)+c*x+d)&gt;1e-5</span>
-<span class="w">		</span><span class="n">lambda2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">+</span><span class="mf">1e-4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">);</span><span class="w"></span>
+<span class="w">		</span><span class="n">lambda2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">+</span><span class="mf">1e-4</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">);</span>
 <span class="w">		</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">0.01</span><span class="o">*</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">c</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="n">b</span><span class="o">+</span><span class="mf">1e-4</span><span class="p">);</span><span class="w"> </span><span class="c1">//学习率0.01可以继续优化。 </span>
-<span class="w">		</span><span class="n">cnt</span><span class="o">++</span><span class="p">;</span><span class="w"></span>
-<span class="w">		</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;第&quot;</span><span class="o">&lt;&lt;</span><span class="n">cnt</span><span class="o">&lt;&lt;</span><span class="s">&quot;次迭代</span><span class="se">\t</span><span class="s">x=&quot;</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">函数f(x)=&quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">d</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span><span class="w"></span>
-<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lambda2</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">)</span><span class="w"></span>
-<span class="w">			</span><span class="k">break</span><span class="p">;</span><span class="w"></span>
-<span class="w">	</span><span class="p">}</span><span class="w"></span>
-<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">		</span><span class="n">cnt</span><span class="o">++</span><span class="p">;</span>
+<span class="w">		</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&quot;第&quot;</span><span class="o">&lt;&lt;</span><span class="n">cnt</span><span class="o">&lt;&lt;</span><span class="s">&quot;次迭代</span><span class="se">\t</span><span class="s">x=&quot;</span><span class="o">&lt;&lt;</span><span class="n">x</span><span class="o">&lt;&lt;</span><span class="s">&quot;</span><span class="se">\t</span><span class="s">函数f(x)=&quot;</span><span class="o">&lt;&lt;</span><span class="n">a</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="n">b</span><span class="o">*</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="n">d</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
+<span class="w">		</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">lambda2</span><span class="o">/</span><span class="mi">2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">1e-4</span><span class="p">)</span>
+<span class="w">			</span><span class="k">break</span><span class="p">;</span>
+<span class="w">	</span><span class="p">}</span>
+<span class="w">	</span><span class="k">return</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -776,9 +780,7 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -823,9 +825,8 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/translations.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>

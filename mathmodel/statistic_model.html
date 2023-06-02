@@ -1,14 +1,14 @@
 <!doctype html>
-<html class="no-js" lang="zh_CN">
+<html class="no-js" lang="zh-CN">
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="prev" title="1. 表示学习" href="../ml/dimension_reduce.html" />
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="prev" title="1. 核函数的基本运算" href="../kernel/base.html" />
 
-    <meta name="generator" content="sphinx-4.5.0, furo 2022.09.29"/>
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
         <title>1. 不确定模型 - MLBOOK 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=d81277517bee4d6b0349d71bb2661d4890b5617c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
     
     
@@ -149,7 +149,7 @@
   <span class="sidebar-brand-text">MLBOOK 1.0 文档</span>
   
 </a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder=搜索 name="q" aria-label="搜索">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
   <input type="hidden" name="check_keywords" value="yes">
   <input type="hidden" name="area" value="default">
 </form>
@@ -172,6 +172,10 @@
 <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数的基本运算</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="current">
@@ -211,11 +215,11 @@
         </div>
         <article role="main">
           <section id="id1">
-<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="永久链接至标题">#</a></h1>
+<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <p>  <strong>数学模型</strong>是一种用变量和数学符号建立起来的等式、不等式集，用于描述客观事物的特征、内在联系的模型。若客观事物的特征具有某种不确定性，此类模型也称为<strong>随机模型</strong>。</p>
 <p>  随机变量的数字特征一般有：均值、方差、中位数、众数等。</p>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <p>  从整体<span class="math notranslate nohighlight">\(\pmb{X}\)</span>抽取一个样本<span class="math notranslate nohighlight">\((\pmb{X}_1,...,\pmb{X}_n)\)</span>，则样本服从特定的分布，一般有：卡方分布、t分布、F分布等。</p>
 <p>  - <strong>卡方分布</strong></p>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}_i \sim \mathcal{N}(0,1)\)</span>，且<span class="math notranslate nohighlight">\(\pmb{X}_i\)</span>相互独立，则统计量</p>
@@ -246,12 +250,12 @@ F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
 <p>服从第一自由度为<span class="math notranslate nohighlight">\(n_1\)</span>和第二自由度为<span class="math notranslate nohighlight">\(n_2\)</span>的F分布。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="永久链接至标题">#</a></h2>
+<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
 <p>  参数的区间估计与假设检验可以看成一个问题的两个方面（都需要假设样本的分布）。<strong>区间估计</strong>是用统计量构建一个区间来估计未知参数，并指明此区间可以覆盖住这个参数的可靠程度。<strong>假设检验</strong>则利用样本数据对某个事先做出的统计假设按照某种设计好的方法（符合某种抽样分布）进行检验，判断假设是否正确。</p>
 <section id="mu">
-<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="此标题的永久链接">#</a></h3>
 <section id="id4">
-<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="永久链接至标题">#</a></h4>
+<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h4>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(\mu,\sigma^2)\)</span>，则样本均值为<span class="math notranslate nohighlight">\(\bar{\pmb{X}}=\frac1n \sum_{i=1}^n \pmb{X}_i\)</span>，样本方差为<span class="math notranslate nohighlight">\(\pmb{S}^2=\frac{1}{n-1}\sum_{i=1}^n (\pmb{X}_i-\bar{\pmb{X}})^2\)</span>。</p>
 <p>  <strong>重要结论</strong></p>
 <p>  1. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>，即<span class="math notranslate nohighlight">\(E[\bar{\pmb{X}}]=\mu, D[\pmb{\bar{X}}]=\sigma/\sqrt{n}, E[S^2]=\sigma^2\)</span>。</p>
@@ -274,7 +278,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 <p>  方法与t检验相似。</p>
 </section>
 <section id="id5">
-<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="永久链接至标题">#</a></h4>
+<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
 <ol class="arabic simple">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
 </ol>
@@ -296,7 +300,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 </section>
 </section>
 <section id="sigma">
-<h3><span class="section-number">1.2.2. </span><span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测<a class="headerlink" href="#sigma" title="永久链接至标题">#</a></h3>
+<h3><span class="section-number">1.2.2. </span><span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测<a class="headerlink" href="#sigma" title="此标题的永久链接">#</a></h3>
 </section>
 </section>
 </section>
@@ -307,14 +311,14 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
         
         <div class="related-pages">
           
-          <a class="prev-page" href="../ml/dimension_reduce.html">
+          <a class="prev-page" href="../kernel/base.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">1. </span>表示学习</div>
+                <div class="title"><span class="section-number">1. </span>核函数的基本运算</div>
                 
               </div>
             </a>
@@ -330,9 +334,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
             
           </div>
           <div class="right-details">
-            <div class="icons">
-              
-            </div>
+            
           </div>
         </div>
         
@@ -373,9 +375,8 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
     </aside>
   </div>
 </div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/translations.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
