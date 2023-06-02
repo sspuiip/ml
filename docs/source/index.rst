@@ -34,6 +34,13 @@
    :numbered:
 
    ml/dimension_reduce.md
+   
+.. toctree::
+   :maxdepth: 2
+   :caption: 核函数
+   :numbered:
+
+   kernel/base.md
 
 Indices and tables
 ==================
