@@ -42,6 +42,13 @@
 
    kernel/base.md
 
+.. toctree::
+   :maxdepth: 2
+   :caption: 数学建模
+   :numbered:
+
+   mathmodel/statistic_model.md
+
 Indices and tables
 ==================
 
