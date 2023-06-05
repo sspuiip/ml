@@ -93,5 +93,43 @@ ans =
 
 
 
-### Gram-Schmidt正交求解
+### QR分解的Gram-Schmidt正交化方法
 
+考虑矩阵$\pmb{A}$，即，
+
+$$
+\pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]
+$$
+
+Gram-Schmidt正交化过程如下，
+
+$$
+\begin{split}
+\pmb{u}_1&=\pmb{a}_1,\quad \pmb{e}_1=\frac{\pmb{u}_1}{\Vert \pmb{u}_1\Vert}\\
+\pmb{u}_2&=\pmb{a}_2-\langle\pmb{a}_2,\pmb{e}_1\rangle\pmb{e}_1,\quad\pmb{e}_2=\frac{\pmb{u}_2}{\Vert \pmb{u}_2\Vert}\\
+&\vdots\\
+\pmb{u}_{k+1}&=\pmb{a}_{k+1}-\sum_{i=1}^k\langle\pmb{a}_{k+1},\pmb{e}_i\rangle\pmb{e}_i\quad\quad\pmb{e}_{k+1}=\frac{\pmb{u}_{k+1}}{\Vert \pmb{u}_{k+1}\Vert}
+\end{split}
+$$
+
+则QR分解结果为，
+
+$$
+\pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]=\left[\pmb{e}_1,\pmb{e}_2,...,\pmb{e}_n \right]\begin{bmatrix}\langle\pmb{a}_1,\pmb{e}_1\rangle& \langle\pmb{a}_2,\pmb{e}_1\rangle &\cdots &\langle\pmb{a}_n,\pmb{e}_1\rangle\\ 0& \langle\pmb{a}_2,\pmb{e}_2\rangle &\cdots &\langle\pmb{a}_n,\pmb{e}_2\rangle\\ \vdots& \vdots& \ddots & \vdots &\\ 0& 0&\cdots&\langle\pmb{a}_n,\pmb{e}_n\rangle \end{bmatrix}=\pmb{QR}
+$$
+
+其中，$\langle \pmb{e}_i,\pmb{a}_i\rangle=\Vert\pmb{u}_i\Vert$。注意，
+
+$$
+\langle \pmb{e}_i,\pmb{a}_i\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i+\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j\right\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i\right\rangle=\Vert\pmb{u}_i\Vert
+$$
+
+以及，
+
+$$
+\begin{split}
+\pmb{a}_i&=\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j+\pmb{u}_i\\
+&=\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j+\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert}\Vert\pmb{u}_i\Vert\\
+&=\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j+\pmb{e}_i\langle \pmb{e}_i,\pmb{a}_i\rangle\\
+\end{split}
+$$
