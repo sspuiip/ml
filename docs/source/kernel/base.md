@@ -1,6 +1,6 @@
-## 核函数基础
+# 核函数基础
 
-### 核函数的基本运算
+## 核函数的基本运算
 
 1. 模长
 
@@ -18,7 +18,7 @@ $$
 \hat{\kappa}(\pmb{x},\pmb{z})=\frac{\kappa(\pmb{x},\pmb{z})}{\sqrt{\kappa(\pmb{x},\pmb{x})\kappa(\pmb{z},\pmb{z})}}
 $$
 
-3. 线性组合S
+3. 线性组合
 
 $$
 \left\Vert \sum_{i=1}^la_i\phi(\pmb{x}_i)\right\Vert^2=\sum_{i,j=1}^l a_ia_j\kappa(\pmb{x}_i\pmb{x}_j)
@@ -68,7 +68,7 @@ $$
 $$
 
 
-### 投影
+## 投影
 
  $\phi(\pmb{x})$在向量$\pmb{w}$上的**投影**$P_{\pmb{w}}(\phi(\pmb{x}))$为，
 

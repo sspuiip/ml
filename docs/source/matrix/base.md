@@ -1,8 +1,8 @@
-### 矩阵性能指标
+# 矩阵性能指标
 
 一个$m\times n$的矩阵可以看成是一种具有$mn$个元素的多变量。如果需要使用一个标量来概括多变量，可以使用矩阵的性能指标来表示。矩阵的性能指标一般有：二次型、行列式、特征值、迹和秩等。
 
-#### 二次型
+## 二次型
 
 任意方阵$\pmb{A}$的**二次型**为$\pmb{x}^\top \pmb{A}\pmb{x}$，其中$\pmb{x}$为任意非零向量。
 
@@ -33,9 +33,9 @@ $$
 
 
 
-#### 行列式
+## 行列式
 
-##### 定义
+### 定义
 
 一个$n\times n$的方阵的**行列式**记为$\det(\pmb{A})$或$|\pmb{A}|$，其定义为，
 
@@ -46,7 +46,7 @@ $$
 
 行列式不为0的矩阵称为**非奇异矩阵**。
 
-##### 余子式
+### 余子式
 
 去掉矩阵第$i$行$j$列后得到的剩余行列式记为$A_{ij}$，称为矩阵元素$a_{ij}$的**余子式**。若去掉矩阵第$i$行$j$列后得到的剩余**子矩阵**记为$\pmb{A}_{ij}$，则有，
 
@@ -70,7 +70,7 @@ $$
 
 
 
-##### 性质一
+### 性质一
 
 1. 行列式的两行（列）交换位置，则行列式的值不变，但符号改变。
 
@@ -98,7 +98,7 @@ $$
    \pmb{A}非奇异\Leftrightarrow\det\left[\begin{array}{cc}\pmb{A}&\pmb{B}\\\pmb{C}&\pmb{D} \end{array}\right]=\det(\pmb{A})\det(\pmb{D}-\pmb{C}\pmb{A}^{-1}\pmb{B})
    $$
 
-##### 性质二
+### 性质二
 
 1. Cauchy-Schwartz不等式，若$\pmb{A,B}$都是$m\times n$矩阵，则
 
@@ -135,7 +135,7 @@ $$
 
 
 
-#### 矩阵内积
+## 矩阵内积
 
 矩阵内积是指：
 
@@ -146,9 +146,9 @@ $$
 
 
 
-#### 矩阵范数
+## 矩阵范数
 
-##### 向量范数
+### 向量范数
 
 1. $L_0$范数： $\lVert \pmb{x}\rVert_0\triangleq$非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。
 
@@ -160,7 +160,7 @@ $$
 
 5. $L_p$范数：$\lVert \pmb{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}$。
 
-##### 矩阵范数
+### 矩阵范数
 
 矩阵范数是矩阵的实值函数，且满足以下条件（与向量空间范数的定义类似），
 
@@ -171,7 +171,7 @@ $$
 
 常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatten范数。
 
-##### 诱导范数
+### 诱导范数
 
 假设有矩阵$\pmb{A}\in \mathbb{R}^{m\times n}$，则有以下诱导范数定义。其实是一个向量范数的变形。
 
@@ -233,7 +233,7 @@ $$
 
              
 
-##### 元素形式范数
+### 元素形式范数
 
 元素形式范数就是将$m\times n$矩阵按列堆栈成$mn\times 1$维的向量，然后再使用向量形式的范数定义。
 
@@ -254,11 +254,11 @@ $$
 
 
 
-##### Schatten范数
+### Schatten范数
 
 Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问题：压缩感知、低秩矩阵与张量恢复等。
 
-###### 核范数
+#### 核范数
 
 核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个**凸优化**问题，所以这种等价可直接降低求解各类**低秩问题**的难度。
 
@@ -299,7 +299,7 @@ $$
 注意：$d\pmb{X}=\pmb{U}(d\pmb{\Sigma})\pmb{V}^\top$可得到，$d\pmb{\pmb{\Sigma}}=\pmb{U}^\top (d\pmb{X})\pmb{V}$。
 
 
-###### Schatten范数
+#### Schatten范数
 
 相比于核范数，Schatten范数多出了一个参数$p$。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多[低秩问题](https://zhuanlan.zhihu.com/p/104402273)。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》[[pdf]](https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf)[[code]](https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery)。
 
@@ -309,7 +309,7 @@ $$
 \lVert \pmb{X}\rVert_{Sp}=(\sigma_1^p+\sigma_2^p+\cdots+\sigma_r^p)^{1/p}
 $$
 
-#### 迹
+## 迹
 
 矩阵的迹是指$n\times n$矩阵$\pmb{A}$的所有对角元素之和，记为$tr(\pmb{A})$，即
 
@@ -318,7 +318,7 @@ $$
 tr(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 $$
 
-##### 性质一
+### 性质一
 
 - $tr(c\pmb{A}\pm d\pmb{B})=tr(\pmb{A})\pm tr(\pmb{B})$
 - $tr(\pmb{A}^\top)=tr(\pmb{A})^\top$
@@ -329,7 +329,7 @@ $$
 - $tr(\pmb{A}^k)=\sum_i \lambda_i^k$
 
 
-##### 性质二
+### 性质二
 
 - $tr(\pmb{A}^2)\le tr(\pmb{A}^\top\pmb{A})$
 - $tr((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[tr(\pmb{A}\pmb{A}^\top)+tr(\pmb{B}\pmb{B}^\top)]$

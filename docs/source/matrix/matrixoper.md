@@ -1,6 +1,6 @@
-### 矩阵运算
+# 矩阵运算
 
-#### 直和
+## 直和
 
 1. **定义**
 
@@ -20,7 +20,7 @@ $$
 - $(\pmb{A}\oplus\pmb{B})(\pmb{C}\oplus\pmb{D})=\pmb{AC}\oplus \pmb{BD}$
 
 
-#### Hadamard积
+## Hadamard积
 
 1. **定义**
 
@@ -45,7 +45,7 @@ $$
 - $(\pmb{A}\oplus\pmb{B})*(\pmb{C}\oplus\pmb{D})=(\pmb{A}*\pmb{C})\oplus(\pmb{B}*\pmb{D})$
 
 
-#### Kronecker积
+## Kronecker积
 
 1. **定义**
 
@@ -97,7 +97,7 @@ $$
 - $(\pmb{A}\otimes\pmb{B})(\pmb{C}\otimes\pmb{D})(\pmb{E}\otimes\pmb{F})=(\pmb{ACE})\otimes(\pmb{BDF})$，特别地，$\pmb{A}\otimes\pmb{D}=(\pmb{AI}_p)\otimes(\pmb{I}_q\pmb{D})=(\pmb{A}\otimes\pmb{I}_q)(\pmb{I}_p\otimes\pmb{D})$
 - $\exp(\pmb{A}\otimes\pmb{B})=\exp(\pmb{A})\otimes\exp(\pmb{B})$
 
-#### 向量化
+## 向量化
 
 1. **定义**
 

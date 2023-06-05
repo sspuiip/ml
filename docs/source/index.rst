@@ -17,6 +17,7 @@
    matrix/matrixdiff.md
    matrix/special_matrix.md
    matrix/subspace.md
+   matrix/decomposition.md
 
 .. toctree::
    :maxdepth: 2

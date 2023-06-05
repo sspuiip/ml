@@ -1,6 +1,6 @@
-### 优化问题求解(1)
+# 优化问题求解(1)
 
-#### 下降法
+## 下降法
 
 &emsp;&emsp;基本思想：利用优化序列
 
@@ -17,7 +17,7 @@ $$
 所以该方法称为<font color='red'>**下降法**</font>。
 
 
-##### 最速下降法
+### 最速下降法
 
 &emsp;&emsp;由Taylor公式可知，
 
@@ -39,7 +39,7 @@ $$
 \mathbf{x}_{k+1}=\mathbf{x}_k+\mu_k\nabla f(\mathbf{x}_k)\tag{4}
 $$
 
-##### Newton法
+### Newton法
 
 &emsp;&emsp;Taylor公式展开至二阶有，
 
@@ -67,7 +67,7 @@ $$
 
 该下降方向也称之为Newton步或Newton下降方向，记为$\Delta\mathbf{x}_{nt}$，相应的方法称为<font color='red'>**Newton法**</font>。
 
-#### 梯度投影法
+## 梯度投影法
 
 &emsp;&emsp;梯度下降法中变元是无约束的。若有约束$\mathbf{x}\in\mathcal{C}$，则梯度下降法中的更新公式应用投影代替，
 
@@ -121,7 +121,7 @@ $$
 $$
 
 
-#### 共轭梯度下降法
+## 共轭梯度下降法
 
 &emsp;&emsp;最速下降法的存在一个问题就是收敛速度过慢，因为已迭代的$\mathbf{x}$会来回振荡，从而导致收敛太慢。
 
@@ -162,7 +162,7 @@ $$
 
 如果$\alpha_i,\mathbf{d}_i$都已知，则$\mathbf{x}^*$可通过上式确定。
 
-##### $\mathbf{A}$-共轭
+### $\mathbf{A}$-共轭
 
 &emsp;&emsp;**定义1**.假设$\mathbf{A}$是一个对称正定矩阵，那么称向量$\mathbf{d}_i,\mathbf{d}_j$是$\mathbf{A}$-共轭的，如果满足，
 
@@ -249,7 +249,7 @@ $$
 \alpha_k=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)}{\mathbf{d}_k^\top\mathbf{Ad}_k}=\frac{\mathbf{d}_k^\top\mathbf{g}_k}{\mathbf{d}_k^\top\mathbf{Ad}_k}\tag{13}
 $$
 
-##### 共轭梯度法
+### 共轭梯度法
 
 &emsp;&emsp;共轭梯度法是一种共轭方向方法。该方法选择的相继的方向向量被视为方法执行时相继获得的梯度的共轭版本。共轭方向并不是提前指定的，而是在每次序贯迭代时确定的。
 
@@ -288,7 +288,7 @@ $$
 4. 求下一个迭代点$\mathbf{x}_{k+1}=\mathbf{x}_k+\beta_k\mathbf{d}_k$
 5. 若$k=n$，则停止计算，返回点$\mathbf{x}_k$,否则继续回到第2步。
 
-##### 案例
+### 案例
 
 &emsp;&emsp;**例1**. 考虑如下二次规划，
 
@@ -341,7 +341,7 @@ f_= -1.7763568394002505e-15
 ```
 
 
-##### 一般函数的共轭梯度法
+### 一般函数的共轭梯度法
 
 &emsp;&emsp;一般函数的共轭梯度与二次函数梯度法的主要区别在于：步长$\alpha_i$不能再用原有方式计算须使用其它方法来确定；凡是用到矩阵$\mathbf{A}$的地方都需要用当前迭代点的Hessian矩阵来替代。这样就可以将共轭梯度法扩展到一般函数。
 
@@ -378,7 +378,7 @@ $$
 5. 令$\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1$转步骤2.
 
 
-#### Newton方法
+## Newton方法
 
 + **Newton步径**.  对于$x\in \mathbf{dom}f$，我们称向量
 

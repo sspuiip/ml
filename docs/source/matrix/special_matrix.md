@@ -1,6 +1,6 @@
-### 特殊矩阵
+# 特殊矩阵
 
-#### Hermitian矩阵
+## Hermitian矩阵
 
 &emsp;&emsp;**定义 (Hermitian矩阵).** 对于矩阵$A\in \mathbb{C}^{m\times m}$，若$a_{ij}=a^*_{ij}(\forall i,j | 1\le i<j \le m) $，即复矩阵的共轭转置$A^H=A$，则称矩阵$A$为Hermitian矩阵。
 
@@ -35,7 +35,7 @@ A'=
 
 
 
-#### 酉矩阵
+## 酉矩阵
 
 &emsp;&emsp;**定义（酉矩阵）** 复正方矩阵$U\in \mathbb{C}^{n\times n}$，若$UU^H=U^HU=I$，则该矩阵为酉矩阵。
 
@@ -49,7 +49,7 @@ A'=
 
 &emsp;&emsp;4. 若$A_{m\times m}$为酉矩阵，则$A$的所有行组成标准正交组；所有列组成标准正交组；$A$非奇异且$U^H=U^{-1}$。
 
-#### 正交矩阵
+## 正交矩阵
 
 &emsp;&emsp;**定义（正交矩阵）** 实矩阵$Q\in\mathbb{R}^{n\times n}$，若有$QQ^\top=Q^\top Q=I$，则该矩阵为正交矩阵。正交矩阵是酉矩阵的特例，即矩阵元素为实值的酉矩阵。
 
