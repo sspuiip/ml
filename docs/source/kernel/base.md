@@ -70,17 +70,20 @@ $$
 
 ### 投影
 
- $\phi(\pmb{x})$在向量$\pmb{w}$上的投影$P_{\pmb{w}}(\phi(\pmb{x}))$为，
+ $\phi(\pmb{x})$在向量$\pmb{w}$上的**投影**$P_{\pmb{w}}(\phi(\pmb{x}))$为，
 
 $$
 P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
 $$
 
 如果$\pmb{w}$已单位化，则有，
+
 $$
 P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
 $$
-即，正交投影$P_{\pmb{w}}^\bot\phi(\pmb{x})$为，
+
+即，**正交投影**$ P_{\pmb{w}}^\bot \phi(\pmb{x}) $ 为，
+
 $$
 P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 $$
