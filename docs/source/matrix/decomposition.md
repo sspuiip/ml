@@ -10,9 +10,7 @@ $$
 \pmb{A}_{m\times n}=\pmb{Q}_{m\times m}\pmb{R}_{m\times n}=\pmb{Q}\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\left[ \pmb{Q}_1\quad \pmb{Q}_2\right]\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\pmb{Q}_1\pmb{R}_1
 $$
 
-其中$\pmb{Q}$为正交矩阵$\pmb{Q}^\top=\pmb{Q}^{-1}$（列向量正交），$\pmb{R}$为上三角矩阵，即$\pmb{R}_1$为$n\times n$的上三角矩阵。
-
-一般来说，$\pmb{Q}$矩阵的前$k(1\le k\le n)$个列向量构建了矩阵$\pmb{A}$的前$k$列张成的一个标准正交基。
+其中$\pmb{Q}$为正交矩阵$\pmb{Q}^\top=\pmb{Q}^{-1}$（列向量正交），$\pmb{R}$为上三角矩阵，即$\pmb{R}_1$为$n\times n$的上三角矩阵。一般来说，$\pmb{Q}$矩阵的前$k(1\le k\le n)$个列向量构建了矩阵$\pmb{A}$的前$k$列张成的一个标准正交基。
 
 - **例**1
 
@@ -51,7 +49,7 @@ $$
 
 - **注意**
 
-  当矩阵列不满秩时，可以使用`[Q,R,P]=qr(A)`来分解，且满足$\pmb{A}*\pmb{P}=\pmb{Q}*\pmb{R}$其中$\pmb{P}$为转换矩阵。若$\pmb{A}=[\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n]$为数据矩阵时，$\pmb{P}$的作用等价于样本重新排列顺序。
+当矩阵列不满秩时，可以使用`[Q,R,P]=qr(A)`来分解，且满足$\pmb{A}*\pmb{P}=\pmb{Q}*\pmb{R}$其中$\pmb{P}$为转换矩阵。若$\pmb{A}=[\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n]$为数据矩阵时，$\pmb{P}$的作用等价于样本重新排列顺序。
 
 ```
 >>>C=[1 1 2;2 1 4;3 1 6]
