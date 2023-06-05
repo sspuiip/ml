@@ -1,4 +1,4 @@
-### 矩阵微分
+# 矩阵微分
 
 矩阵微分是多变量函数微分的推广。首先注意区分以下标记。
 
@@ -13,7 +13,7 @@
 | $\mathbf{F}(\mathbf{x})\in \mathbb{R}^{p\times q}$  | $p\times q$维矩阵函数   |$\mathbf{x}\in\mathbb{R}^m$     |$f:\mathbb{R}^m\rightarrow\mathbb{R}^{p\times q}$    |
 | $\mathbf{F}(\mathbf{X})\in \mathbb{R}^{p\times q}$  |${p\times q}$维矩阵函数    | $\mathbf{X}\in\mathbb{R}^{m\times n}$    | $f:\mathbb{R}^{m\times n}\rightarrow\mathbb{R}^{p\times q}$   |
 
-#### Jacobian矩阵
+## Jacobian矩阵
 
 1. **向量偏导算子（分子布局）**。
 $1\times m$行向量$\mathbf{x}^\top$**偏导算子**记为，
@@ -51,7 +51,7 @@ $$
 
 即标量函数的行向量偏导$\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})$等于标量函数$f(\mathbf{X})$关于矩阵变元$\mathbf{X}$的Jacobian矩阵。
 
-#### 梯度矩阵
+## 梯度矩阵
 
 **梯度算子(分母布局)** 指的是以列向量形式$\mathbf{x}=[x_1,...,x_m]^\top$定义的偏导算子，记为$\nabla_{\mathbf{x}}$，定义为
 
@@ -85,9 +85,9 @@ $$
 
 即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。
 
-#### 偏导和梯度计算
+## 偏导和梯度计算
 
-##### 基本规则
+### 基本规则
 
 假设$\mathbf{X}\in \mathbb{R}^{m\times n}$，$f(\mathbf{X})$为一标量函数，则有以下偏导计算规则：
 
@@ -131,7 +131,7 @@ $$
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
 $$
 
-###### 独立性假设
+#### 独立性假设
 
 假定实值函数的向量变元$\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m$或者矩阵变元$\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}$本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即
 
@@ -145,7 +145,7 @@ $$
 \frac{\partial x_{kl}}{\partial x_{ij}}=\delta_{ki}\delta_{lj}=\left\{\begin{array}{ll}1,&k=i \wedge l=j\\ 0,&others \end{array} \right.
 $$
 
-###### 案例
+#### 案例
 
 1. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。由于$\mathbf{x}^\top\mathbf{A}\mathbf{x}=\sum_{k=1}^n\sum_{l=1}^n a_{kl}x_kx_l$，则根据$\mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}$可知第$i$分量为，
 
@@ -158,7 +158,7 @@ $$
 从上述计算过程可以看出，根据$\frac{\partial x_{kl}}{\partial x_{ij}}$可以计算出大部分的矩阵函数的Jacobian矩阵和梯度矩阵，但是对于复杂的矩阵函数，偏导$\frac{\partial x_{kl}}{\partial x_{ij}}$的计算就会比较困难。因此，产生了一种相对简单计算的方法：使用矩阵微分计算(**标量、向量和矩阵**)函数关于(**向量或矩阵**)变元的偏导。
 
 
-##### 一阶实矩阵微分
+### 一阶实矩阵微分
 
 矩阵微分记为$\mathrm{d}\mathbf{X}$，其定义为，
 
@@ -166,7 +166,7 @@ $$
 \mathrm{d}\mathbf{X}=[\mathrm{d}X_{ij}]_{i=1,j=1}^{m,n}
 $$
 
-###### 性质
+#### 性质
 
 1. **转置不变** $\mathrm{d}(\mathbf{X}^\top)=(\mathrm{d}\mathbf{X})^\top$
 2. **线性** $\mathrm{d}(\alpha\mathbf{X}\pm\beta\mathbf{Y})=\alpha\mathrm{d}\mathbf{X}\pm\beta\mathrm{d}\mathbf{Y}$
@@ -230,7 +230,7 @@ $$
 \mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})* \mathrm{d}\mathbf{X}
 $$
 
-###### 标量函数$f(\mathbf{x})$的向量变元$\mathbf{x}$全微分求偏导方法
+#### 标量函数$f(\mathbf{x})$的向量变元$\mathbf{x}$全微分求偏导方法
 
 考虑标量函数$f(\mathbf{x}),\mathbf{x}\in\mathbb{R}^n$的全微分，
 
@@ -250,7 +250,7 @@ $$\mathrm{d}f(\mathbf{x})=\mathrm{tr}\left(\frac{\partial f(\mathbf{x})}{\partia
 
 的形式，则$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}$就是函数$f(\mathbf{x})$关于变元$\mathbf{x}$的Jacobian矩阵$\mathbf{D}_\mathbf{x}f(\mathbf{x})$，其转置$\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]^\top$即为梯度$\nabla_\mathbf{x}f(\mathbf{x})$。
 
-###### 标量函数$f(\mathbf{X})$的矩阵量变元$\mathbf{X}$全微分求偏导方法
+#### 标量函数$f(\mathbf{X})$的矩阵量变元$\mathbf{X}$全微分求偏导方法
 
 和向量一样，把变元矩阵的每个元素看作是一个变量，则标量函数$f(\mathbf{X}),\mathbf{X}\in\mathbb{R}^{m\times n}$的全微分可以写成如下形式，
 
@@ -267,7 +267,7 @@ $$
 
 易知：$\nabla_\mathbf{X}f(\mathbf{X})=\mathbf{D}^\top_\mathbf{X}f(\mathbf{X})$，即可求出梯度矩阵。
 
-###### 求导方法
+#### 求导方法
 
 综上所述，若标量函数$f(\mathbf{x}),f(\mathbf{X})$在$\mathbf{x},\mathbf{X}$可微，则Jacobin矩阵存在，且可以通过以下形式计算，
 
@@ -291,7 +291,7 @@ $$
 7. $\mathrm{tr}(\mathbf{A}^\top(\mathbf{B}*\mathbf{C}))=\mathrm{tr}((\mathbf{A}*\mathbf{B})^\top\mathbf{C})=\sum_{ij}A_{ij}B_{ij}C_{ij}$
 
 
-###### 案例
+#### 案例
 
 **例1**. 求实值函数$f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}$的梯度向量与Jacobian矩阵。
 
@@ -398,7 +398,7 @@ $$
 因此，$\nabla_\mathbf{W}f(\mathbf{W})=(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})\mathbf{x}^\top$。
 
 
-##### 实矩阵函数的偏导计算
+### 实矩阵函数的偏导计算
 
 实值矩阵函数$\mathbf{F}(\mathbf{X})$的第$k$行,$j$列元素记为$f_{kl}$，则$\mathrm{d}f_{kl}(\mathbf{X})=[\mathrm{d}\mathbf{F}(\mathbf{X})]$表示为以$\mathbf{X}$为变元的标量函数微分，
 
@@ -489,7 +489,7 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 $$
 
 
-#### Hessian矩阵
+## Hessian矩阵
 
 1. **定义**
 
