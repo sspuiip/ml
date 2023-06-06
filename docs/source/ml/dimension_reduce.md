@@ -14,18 +14,17 @@
 &emsp;&emsp;主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，
 
 $$
-\pmb{X}=\begin{pmatrix}|&|&\cdots &| \\
-\pmb{x}_1 & \pmb{x}_2 &  \cdots & \pmb{x}_m\\ |&|&\cdots &|\end{pmatrix}
+\pmb{X}=\begin{pmatrix} -&\pmb{x}_1&-\\-&\pmb{x}_2&-\\ &\dots&\\-&\pmb{x}_m&- \end{pmatrix}
 $$
 
-其中，$\pmb{x}_i=(x_{i1},...,x_{in})^\top$。PCA的目标是找到一个变换矩阵$\pmb{W}_{n\times d}$使得,
+其中，$\pmb{x}_i=(x_{i1},...,x_{in})^\top$。PCA的**目标**是找到一个变换矩阵$\pmb{W}_d(n\times d)$，使得$\pmb{X}_{new}=\pmb{X}\pmb{W}_d$与$\pmb{X}$的误差尽可能的小，即，投影的超平面$\pmb{W}_d$使得投影后的数据$\pmb{X}_{new}$丢失的信息最少。
 
-$$
-\min\limits_{\pmb{W}}\quad \lVert\pmb{X}_{new}-\pmb{X}\pmb{W}\rVert
-$$
+&emsp;&emsp;如何找到这个超平面呢？可行的一个办法是比较$\pmb{X}$与$\pmb{X}_{new}$之间的平均距离（$\parallel \pmb{x}_i-\pmb{x}'_i\parallel^2$），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。
 
+&emsp;&emsp;对于空间的所有样本点，如何用一个超平面来恰当的表示？有两种办法，即
 
++ 样本点到这个超平面的距离都足够近
 
-
++ 样本点在这个超平面的投影尽可能分开
 
 
