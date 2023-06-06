@@ -1,129 +1,337 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="zh-CN" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>4. 矩阵微分 &mdash; MLBOOK 1.0 文档</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>4. 矩阵微分 &#8212; MLBOOK 1.0 文档</title>
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/translations.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script src="../_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/matrixdiff';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="5. 特殊矩阵" href="special_matrix.html" />
-    <link rel="prev" title="3. 向量空间" href="vectorspace.html" /> 
-</head>
+    <link rel="prev" title="3. 向量空间" href="vectorspace.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            MLBOOK
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="current">
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MLBOOK 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">4. 矩阵微分</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#jacobian">4.1. Jacobian矩阵</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">4.2. 梯度矩阵</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">4.3. 偏导和梯度计算</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id4">4.3.1. 基本规则</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id5">4.3.1.1. 独立性假设</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">4.3.1.2. 案例</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">4.3.2. 一阶实矩阵微分</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id8">4.3.2.1. 性质</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#f-mathbf-x-mathbf-x">4.3.2.2. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">4.3.2.3. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">4.3.2.4. 求导方法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id11">4.3.2.5. 案例</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#id12">4.3.3. 实矩阵函数的偏导计算</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#hessian">4.4. Hessian矩阵</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. 矩阵微分</a></li>
 <li class="toctree-l1"><a class="reference internal" href="special_matrix.html">5. 特殊矩阵</a></li>
 <li class="toctree-l1"><a class="reference internal" href="subspace.html">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decomposition.html">7. 矩阵分解</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 表示学习</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">核函数</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
-        </div>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
       </div>
-    </nav>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">MLBOOK</a>
-      </nav>
+<div class="sbt-scroll-pixel-helper"></div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="页面导航">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">4. </span>矩阵微分</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/matrix/matrixdiff.md.txt" rel="nofollow"> 查看页面源码</a>
-      </li>
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/matrix/matrixdiff.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
   </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>矩阵微分</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian">4.1. Jacobian矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2. 梯度矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.3. 偏导和梯度计算</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.3.1. 基本规则</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.3.1.1. 独立性假设</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.3.1.2. 案例</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.2. 一阶实矩阵微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.2.1. 性质</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-mathbf-x-mathbf-x">4.3.2.2. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">4.3.2.3. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">4.3.2.4. 求导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.3.2.5. 案例</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4.3.3. 实矩阵函数的偏导计算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">4.4. Hessian矩阵</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4. </span>矩阵微分<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<h1><span class="section-number">4. </span>矩阵微分<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <p>矩阵微分是多变量函数微分的推广。首先注意区分以下标记。</p>
-<table class="docutils align-default">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><strong>标记</strong></p></th>
 <th class="head text-left"><p><strong>含义</strong></p></th>
@@ -175,7 +383,7 @@
 </tbody>
 </table>
 <section id="jacobian">
-<h2><span class="section-number">4.1. </span>Jacobian矩阵<a class="headerlink" href="#jacobian" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">4.1. </span>Jacobian矩阵<a class="headerlink" href="#jacobian" title="此标题的永久链接">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>向量偏导算子（分子布局）</strong>。
 <span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span><strong>偏导算子</strong>记为，</p></li>
@@ -218,7 +426,7 @@
 <p>即标量函数的行向量偏导<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>等于标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的Jacobian矩阵。</p>
 </section>
 <section id="id2">
-<h2><span class="section-number">4.2. </span>梯度矩阵<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">4.2. </span>梯度矩阵<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <p><strong>梯度算子(分母布局)</strong> 指的是以列向量形式<span class="math notranslate nohighlight">\(\mathbf{x}=[x_1,...,x_m]^\top\)</span>定义的偏导算子，记为<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}\)</span>，定义为</p>
 <div class="math notranslate nohighlight">
 \[
@@ -253,9 +461,9 @@
 <p>即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">4.3. </span>偏导和梯度计算<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">4.3. </span>偏导和梯度计算<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
 <section id="id4">
-<h3><span class="section-number">4.3.1. </span>基本规则<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">4.3.1. </span>基本规则<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
 <p>假设<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>，<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>为一标量函数，则有以下偏导计算规则：</p>
 <ol class="arabic simple">
 <li><p>若<span class="math notranslate nohighlight">\(f(\mathbf{X})=c\)</span>为常数，则梯度<span class="math notranslate nohighlight">\(\frac{\partial c}{\partial \mathbf{X}}=\mathbf{0}_{m\times n}\)</span>。</p></li>
@@ -299,7 +507,7 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
 \]</div>
 <section id="id5">
-<h4><span class="section-number">4.3.1.1. </span>独立性假设<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.1.1. </span>独立性假设<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
 <p>假定实值函数的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m\)</span>或者矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}\)</span>本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -312,7 +520,7 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 \end{split}\]</div>
 </section>
 <section id="id6">
-<h4><span class="section-number">4.3.1.2. </span>案例<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.1.2. </span>案例<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h4>
 <ol class="arabic simple">
 <li><p>求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。由于<span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{A}\mathbf{x}=\sum_{k=1}^n\sum_{l=1}^n a_{kl}x_kx_l\)</span>，则根据<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\)</span>可知第<span class="math notranslate nohighlight">\(i\)</span>分量为，</p></li>
 </ol>
@@ -325,14 +533,14 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 </section>
 </section>
 <section id="id7">
-<h3><span class="section-number">4.3.2. </span>一阶实矩阵微分<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">4.3.2. </span>一阶实矩阵微分<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
 <p>矩阵微分记为<span class="math notranslate nohighlight">\(\mathrm{d}\mathbf{X}\)</span>，其定义为，</p>
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}\mathbf{X}=[\mathrm{d}X_{ij}]_{i=1,j=1}^{m,n}
 \]</div>
 <section id="id8">
-<h4><span class="section-number">4.3.2.1. </span>性质<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.2.1. </span>性质<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h4>
 <ol class="arabic simple">
 <li><p><strong>转置不变</strong> <span class="math notranslate nohighlight">\(\mathrm{d}(\mathbf{X}^\top)=(\mathrm{d}\mathbf{X})^\top\)</span></p></li>
 <li><p><strong>线性</strong> <span class="math notranslate nohighlight">\(\mathrm{d}(\alpha\mathbf{X}\pm\beta\mathbf{Y})=\alpha\mathrm{d}\mathbf{X}\pm\beta\mathrm{d}\mathbf{Y}\)</span></p></li>
@@ -404,7 +612,7 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 \]</div>
 </section>
 <section id="f-mathbf-x-mathbf-x">
-<h4><span class="section-number">4.3.2.2. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法<a class="headerlink" href="#f-mathbf-x-mathbf-x" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.2.2. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法<a class="headerlink" href="#f-mathbf-x-mathbf-x" title="此标题的永久链接">#</a></h4>
 <p>考虑标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),\mathbf{x}\in\mathbb{R}^n\)</span>的全微分，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -421,7 +629,7 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 <p>的形式，则<span class="math notranslate nohighlight">\(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\)</span>就是函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>关于变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的Jacobian矩阵<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{x}f(\mathbf{x})\)</span>，其转置<span class="math notranslate nohighlight">\(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]^\top\)</span>即为梯度<span class="math notranslate nohighlight">\(\nabla_\mathbf{x}f(\mathbf{x})\)</span>。</p>
 </section>
 <section id="id9">
-<h4><span class="section-number">4.3.2.3. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.2.3. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h4>
 <p>和向量一样，把变元矩阵的每个元素看作是一个变量，则标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X}),\mathbf{X}\in\mathbb{R}^{m\times n}\)</span>的全微分可以写成如下形式，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -437,7 +645,7 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 <p>易知：<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=\mathbf{D}^\top_\mathbf{X}f(\mathbf{X})\)</span>，即可求出梯度矩阵。</p>
 </section>
 <section id="id10">
-<h4><span class="section-number">4.3.2.4. </span>求导方法<a class="headerlink" href="#id10" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.2.4. </span>求导方法<a class="headerlink" href="#id10" title="此标题的永久链接">#</a></h4>
 <p>综上所述，若标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),f(\mathbf{X})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{X}\)</span>可微，则Jacobin矩阵存在，且可以通过以下形式计算，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -459,7 +667,7 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 </ol>
 </section>
 <section id="id11">
-<h4><span class="section-number">4.3.2.5. </span>案例<a class="headerlink" href="#id11" title="此标题的永久链接"></a></h4>
+<h4><span class="section-number">4.3.2.5. </span>案例<a class="headerlink" href="#id11" title="此标题的永久链接">#</a></h4>
 <p><strong>例1</strong>. 求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。</p>
 <p>使用微分法，凑规范形式如下，</p>
 <div class="math notranslate nohighlight">
@@ -546,7 +754,7 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 </section>
 </section>
 <section id="id12">
-<h3><span class="section-number">4.3.3. </span>实矩阵函数的偏导计算<a class="headerlink" href="#id12" title="此标题的永久链接"></a></h3>
+<h3><span class="section-number">4.3.3. </span>实矩阵函数的偏导计算<a class="headerlink" href="#id12" title="此标题的永久链接">#</a></h3>
 <p>实值矩阵函数<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X})\)</span>的第<span class="math notranslate nohighlight">\(k\)</span>行,<span class="math notranslate nohighlight">\(j\)</span>列元素记为<span class="math notranslate nohighlight">\(f_{kl}\)</span>，则<span class="math notranslate nohighlight">\(\mathrm{d}f_{kl}(\mathbf{X})=[\mathrm{d}\mathbf{F}(\mathbf{X})]\)</span>表示为以<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>为变元的标量函数微分，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -590,7 +798,7 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\partial (\mathrm{vec}\mathbf{X})^\top}=(\mathbf{B}^\top\otimes\mathbf{A})+(\mathbf{D}^\top\otimes\mathbf{C})\mathbf{K}_{mn}
 \]</div>
 <p>转置后即为梯度矩阵<span class="math notranslate nohighlight">\(\nabla_{\mathbf{X}}\mathbf{F}(\mathbf{X})\)</span>。</p>
-<table class="docutils align-default">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><strong>函数类型</strong></p></th>
 <th class="head text-left"><p><strong>矩阵微分</strong></p></th>
@@ -652,7 +860,7 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 </section>
 </section>
 <section id="hessian">
-<h2><span class="section-number">4.4. </span>Hessian矩阵<a class="headerlink" href="#hessian" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">4.4. </span>Hessian矩阵<a class="headerlink" href="#hessian" title="此标题的永久链接">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>定义</strong></p></li>
 </ol>
@@ -760,34 +968,124 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="vectorspace.html" class="btn btn-neutral float-left" title="3. 向量空间" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="special_matrix.html" class="btn btn-neutral float-right" title="5. 特殊矩阵" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+                </article>
+              
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; 版权所有 2022, SSPUIIP.</p>
-  </div>
-
-  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
-    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
-   
-
-</footer>
-        </div>
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vectorspace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>向量空间</p>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class="right-next"
+       href="special_matrix.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>特殊矩阵</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
 
-</body>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian">4.1. Jacobian矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2. 梯度矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.3. 偏导和梯度计算</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.3.1. 基本规则</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">4.3.1.1. 独立性假设</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.3.1.2. 案例</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.2. 一阶实矩阵微分</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.2.1. 性质</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-mathbf-x-mathbf-x">4.3.2.2. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">4.3.2.3. 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">4.3.2.4. 求导方法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">4.3.2.5. 案例</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">4.3.3. 实矩阵函数的偏导计算</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hessian">4.4. Hessian矩阵</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022, SSPUIIP.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>

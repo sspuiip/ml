@@ -1,117 +1,336 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="zh-CN" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>7. 矩阵分解 &mdash; MLBOOK 1.0 文档</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>7. 矩阵分解 &#8212; MLBOOK 1.0 文档</title>
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
-        <script src="../_static/translations.js"></script>
-        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script src="../_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/decomposition';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" />
-    <link rel="prev" title="6. 子空间分析" href="subspace.html" /> 
-</head>
+    <link rel="prev" title="6. 子空间分析" href="subspace.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            MLBOOK
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="搜索文档" aria-label="搜索文档" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="导航菜单">
-              <p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="current">
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MLBOOK 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
 <li class="toctree-l1"><a class="reference internal" href="special_matrix.html">5. 特殊矩阵</a></li>
 <li class="toctree-l1"><a class="reference internal" href="subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">7. 矩阵分解</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#qr">7.1. QR分解</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">7.1.1. QR的一般形式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#qrgram-schmidt">7.1.2. QR分解的Gram-Schmidt正交化方法</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">7. 矩阵分解</a></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 表示学习</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">核函数</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
-        </div>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
       </div>
-    </nav>
+      
+      <main id="main-content" class="bd-main">
+        
+        
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="移动版导航菜单" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">MLBOOK</a>
-      </nav>
+<div class="sbt-scroll-pixel-helper"></div>
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="页面导航">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active"><span class="section-number">7. </span>矩阵分解</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/matrix/decomposition.md.txt" rel="nofollow"> 查看页面源码</a>
-      </li>
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/matrix/decomposition.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
   </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>矩阵分解</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qr">7.1. QR分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1.1. QR的一般形式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qrgram-schmidt">7.1.2. QR分解的Gram-Schmidt正交化方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. 特征值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.2.1. 方阵的特征值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.2.1.1. 对称矩阵的特征值分解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.3. 奇异值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd">7.3.1. SVD参数求解</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">7. </span>矩阵分解<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h1>
+<h1><span class="section-number">7. </span>矩阵分解<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <section id="qr">
-<h2><span class="section-number">7.1. </span>QR分解<a class="headerlink" href="#qr" title="此标题的永久链接"></a></h2>
+<h2><span class="section-number">7.1. </span>QR分解<a class="headerlink" href="#qr" title="此标题的永久链接">#</a></h2>
 <section id="id2">
-<h3><span class="section-number">7.1.1. </span>QR的一般形式<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
-<p>对于一般矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}(m\ge n)\)</span>，可以分解为，</p>
+<h3><span class="section-number">7.1.1. </span>QR的一般形式<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h3>
+<p>  对于一般矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}(m\ge n)\)</span>，可以分解为，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}_{m\times n}=\pmb{Q}_{m\times m}\pmb{R}_{m\times n}=\pmb{Q}\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\left[ \pmb{Q}_1\quad \pmb{Q}_2\right]\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\pmb{Q}_1\pmb{R}_1
@@ -155,7 +374,7 @@
 <ul class="simple">
 <li><p><strong>注意</strong></p></li>
 </ul>
-<p>当矩阵列不满秩时，可以使用<code class="docutils literal notranslate"><span class="pre">[Q,R,P]=qr(A)</span></code>来分解，且满足<span class="math notranslate nohighlight">\(\pmb{A}*\pmb{P}=\pmb{Q}*\pmb{R}\)</span>其中<span class="math notranslate nohighlight">\(\pmb{P}\)</span>为转换矩阵。若<span class="math notranslate nohighlight">\(\pmb{A}=[\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n]\)</span>为数据矩阵时，<span class="math notranslate nohighlight">\(\pmb{P}\)</span>的作用等价于样本重新排列顺序。</p>
+<p>  当矩阵列不满秩时，可以使用<code class="docutils literal notranslate"><span class="pre">[Q,R,P]=qr(A)</span></code>来分解，且满足<span class="math notranslate nohighlight">\(\pmb{A}*\pmb{P}=\pmb{Q}*\pmb{R}\)</span>其中<span class="math notranslate nohighlight">\(\pmb{P}\)</span>为转换矩阵。若<span class="math notranslate nohighlight">\(\pmb{A}=[\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n]\)</span>为数据矩阵时，<span class="math notranslate nohighlight">\(\pmb{P}\)</span>的作用等价于样本重新排列顺序。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="go">&gt;&gt;&gt;C=[1 1 2;2 1 4;3 1 6]</span>
 
 <span class="go">     1     1     2</span>
@@ -196,8 +415,8 @@
 </div>
 </section>
 <section id="qrgram-schmidt">
-<h3><span class="section-number">7.1.2. </span>QR分解的Gram-Schmidt正交化方法<a class="headerlink" href="#qrgram-schmidt" title="此标题的永久链接"></a></h3>
-<p>考虑矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>，即，</p>
+<h3><span class="section-number">7.1.2. </span>QR分解的Gram-Schmidt正交化方法<a class="headerlink" href="#qrgram-schmidt" title="此标题的永久链接">#</a></h3>
+<p>  考虑矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>，即，</p>
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]
@@ -217,7 +436,8 @@
 \[\begin{split}
 \pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]=\left[\pmb{e}_1,\pmb{e}_2,...,\pmb{e}_n \right]\begin{bmatrix}\langle\pmb{a}_1,\pmb{e}_1\rangle&amp; \langle\pmb{a}_2,\pmb{e}_1\rangle &amp;\cdots &amp;\langle\pmb{a}_n,\pmb{e}_1\rangle\\ 0&amp; \langle\pmb{a}_2,\pmb{e}_2\rangle &amp;\cdots &amp;\langle\pmb{a}_n,\pmb{e}_2\rangle\\ \vdots&amp; \vdots&amp; \ddots &amp; \vdots &amp;\\ 0&amp; 0&amp;\cdots&amp;\langle\pmb{a}_n,\pmb{e}_n\rangle \end{bmatrix}=\pmb{QR}
 \end{split}\]</div>
-<p>其中，<span class="math notranslate nohighlight">\(\langle \pmb{e}_i,\pmb{a}_i\rangle=\Vert\pmb{u}_i\Vert\)</span>。注意，</p>
+<p>其中，<span class="math notranslate nohighlight">\(\langle \pmb{e}_i,\pmb{a}_i\rangle=\Vert\pmb{u}_i\Vert\)</span>。</p>
+<p>  注意，</p>
 <div class="math notranslate nohighlight">
 \[
 \langle \pmb{e}_i,\pmb{a}_i\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i+\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j\right\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i\right\rangle=\Vert\pmb{u}_i\Vert
@@ -233,37 +453,213 @@
 \end{split}\]</div>
 </section>
 </section>
+<section id="id3">
+<h2><span class="section-number">7.2. </span>特征值分解<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<section id="id4">
+<h3><span class="section-number">7.2.1. </span>方阵的特征值分解<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<p>  若方阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m}\)</span>可对角化，则有，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{A}=\pmb{X}\pmb{\Lambda}\pmb{X}^{-1}
+\]</div>
+<p>  矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的特征向量是经过矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>变换后方向保持不变的向量，而特征值为这个变换中特征向量的缩放因子，即矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>对特征向量<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的变换等于特征向量与特征值的乘积。</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{Ax}=\lambda \pmb{x}
+\]</div>
+<p>  令，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix},\quad \pmb{\Lambda}=\begin{pmatrix}\lambda_1&amp;&amp;&amp;\\&amp;\lambda_2&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\lambda_n \end{pmatrix}
+\end{split}\]</div>
+<p>可以得到，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}\pmb{AX}&amp;=A\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\\&amp;=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\lambda_1\pmb{x}_1&amp;\lambda_2\pmb{x}_2&amp;\dots&amp;\lambda_n\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\\&amp;=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\begin{pmatrix}\lambda_1&amp;&amp;&amp;\\&amp;\lambda_2&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\lambda_n \end{pmatrix}\\&amp;=\pmb{X\Lambda}\end{split}
+\end{split}\]</div>
+<p>最终，我们可以得到结论（特征向量线性无关，故<span class="math notranslate nohighlight">\(\pmb{X}^{-1}\)</span>存在），</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{A}=\pmb{X}\pmb{\Lambda} \pmb{X}^{-1}
+\]</div>
+<section id="id5">
+<h4><span class="section-number">7.2.1.1. </span>对称矩阵的特征值分解<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
+<p>  任意对称实矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>可分解为，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{A}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^{-1}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^\top.
+\]</div>
+<p>  对称矩阵有一个<strong>非常重要的性质</strong>：</p>
+<blockquote>
+<div><p>对称矩阵的特征向量是正交向量，即<span class="math notranslate nohighlight">\(\langle\pmb{x}_i, \pmb{x}_j\rangle=0,\forall i\neq j\)</span>。</p>
+</div></blockquote>
+<p>  <strong>证</strong>：假设<span class="math notranslate nohighlight">\(\lambda_1,\lambda_2,\pmb{x}_1,\pmb{x}_2\)</span>为对称矩阵<span class="math notranslate nohighlight">\(S\)</span>的任意互不相等的特征值和特征向量，那么，</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda_1\langle\pmb{x}_i, \pmb{x}_j\rangle=\langle\pmb{Ax}_1, \pmb{x}_2\rangle=\pmb{x}_1^\top \pmb{Ax}_2=\pmb{x}_1^\top\lambda_2\pmb{x}_2=\lambda_2\langle\pmb{x}_1, \pmb{x}_2\rangle
+\]</div>
+<p>等式左边减去右边，得</p>
+<div class="math notranslate nohighlight">
+\[
+(\lambda_1-\lambda_2)\langle\pmb{x}_1, \pmb{x}_2\rangle=0.
+\]</div>
+<p>  由于<span class="math notranslate nohighlight">\(\lambda_1\neq\lambda_2\)</span>，因此只能<span class="math notranslate nohighlight">\(\langle\pmb{x}_1, \pmb{x}_2\rangle=0\)</span>，即对称矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的任意不相同的特征向量是正交的。于是，我们可以得到一个<strong>重要结论</strong>：</p>
+<blockquote>
+<div><p>对称矩阵可以分解为两个由正交向量组成的矩阵与其对角阵的乘积，即<span class="math notranslate nohighlight">\(\pmb{A}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^{-1}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^\top\)</span>。</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">7.3. </span>奇异值分解<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h2>
+<p>  对于<span class="math notranslate nohighlight">\(m\times n\)</span>的矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>，没有特征值的定义。因此，不能进行特征值分解。但可以使用奇异值分解，即</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{A}=\pmb{U}\pmb{\Sigma} \pmb{V}^\top=\sum_{i=1}\sigma_i\pmb{u}_i\pmb{v}_i^\top
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\pmb{U}=(\pmb{u}_1,\pmb{u}_2,...,\pmb{u}_m)\)</span>为<span class="math notranslate nohighlight">\(m\times m\)</span>的正交矩阵，<span class="math notranslate nohighlight">\(\pmb{u}_i\)</span>称为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的左奇异向量。<span class="math notranslate nohighlight">\(\pmb{V}=(\pmb{v}_1,\pmb{v}_2,...,\pmb{v}_n)\)</span>为<span class="math notranslate nohighlight">\(n\times n\)</span>的正交矩阵，<span class="math notranslate nohighlight">\(\pmb{v}_i\)</span>称为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的右奇异向量。<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>的主对角线上的元素<span class="math notranslate nohighlight">\(\sigma_i\)</span>称为奇异值。</p>
+<p>  奇异值分解(SVD)的目标就是找到参数<span class="math notranslate nohighlight">\(\pmb{U},\pmb{V}\)</span>和奇异值矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>。<span class="math notranslate nohighlight">\(\pmb{u}_i,\pmb{v}_i\)</span>都是正交向量且满足，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{Av}_i=\sigma_i\pmb{u}_i
+\]</div>
+<p>也就是说，一个<span class="math notranslate nohighlight">\(n\)</span>维向量<span class="math notranslate nohighlight">\(\pmb{v}\)</span>经过矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的变换<strong>等于</strong>一个<span class="math notranslate nohighlight">\(m\)</span>维向量<span class="math notranslate nohighlight">\(\pmb{u}\)</span>经过奇异值<span class="math notranslate nohighlight">\(\sigma\)</span>的缩放。</p>
+<section id="svd">
+<h3><span class="section-number">7.3.1. </span>SVD参数求解<a class="headerlink" href="#svd" title="此标题的永久链接">#</a></h3>
+<p>  SVD参数一般通过<span class="math notranslate nohighlight">\(\pmb{AA}^\top\)</span>求<span class="math notranslate nohighlight">\(\pmb{U}\)</span>,<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}\)</span>求<span class="math notranslate nohighlight">\(\pmb{V}\)</span>。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{AA}^\top&amp;=\pmb{U}\pmb{\Sigma} \pmb{V}^\top \pmb{V\Sigma U}^\top=\pmb{U\Sigma}^2 \pmb{U}^\top\\ 
+\pmb{A}^\top\pmb{A}&amp;=\pmb{V}\pmb{\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
+\end{split}
+\end{split}\]</div>
+<p>由于上述矩阵均为对称矩阵，因此，可以使用特征值分解求得矩阵<span class="math notranslate nohighlight">\(\pmb{U},\pmb{V}\)</span>。</p>
+<p>  <span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>与<span class="math notranslate nohighlight">\(\pmb{AA}^\top,\pmb{A}^\top\pmb{A}\)</span>的关系，可以求得奇异值。</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(\pmb{AA}^\top\)</span>与<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}\)</span>的特征值是相等的。</p>
+</div></blockquote>
+<p>  <strong>证</strong>：<span class="math notranslate nohighlight">\(\pmb{AA}^\top\pmb{x}=\lambda \pmb{x}\)</span>，可以得到<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{AA}^\top\pmb{x}=\lambda \pmb{A}^\top\pmb{x}\)</span>，于是有，<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}(\pmb{A}^\top\pmb{x})=\lambda(\pmb{A}^\top\pmb{x})\)</span>，即，<span class="math notranslate nohighlight">\(\lambda\)</span>为<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}\)</span>的特征值，<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{x}\)</span>为新的特征向量。</p>
+<p>  令<span class="math notranslate nohighlight">\(\lambda_i\)</span>为<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}\)</span>的特征值，则，奇异值<span class="math notranslate nohighlight">\(\sigma_i=\sqrt{\lambda_i}\)</span>。</p>
+</section>
+</section>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="页脚">
-        <a href="subspace.html" class="btn btn-neutral float-left" title="6. 子空间分析" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
-        <a href="../optimization/convex_prob.html" class="btn btn-neutral float-right" title="1. 凸优化问题" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+                </article>
+              
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; 版权所有 2022, SSPUIIP.</p>
-  </div>
-
-  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用的 
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
-    由 <a href="https://readthedocs.org">Read the Docs</a> 开发.
-   
-
-</footer>
-        </div>
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="subspace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">6. </span>子空间分析</p>
       </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+    </a>
+    <a class="right-next"
+       href="../optimization/convex_prob.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>凸优化问题</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
 
-</body>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qr">7.1. QR分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1.1. QR的一般形式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#qrgram-schmidt">7.1.2. QR分解的Gram-Schmidt正交化方法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">7.2. 特征值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">7.2.1. 方阵的特征值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">7.2.1.1. 对称矩阵的特征值分解</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">7.3. 奇异值分解</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd">7.3.1. SVD参数求解</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022, SSPUIIP.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>
