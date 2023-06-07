@@ -14,10 +14,10 @@
 &emsp;&emsp;主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，
 
 $$
-\pmb{X}=\begin{pmatrix} -&\pmb{x}_1&-\\-&\pmb{x}_2&-\\ &\dots&\\-&\pmb{x}_m&- \end{pmatrix}
+\pmb{X}=\begin{pmatrix}|&|&\dots&|\\\pmb{x}_1&\pmb{x}_2&\dots&\pmb{x}_m\\ |&|&\dots&| \end{pmatrix}_{n\times m}
 $$
 
-其中，$\pmb{x}_i=(x_{i1},...,x_{in})^\top$。PCA的**目标**是找到一个变换矩阵$\pmb{W}_d(n\times d)$，使得$\pmb{Z}=\pmb{X}\pmb{W}_d$的重构矩阵$\hat{\pmb{X}}$与$\pmb{X}$的误差尽可能的小，即，投影的超平面$\pmb{W}_d$使得投影后的数据$\pmb{Z}$丢失的信息最少。
+其中，$\pmb{x}_i=(x_{i1},...,x_{in})^\top$。PCA的**目标**是找到一个基$(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)=\pmb{W}_{n\times d}$，使得$\pmb{Z}=\pmb{W}^\top\pmb{X}$的重构矩阵$\hat{\pmb{X}}=\pmb{WZ}$与$\pmb{X}$的误差尽可能的小，即，投影的超平面$\pmb{W}$使得投影后的数据矩阵$\pmb{Z}$丢失的信息最少。
 
 &emsp;&emsp;如何找到这个超平面呢？可行的一个办法是比较$\pmb{X}$与$\hat{\pmb{X}}$之间的平均距离（$\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2$），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。
 
