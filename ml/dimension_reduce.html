@@ -328,9 +328,9 @@ document.write(`
 <p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\pmb{X}=\begin{pmatrix} -&amp;\pmb{x}_1&amp;-\\-&amp;\pmb{x}_2&amp;-\\ &amp;\dots&amp;\\-&amp;\pmb{x}_m&amp;- \end{pmatrix}
+\pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{n\times m}
 \end{split}\]</div>
-<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}_d(n\times d)\)</span>，使得<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{X}\pmb{W}_d\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}_d\)</span>使得投影后的数据<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个基<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)=\pmb{W}_{n\times d}\)</span>，使得<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{W}^\top\pmb{X}\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}=\pmb{WZ}\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>使得投影后的数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
 <p>  如何找到这个超平面呢？可行的一个办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。</p>
 <p>  对于空间的所有样本点，如何用一个超平面来恰当的表示？有两种办法，即</p>
 <ul class="simple">
