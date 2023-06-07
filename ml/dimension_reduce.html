@@ -297,7 +297,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 主成分分析</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 主成分分析</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 最近重构性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 最大可分性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.3. 优化问题的求解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.4. 算法</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -312,8 +318,10 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">1. </span>表示学习<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <p>  一般来说，机器学习中的原始数据是高维数据。高维数据往往具有复杂性、冗余性等特点。高维空间会有很多不一样的特征，也称之为维度灾难。</p>
-<p>  - 大多数数据对象之间相距都很远(高维数据有很大可能非常稀疏)</p>
-<p>  - 理论上，通过增大训练集，使训练集达到足够密度，是可以避免维度灾难的。但实践中，要达到给定密度，所需的训练数据随着维度的增加呈指数式上升</p>
+<ul class="simple">
+<li><p>大多数数据对象之间相距都很远(高维数据有很大可能非常稀疏)</p></li>
+<li><p>理论上，通过增大训练集，使训练集达到足够密度，是可以避免维度灾难的。但实践中，要达到给定密度，所需的训练数据随着维度的增加呈指数式上升</p></li>
+</ul>
 <p>  为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题，这一过程也称之为<strong>表示学习</strong>。</p>
 <section id="id2">
 <h2><span class="section-number">1.1. </span>主成分分析<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
@@ -322,13 +330,135 @@ document.write(`
 \[\begin{split}
 \pmb{X}=\begin{pmatrix} -&amp;\pmb{x}_1&amp;-\\-&amp;\pmb{x}_2&amp;-\\ &amp;\dots&amp;\\-&amp;\pmb{x}_m&amp;- \end{pmatrix}
 \end{split}\]</div>
-<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}_d(n\times d)\)</span>，使得<span class="math notranslate nohighlight">\(\pmb{X}_{new}=\pmb{X}\pmb{W}_d\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}_d\)</span>使得投影后的数据<span class="math notranslate nohighlight">\(\pmb{X}_{new}\)</span>丢失的信息最少。</p>
-<p>  如何找到这个超平面呢？可行的一个办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}_{new}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\parallel \pmb{x}_i-\pmb{x}'_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。</p>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}_d(n\times d)\)</span>，使得<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{X}\pmb{W}_d\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}_d\)</span>使得投影后的数据<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
+<p>  如何找到这个超平面呢？可行的一个办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。</p>
 <p>  对于空间的所有样本点，如何用一个超平面来恰当的表示？有两种办法，即</p>
 <ul class="simple">
-<li><p>样本点到这个超平面的距离都足够近</p></li>
+<li><p>样本点到这个超平面的距离都足够近(投影距离最小)</p></li>
 <li><p>样本点在这个超平面的投影尽可能分开</p></li>
 </ul>
+<section id="id3">
+<h3><span class="section-number">1.1.1. </span>最近重构性<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<p>  假设数据样本已<font color="red">中心化</font>所有样本减去均值即为中心化；(中心化之后再除以样本标准差即为标准化)，变换后的新坐标系为<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)\)</span>，若丢弃部分坐标，将维度降至<span class="math notranslate nohighlight">\(d'&lt;d\)</span>，则样本在低维坐标系中的投影为<span class="math notranslate nohighlight">\(\pmb{z}_i=(z_{i1},z_{i2},...,z_{id'})\)</span> ，其中<span class="math notranslate nohighlight">\(z_{ij}=\langle \pmb{x}_i,\pmb{w}_j\rangle\)</span>是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在低维坐标系的第<span class="math notranslate nohighlight">\(j\)</span>维的坐标。若用<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>来重构<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>，则会有<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i=\sum_{j=1}^{d'}z_{ij}\pmb{w}_j=\pmb{W}\pmb{z}_i\)</span>。</p>
+<p>  对于整个数据集，原样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与投影重构<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>之间距离为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\sum_{i=1}^m \left\Vert \sum_{j=1}^{d'}z_{ij}\pmb{w}_j-\pmb{x}_i\right\Vert^2 &amp;=\sum_{i=1}^m \pmb{z}_i^\top\pmb{z}_i-2\sum_{i=1}^m\pmb{z}_i^\top\pmb{W}^\top\pmb{x}_i + \textrm{const}\\
+&amp;=\sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i-2\sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i +\textrm{const}\\
+&amp;=-\text{tr}\left( \sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i  \right)+\textrm{const}\\
+&amp;\propto-\text{tr}\left(\pmb{W}^\top\left(\sum_{i=1}^m \pmb{x}_i\pmb{x}_i^\top  \right)\pmb{W} \right)
+\end{split}
+\end{split}\]</div>
+<p>PCA的优化目标则变成，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min\limits_{\pmb{W}}\quad &amp;-\text{tr}\left(\pmb{W}^\top\pmb{XX}^\top\pmb{W} \right)\\
+\textrm{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
+\end{split}
+\end{split}\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times m}, \qquad
+\pmb{W}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{w}_1&amp;\pmb{w}_2&amp;\dots&amp;x_{d'}\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times d'}
+\end{split}\]</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">1.1.2. </span>最大可分性<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<p>  样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在新空间的超平面投影为<span class="math notranslate nohighlight">\(\pmb{W}^\top\pmb{x}_i\)</span>，若要投影尽可能分开，则应使投影后的样本方差最大化，即，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\max_{\pmb{W}} \quad &amp;\text{tr}(\pmb{W}^\top\pmb{XX}^\top\pmb{W})\\
+\text{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
+\end{split}
+\end{split}\]</div>
+<p>可以看出，该问题与第一种情况是等价的。</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">1.1.3. </span>优化问题的求解<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h3>
+<p>  使用拉格朗日乘子法，可得，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathcal{L}(\pmb{W},\pmb{\lambda})&amp;=\textrm{tr}(\pmb{W}^\top\pmb{XX}^\top\pmb{W})+\lambda(\pmb{W}^\top\pmb{W}-\pmb{I})\\
+&amp;=\sum_{i=1}\pmb{w}_i^\top\pmb{XX}^\top\pmb{w}_i + \sum_{i=1}\lambda_i(\pmb{w}_i^\top\pmb{w}_i-1)
+\end{split}
+\end{split}\]</div>
+<p>则有，<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=\pmb{XX}^\top\pmb{w}_i-\lambda_i\pmb{w}_i
+\]</div>
+<p>令<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=0\)</span>，则有</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{X}\pmb{X}^\top\pmb{w}_i=\lambda_i\pmb{w}_i
+\]</div>
+<p>于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量构成<font color="red">投影矩阵<span class="math notranslate nohighlight">\(W^*=(w_1,w_2,...,w_{d'})\)</span></font>。该矩阵即为主成分分析的解。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">1.1.4. </span>算法<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
+<p>  通过样本协方差矩阵计算PCA。</p>
+<p>  <strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{x_1,x_2,...,x_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
+<p>  <strong>过程</strong>：</p>
+<p>  1：样本中心化： <span class="math notranslate nohighlight">\(\pmb{x}_i=\pmb{x}_i-\frac{1}{m}\sum_{i=1}^m\pmb{x}_i\)</span>；</p>
+<p>  2：计算样本的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^T\)</span>;</p>
+<p>  3：对协方差矩阵做特征值分解；</p>
+<p>  4：取出最大的<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量<span class="math notranslate nohighlight">\(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'}\)</span>；</p>
+<p>  <strong>输出</strong>： 投影矩阵<span class="math notranslate nohighlight">\(\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})\)</span>。</p>
+<ul class="simple">
+<li><p><strong>示例代码</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="k">def</span> <span class="nf">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">scatter_matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">eig_val</span><span class="p">,</span><span class="n">eig_vec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">scatter_matrix</span><span class="p">)</span>
+    <span class="n">eig_pairs</span><span class="o">=</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eig_val</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">eig_vec</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">)]</span>
+    <span class="n">eig_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">eig_pairs</span><span class="p">[:</span><span class="n">k</span><span class="p">]])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">features</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+    <span class="n">X_new</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    
+    
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;ro&#39;</span><span class="p">)</span><span class="c1">#,c = &#39;r&#39;,marker = &#39;o&#39;)</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">x1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">y1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+
+    <span class="n">proj_dir</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">proj_dir</span><span class="o">=</span><span class="n">proj_dir</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+    <span class="c1">#计算投影</span>
+    <span class="n">PX</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">proj_dir</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+        <span class="n">px</span><span class="o">=</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">py</span><span class="o">=</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">PX</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">px</span><span class="p">,</span><span class="n">py</span><span class="p">])</span>
+    <span class="n">PX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">PX</span><span class="p">)</span>  
+    <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="s1">&#39;y:&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -380,7 +510,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 主成分分析</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 主成分分析</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 最近重构性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 最大可分性</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.3. 优化问题的求解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.4. 算法</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
