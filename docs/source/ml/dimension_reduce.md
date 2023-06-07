@@ -97,7 +97,7 @@ $$
 于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前$d'$个特征值对应的特征向量构成<font color="red">投影矩阵$W^*=(w_1,w_2,...,w_{d'})$</font>。该矩阵即为主成分分析的解。
 
 
-### 算法
+### 算法1--特征值分解
 
 
 &emsp;&emsp;通过样本协方差矩阵计算PCA。
@@ -164,4 +164,86 @@ if __name__=="__main__":
         plt.scatter(PX[ix,0],PX[ix,1],c='b',marker="s")
         plt.plot([X[ix,0],PX[ix,0]],[X[ix,1],PX[ix,1]],'y:')
     plt.axis('equal')
+```
+
+### 算法2--SVD分解
+
+&emsp;&emsp;PCA除了对于协方差矩阵$\pmb{XX}^\top$进行特征值分解计算得到投影特征向量之外，还可以通过SVD矩阵分解技术得到投影向量。SVD矩阵分解如下式所示，
+
+$$
+\hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
+$$
+
+这里的$\hat{\pmb{X}}$是正常的数据集矩阵。PCA中的$\pmb{X}=\hat{\pmb{X}}^\top$，因此有，
+
+$$
+\pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
+$$
+
+&emsp;&emsp;最终，$\pmb{V}$的最大前$d'$个特征值对应的特征向量所组成的矩阵即为变换矩阵$\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})$。而$\pmb{V}$可以通过SVD分解获得。
+
+&emsp;&emsp;投影后的新数据($d'<n$)，
+
+$$
+\pmb{Z}=\pmb{X}^\top\pmb{W}^*=\pmb{U\Sigma V}^\top\pmb{W}^*\approx\pmb{U\Sigma}
+$$
+
++ 示例
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+def pca(X,k):
+    n_samples,n_features=X.shape
+    X=X-X.mean(axis=0)
+    scatter_matrix=np.dot(np.transpose(X),X)
+    eig_val,eig_vec=np.linalg.eig(scatter_matrix)
+    eig_pairs=[(np.abs(eig_val[i]),eig_vec[:,i]) for i in range(n_features)]
+    eig_pairs.sort(reverse=True)
+    features=np.array([ele[1] for ele in eig_pairs[:k]])
+    features=np.transpose(features)
+    data=np.dot(X,features)
+    return data,features
+def pca_svd(X,k):
+    X=X-X.mean(axis=0)
+    U,S,Vt=np.linalg.svd(X)
+    W=Vt.T[:,:k]
+    data = np.dot(X,W)
+    return data,W
+if __name__=="__main__":
+    
+    X = np.array([[-1, -1.5], [-2, -1], [-3, -2], [1, 2], [2, 1], [3, 2],[1,3],[-1.5,1]]) 
+    X_new,features=pca(X,2)
+    X_new_svd,f_svd=pca_svd(X, 1)
+    print('X_eig_decom',X_new)
+    print('X_svd',X_new_svd)
+    
+    
+    for i in range(2):    
+        a,b=features[:,i]    
+        plt.plot(X[:,0],X[:,1],'ro')#,c = 'r',marker = 'o')
+        y=np.linspace(-6,6,10)
+        x1=y*np.cos(np.arctan(b/a))#features[1,0]/features[0,0]))
+        y1=y*np.sin(np.arctan(b/a))#features[1,0]/features[0,0]))
+        plt.plot(x1,y1,'b--')    
+    
+        proj_dir=np.array([a,b])#features[0,0],features[1,0]])
+        proj_dir=proj_dir/np.linalg.norm(proj_dir)
+        #计算投影
+        PX=[]
+        for x in X:
+            p=np.dot(x,proj_dir)/np.linalg.norm(proj_dir)
+            px=p*proj_dir
+            PX.append(px)
+            #px=p*np.cos(np.arctan(features[1,0]/features[0,0]))
+            #py=p*np.sin(np.arctan(features[1,0]/features[0,0]))
+            #PX.append([px,py])
+        PX=np.array(PX)  
+        for ix in range(X.shape[0]):
+            plt.scatter(PX[ix,0],PX[ix,1],c='b',marker="s")
+            plt.plot([X[ix,0],PX[ix,0]],[X[ix,1],PX[ix,1]],'y:')       
+    
+    plt.axis('equal')
+
 ```
