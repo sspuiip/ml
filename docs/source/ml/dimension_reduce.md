@@ -247,3 +247,26 @@ if __name__=="__main__":
     plt.axis('equal')
 
 ```
+
+### 核主成分分析
+
+&emsp;&emsp;前面我们通过计算样本协方差矩阵$\pmb{XX}^\top$的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射$\phi :\pmb{x}\rightarrow \phi(\pmb{x})$形成的映射数据矩阵$\pmb{\Phi}^\top$，如何计算PCA。也就是映射后的协方差矩阵$\pmb{\Phi\Phi}^\top$如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。
+
+&emsp;&emsp;首先考查$\pmb{X}^\top\pmb{X}$与$\pmb{XX}^\top$特征向量之间的关系。
+对实对称矩阵$\pmb{X}^\top\pmb{X}$进行特征值分解$\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}$，等式两边同时乘上$\pmb{X}$，则可以得到，
+
+$$
+(\pmb{XX}^\top)(\pmb{XU})=(\pmb{XU})\pmb{\Lambda}
+$$
+
+从上式可以得到$\pmb{XX}^\top$的特征向量为$\pmb{V}\triangleq\pmb{XU}$，特征值对角矩阵为$\pmb{\Lambda}$。注意到特征向量的模长，
+
+$$
+\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
+$$
+
+可以得到单位化的特征向量矩阵$\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}$。
+
+&emsp;&emsp;现在考虑Gram矩阵$\pmb{K}=\pmb{XX}^\top$。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将$\pmb{x}_i$表示为$\phi_i\triangleq\phi(\pmb{x}_i)$，则数据矩阵映射为$\pmb{\Phi}^\top$。
+
+
