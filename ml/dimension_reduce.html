@@ -303,6 +303,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.3. 优化问题的求解</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.4. 算法1–特征值分解</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd">1.1.5. 算法2–SVD分解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.6. 核主成分分析</a></li>
 </ul>
 </li>
 </ul>
@@ -539,6 +540,23 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<section id="id7">
+<h3><span class="section-number">1.1.6. </span>核主成分分析<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
+<p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
+<p>  首先考查<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>特征向量之间的关系。
+对实对称矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>进行特征值分解<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}\)</span>，等式两边同时乘上<span class="math notranslate nohighlight">\(\pmb{X}\)</span>，则可以得到，</p>
+<div class="math notranslate nohighlight">
+\[
+(\pmb{XX}^\top)(\pmb{XU})=(\pmb{XU})\pmb{\Lambda}
+\]</div>
+<p>从上式可以得到<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量为<span class="math notranslate nohighlight">\(\pmb{V}\triangleq\pmb{XU}\)</span>，特征值对角矩阵为<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>。注意到特征向量的模长，</p>
+<div class="math notranslate nohighlight">
+\[
+\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
+\]</div>
+<p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
+<p>  现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{XX}^\top\)</span>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\phi_i\triangleq\phi(\pmb{x}_i)\)</span>，则数据矩阵映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>。</p>
+</section>
 </section>
 </section>
 
@@ -596,6 +614,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.3. 优化问题的求解</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.1.4. 算法1–特征值分解</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svd">1.1.5. 算法2–SVD分解</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.6. 核主成分分析</a></li>
 </ul>
 </li>
 </ul>
