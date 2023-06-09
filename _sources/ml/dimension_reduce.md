@@ -174,7 +174,15 @@ $$
 \hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
 $$
 
-这里的$\hat{\pmb{X}}$是正常的数据集矩阵。PCA中的$\pmb{X}=\hat{\pmb{X}}^\top$，因此有，
+这里的$\hat{\pmb{X}}$是正常的数据集矩阵。即
+
+$$
+\hat{\pmb{X}}=\begin{pmatrix}-&\pmb{x}_1 &-\\ -&\pmb{x}_1 &-\\ 
+\vdots&\vdots &\vdots\\ -&\pmb{x}_m &-\\ \end{pmatrix}
+$$
+
+
+&emsp;&emsp;PCA中的$\pmb{X}=\hat{\pmb{X}}^\top$，因此有，
 
 $$
 \pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
@@ -267,6 +275,76 @@ $$
 
 可以得到单位化的特征向量矩阵$\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}$。
 
-&emsp;&emsp;现在考虑Gram矩阵$\pmb{K}=\pmb{XX}^\top$。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将$\pmb{x}_i$表示为$\phi_i\triangleq\phi(\pmb{x}_i)$，则数据矩阵映射为$\pmb{\Phi}^\top$。
+&emsp;&emsp;现在考虑Gram矩阵$\pmb{K}\triangleq\pmb{X}^\top\pmb{X}$。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将$\pmb{x}_i$表示为$\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)$。相应地，数据矩阵$\pmb{X}^\top$映射为$\pmb{\Phi}^\top$，协方差矩阵$\pmb{X}\pmb{X}^\top$映射为$\pmb{\Phi}\pmb{\Phi}^\top$。由$\pmb{X}^\top\pmb{X}$与$\pmb{XX}^\top$的关系可知，$\pmb{\Phi}\pmb{\Phi}^\top$的特征向量矩阵为
+
+$$\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}$$
+
+其中$\pmb{U\Lambda}$分别为$\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}$的特征向量矩阵以及对应的特征值。
+
+&emsp;&emsp;根据上面计算的结果，从特征向量矩阵中取$k$个特征向量即可组成投影矩阵，经过数据投影即可得到样本的$k$维压缩表示。**但是**，映射$\phi()$可能没有显示表示，或难以直接计算。解决办法是使用核函数间接计算$\phi()$。任意给定样本$\pmb{x}_*$，则其在特征空间的投影$\hat{\pmb{x}}_i$可通过以下方式计算。
+
+$$
+\hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
+$$
+
+&emsp;&emsp;最后要注意的是$\pmb{K}$在特征值分解之前，需要中心化。中心化可通过以下步骤计算得到。
+
+$$
+\begin{split}
+\tilde{\pmb{K}}&=\pmb{K}-\frac1N\pmb{K11}^\top-\frac1N\pmb{11}^\top\pmb{K}+\frac{1}{N^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top\\
+&=\pmb{K}-\pmb{KO}-\pmb{{OK}}+\pmb{OKO}
+\end{split}
+$$
+
+其中，$\pmb{O}=\frac1N \pmb{1}\pmb{1}^\top, \pmb{1}=[1,1,...,1]_{1\times N}^\top$。
+
+- 示例
+
+```python
+def kpca(X,k):
+    """ 
+
+    Parameters
+    ----------
+    X : np.array with n x d
+    k : int rank of the low-dimension
+
+    Returns
+    -------
+    data : projection data
+
+    """
+    n,d = X.shape
+    if d < k:
+        print("\nDimensions of output data has to be lesser than the dimensions of input data\n")
+        return
+    
+    # construct K
+    K = np.zeros((n,n))
+    for row in range(n):
+        for col in range(row+1):
+            k_ij = np.sum((X[row,:]-X[col,:])**2)
+            K[row,col]=np.exp(-k_ij)
+    K = K+K.T
+    for row in range(n):
+        K[row,row]=K[row,row]/2
+        
+    # normalize K
+    all1 = np.ones((n,n))/n
+    K_center = K - np.dot(all1,K)-np.dot(K,all1)+np.dot(np.dot(all1,K),all1)
+    
+    # eigvector
+    S,U= np.linalg.eig(K_center)      
+    V=np.dot(U,np.diag(1/np.sqrt(np.abs(S))))
+    
+    eig_pairs=[(S[i],V[:,i]) for i in range(len(S))]
+    eig_pairs.sort(reverse=True)
+    
+    V = np.array(([ele[1] for ele in eig_pairs[:k]]))
+    V = V.T
+    data=np.dot(K_center,V)
+    return data
+```
+
 
 

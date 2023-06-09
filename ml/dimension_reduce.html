@@ -468,7 +468,13 @@ document.write(`
 \[
 \hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
 \]</div>
-<p>这里的<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>是正常的数据集矩阵。PCA中的<span class="math notranslate nohighlight">\(\pmb{X}=\hat{\pmb{X}}^\top\)</span>，因此有，</p>
+<p>这里的<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>是正常的数据集矩阵。即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{\pmb{X}}=\begin{pmatrix}-&amp;\pmb{x}_1 &amp;-\\ -&amp;\pmb{x}_1 &amp;-\\ 
+\vdots&amp;\vdots &amp;\vdots\\ -&amp;\pmb{x}_m &amp;-\\ \end{pmatrix}
+\end{split}\]</div>
+<p>  PCA中的<span class="math notranslate nohighlight">\(\pmb{X}=\hat{\pmb{X}}^\top\)</span>，因此有，</p>
 <div class="math notranslate nohighlight">
 \[
 \pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
@@ -555,7 +561,72 @@ document.write(`
 \Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
 \]</div>
 <p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
-<p>  现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{XX}^\top\)</span>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\phi_i\triangleq\phi(\pmb{x}_i)\)</span>，则数据矩阵映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>。</p>
+<p>  现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
+<div class="math notranslate nohighlight">
+\[\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\pmb{U\Lambda}\)</span>分别为<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}\)</span>的特征向量矩阵以及对应的特征值。</p>
+<p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
+\]</div>
+<p>  最后要注意的是<span class="math notranslate nohighlight">\(\pmb{K}\)</span>在特征值分解之前，需要中心化。中心化可通过以下步骤计算得到。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\tilde{\pmb{K}}&amp;=\pmb{K}-\frac1N\pmb{K11}^\top-\frac1N\pmb{11}^\top\pmb{K}+\frac{1}{N^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top\\
+&amp;=\pmb{K}-\pmb{KO}-\pmb{{OK}}+\pmb{OKO}
+\end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{O}=\frac1N \pmb{1}\pmb{1}^\top, \pmb{1}=[1,1,...,1]_{1\times N}^\top\)</span>。</p>
+<ul class="simple">
+<li><p>示例</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">kpca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.array with n x d</span>
+<span class="sd">    k : int rank of the low-dimension</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : projection data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dimensions of output data has to be lesser than the dimensions of input data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="c1"># construct K</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">k_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">,:]</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_ij</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">+</span><span class="n">K</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">row</span><span class="p">]</span><span class="o">=</span><span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">row</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+        
+    <span class="c1"># normalize K</span>
+    <span class="n">all1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span><span class="o">/</span><span class="n">n</span>
+    <span class="n">K_center</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all1</span><span class="p">,</span><span class="n">K</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">all1</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all1</span><span class="p">,</span><span class="n">K</span><span class="p">),</span><span class="n">all1</span><span class="p">)</span>
+    
+    <span class="c1"># eigvector</span>
+    <span class="n">S</span><span class="p">,</span><span class="n">U</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">K_center</span><span class="p">)</span>      
+    <span class="n">V</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">S</span><span class="p">))))</span>
+    
+    <span class="n">eig_pairs</span><span class="o">=</span><span class="p">[(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">V</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))]</span>
+    <span class="n">eig_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">eig_pairs</span><span class="p">[:</span><span class="n">k</span><span class="p">]]))</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_center</span><span class="p">,</span><span class="n">V</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
 </section>
 </section>
 </section>
