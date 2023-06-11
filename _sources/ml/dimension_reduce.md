@@ -163,6 +163,9 @@ if __name__=="__main__":
     for ix in range(X.shape[0]):
         plt.scatter(PX[ix,0],PX[ix,1],c='b',marker="s")
         plt.plot([X[ix,0],PX[ix,0]],[X[ix,1],PX[ix,1]],'y:')
+    
+    for xy in zip(X[:,0],X[:,1]):
+            plt.annotate("(%.0f,%.0f)"%(xy[0],xy[1]), xy, xytext=(-10,10), textcoords='offset points') #标注数据样本
     plt.axis('equal')
 ```
 
@@ -251,7 +254,8 @@ if __name__=="__main__":
         for ix in range(X.shape[0]):
             plt.scatter(PX[ix,0],PX[ix,1],c='b',marker="s")
             plt.plot([X[ix,0],PX[ix,0]],[X[ix,1],PX[ix,1]],'y:')       
-    
+        
+   
     plt.axis('equal')
 
 ```
@@ -346,5 +350,47 @@ def kpca(X,k):
     return data
 ```
 
+## 等度量映射
+
+&emsp;&emsp;等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一$x,y$坐标，$z$不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。
+
+&emsp;&emsp;所谓$d$维流形是$n$维空间$(d<n)$的一部分，局部类似于$d$维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。**流形学习**通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。
 
 
+&emsp;&emsp;如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。
+
+### 算法
+
+**输入**：样本集$\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}$，低维空间维数$d'$.
+
+**过程**：
+
+1. 确定每个样本$\pmb{x}_i$的$k$近邻;
+
+2. 使用最短路径算法计算$k$近邻图的任意样本间距离$dist(\pmb{x}_i,\pmb{x}_j)$;
+
+3. 以$dist(\pmb{x}_i,\pmb{x}_j)$为输入，使用MDS计算低维坐标；
+
+**输出**： MDS计算的低维坐标。
+
+- 示例
+
+```python
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.manifold import Isomap
+
+iris=datasets.load_iris()
+X=iris.data
+y=iris.target
+
+fig,ax=plt.subplots(1,3,figsize=(15,5))
+for idx,neighbor in enumerate([2,20,100]):
+    isomap=Isomap(n_components=2, n_neighbors=neighbor)
+    X_new=isomap.fit_transform(X)
+    ax[idx].scatter(X_new[:,0],X_new[:,1],c=y)
+    ax[idx].set_title("Isomap(n_neighbors=%d)"%neighbor)
+plt.show()
+
+
+```
