@@ -397,4 +397,106 @@ plt.show()
 
 ## 多维缩放
 
-&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。
+&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。假设$m$个样本在原始空间的距离矩阵为$\pmb{D}\subseteq \mathbb{R}^{m\times m}$。MDS的任务是获得样本集在$d'$维空间的表示$\pmb{Z}\in \mathbb{R}^{d'\times m}$，且任意两个样本在$d'$维空间的欧式距离等于原始空间的距离，即$\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=$$D_{ij}, \forall 0<i,j\leq m$。
+
+- MDS的求解
+
+&emsp;&emsp;令$\pmb{B}=\pmb{Z}^\top \pmb{Z}\in\mathbb{R}^{m\times m}$为降维后的样本内积矩阵，$b_{ij}=\pmb{z}_i^\top\pmb{z}_j$,则有，
+
+$$
+\begin{split}
+dist_{ij}^2&=\parallel z_i \parallel^2+\parallel z_j\parallel^2-2z_i^Tz_j\\
+&=b_{ii}+b_{jj}-2b_{ij}\\
+\end{split}
+$$
+
+假设$\pmb{Z}$已中心化，即$\sum_{i=1}^m\pmb{z}_i=0$，显然$\sum_{i=1}^mb_{ij}=\sum_{j=1}^mb_{ij}=0$，由此可知，
+
+$$
+\begin{split}
+\sum_{i=1}^mdist_{ij}^2&=\text{tr}(B)+mb_{jj}\\
+\sum_{j=1}^mdist_{ij}^2&=\text{tr}(B)+mb_{ii}\\
+\sum_{i=1}^m\sum_{j=1}^mdist_{ij}^2&=2m\cdot\text{tr}(B)\\
+\end{split}
+$$
+
+令,
+
+$$
+\begin{split}
+dist_{i\cdot}^2&=\frac{1}{m}\sum_{j=1}^mdist_{ij}^2\\
+dist_{\cdot j}^2&=\frac{1}{m}\sum_{i=1}^mdist_{ij}^2\\
+dist_{\cdot\cdot}^2&=\frac{1}{m^2}\sum_{i=1}\sum_{j=1}^mdist_{ij}^2\\
+\end{split}
+$$
+
+最终可得，
+
+$$
+b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdot}^2)
+$$
+
+其中，$dist_{ij}=D_{ij}$。由此，可以根据降维前的距离矩阵$\pmb{D}$求得降维后距离不变的矩阵$\pmb{B}$。令$\pmb{C}_n=\pmb{I}_n-\frac1n\pmb{11}^\top$为中心化矩阵(Centering matrix)，则，
+
+$$
+\pmb{B}=-\frac12\pmb{C}_n\pmb{D}\pmb{C}_n
+$$
+
+其中，$\pmb{X}\pmb{C}_n$相当于对$\pmb{X}$的所有行向量减去行向量均值；$\pmb{C}_n\pmb{X}$相当于对$\pmb{X}$的所有列向量减去列向量均值；
+
+- 获得降维后的样本投影矩阵$\pmb{Z}$
+
+&emsp;&emsp;对矩阵$\pmb{B}$（实对称矩阵）做特征值分解，$\pmb{B}=\pmb{V\Lambda V}^\top$。假设有$d_*$个非零特征值构成对角矩阵$\pmb{\Lambda}_*=\textrm{diag}(\lambda_1,\lambda_2,...,\lambda_{d_*})$,以及所对应的特征向量矩阵$\pmb{V}_*$，则$\pmb{Z}$可以表示为，
+
+$$
+\pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{d_*\times m}
+$$
+
+&emsp;&emsp;现实应用中，可以选择$d'<d$个最大特征值构成的对角阵$\hat{\pmb{\Lambda}}$及特征向量矩阵$\hat{\pmb{V}}$，即
+
+$$
+\pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{d'\times m}
+$$
+
+### 算法
+
+&emsp;&emsp;**输入**：距离矩阵$\pmb{D}$，低维空间维数$d'$.
+
+&emsp;&emsp;**过程**：
+
+&emsp;&emsp;&emsp;&emsp;1. 计算$\pmb{D}$;
+
+&emsp;&emsp;&emsp;&emsp;2. 计算矩阵$\pmb{B}$;
+
+&emsp;&emsp;&emsp;&emsp;3. 矩阵$\pmb{B}$做特征值分解；
+
+&emsp;&emsp;&emsp;&emsp;4. 选取$\hat{\pmb{V}},\hat{\pmb{\Lambda}}$；
+
+&emsp;&emsp;**输出**： 矩阵$\hat{\pmb{V}}\hat{\pmb{\Lambda}}^{1/2}$每一行即为一个样本的低维坐标。
+
+- 示例代码
+
+```python
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.decomposition import PCA   # 与MDS进行对比
+from sklearn.manifold import MDS
+    
+ris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+plt.subplot(121)
+pca = PCA(n_components=2)
+pca.fit(X)
+new_X_pca = pca.transform(X)
+plt.scatter(new_X_pca [:,0], new_X_pca [:,1], c=y)
+
+plt.subplot(122)
+mds = MDS( n_components=2, metric=True)
+new_X_mds = mds.fit_transform(X)
+plt.scatter(new_X_mds[:,0], new_X_mds[:,1], c=y)
+
+plt.show()
+```
+
