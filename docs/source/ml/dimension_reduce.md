@@ -394,3 +394,7 @@ plt.show()
 
 
 ```
+
+## 多维缩放
+
+&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。
