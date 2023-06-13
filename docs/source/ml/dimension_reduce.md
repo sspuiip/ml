@@ -397,7 +397,7 @@ plt.show()
 
 ## 多维缩放
 
-&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。假设$m$个样本在原始空间的距离矩阵为$\pmb{D}\subseteq \mathbb{R}^{m\times m}$。MDS的任务是获得样本集在$d'$维空间的表示$\pmb{Z}\in \mathbb{R}^{d'\times m}$，且任意两个样本在$d'$维空间的欧式距离等于原始空间的距离，即$\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=$$D_{ij}, \forall 0<i,j\leq m$。
+&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。假设$m$个样本在原始空间的距离矩阵为$\pmb{D}\subseteq \mathbb{R}^{m\times m}$。MDS的任务是获得样本集在$d'$维空间的表示$\pmb{Z}\in \mathbb{R}^{m\times d'}$，且任意两个样本在$d'$维空间的欧式距离等于原始空间的距离，即$\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=$$D_{ij}, \forall 0<i,j\leq m$。
 
 - MDS的求解
 
@@ -449,13 +449,13 @@ $$
 &emsp;&emsp;对矩阵$\pmb{B}$（实对称矩阵）做特征值分解，$\pmb{B}=\pmb{V\Lambda V}^\top$。假设有$d_*$个非零特征值构成对角矩阵$\pmb{\Lambda}_*=\textrm{diag}(\lambda_1,\lambda_2,...,\lambda_{d_*})$,以及所对应的特征向量矩阵$\pmb{V}_*$，则$\pmb{Z}$可以表示为，
 
 $$
-\pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{d_*\times m}
+\pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{m\times d_*}
 $$
 
 &emsp;&emsp;现实应用中，可以选择$d'<d$个最大特征值构成的对角阵$\hat{\pmb{\Lambda}}$及特征向量矩阵$\hat{\pmb{V}}$，即
 
 $$
-\pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{d'\times m}
+\pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
 $$
 
 ### 算法
