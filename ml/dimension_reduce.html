@@ -646,13 +646,20 @@ document.write(`
 <p>  等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一<span class="math notranslate nohighlight">\(x,y\)</span>坐标，<span class="math notranslate nohighlight">\(z\)</span>不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。</p>
 <p>  所谓<span class="math notranslate nohighlight">\(d\)</span>维流形是<span class="math notranslate nohighlight">\(n\)</span>维空间<span class="math notranslate nohighlight">\((d&lt;n)\)</span>的一部分，局部类似于<span class="math notranslate nohighlight">\(d\)</span>维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。<strong>流形学习</strong>通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。</p>
 <p>  如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。</p>
+<p>  它的核心思想是沿着图的边移动的距离近似于沿着流形移动的距离。</p>
 <section id="id9">
 <h3><span class="section-number">1.2.1. </span>算法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
 <p><strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
 <p><strong>过程</strong>：</p>
 <ol class="arabic simple">
 <li><p>确定每个样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的<span class="math notranslate nohighlight">\(k\)</span>近邻;</p></li>
-<li><p>使用最短路径算法计算<span class="math notranslate nohighlight">\(k\)</span>近邻图的任意样本间距离<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>;</p></li>
+<li><p>使用最短路径算法(例如：Dijkstra)计算<span class="math notranslate nohighlight">\(k\)</span>近邻图的任意样本间距离<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>;</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+e_{ij}=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), &amp; \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, &amp; \textrm{otherwise.}\end{array}\right.
+\end{split}\]</div>
+<ol class="arabic simple" start="3">
 <li><p>以<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>为输入，使用MDS计算低维坐标；</p></li>
 </ol>
 <p><strong>输出</strong>： MDS计算的低维坐标。</p>
