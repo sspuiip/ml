@@ -350,58 +350,7 @@ def kpca(X,k):
     return data
 ```
 
-## 等度量映射
 
-&emsp;&emsp;等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一$x,y$坐标，$z$不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。
-
-
-
-&emsp;&emsp;所谓$d$维流形是$n$维空间$(d<n)$的一部分，局部类似于$d$维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。**流形学习**通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。
-
-
-&emsp;&emsp;如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。
-
-&emsp;&emsp;它的核心思想是沿着图的边移动的距离近似于沿着流形移动的距离。
-
-### 算法
-
-**输入**：样本集$\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}$，低维空间维数$d'$.
-
-**过程**：
-
-1. 确定每个样本$\pmb{x}_i$的$k$近邻;
-
-2. 使用最短路径算法(例如：Dijkstra)计算$k$近邻图的任意样本间距离$dist(\pmb{x}_i,\pmb{x}_j)$;
-
-$$
-e_{ij}=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), & \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, & \textrm{otherwise.}\end{array}\right.
-$$
-
-3. 以$dist(\pmb{x}_i,\pmb{x}_j)$为输入，使用MDS计算低维坐标；
-
-**输出**： MDS计算的低维坐标。
-
-- 示例
-
-```python
-import matplotlib.pyplot as plt
-from sklearn import datasets
-from sklearn.manifold import Isomap
-
-iris=datasets.load_iris()
-X=iris.data
-y=iris.target
-
-fig,ax=plt.subplots(1,3,figsize=(15,5))
-for idx,neighbor in enumerate([2,20,100]):
-    isomap=Isomap(n_components=2, n_neighbors=neighbor)
-    X_new=isomap.fit_transform(X)
-    ax[idx].scatter(X_new[:,0],X_new[:,1],c=y)
-    ax[idx].set_title("Isomap(n_neighbors=%d)"%neighbor)
-plt.show()
-
-
-```
 
 ## 多维缩放
 
@@ -508,3 +457,137 @@ plt.scatter(new_X_mds[:,0], new_X_mds[:,1], c=y)
 plt.show()
 ```
 
+## 等度量映射
+
+&emsp;&emsp;等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一$x,y$坐标，$z$不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。
+
+
+
+&emsp;&emsp;所谓$d$维流形是$n$维空间$(d<n)$的一部分，局部类似于$d$维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。**流形学习**通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。
+
+
+&emsp;&emsp;如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。
+
+&emsp;&emsp;它的**核心思想**是沿着图的边移动的距离近似于沿着流形移动的距离。
+
+### 算法
+
+**输入**：样本集$\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}$，低维空间维数$d'$.
+
+**过程**：
+
+1. 确定每个样本$\pmb{x}_i$的$k$近邻;
+
+2. 使用最短路径算法(例如：Dijkstra)计算$k$近邻图的任意样本间距离$dist(\pmb{x}_i,\pmb{x}_j)$;
+
+$$
+ dist(\pmb{x}_i,\pmb{x}_j)=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), & \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, & \textrm{otherwise.}\end{array}\right.
+$$
+
+3. 以$dist(\pmb{x}_i,\pmb{x}_j)$为输入，使用MDS计算低维坐标；
+
+**输出**： MDS计算的低维坐标。
+
+- 示例
+
+```python
+import matplotlib.pyplot as plt
+from sklearn import datasets
+from sklearn.manifold import Isomap
+
+iris=datasets.load_iris()
+X=iris.data
+y=iris.target
+
+fig,ax=plt.subplots(1,3,figsize=(15,5))
+for idx,neighbor in enumerate([2,20,100]):
+    isomap=Isomap(n_components=2, n_neighbors=neighbor)
+    X_new=isomap.fit_transform(X)
+    ax[idx].scatter(X_new[:,0],X_new[:,1],c=y)
+    ax[idx].set_title("Isomap(n_neighbors=%d)"%neighbor)
+plt.show()
+
+
+```
+
+## LLE局部线性嵌入
+
+### LLE基本思想
+
+&emsp;&emsp;Isomap试图**保持**局部近邻样本之间的**距离**。LLE则试图**保持**局部邻域内样本之间的**线性关系**。假设样本$\pmb{x}_i$的坐标可由邻居样本$\pmb{x}_j,\pmb{x}_k,\pmb{x}_l$的坐标通过线性组合重构出来，即，
+
+$$
+\pmb{x}_i=w_{ij}\pmb{x}_j+w_{ik}\pmb{x}_k+w_{il}\pmb{x}_l
+$$
+
+则LLE希望此关系在低维空间依旧能得以保持。
+
+### LLE求解
+
+&emsp;&emsp;**Step 1**. 寻找样本$\forall \pmb{x}_i\in \mathcal{X}$的$k$个近邻。
+
+
+&emsp;&emsp;**Step 2**. 求解重构系数矩阵$\pmb{W}$。
+
+$$
+\begin{split}
+\min_W \quad &\varepsilon(\pmb{W})= \sum_{i=1}^m \left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+\text{s.t.}\quad &\sum_{j\in \mathcal{N}_i} w_{ij}=1
+\end{split}
+$$
+
+令$\varepsilon_i=\left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2$，则有，
+
+$$
+\begin{split}
+\varepsilon_i&=\left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+&=\left\lVert (w_{i1}+w_{i2}+\cdots+w_{ik})\pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\quad \textrm{(sum of weights equals to 1)}\\
+&=\left\lVert \sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+&=\left\lVert \sum_{j\in \mathcal{N}_i} w_{ij}(\pmb{x}_i-\pmb{x}_j) \right\rVert^2
+\end{split}
+$$
+
+令$C_{jk}=(\pmb{x}_i-\pmb{x}_j)^T(\pmb{x}_i-\pmb{x}_k)$，则$w_{ij}$有闭式解，
+
+$$
+w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} C_{ls}^{-1} }
+$$
+
+&emsp;&emsp;**Step 3**. 恢复低维空间坐标。LLE在低维空间保持$\pmb{W}$不变，于是$\pmb{x}_i$对应的低维空间坐标$\pmb{z}_i$可以通过下式求解获得，
+
+$$
+\min\limits_{\pmb{Z}}\quad \sum_{i=1}^m \left\lVert \pmb{z}_i-\sum_{j\in \mathcal{N}_i}w_{ij}\pmb{z}_j\right\rVert^2
+$$
+
+&emsp;&emsp;上述两优化问题目标同形，唯一区别在于前一个问题要确定$\pmb{W}$，而后一个需要确定$\pmb{x}_i$所对应的低维坐标$\pmb{z}_i$。
+
+$$
+\varepsilon(\pmb{Z})&=\sum_{i=1}^n \left\Vert \pmb{z}_i-\sum_j w_{ij}\pmb{z}_j \right\Vert^2\\
+$$
+
+令,
+
+$$
+\pmb{W}=\begin{bmatrix}-&\pmb{w}_1&-\\-&\pmb{w}_2&-\\ &\vdots &\\ -&\pmb{w}_n&- \end{bmatrix} \quad \pmb{Z}=\begin{bmatrix}|&|&\cdots &|\\\pmb{z}_1&\pmb{z}_2&\cdots&\pmb{z}_n\\ |&|&\cdots &|\\ \end{bmatrix}
+$$
+
+则有，
+
+$$
+\begin{split}
+\varepsilon(\pmb{Z})&=\Vert \pmb{Z}^\top -\pmb{WZ}^\top\Vert_F^2\\
+&=\Vert (\pmb{I}-\pmb{W})\pmb{Z}^\top\Vert_F^2\\
+&=\textrm{tr}(\pmb{Z}\pmb{M}\pmb{Z}^\top)
+\end{split}
+$$
+
+其中，$\pmb{M}=(\pmb{I}-\pmb{W})^\top(\pmb{I}-\pmb{W})$。则问题可重写为，
+
+$$
+\begin{split}
+\min_\pmb{Z}\quad &\text{tr}(\pmb{ZMZ}^\top)\\
+\text{s.t.}\quad &\pmb{ZZ}^\top=\pmb{I}
+\end{split}
+$$
+
+该问题可以通过特征值分解求得$\pmb{M}$的最大$d'$个特征值对应的特征向量组成的矩阵即为$\pmb{Z}^\top$。
