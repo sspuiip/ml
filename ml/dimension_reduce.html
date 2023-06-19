@@ -306,12 +306,17 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.6. 核主成分分析</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2. 等度量映射</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2. 多维缩放</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.2.1. 算法</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3. 多维缩放</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3. 等度量映射</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.3.1. 算法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lle">1.4. LLE局部线性嵌入</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.4.1. LLE基本思想</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4.2. LLE求解</a></li>
 </ul>
 </li>
 </ul>
@@ -642,53 +647,7 @@ document.write(`
 </section>
 </section>
 <section id="id8">
-<h2><span class="section-number">1.2. </span>等度量映射<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h2>
-<p>  等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一<span class="math notranslate nohighlight">\(x,y\)</span>坐标，<span class="math notranslate nohighlight">\(z\)</span>不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。</p>
-<p>  所谓<span class="math notranslate nohighlight">\(d\)</span>维流形是<span class="math notranslate nohighlight">\(n\)</span>维空间<span class="math notranslate nohighlight">\((d&lt;n)\)</span>的一部分，局部类似于<span class="math notranslate nohighlight">\(d\)</span>维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。<strong>流形学习</strong>通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。</p>
-<p>  如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。</p>
-<p>  它的核心思想是沿着图的边移动的距离近似于沿着流形移动的距离。</p>
-<section id="id9">
-<h3><span class="section-number">1.2.1. </span>算法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
-<p><strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
-<p><strong>过程</strong>：</p>
-<ol class="arabic simple">
-<li><p>确定每个样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的<span class="math notranslate nohighlight">\(k\)</span>近邻;</p></li>
-<li><p>使用最短路径算法(例如：Dijkstra)计算<span class="math notranslate nohighlight">\(k\)</span>近邻图的任意样本间距离<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>;</p></li>
-</ol>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-e_{ij}=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), &amp; \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, &amp; \textrm{otherwise.}\end{array}\right.
-\end{split}\]</div>
-<ol class="arabic simple" start="3">
-<li><p>以<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>为输入，使用MDS计算低维坐标；</p></li>
-</ol>
-<p><strong>输出</strong>： MDS计算的低维坐标。</p>
-<ul class="simple">
-<li><p>示例</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">Isomap</span>
-
-<span class="n">iris</span><span class="o">=</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
-
-<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">neighbor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">]):</span>
-    <span class="n">isomap</span><span class="o">=</span><span class="n">Isomap</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbor</span><span class="p">)</span>
-    <span class="n">X_new</span><span class="o">=</span><span class="n">isomap</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X_new</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
-    <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Isomap(n_neighbors=</span><span class="si">%d</span><span class="s2">)&quot;</span><span class="o">%</span><span class="n">neighbor</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-
-</pre></div>
-</div>
-</section>
-</section>
-<section id="id10">
-<h2><span class="section-number">1.3. </span>多维缩放<a class="headerlink" href="#id10" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.2. </span>多维缩放<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h2>
 <p>  多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。假设<span class="math notranslate nohighlight">\(m\)</span>个样本在原始空间的距离矩阵为<span class="math notranslate nohighlight">\(\pmb{D}\subseteq \mathbb{R}^{m\times m}\)</span>。MDS的任务是获得样本集在<span class="math notranslate nohighlight">\(d'\)</span>维空间的表示<span class="math notranslate nohighlight">\(\pmb{Z}\in \mathbb{R}^{m\times d'}\)</span>，且任意两个样本在<span class="math notranslate nohighlight">\(d'\)</span>维空间的欧式距离等于原始空间的距离，即<span class="math notranslate nohighlight">\(\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=\)</span><span class="math notranslate nohighlight">\(D_{ij}, \forall 0&lt;i,j\leq m\)</span>。</p>
 <ul class="simple">
 <li><p>MDS的求解</p></li>
@@ -743,8 +702,8 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 \[
 \pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
 \]</div>
-<section id="id11">
-<h3><span class="section-number">1.3.1. </span>算法<a class="headerlink" href="#id11" title="此标题的永久链接">#</a></h3>
+<section id="id9">
+<h3><span class="section-number">1.2.1. </span>算法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
 <p>  <strong>输入</strong>：距离矩阵<span class="math notranslate nohighlight">\(\pmb{D}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
 <p>  <strong>过程</strong>：</p>
 <p>    1. 计算<span class="math notranslate nohighlight">\(\pmb{D}\)</span>;</p>
@@ -778,6 +737,124 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+</section>
+</section>
+<section id="id10">
+<h2><span class="section-number">1.3. </span>等度量映射<a class="headerlink" href="#id10" title="此标题的永久链接">#</a></h2>
+<p>  等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一<span class="math notranslate nohighlight">\(x,y\)</span>坐标，<span class="math notranslate nohighlight">\(z\)</span>不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。</p>
+<p>  所谓<span class="math notranslate nohighlight">\(d\)</span>维流形是<span class="math notranslate nohighlight">\(n\)</span>维空间<span class="math notranslate nohighlight">\((d&lt;n)\)</span>的一部分，局部类似于<span class="math notranslate nohighlight">\(d\)</span>维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。<strong>流形学习</strong>通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。</p>
+<p>  如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。</p>
+<p>  它的<strong>核心思想</strong>是沿着图的边移动的距离近似于沿着流形移动的距离。</p>
+<section id="id11">
+<h3><span class="section-number">1.3.1. </span>算法<a class="headerlink" href="#id11" title="此标题的永久链接">#</a></h3>
+<p><strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
+<p><strong>过程</strong>：</p>
+<ol class="arabic simple">
+<li><p>确定每个样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的<span class="math notranslate nohighlight">\(k\)</span>近邻;</p></li>
+<li><p>使用最短路径算法(例如：Dijkstra)计算<span class="math notranslate nohighlight">\(k\)</span>近邻图的任意样本间距离<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>;</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ dist(\pmb{x}_i,\pmb{x}_j)=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), &amp; \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, &amp; \textrm{otherwise.}\end{array}\right.
+\end{split}\]</div>
+<ol class="arabic simple" start="3">
+<li><p>以<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>为输入，使用MDS计算低维坐标；</p></li>
+</ol>
+<p><strong>输出</strong>： MDS计算的低维坐标。</p>
+<ul class="simple">
+<li><p>示例</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">Isomap</span>
+
+<span class="n">iris</span><span class="o">=</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">neighbor</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">100</span><span class="p">]):</span>
+    <span class="n">isomap</span><span class="o">=</span><span class="n">Isomap</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">neighbor</span><span class="p">)</span>
+    <span class="n">X_new</span><span class="o">=</span><span class="n">isomap</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_new</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X_new</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Isomap(n_neighbors=</span><span class="si">%d</span><span class="s2">)&quot;</span><span class="o">%</span><span class="n">neighbor</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+</pre></div>
+</div>
+</section>
+</section>
+<section id="lle">
+<h2><span class="section-number">1.4. </span>LLE局部线性嵌入<a class="headerlink" href="#lle" title="此标题的永久链接">#</a></h2>
+<section id="id12">
+<h3><span class="section-number">1.4.1. </span>LLE基本思想<a class="headerlink" href="#id12" title="此标题的永久链接">#</a></h3>
+<p>  Isomap试图<strong>保持</strong>局部近邻样本之间的<strong>距离</strong>。LLE则试图<strong>保持</strong>局部邻域内样本之间的<strong>线性关系</strong>。假设样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的坐标可由邻居样本<span class="math notranslate nohighlight">\(\pmb{x}_j,\pmb{x}_k,\pmb{x}_l\)</span>的坐标通过线性组合重构出来，即，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{x}_i=w_{ij}\pmb{x}_j+w_{ik}\pmb{x}_k+w_{il}\pmb{x}_l
+\]</div>
+<p>则LLE希望此关系在低维空间依旧能得以保持。</p>
+</section>
+<section id="id13">
+<h3><span class="section-number">1.4.2. </span>LLE求解<a class="headerlink" href="#id13" title="此标题的永久链接">#</a></h3>
+<p>  <strong>Step 1</strong>. 寻找样本<span class="math notranslate nohighlight">\(\forall \pmb{x}_i\in \mathcal{X}\)</span>的<span class="math notranslate nohighlight">\(k\)</span>个近邻。</p>
+<p>  <strong>Step 2</strong>. 求解重构系数矩阵<span class="math notranslate nohighlight">\(\pmb{W}\)</span>。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min_W \quad &amp;\varepsilon(\pmb{W})= \sum_{i=1}^m \left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+\text{s.t.}\quad &amp;\sum_{j\in \mathcal{N}_i} w_{ij}=1
+\end{split}
+\end{split}\]</div>
+<p>令<span class="math notranslate nohighlight">\(\varepsilon_i=\left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\)</span>，则有，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\varepsilon_i&amp;=\left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+&amp;=\left\lVert (w_{i1}+w_{i2}+\cdots+w_{ik})\pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\quad \textrm{(sum of weights equals to 1)}\\
+&amp;=\left\lVert \sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\\
+&amp;=\left\lVert \sum_{j\in \mathcal{N}_i} w_{ij}(\pmb{x}_i-\pmb{x}_j) \right\rVert^2
+\end{split}
+\end{split}\]</div>
+<p>令<span class="math notranslate nohighlight">\(C_{jk}=(\pmb{x}_i-\pmb{x}_j)^T(\pmb{x}_i-\pmb{x}_k)\)</span>，则<span class="math notranslate nohighlight">\(w_{ij}\)</span>有闭式解，</p>
+<div class="math notranslate nohighlight">
+\[
+w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} C_{ls}^{-1} }
+\]</div>
+<p>  <strong>Step 3</strong>. 恢复低维空间坐标。LLE在低维空间保持<span class="math notranslate nohighlight">\(\pmb{W}\)</span>不变，于是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>对应的低维空间坐标<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>可以通过下式求解获得，</p>
+<div class="math notranslate nohighlight">
+\[
+\min\limits_{\pmb{Z}}\quad \sum_{i=1}^m \left\lVert \pmb{z}_i-\sum_{j\in \mathcal{N}_i}w_{ij}\pmb{z}_j\right\rVert^2
+\]</div>
+<p>  上述两优化问题目标同形，唯一区别在于前一个问题要确定<span class="math notranslate nohighlight">\(\pmb{W}\)</span>，而后一个需要确定<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>所对应的低维坐标<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\varepsilon(\pmb{Z})&amp;=\sum_{i=1}^n \left\Vert \pmb{z}_i-\sum_j w_{ij}\pmb{z}_j \right\Vert^2\\
+\end{split}\]</div>
+<p>令,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{W}=\begin{bmatrix}-&amp;\pmb{w}_1&amp;-\\-&amp;\pmb{w}_2&amp;-\\ &amp;\vdots &amp;\\ -&amp;\pmb{w}_n&amp;- \end{bmatrix} \quad \pmb{Z}=\begin{bmatrix}|&amp;|&amp;\cdots &amp;|\\\pmb{z}_1&amp;\pmb{z}_2&amp;\cdots&amp;\pmb{z}_n\\ |&amp;|&amp;\cdots &amp;|\\ \end{bmatrix}
+\end{split}\]</div>
+<p>则有，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\varepsilon(\pmb{Z})&amp;=\Vert \pmb{Z}^\top -\pmb{WZ}^\top\Vert_F^2\\
+&amp;=\Vert (\pmb{I}-\pmb{W})\pmb{Z}^\top\Vert_F^2\\
+&amp;=\textrm{tr}(\pmb{Z}\pmb{M}\pmb{Z}^\top)
+\end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{M}=(\pmb{I}-\pmb{W})^\top(\pmb{I}-\pmb{W})\)</span>。则问题可重写为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min_\pmb{Z}\quad &amp;\text{tr}(\pmb{ZMZ}^\top)\\
+\text{s.t.}\quad &amp;\pmb{ZZ}^\top=\pmb{I}
+\end{split}
+\end{split}\]</div>
+<p>该问题可以通过特征值分解求得<span class="math notranslate nohighlight">\(\pmb{M}\)</span>的最大<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量组成的矩阵即为<span class="math notranslate nohighlight">\(\pmb{Z}^\top\)</span>。</p>
 </section>
 </section>
 </section>
@@ -839,12 +916,17 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.6. 核主成分分析</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2. 等度量映射</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2. 多维缩放</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.2.1. 算法</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3. 多维缩放</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.3. 等度量映射</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.3.1. 算法</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lle">1.4. LLE局部线性嵌入</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.4.1. LLE基本思想</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4.2. LLE求解</a></li>
 </ul>
 </li>
 </ul>
