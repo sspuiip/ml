@@ -510,6 +510,41 @@ plt.show()
 
 ```
 
+### 流形
+
+&emsp;&emsp;在介绍流形前，需要一些有关的背景知识。
+
+- **拓扑空间**
+
+&emsp;&emsp;给定集合$\mathcal{X}$，以及$\mathcal{X}$的一些子集构成的族$\mathcal{O}$，如果以下性质成立，则$(\mathcal{X},\mathcal{O})$称为一个拓扑空间：
+1. $\emptyset$和$\mathcal{X}$都属于$\mathcal{O}$；
+2. $\mathcal{O}$中的任意多个元素的并仍属于$\mathcal{O}$；
+3. $\mathcal{O}$中的任意多个元素的交仍属于$\mathcal{O}$；
+
+此时，$\mathcal{X}$中的元素称为点，$\mathcal{O}$中的元素称为开集（可以理解为开区间）。
+
+
+- **度量空间**
+
+&emsp;&emsp;度量空间是一个二元对$(\mathcal{M},d)$，其中$\mathcal{M}$是一个集合，$d$是定义在$\mathcal{M}$上的一个度量，即映射$d: \mathcal{M}\times \mathcal{M}\rightarrow \mathbb{R}$，对于任意$\pmb{x,y,z}\in M$满足以下条件：
+1. $d(\pmb{x,y})=0 \Leftrightarrow \pmb{x}=\pmb{y}$;
+2. $d(\pmb{x,y})=d(\pmb{y,x})$;
+3. $d(\pmb{x,z})\le d(\pmb{x,y})+d(\pmb{y,z})$;
+
+- **流形**
+
+&emsp;&emsp;流形是一个拓扑空间，对于每个点，其周围的邻域局部类似于欧几里得空间。更确切地说，$n$维流形的每个点都有一个邻域开集，该邻域与$n$维欧几里德空间的邻域开集同胚。人们经常可以想象拉伸或平坦流形的局部邻域以得到一个平坦的欧几里得平面。大致地说，拓扑空间是一个几何物体，同胚就是把物体连续延展和弯曲，使其成为一个新的物体。因此，正方形和圆是同胚的，但球面和环面就不是。
+
+&emsp;&emsp;在拓扑学中，同胚(homeomorphism、topological isomorphism、bi continuous function)是两个拓扑空间之间的**双连续函数**。同胚是拓扑空间范畴中的同构；也就是说，它们是保持给定空间的所有拓扑性质的映射。如果两个空间之间存在同胚，那么这两个空间就称为同胚的，从拓扑学的观点来看，两个空间是相同的。
+
+&emsp;&emsp;一个较大的$m$维空间($n<m$)中的$n$维流形
+)局部类似于$n$维欧几里得超平面。例如
+
+1. 1维流形：圆，正方形，曲线等。但8字形不是1维流形，因为8字的中心点局部是2维的欧氏空间同胚。
+2. 2维流形：球面，环面等。
+
+&emsp;&emsp;由于流形结构是由“局部”类似于欧几里得空间的性质定义的，我们不必考虑任何全局的、外部定义的坐标系的几何关系，相反，我们可以只考虑流形的内在几何和拓扑性质。
+
 ## LLE局部线性嵌入
 
 ### LLE基本思想
@@ -591,3 +626,146 @@ $$
 $$
 
 该问题可以通过特征值分解求得$\pmb{M}$的最大$d'$个特征值对应的特征向量组成的矩阵即为$\pmb{Z}^\top$。
+
+
+## 拉普拉斯特征映射
+
+### 拉普拉斯算子
+
+- **连续型**
+
+&emsp;&emsp;**[定义]**- 假设函数$f$连续二阶可微，则拉普拉斯算子($\Delta f$)由下式给出，
+
+$$
+\Delta f\triangleq\sum_{i=1}^n\frac{\partial^2f}{\partial x_i^2}=\nabla\cdot\nabla f=\textrm{div}(\textrm{grad}f)
+$$
+
+其中，
+
+$$
+\begin{split}
+\textrm{grad} f&=\nabla f=\left(\frac{\partial f}{\partial x_1},\frac{\partial f}{\partial x_2},...,\frac{\partial f}{\partial x_n}\right)\\
+\textrm{div}(\textrm{grad}f)&=\nabla\cdot\nabla f=\frac{\partial^2 f}{\partial x_1^2}+\frac{\partial^2 f}{\partial x_2^2}+...+\frac{\partial^2 f}{\partial x_n^2}
+\end{split}
+$$
+
+- **离散型**
+
+&emsp;&emsp;在离散情况下，我们仍然希望拉普拉斯算子将输入的函数映射为其它函数。只不过，这种情况下，函数将被定义在离散的域上（如图$G$的有限顶点集$V$）。因此，我们可以将离散拉普拉斯算子$(\Delta)\phi(v)$作用在函数 $\phi :V\rightarrow R$。而$\phi$是一个定义在图的顶点集上的一个函数。我们也使用有限差分作为导数的离散类比，因此，我们不是使用导数来比较连续域的局部区域，而是使用有限差分来比较离散图的局部邻域。
+
+&emsp;&emsp;对于一个定义在图$G$的顶点集的函数$\phi :V\rightarrow R$，离散拉普拉斯算子定义为，
+
+$$
+(\Delta\phi)(v_i)=\sum_{v_j\in \mathcal{N}(v_i)}W_{ij}[\phi(v_j)-\phi(v_i)]
+$$
+
+其中，$W_{ij}$为连接$v_i$和$v_j$的边$e_{ij}$的权值。
+
+&emsp;&emsp;与连续版本一样，当$\phi(v_i)$的值比其周围的邻居大时(极大值)，离散拉普拉斯值较小；当$\phi(v_i)$的值比其周围的邻居小时（极小值），离散拉普拉斯值较大。
+
+- 例：图像Laplacian算子
+
+&emsp;&emsp;图像是一种离散型的数据，图像上的Laplacian算子可以大致进行如下运算。
+
+$$
+\begin{split}
+\frac{\partial^2 f(x,y)}{\partial x^2}&=f_x^{''}(x,y)\\
+&\approx f_x^{'}(x,y)-f_x^{'}(x-1,y)\\
+&\approx f(x+1,y)-f(x,y)-f(x,y)+f(x-1,y)\\
+&=f(x+1,y)+f(x-1,y)-2f(x,y)
+\end{split}
+$$
+
+同理，$\frac{\partial^2 f(x,y)}{\partial y^2}=f(x,y+1)+f(x,y-1)-2f(x,y)$。因此有Laplacian值，
+
+$$
+\Delta f(x,y)=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y)
+$$
+
+&emsp;&emsp;可以得出**结论**：Laplacian算子近似等于所有方向（自由度）差分累积（增益）。
+
+- 例：图拉普拉斯算子
+
+&emsp;&emsp;图数据上的Laplacian算子又该如何应用呢？图由$N$个结点及其连接边权值$W$所构成。和图像Laplacian算子类似，图Laplacian算子可以近似等于所有方向($\mathcal{N}_i$个邻接结点)的差分累积。
+
+&emsp;&emsp;对于任意结点$i$，可以通过映射$f: V\rightarrow R$得到值$f_i$。显然结点$i$的Laplacian就等于其所有邻接点的差分累积，即
+
+$$
+(\Delta f)_i = \sum_{j\in\mathcal{N}_i}W_{ij}(f_j-f_i)
+$$
+
+因为$j\notin\mathcal{N}_i,W_{ij}=0$，上式可继续简化，
+
+$$
+\begin{split}
+(\Delta f)_i&=\sum_j W_{ij}f_j -\sum_j W_{ij}f_i\\
+&=(Wf)_i-(Df)_i\\
+&=[(W-D)f]_i
+\end{split}
+$$
+
+若$F: \mathbb{R}^d \rightarrow \mathbb{R}^p$,则有，
+
+$$
+\begin{split}
+\Delta \pmb{F}&=\sum_{ij}\Vert \pmb{f}_i-\pmb{f}_j\Vert^2W_{ij}\\
+&=\sum_{ij}\pmb{f}_i^\top\pmb{f}_iW_{ij}-2\sum_{ij}\pmb{f}_i^\top W_{ij}\pmb{f}_j+\sum_{ij}\pmb{f}_j^\top\pmb{f}_jW_{ij}\\
+&=2\left(\sum_i \pmb{f}_i^\top D_{ii}\pmb{f}_i)-\sum_{ij}\pmb{f}_i^\top W_{ij}\pmb{f}_j\right)\\
+&=2\textrm{tr}\left(\pmb{Y}^\top\pmb{L}\pmb{Y} \right)
+\end{split}
+$$
+
+
+
+
+### 拉普拉斯矩阵
+
+&emsp;&emsp;离散Laplacian算子表示为一个矩阵时，映射函数$\phi$可以写为列向量，$\Delta \phi$则表示为Laplacian矩阵$\pmb{L}$与列向量的乘积，即
+
+$$
+\Delta\phi=\pmb{L}\times \phi
+$$
+
+Laplacian矩阵$\pmb{L}=\pmb{D}-\pmb{W}$。其中，
+
+$$
+\pmb{D}_{ii}=\sum_j \pmb{W}_{ij}
+$$
+
+
+
+### 拉普拉斯变换
+
+&emsp;&emsp;如果数据样本$i$与$j$很相似，则在拉普拉斯变换后的子空间与原空间一样，尽可能的接近。即，
+
+$$
+\begin{split}
+\min\limits_{\pmb{Y}}\quad &\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})\\ 
+\textrm{s.t.}\quad &\pmb{Y}^\top\pmb{DY}=\pmb{I}
+\end{split}
+$$
+
+其中，$\pmb{L}$为拉普拉斯矩阵，$\phi:\pmb{x}\rightarrow\pmb{y},\pmb{x}\in\mathbb{R}^d, \pmb{y}\in\mathbb{R}^p$。
+
+&emsp;&emsp;使用Lagrangian乘子法，可得，Lagrangian函数
+
+$$
+f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\pmb{Y}^\top\pmb{DY}-\pmb{I})]
+$$
+
+对其求偏导数，
+
+$$
+\begin{split}
+\frac{\partial f}{\partial \pmb{Y}}&=2\pmb{LY}+\pmb{D}^\top\pmb{Y}\pmb{\Lambda}^\top+\pmb{DY\Lambda}\\
+&=2\pmb{LY}+2\pmb{DY\Lambda}
+\end{split}
+$$
+
+令$\frac{\partial f}{\partial \pmb{Y}}=0$，可得$\pmb{LY}=-\pmb{DY\Lambda}$，即
+
+$$
+\pmb{Ly}=\lambda\pmb{Dy}
+$$
+
+&emsp;&emsp;因此，只需选择$p$个最小的特征值所对应的特征向量即可得到最优解$\hat{\pmb{Y}}$。

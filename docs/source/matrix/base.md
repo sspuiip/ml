@@ -32,6 +32,20 @@ $$
 |  不定矩阵  |                       | $\forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}$既有正值又有负值 |
 
 
+### 常用性质
+
+&emsp;&emsp;若记$\pmb{X}=(\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n)$,其中$\pmb{x}_i \in \mathbb{R}^d$，则有，
+
+$$
+\sum_i \pmb{x}_i^\top\pmb{A}\pmb{x}_i =\textrm{tr}(\pmb{X}^\top\pmb{AX})
+$$
+
+特别地，若$\pmb{A}=\pmb{\Lambda}$为对角阵，则有，
+
+$$
+\sum_i \pmb{x}_i^\top\pmb{A}\pmb{x}_i =\textrm{tr}(\pmb{X}^\top\pmb{\Lambda X})=\sum_i \pmb{x}_i^\top \Lambda_{ii}\pmb{x}_i
+$$
+
 
 ## 行列式
 
