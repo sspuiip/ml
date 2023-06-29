@@ -262,7 +262,7 @@ $$
   3. $p=2$时，$\lVert \pmb{A}\rVert_2= \left(\sum_{i=1}\sum_{j=1}|a_{ij}|^2\right)^{1/2}$。该范数也称之为Frobenius范数。并且有如下性质，
 
   $$
-   \lVert \pmb{A}\rVert_2=\sqrt{tr(\pmb{A}^\top\pmb{A})}=\langle \pmb{A},\pmb{A}\rangle^{1/2}
+   \lVert \pmb{A}\rVert_2=\sqrt{\textrm{tr}(\pmb{A}^\top\pmb{A})}=\langle \pmb{A},\pmb{A}\rangle^{1/2}
   $$
 
 
@@ -325,26 +325,26 @@ $$
 
 ## 迹
 
-矩阵的迹是指$n\times n$矩阵$\pmb{A}$的所有对角元素之和，记为$tr(\pmb{A})$，即
+矩阵的迹是指$n\times n$矩阵$\pmb{A}$的所有对角元素之和，记为$\textrm{tr}(\pmb{A})$，即
 
 
 $$
-tr(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
+\textrm{tr}(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 $$
 
 ### 性质一
 
-- $tr(c\pmb{A}\pm d\pmb{B})=tr(\pmb{A})\pm tr(\pmb{B})$
-- $tr(\pmb{A}^\top)=tr(\pmb{A})^\top$
-- $tr(\pmb{ABC})=tr(\pmb{BCA})=tr(\pmb{CAB})$
-- $\pmb{x}^\top\pmb{A}\pmb{x}=tr(\pmb{x}^\top\pmb{A}\pmb{x})$，特别地，$\pmb{x}^\top\pmb{y}=tr(\pmb{yx}^\top)$
-- $tr(\pmb{A})=\lambda_1+\lambda_2+\cdots+\lambda_n$所有特征值之和。
-- $tr\left[\begin{array}{cc}\pmb{A}&\pmb{B}\\\pmb{C}&\pmb{D}\end{array}\right]=tr(\pmb{A})+tr(\pmb{D})$
-- $tr(\pmb{A}^k)=\sum_i \lambda_i^k$
+- $\textrm{tr}(c\pmb{A}\pm d\pmb{B})=\textrm{tr}(\pmb{A})\pm \textrm{tr}(\pmb{B})$
+- $\textrm{tr}(\pmb{A}^\top)=\textrm{tr}(\pmb{A})^\top$
+- $\textrm{tr}(\pmb{ABC})=\textrm{tr}(\pmb{BCA})=\textrm{tr}(\pmb{CAB})$
+- $\pmb{x}^\top\pmb{A}\pmb{x}=\textrm{tr}(\pmb{x}^\top\pmb{A}\pmb{x})$，特别地，$\pmb{x}^\top\pmb{y}=\textrm{tr}(\pmb{yx}^\top)$
+- $\textrm{tr}(\pmb{A})=\lambda_1+\lambda_2+\cdots+\lambda_n$所有特征值之和。
+- $tr\left[\begin{array}{cc}\pmb{A}&\pmb{B}\\\pmb{C}&\pmb{D}\end{array}\right]=\textrm{tr}(\pmb{A})+\textrm{tr}(\pmb{D})$
+- $\textrm{tr}(\pmb{A}^k)=\sum_i \lambda_i^k$
 
 
 ### 性质二
 
-- $tr(\pmb{A}^2)\le tr(\pmb{A}^\top\pmb{A})$
-- $tr((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[tr(\pmb{A}\pmb{A}^\top)+tr(\pmb{B}\pmb{B}^\top)]$
-- 若$\pmb{A,B}$都是对称矩阵，则$tr(\pmb{AB})\le \frac12 tr(\pmb{A}^2+\pmb{B}^2)$
+- $\textrm{tr}(\pmb{A}^2)\le \textrm{tr}(\pmb{A}^\top\pmb{A})$
+- $\textrm{tr}((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[\textrm{tr}(\pmb{A}\pmb{A}^\top)+\textrm{tr}(\pmb{B}\pmb{B}^\top)]$
+- 若$\pmb{A,B}$都是对称矩阵，则$\textrm{tr}(\pmb{AB})\le \frac12 \textrm{tr}(\pmb{A}^2+\pmb{B}^2)$

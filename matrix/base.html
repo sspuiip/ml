@@ -580,7 +580,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 </ol>
 <div class="math notranslate nohighlight">
 \[
-   \lVert \pmb{A}\rVert_2=\sqrt{tr(\pmb{A}^\top\pmb{A})}=\langle \pmb{A},\pmb{A}\rangle^{1/2}
+   \lVert \pmb{A}\rVert_2=\sqrt{\textrm{tr}(\pmb{A}^\top\pmb{A})}=\langle \pmb{A},\pmb{A}\rangle^{1/2}
   \]</div>
 </section>
 <section id="schatten">
@@ -634,29 +634,29 @@ d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
 </section>
 <section id="id17">
 <h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id17" title="此标题的永久链接">#</a></h2>
-<p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(tr(\pmb{A})\)</span>，即</p>
+<p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A})\)</span>，即</p>
 <div class="math notranslate nohighlight">
 \[
-tr(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
+\textrm{tr}(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 \]</div>
 <section id="id18">
 <h3><span class="section-number">1.5.1. </span>性质一<a class="headerlink" href="#id18" title="此标题的永久链接">#</a></h3>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(tr(c\pmb{A}\pm d\pmb{B})=tr(\pmb{A})\pm tr(\pmb{B})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^\top)=tr(\pmb{A})^\top\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\pmb{ABC})=tr(\pmb{BCA})=tr(\pmb{CAB})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{A}\pmb{x}=tr(\pmb{x}^\top\pmb{A}\pmb{x})\)</span>，特别地，<span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{y}=tr(\pmb{yx}^\top)\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A})=\lambda_1+\lambda_2+\cdots+\lambda_n\)</span>所有特征值之和。</p></li>
-<li><p><span class="math notranslate nohighlight">\(tr\left[\begin{array}{cc}\pmb{A}&amp;\pmb{B}\\\pmb{C}&amp;\pmb{D}\end{array}\right]=tr(\pmb{A})+tr(\pmb{D})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^k)=\sum_i \lambda_i^k\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(c\pmb{A}\pm d\pmb{B})=\textrm{tr}(\pmb{A})\pm \textrm{tr}(\pmb{B})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A}^\top)=\textrm{tr}(\pmb{A})^\top\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{ABC})=\textrm{tr}(\pmb{BCA})=\textrm{tr}(\pmb{CAB})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{A}\pmb{x}=\textrm{tr}(\pmb{x}^\top\pmb{A}\pmb{x})\)</span>，特别地，<span class="math notranslate nohighlight">\(\pmb{x}^\top\pmb{y}=\textrm{tr}(\pmb{yx}^\top)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A})=\lambda_1+\lambda_2+\cdots+\lambda_n\)</span>所有特征值之和。</p></li>
+<li><p><span class="math notranslate nohighlight">\(tr\left[\begin{array}{cc}\pmb{A}&amp;\pmb{B}\\\pmb{C}&amp;\pmb{D}\end{array}\right]=\textrm{tr}(\pmb{A})+\textrm{tr}(\pmb{D})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A}^k)=\sum_i \lambda_i^k\)</span></p></li>
 </ul>
 </section>
 <section id="id19">
 <h3><span class="section-number">1.5.2. </span>性质二<a class="headerlink" href="#id19" title="此标题的永久链接">#</a></h3>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(tr(\pmb{A}^2)\le tr(\pmb{A}^\top\pmb{A})\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(tr((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[tr(\pmb{A}\pmb{A}^\top)+tr(\pmb{B}\pmb{B}^\top)]\)</span></p></li>
-<li><p>若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是对称矩阵，则<span class="math notranslate nohighlight">\(tr(\pmb{AB})\le \frac12 tr(\pmb{A}^2+\pmb{B}^2)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A}^2)\le \textrm{tr}(\pmb{A}^\top\pmb{A})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\textrm{tr}((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[\textrm{tr}(\pmb{A}\pmb{A}^\top)+\textrm{tr}(\pmb{B}\pmb{B}^\top)]\)</span></p></li>
+<li><p>若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是对称矩阵，则<span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{AB})\le \frac12 \textrm{tr}(\pmb{A}^2+\pmb{B}^2)\)</span></p></li>
 </ul>
 </section>
 </section>

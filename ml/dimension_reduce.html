@@ -930,9 +930,9 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(W_{ij}\)</span>为连接<span class="math notranslate nohighlight">\(v_i\)</span>和<span class="math notranslate nohighlight">\(v_j\)</span>的边<span class="math notranslate nohighlight">\(e_{ij}\)</span>的权值。</p>
 <p>  与连续版本一样，当<span class="math notranslate nohighlight">\(\phi(v_i)\)</span>的值比其周围的邻居大时(极大值)，离散拉普拉斯值较小；当<span class="math notranslate nohighlight">\(\phi(v_i)\)</span>的值比其周围的邻居小时（极小值），离散拉普拉斯值较大。</p>
-<ul class="simple">
-<li><p>例：图像Laplacian算子</p></li>
-</ul>
+<ol class="arabic simple">
+<li><p><strong>例：图像Laplacian算子</strong></p></li>
+</ol>
 <p>  图像是一种离散型的数据，图像上的Laplacian算子可以大致进行如下运算。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -949,9 +949,9 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \Delta f(x,y)=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y)
 \]</div>
 <p>  可以得出<strong>结论</strong>：Laplacian算子近似等于所有方向（自由度）差分累积（增益）。</p>
-<ul class="simple">
-<li><p>例：图拉普拉斯算子</p></li>
-</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>例：图拉普拉斯算子</strong></p></li>
+</ol>
 <p>  图数据上的Laplacian算子又该如何应用呢？图由<span class="math notranslate nohighlight">\(N\)</span>个结点及其连接边权值<span class="math notranslate nohighlight">\(W\)</span>所构成。和图像Laplacian算子类似，图Laplacian算子可以近似等于所有方向(<span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span>个邻接结点)的差分累积。</p>
 <p>  对于任意结点<span class="math notranslate nohighlight">\(i\)</span>，可以通过映射<span class="math notranslate nohighlight">\(f: V\rightarrow R\)</span>得到值<span class="math notranslate nohighlight">\(f_i\)</span>。显然结点<span class="math notranslate nohighlight">\(i\)</span>的Laplacian就等于其所有邻接点的差分累积，即</p>
 <div class="math notranslate nohighlight">
@@ -993,7 +993,7 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 </section>
 <section id="id18">
 <h3><span class="section-number">1.5.3. </span>拉普拉斯变换<a class="headerlink" href="#id18" title="此标题的永久链接">#</a></h3>
-<p>  如果数据样本<span class="math notranslate nohighlight">\(i\)</span>与<span class="math notranslate nohighlight">\(j\)</span>很相似，则在拉普拉斯变换后的子空间与原空间一样，尽可能的接近。即，</p>
+<p>  如果数据样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与<span class="math notranslate nohighlight">\(\pmb{x}_j\)</span>很相似，则在拉普拉斯变换后的子空间与原空间一样，尽可能的接近。即，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
