@@ -326,7 +326,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.3. 拉普拉斯变换</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sne">1.6.1. SNE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.2. 对称SNE</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -1026,14 +1030,15 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 </section>
 <section id="id19">
 <h2><span class="section-number">1.6. </span>随机近邻嵌入<a class="headerlink" href="#id19" title="此标题的永久链接">#</a></h2>
+<section id="sne">
+<h3><span class="section-number">1.6.1. </span>SNE<a class="headerlink" href="#sne" title="此标题的永久链接">#</a></h3>
 <p>  随机近邻嵌入(Stochastic Neighbor Embedding,SNE)的主要思想是：若两数据在高维空间相似(距离很近)，那么通过某种降维映射至2-3维空间时，它们应该离的很近。</p>
 <p>  使用条件概率<span class="math notranslate nohighlight">\(p_{j|i}\)</span>来评价数据点<span class="math notranslate nohighlight">\(\pmb{x}_i,\pmb{x}_j\)</span>的相似性。高维空间的距离可以通过高斯分布进行计算，</p>
 <div class="math notranslate nohighlight">
 \[
 \textrm{P}\{\textrm{高维空间}\pmb{x}_j是\pmb{x}_i的邻居\}\triangleq p_{j|i}=\frac{\exp(-\Vert\pmb{x}_i-\pmb{x}_j\Vert^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\Vert\pmb{x}_i-\pmb{x}_k\Vert^2/(2\sigma_i^2))}
 \]</div>
-<p>可以不用关心与自身的相似性，故可令<span class="math notranslate nohighlight">\(p_{i|i}=0\)</span>。</p>
-<p>  假设经过低维映射<span class="math notranslate nohighlight">\(\phi\)</span>后<span class="math notranslate nohighlight">\(\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j\)</span>，则在该低维空间两点之间的相似性，即<span class="math notranslate nohighlight">\(\pmb{y}_j\)</span>是<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>邻居的条件概率<span class="math notranslate nohighlight">\(q_{j|i}\)</span>可以通过以下分布计算，</p>
+<p>可以不用关心与自身的相似性，故可令<span class="math notranslate nohighlight">\(p_{i|i}=0\)</span>。假设经过低维映射<span class="math notranslate nohighlight">\(\phi\)</span>后<span class="math notranslate nohighlight">\(\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j\)</span>，则在该低维空间两点之间的相似性，即<span class="math notranslate nohighlight">\(\pmb{y}_j\)</span>是<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>邻居的条件概率<span class="math notranslate nohighlight">\(q_{j|i}\)</span>可以通过以下分布计算，</p>
 <div class="math notranslate nohighlight">
 \[
 q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Vert \pmb{y}_i-\pmb{y}_k \Vert^2)}
@@ -1049,6 +1054,7 @@ q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Ver
 \[
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})
 \]</div>
+<div style="background-color: lightgray">
 <p>  提示：使用链式法则求解。令<span class="math notranslate nohighlight">\(p_{ij}=p_{i|j}\)</span>, <span class="math notranslate nohighlight">\(q_{ij}=q_{i|j}\)</span>,以及，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1107,11 +1113,25 @@ k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 &amp;=p_{ij}-q_{ij}
 \end{split}
 \end{split}\]</div>
-<p>同理可求得<span class="math notranslate nohighlight">\(k_ji\)</span>，最后整理可得梯度为，</p>
+<p>同理可求得<span class="math notranslate nohighlight">\(k_{ji}\)</span>，最后整理可得梯度为，</p>
 <div class="math notranslate nohighlight">
 \[
 \boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
 \]</div>
+</div>
+<ul class="simple">
+<li><p>存在的问题</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>只关注数据的局部性，忽略了数据的全局性</strong>。对于目标函数来说，当<span class="math notranslate nohighlight">\(p_{j|i}\)</span>较大<span class="math notranslate nohighlight">\(q_{j|i}\)</span>较小时，代价较高；当<span class="math notranslate nohighlight">\(p_{j|i}\)</span>较小<span class="math notranslate nohighlight">\(q_{j|i}\)</span>较大时，代价较小；也就是说，高维空间数据点较近时，映射至低维空间后较远，那么会得到一个较高的惩罚，这是合理的。反之，高维空间较远的点映射后距离较近将会得到一个较低的惩罚，这就有问题了，这里应该得到一个较高的惩罚才合理。</p></li>
+<li><p><strong>不对称性</strong>。<span class="math notranslate nohighlight">\(p_{j|i}\neq p_{i|j}, q_{j|i}\neq q_{i|j}\)</span>导致梯度计算量过大。</p></li>
+<li><p><strong>拥护问题</strong>。不同的类簇挤在一起即为拥护问题。</p></li>
+</ol>
+</section>
+<section id="id20">
+<h3><span class="section-number">1.6.2. </span>对称SNE<a class="headerlink" href="#id20" title="此标题的永久链接">#</a></h3>
+<p>  针对SNE的不对称问题</p>
+</section>
 </section>
 </section>
 
@@ -1192,7 +1212,11 @@ k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.3. 拉普拉斯变换</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sne">1.6.1. SNE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.2. 对称SNE</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
