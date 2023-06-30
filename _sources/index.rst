@@ -8,29 +8,6 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 矩阵分析
-   :numbered:
-
-   matrix/base.md
-   matrix/matrixoper.md
-   matrix/vectorspace.md
-   matrix/matrixdiff.md
-   matrix/special_matrix.md
-   matrix/subspace.md
-   matrix/decomposition.md
-
-.. toctree::
-   :maxdepth: 2
-   :caption: 最优化
-   :numbered:
-
-   optimization/convex_prob.md
-   optimization/convex_solve.md
-   optimization/convex_neq_solve.md
-   
-
-.. toctree::
-   :maxdepth: 2
    :caption: 机器学习
    :numbered:
 
@@ -43,6 +20,30 @@
 
    kernel/base.md
 
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 最优化
+   :numbered:
+
+   optimization/convex_prob.md
+   optimization/convex_solve.md
+   optimization/convex_neq_solve.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 矩阵分析
+   :numbered:
+
+   matrix/base.md
+   matrix/matrixoper.md
+   matrix/vectorspace.md
+   matrix/matrixdiff.md
+   matrix/special_matrix.md
+   matrix/subspace.md
+   matrix/decomposition.md
+   
 .. toctree::
    :maxdepth: 2
    :caption: 数学建模

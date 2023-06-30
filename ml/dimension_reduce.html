@@ -47,7 +47,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="1. 核函数基础" href="../kernel/base.html" />
-    <link rel="prev" title="3. 优化问题求解(2)" href="../optimization/convex_neq_solve.html" />
+    <link rel="prev" title="机器学习基础" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -124,7 +124,21 @@
 </a></div>
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. 表示学习</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
@@ -133,20 +147,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. 表示学习</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
@@ -350,6 +350,7 @@ document.write(`
 <li><p>理论上，通过增大训练集，使训练集达到足够密度，是可以避免维度灾难的。但实践中，要达到给定密度，所需的训练数据随着维度的增加呈指数式上升</p></li>
 </ul>
 <p>  为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题，这一过程也称之为<strong>表示学习</strong>。</p>
+<hr class="docutils" />
 <section id="id2">
 <h2><span class="section-number">1.1. </span>主成分分析<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，</p>
@@ -658,6 +659,7 @@ document.write(`
 </div>
 </section>
 </section>
+<hr class="docutils" />
 <section id="id8">
 <h2><span class="section-number">1.2. </span>多维缩放<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h2>
 <p>  多维缩放(multiple dimensional scaling, MDS)的主要思想是原始空间中样本之间的距离在低维空间得以保持。假设<span class="math notranslate nohighlight">\(m\)</span>个样本在原始空间的距离矩阵为<span class="math notranslate nohighlight">\(\pmb{D}\subseteq \mathbb{R}^{m\times m}\)</span>。MDS的任务是获得样本集在<span class="math notranslate nohighlight">\(d'\)</span>维空间的表示<span class="math notranslate nohighlight">\(\pmb{Z}\in \mathbb{R}^{m\times d'}\)</span>，且任意两个样本在<span class="math notranslate nohighlight">\(d'\)</span>维空间的欧式距离等于原始空间的距离，即<span class="math notranslate nohighlight">\(\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=\)</span><span class="math notranslate nohighlight">\(D_{ij}, \forall 0&lt;i,j\leq m\)</span>。</p>
@@ -751,6 +753,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 </div>
 </section>
 </section>
+<hr class="docutils" />
 <section id="id10">
 <h2><span class="section-number">1.3. </span>等度量映射<a class="headerlink" href="#id10" title="此标题的永久链接">#</a></h2>
 <p>  等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一<span class="math notranslate nohighlight">\(x,y\)</span>坐标，<span class="math notranslate nohighlight">\(z\)</span>不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。</p>
@@ -832,6 +835,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <p>  由于流形结构是由“局部”类似于欧几里得空间的性质定义的，我们不必考虑任何全局的、外部定义的坐标系的几何关系，相反，我们可以只考虑流形的内在几何和拓扑性质。</p>
 </section>
 </section>
+<hr class="docutils" />
 <section id="lle">
 <h2><span class="section-number">1.4. </span>LLE局部线性嵌入<a class="headerlink" href="#lle" title="此标题的永久链接">#</a></h2>
 <section id="id13">
@@ -904,6 +908,7 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 <p>该问题可以通过特征值分解求得<span class="math notranslate nohighlight">\(\pmb{M}\)</span>的最大<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量组成的矩阵即为<span class="math notranslate nohighlight">\(\pmb{Z}^\top\)</span>。</p>
 </section>
 </section>
+<hr class="docutils" />
 <section id="id15">
 <h2><span class="section-number">1.5. </span>拉普拉斯特征映射<a class="headerlink" href="#id15" title="此标题的永久链接">#</a></h2>
 <section id="id16">
@@ -1028,6 +1033,7 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 <p>  因此，只需选择<span class="math notranslate nohighlight">\(p\)</span>个最小的特征值所对应的特征向量即可得到最优解<span class="math notranslate nohighlight">\(\hat{\pmb{Y}}\)</span>。</p>
 </section>
 </section>
+<hr class="docutils" />
 <section id="id19">
 <h2><span class="section-number">1.6. </span>随机近邻嵌入<a class="headerlink" href="#id19" title="此标题的永久链接">#</a></h2>
 <section id="sne">
@@ -1092,7 +1098,7 @@ w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\p
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_n} 
 &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{in}} \frac{\partial w_{in}}{\partial f_{in}}\frac{\partial f_{in}}{\partial d_{in}}\frac{\partial d_{in}}{\partial \pmb{y}_n} +  \sum_{j}\frac{\partial \mathcal{L}}{\partial q_{nj}}\sum_{l}\frac{\partial q_{nj}}{w_{nl}} \frac{\partial w_{nl}}{\partial f_{nl}}\frac{\partial f_{nl}}{\partial d_{nl}}\frac{\partial d_{nl}}{\partial \pmb{y}_n}\\
 &amp;=\sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}}\frac{\partial f_{ji}}{\partial d_{ji}}\frac{\partial d_{ji}}{\partial \pmb{y}_i} + \sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}\\
-&amp;=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{k_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{k_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
+&amp;=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{t_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{t_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
 \end{split}
 \end{split}\]</div>
 <p>  注意到，<span class="math notranslate nohighlight">\(q_{ij}=\frac{w_{ij}}{\sum_l w_{il}}\triangleq \frac{w_{ij}}{S_i}\)</span>，则</p>
@@ -1100,11 +1106,11 @@ w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\p
 \[
 \frac{\partial q_{ij}}{\partial w_{ij}}=\frac{1}{S_i}-\frac{q_{ij}}{S_i},\quad \frac{\partial q_{ik}}{\partial w_{ij}}=-\frac{q_{ik}}{S_i}
 \]</div>
-<p>代入<span class="math notranslate nohighlight">\(k_{ij}\)</span>，可得</p>
+<p>代入<span class="math notranslate nohighlight">\(t_{ij}\)</span>，可得</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\\
+t_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\\
 &amp;=\left( \frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{ij}} +\sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
 &amp;=\left( \frac{1}{S_i} \frac{\partial \mathcal{L}}{\partial q_{ij}}  -\frac{q_{ij}}{S_i}\frac{\partial \mathcal{L}}{\partial q_{ij}} - \sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{q_{ik}}{S_i}        \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
 &amp;=\frac{1}{S_i}\left(\frac{\partial \mathcal{L}}{\partial q_{ij}}  - \sum_{k}\frac{\partial \mathcal{L}}{\partial q_{ik}}q_{ik}  \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
@@ -1113,7 +1119,7 @@ k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 &amp;=p_{ij}-q_{ij}
 \end{split}
 \end{split}\]</div>
-<p>同理可求得<span class="math notranslate nohighlight">\(k_{ji}\)</span>，最后整理可得梯度为，</p>
+<p>同理可求得<span class="math notranslate nohighlight">\(t_{ji}\)</span>，最后整理可得梯度为，</p>
 <div class="math notranslate nohighlight">
 \[
 \boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
@@ -1125,7 +1131,7 @@ k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 <ol class="arabic simple">
 <li><p><strong>只关注数据的局部性，忽略了数据的全局性</strong>。对于目标函数来说，当<span class="math notranslate nohighlight">\(p_{j|i}\)</span>较大<span class="math notranslate nohighlight">\(q_{j|i}\)</span>较小时，代价较高；当<span class="math notranslate nohighlight">\(p_{j|i}\)</span>较小<span class="math notranslate nohighlight">\(q_{j|i}\)</span>较大时，代价较小；也就是说，高维空间数据点较近时，映射至低维空间后较远，那么会得到一个较高的惩罚，这是合理的。反之，高维空间较远的点映射后距离较近将会得到一个较低的惩罚，这就有问题了，这里应该得到一个较高的惩罚才合理。</p></li>
 <li><p><strong>不对称性</strong>。<span class="math notranslate nohighlight">\(p_{j|i}\neq p_{i|j}, q_{j|i}\neq q_{i|j}\)</span>导致梯度计算量过大。</p></li>
-<li><p><strong>拥护问题</strong>。不同的类簇挤在一起即为拥护问题。</p></li>
+<li><p><strong>拥挤问题</strong>。不同的类簇挤在一起即为拥挤问题。</p></li>
 </ol>
 </section>
 <section id="id20">
@@ -1148,12 +1154,12 @@ k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../optimization/convex_neq_solve.html"
+       href="../index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>优化问题求解(2)</p>
+        <p class="prev-next-title">机器学习基础</p>
       </div>
     </a>
     <a class="right-next"

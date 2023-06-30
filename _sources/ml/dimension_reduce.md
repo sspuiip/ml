@@ -8,7 +8,7 @@
 
 &emsp;&emsp;为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题，这一过程也称之为**表示学习**。
 
-
+---
 ## 主成分分析
 
 &emsp;&emsp;主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，
@@ -350,7 +350,7 @@ def kpca(X,k):
     return data
 ```
 
-
+---
 
 ## 多维缩放
 
@@ -456,7 +456,7 @@ plt.scatter(new_X_mds[:,0], new_X_mds[:,1], c=y)
 
 plt.show()
 ```
-
+---
 ## 等度量映射
 
 &emsp;&emsp;等度量映射(Isometric Mapping, Isomap)的基本出发点在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一$x,y$坐标，$z$不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。
@@ -545,6 +545,7 @@ plt.show()
 
 &emsp;&emsp;由于流形结构是由“局部”类似于欧几里得空间的性质定义的，我们不必考虑任何全局的、外部定义的坐标系的几何关系，相反，我们可以只考虑流形的内在几何和拓扑性质。
 
+---
 ## LLE局部线性嵌入
 
 ### LLE基本思想
@@ -627,7 +628,7 @@ $$
 
 该问题可以通过特征值分解求得$\pmb{M}$的最大$d'$个特征值对应的特征向量组成的矩阵即为$\pmb{Z}^\top$。
 
-
+---
 ## 拉普拉斯特征映射
 
 ### 拉普拉斯算子
@@ -770,7 +771,7 @@ $$
 
 &emsp;&emsp;因此，只需选择$p$个最小的特征值所对应的特征向量即可得到最优解$\hat{\pmb{Y}}$。
 
-
+---
 ## 随机近邻嵌入
 
 ### SNE
@@ -847,7 +848,7 @@ $$
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_n} 
 &=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{in}} \frac{\partial w_{in}}{\partial f_{in}}\frac{\partial f_{in}}{\partial d_{in}}\frac{\partial d_{in}}{\partial \pmb{y}_n} +  \sum_{j}\frac{\partial \mathcal{L}}{\partial q_{nj}}\sum_{l}\frac{\partial q_{nj}}{w_{nl}} \frac{\partial w_{nl}}{\partial f_{nl}}\frac{\partial f_{nl}}{\partial d_{nl}}\frac{\partial d_{nl}}{\partial \pmb{y}_n}\\
 &=\sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}}\frac{\partial f_{ji}}{\partial d_{ji}}\frac{\partial d_{ji}}{\partial \pmb{y}_i} + \sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}\\
-&=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{k_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{k_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
+&=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{t_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{t_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
 \end{split}
 $$
 
@@ -858,11 +859,11 @@ $$
 \frac{\partial q_{ij}}{\partial w_{ij}}=\frac{1}{S_i}-\frac{q_{ij}}{S_i},\quad \frac{\partial q_{ik}}{\partial w_{ij}}=-\frac{q_{ik}}{S_i}
 $$
 
-代入$k_{ij}$，可得
+代入$t_{ij}$，可得
 
 $$
 \begin{split}
-k_{ij}&=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\\
+t_{ij}&=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\\
 &=\left( \frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{ij}} +\sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
 &=\left( \frac{1}{S_i} \frac{\partial \mathcal{L}}{\partial q_{ij}}  -\frac{q_{ij}}{S_i}\frac{\partial \mathcal{L}}{\partial q_{ij}} - \sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{q_{ik}}{S_i}        \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
 &=\frac{1}{S_i}\left(\frac{\partial \mathcal{L}}{\partial q_{ij}}  - \sum_{k}\frac{\partial \mathcal{L}}{\partial q_{ik}}q_{ik}  \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
@@ -872,7 +873,7 @@ k_{ij}&=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}
 \end{split}
 $$
 
-同理可求得$k_{ji}$，最后整理可得梯度为，
+同理可求得$t_{ji}$，最后整理可得梯度为，
 
 $$
 \boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
@@ -886,7 +887,7 @@ $$
 
 2. **不对称性**。$p_{j|i}\neq p_{i|j}, q_{j|i}\neq q_{i|j}$导致梯度计算量过大。
 
-3. **拥护问题**。不同的类簇挤在一起即为拥护问题。
+3. **拥挤问题**。不同的类簇挤在一起即为拥挤问题。
 
 
 ### 对称SNE
