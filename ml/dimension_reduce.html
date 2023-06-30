@@ -326,6 +326,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.3. 拉普拉斯变换</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a></li>
 </ul>
             </nav>
         </div>
@@ -1023,6 +1024,95 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 <p>  因此，只需选择<span class="math notranslate nohighlight">\(p\)</span>个最小的特征值所对应的特征向量即可得到最优解<span class="math notranslate nohighlight">\(\hat{\pmb{Y}}\)</span>。</p>
 </section>
 </section>
+<section id="id19">
+<h2><span class="section-number">1.6. </span>随机近邻嵌入<a class="headerlink" href="#id19" title="此标题的永久链接">#</a></h2>
+<p>  随机近邻嵌入(Stochastic Neighbor Embedding,SNE)的主要思想是：若两数据在高维空间相似(距离很近)，那么通过某种降维映射至2-3维空间时，它们应该离的很近。</p>
+<p>  使用条件概率<span class="math notranslate nohighlight">\(p_{j|i}\)</span>来评价数据点<span class="math notranslate nohighlight">\(\pmb{x}_i,\pmb{x}_j\)</span>的相似性。高维空间的距离可以通过高斯分布进行计算，</p>
+<div class="math notranslate nohighlight">
+\[
+\textrm{P}\{\textrm{高维空间}\pmb{x}_j是\pmb{x}_i的邻居\}\triangleq p_{j|i}=\frac{\exp(-\Vert\pmb{x}_i-\pmb{x}_j\Vert^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\Vert\pmb{x}_i-\pmb{x}_k\Vert^2/(2\sigma_i^2))}
+\]</div>
+<p>可以不用关心与自身的相似性，故可令<span class="math notranslate nohighlight">\(p_{i|i}=0\)</span>。</p>
+<p>  假设经过低维映射<span class="math notranslate nohighlight">\(\phi\)</span>后<span class="math notranslate nohighlight">\(\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j\)</span>，则在该低维空间两点之间的相似性，即<span class="math notranslate nohighlight">\(\pmb{y}_j\)</span>是<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>邻居的条件概率<span class="math notranslate nohighlight">\(q_{j|i}\)</span>可以通过以下分布计算，</p>
+<div class="math notranslate nohighlight">
+\[
+q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Vert \pmb{y}_i-\pmb{y}_k \Vert^2)}
+\]</div>
+<p>为简化计算，令<span class="math notranslate nohighlight">\(\sigma_i=2^{-1/2}\)</span>，同样有<span class="math notranslate nohighlight">\(q_{i|i}=0\)</span>。</p>
+<p>  为确保<span class="math notranslate nohighlight">\(p_{j|i}\)</span>与<span class="math notranslate nohighlight">\(q_{j|i}\)</span>尽可能一致，可以通过KL散度来评估两个条件分布的差异性。因此，目标函数就变成了尽可能的降低<span class="math notranslate nohighlight">\(p_{j|i},q_{j|i}\)</span>的散度，即使用<span class="math notranslate nohighlight">\(q_{j|i}\)</span>替代<span class="math notranslate nohighlight">\(p_{j|i}\)</span>的信息损失，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}=\sum_i\sum_j p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
+\]</div>
+<p>  梯度法求解上述问题，对<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>求偏导，可得梯度</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})
+\]</div>
+<p>  提示：使用链式法则求解。令<span class="math notranslate nohighlight">\(p_{ij}=p_{i|j}\)</span>, <span class="math notranslate nohighlight">\(q_{ij}=q_{i|j}\)</span>,以及，</p>
+<div class="math notranslate nohighlight">
+\[
+w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\pmb{y}_j \Vert^2, \quad d_{ij}=\Vert \pmb{y}_i-\pmb{y}_j \Vert
+\]</div>
+<p>由链式法则可知，</p>
+<div class="math notranslate nohighlight">
+\[
+\begin{split}
+\frac{\partial \mathcal{L}}{\partial \pmb{y}_n} &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{kl}\frac{\partial q_{ij}}{w_{kl}}\sum_{mn}\frac{\partial w_{kl}}{\partial f_{mn}}\sum_{pq}\frac{\partial f_{mn}}{\partial d_{pq}}\frac{\partial d_{pq}}{\partial \pmb{y}_n}
+\end{split}
+\]</div>
+<p>显然，只有当<span class="math notranslate nohighlight">\(pq=mn=kl\)</span>时，偏导数才不为0，因此，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\frac{\partial \mathcal{L}}{\partial \pmb{y}_n} &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{kl}\frac{\partial q_{ij}}{w_{kl}}\sum_{mn}\frac{\partial w_{kl}}{\partial f_{mn}}\sum_{pq}\frac{\partial f_{mn}}{\partial d_{pq}}\frac{\partial d_{pq}}{\partial \pmb{y}_n}\\
+&amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{kl}\frac{\partial q_{ij}}{w_{kl}} \frac{\partial w_{kl}}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial d_{kl}}\frac{\partial d_{kl}}{\partial \pmb{y}_n}\\
+&amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{l}\frac{\partial q_{ij}}{w_{il}} \frac{\partial w_{il}}{\partial f_{il}}\frac{\partial f_{il}}{\partial d_{il}}\frac{\partial d_{il}}{\partial \pmb{y}_n}\\
+\end{split}
+\end{split}\]</div>
+<p>由于<span class="math notranslate nohighlight">\(w_{il}\)</span>涉及<span class="math notranslate nohighlight">\(\pmb{y}_n\)</span>分两种情况：<span class="math notranslate nohighlight">\(i=n\)</span>或<span class="math notranslate nohighlight">\(l=n\)</span>,因此，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\frac{\partial \mathcal{L}}{\partial \pmb{y}_n} 
+&amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{l}\frac{\partial q_{ij}}{w_{il}} \frac{\partial w_{il}}{\partial f_{il}}\frac{\partial f_{il}}{\partial d_{il}}\frac{\partial d_{il}}{\partial \pmb{y}_n}\\
+&amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{in}} \frac{\partial w_{in}}{\partial f_{in}}\frac{\partial f_{in}}{\partial d_{in}}\frac{\partial d_{in}}{\partial \pmb{y}_n} +  \sum_{j}\frac{\partial \mathcal{L}}{\partial q_{nj}}\sum_{l}\frac{\partial q_{nj}}{w_{nl}} \frac{\partial w_{nl}}{\partial f_{nl}}\frac{\partial f_{nl}}{\partial d_{nl}}\frac{\partial d_{nl}}{\partial \pmb{y}_n}
+\end{split}
+\end{split}\]</div>
+<p>整理：<span class="math notranslate nohighlight">\(n\rightarrow i\)</span>，左式：<span class="math notranslate nohighlight">\(i\rightarrow j, j\rightarrow k\)</span>, 右式： <span class="math notranslate nohighlight">\(j\rightarrow k, l\rightarrow j\)</span>, 以及<span class="math notranslate nohighlight">\(f_{ij}=f{ji}, d_{ij}=d_{ji}\)</span>，可得</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\frac{\partial \mathcal{L}}{\partial \pmb{y}_n} 
+&amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{in}} \frac{\partial w_{in}}{\partial f_{in}}\frac{\partial f_{in}}{\partial d_{in}}\frac{\partial d_{in}}{\partial \pmb{y}_n} +  \sum_{j}\frac{\partial \mathcal{L}}{\partial q_{nj}}\sum_{l}\frac{\partial q_{nj}}{w_{nl}} \frac{\partial w_{nl}}{\partial f_{nl}}\frac{\partial f_{nl}}{\partial d_{nl}}\frac{\partial d_{nl}}{\partial \pmb{y}_n}\\
+&amp;=\sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}}\frac{\partial f_{ji}}{\partial d_{ji}}\frac{\partial d_{ji}}{\partial \pmb{y}_i} + \sum_{jk}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}\\
+&amp;=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{k_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{k_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
+\end{split}
+\end{split}\]</div>
+<p>  注意到，<span class="math notranslate nohighlight">\(q_{ij}=\frac{w_{ij}}{\sum_l w_{il}}\triangleq \frac{w_{ij}}{S_i}\)</span>，则</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial q_{ij}}{\partial w_{ij}}=\frac{1}{S_i}-\frac{q_{ij}}{S_i},\quad \frac{\partial q_{ik}}{\partial w_{ij}}=-\frac{q_{ik}}{S_i}
+\]</div>
+<p>代入<span class="math notranslate nohighlight">\(k_{ij}\)</span>，可得</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+k_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}\\
+&amp;=\left( \frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{ij}} +\sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
+&amp;=\left( \frac{1}{S_i} \frac{\partial \mathcal{L}}{\partial q_{ij}}  -\frac{q_{ij}}{S_i}\frac{\partial \mathcal{L}}{\partial q_{ij}} - \sum_{k\neq j}\frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{q_{ik}}{S_i}        \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
+&amp;=\frac{1}{S_i}\left(\frac{\partial \mathcal{L}}{\partial q_{ij}}  - \sum_{k}\frac{\partial \mathcal{L}}{\partial q_{ik}}q_{ik}  \right)\frac{\partial w_{ij}}{\partial f_{ij}}\\
+&amp;=\frac{1}{S_i}\left(\frac{-p_{ij} }{q_{ij} }  - \sum_{k}\frac{-p_{ik} }{q_{ik} }q_{ik}  \right)(-w_{ij})\\
+&amp;=-q_{ij}\left( \frac{-p_{ij} }{q_{ij} }+\sum_k p_{ik} \right)\\
+&amp;=p_{ij}-q_{ij}
+\end{split}
+\end{split}\]</div>
+<p>同理可求得<span class="math notranslate nohighlight">\(k_ji\)</span>，最后整理可得梯度为，</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
+\]</div>
+</section>
 </section>
 
 
@@ -1102,6 +1192,7 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.3. 拉普拉斯变换</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a></li>
 </ul>
   </nav></div>
 
