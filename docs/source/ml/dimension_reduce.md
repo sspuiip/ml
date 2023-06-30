@@ -773,6 +773,8 @@ $$
 
 ## 随机近邻嵌入
 
+### SNE
+
 &emsp;&emsp;随机近邻嵌入(Stochastic Neighbor Embedding,SNE)的主要思想是：若两数据在高维空间相似(距离很近)，那么通过某种降维映射至2-3维空间时，它们应该离的很近。
 
 &emsp;&emsp;使用条件概率$p_{j|i}$来评价数据点$\pmb{x}_i,\pmb{x}_j$的相似性。高维空间的距离可以通过高斯分布进行计算，
@@ -781,9 +783,7 @@ $$
 \textrm{P}\{\textrm{高维空间}\pmb{x}_j是\pmb{x}_i的邻居\}\triangleq p_{j|i}=\frac{\exp(-\Vert\pmb{x}_i-\pmb{x}_j\Vert^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\Vert\pmb{x}_i-\pmb{x}_k\Vert^2/(2\sigma_i^2))}
 $$
 
-可以不用关心与自身的相似性，故可令$p_{i|i}=0$。
-
-&emsp;&emsp;假设经过低维映射$\phi$后$\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j$，则在该低维空间两点之间的相似性，即$\pmb{y}_j$是$\pmb{y}_i$邻居的条件概率$q_{j|i}$可以通过以下分布计算，
+可以不用关心与自身的相似性，故可令$p_{i|i}=0$。假设经过低维映射$\phi$后$\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j$，则在该低维空间两点之间的相似性，即$\pmb{y}_j$是$\pmb{y}_i$邻居的条件概率$q_{j|i}$可以通过以下分布计算，
 
 $$
 q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Vert \pmb{y}_i-\pmb{y}_k \Vert^2)}
@@ -802,6 +802,9 @@ $$
 $$
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})
 $$
+
+
+<div style="background-color: lightgray">
 
 &emsp;&emsp;提示：使用链式法则求解。令$p_{ij}=p_{i|j}$, $q_{ij}=q_{i|j}$,以及，
 
@@ -869,11 +872,24 @@ k_{ij}&=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}
 \end{split}
 $$
 
-同理可求得$k_ji$，最后整理可得梯度为，
+同理可求得$k_{ji}$，最后整理可得梯度为，
 
 $$
 \boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
 $$
 
+</div>
 
+- 存在的问题
+
+1. **只关注数据的局部性，忽略了数据的全局性**。对于目标函数来说，当$p_{j|i}$较大$q_{j|i}$较小时，代价较高；当$p_{j|i}$较小$q_{j|i}$较大时，代价较小；也就是说，高维空间数据点较近时，映射至低维空间后较远，那么会得到一个较高的惩罚，这是合理的。反之，高维空间较远的点映射后距离较近将会得到一个较低的惩罚，这就有问题了，这里应该得到一个较高的惩罚才合理。
+
+2. **不对称性**。$p_{j|i}\neq p_{i|j}, q_{j|i}\neq q_{i|j}$导致梯度计算量过大。
+
+3. **拥护问题**。不同的类簇挤在一起即为拥护问题。
+
+
+### 对称SNE
+
+&emsp;&emsp;针对SNE的不对称问题
 
