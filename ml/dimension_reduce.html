@@ -329,6 +329,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sne">1.6.1. SNE</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.2. 对称SNE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-sne">1.6.3. t-SNE</a></li>
 </ul>
 </li>
 </ul>
@@ -365,6 +366,7 @@ document.write(`
 <li><p>样本点到这个超平面的距离都足够近(投影距离最小)</p></li>
 <li><p>样本点在这个超平面的投影尽可能分开</p></li>
 </ul>
+<hr class="docutils" />
 <section id="id3">
 <h3><span class="section-number">1.1.1. </span>最近重构性<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  假设数据样本已<font color="red">中心化</font>所有样本减去均值即为中心化；(中心化之后再除以样本标准差即为标准化)，变换后的新坐标系为<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)\)</span>，若丢弃部分坐标，将维度降至<span class="math notranslate nohighlight">\(d'&lt;d\)</span>，则样本在低维坐标系中的投影为<span class="math notranslate nohighlight">\(\pmb{z}_i=(z_{i1},z_{i2},...,z_{id'})\)</span> ，其中<span class="math notranslate nohighlight">\(z_{ij}=\langle \pmb{x}_i,\pmb{w}_j\rangle\)</span>是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在低维坐标系的第<span class="math notranslate nohighlight">\(j\)</span>维的坐标。若用<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>来重构<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>，则会有<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i=\sum_{j=1}^{d'}z_{ij}\pmb{w}_j=\pmb{W}\pmb{z}_i\)</span>。</p>
@@ -393,6 +395,7 @@ document.write(`
 \pmb{W}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{w}_1&amp;\pmb{w}_2&amp;\dots&amp;x_{d'}\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times d'}
 \end{split}\]</div>
 </section>
+<hr class="docutils" />
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>最大可分性<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
 <p>  样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在新空间的超平面投影为<span class="math notranslate nohighlight">\(\pmb{W}^\top\pmb{x}_i\)</span>，若要投影尽可能分开，则应使投影后的样本方差最大化，即，</p>
@@ -405,6 +408,7 @@ document.write(`
 \end{split}\]</div>
 <p>可以看出，该问题与第一种情况是等价的。</p>
 </section>
+<hr class="docutils" />
 <section id="id5">
 <h3><span class="section-number">1.1.3. </span>优化问题的求解<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h3>
 <p>  使用拉格朗日乘子法，可得，</p>
@@ -427,6 +431,7 @@ document.write(`
 \]</div>
 <p>于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量构成<font color="red">投影矩阵<span class="math notranslate nohighlight">\(W^*=(w_1,w_2,...,w_{d'})\)</span></font>。该矩阵即为主成分分析的解。</p>
 </section>
+<hr class="docutils" />
 <section id="id6">
 <h3><span class="section-number">1.1.4. </span>算法1–特征值分解<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
 <p>  通过样本协方差矩阵计算PCA。</p>
@@ -490,6 +495,7 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<hr class="docutils" />
 <section id="svd">
 <h3><span class="section-number">1.1.5. </span>算法2–SVD分解<a class="headerlink" href="#svd" title="此标题的永久链接">#</a></h3>
 <p>  PCA除了对于协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>进行特征值分解计算得到投影特征向量之外，还可以通过SVD矩阵分解技术得到投影向量。SVD矩阵分解如下式所示，</p>
@@ -576,6 +582,7 @@ document.write(`
 </pre></div>
 </div>
 </section>
+<hr class="docutils" />
 <section id="id7">
 <h3><span class="section-number">1.1.6. </span>核主成分分析<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
 <p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
@@ -716,6 +723,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 \[
 \pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
 \]</div>
+<hr class="docutils" />
 <section id="id9">
 <h3><span class="section-number">1.2.1. </span>算法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
 <p>  <strong>输入</strong>：距离矩阵<span class="math notranslate nohighlight">\(\pmb{D}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
@@ -760,6 +768,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <p>  所谓<span class="math notranslate nohighlight">\(d\)</span>维流形是<span class="math notranslate nohighlight">\(n\)</span>维空间<span class="math notranslate nohighlight">\((d&lt;n)\)</span>的一部分，局部类似于<span class="math notranslate nohighlight">\(d\)</span>维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。<strong>流形学习</strong>通过训练实例所在的流形进行建模。流形学习基于流行假设，即大多数现实世界的高维数据集都接近于低维流形。如：三维空间的球面，其实可以只用经度和纬度两个特征来表示。低维嵌入流形上的本真距离（即测地线距离，如：北京至上海的距离（地球是圆的，直线距离要穿过地下层））不能用高维空间的直线距离来计算，但能用近邻距离来近似。</p>
 <p>  如何计算测地线距离呢？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。</p>
 <p>  它的<strong>核心思想</strong>是沿着图的边移动的距离近似于沿着流形移动的距离。</p>
+<hr class="docutils" />
 <section id="id11">
 <h3><span class="section-number">1.3.1. </span>算法<a class="headerlink" href="#id11" title="此标题的永久链接">#</a></h3>
 <p><strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.</p>
@@ -799,6 +808,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 </pre></div>
 </div>
 </section>
+<hr class="docutils" />
 <section id="id12">
 <h3><span class="section-number">1.3.2. </span>流形<a class="headerlink" href="#id12" title="此标题的永久链接">#</a></h3>
 <p>  在介绍流形前，需要一些有关的背景知识。</p>
@@ -847,6 +857,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 \]</div>
 <p>则LLE希望此关系在低维空间依旧能得以保持。</p>
 </section>
+<hr class="docutils" />
 <section id="id14">
 <h3><span class="section-number">1.4.2. </span>LLE求解<a class="headerlink" href="#id14" title="此标题的永久链接">#</a></h3>
 <p>  <strong>Step 1</strong>. 寻找样本<span class="math notranslate nohighlight">\(\forall \pmb{x}_i\in \mathcal{X}\)</span>的<span class="math notranslate nohighlight">\(k\)</span>个近邻。</p>
@@ -988,6 +999,7 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \end{split}
 \end{split}\]</div>
 </section>
+<hr class="docutils" />
 <section id="id17">
 <h3><span class="section-number">1.5.2. </span>拉普拉斯矩阵<a class="headerlink" href="#id17" title="此标题的永久链接">#</a></h3>
 <p>  离散Laplacian算子表示为一个矩阵时，映射函数<span class="math notranslate nohighlight">\(\phi\)</span>可以写为列向量，<span class="math notranslate nohighlight">\(\Delta \phi\)</span>则表示为Laplacian矩阵<span class="math notranslate nohighlight">\(\pmb{L}\)</span>与列向量的乘积，即</p>
@@ -1001,6 +1013,7 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \pmb{D}_{ii}=\sum_j \pmb{W}_{ij}
 \]</div>
 </section>
+<hr class="docutils" />
 <section id="id18">
 <h3><span class="section-number">1.5.3. </span>拉普拉斯变换<a class="headerlink" href="#id18" title="此标题的永久链接">#</a></h3>
 <p>  如果数据样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与<span class="math notranslate nohighlight">\(\pmb{x}_j\)</span>很相似，则在拉普拉斯变换后的子空间与原空间一样，尽可能的接近。即，</p>
@@ -1039,7 +1052,7 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 <section id="sne">
 <h3><span class="section-number">1.6.1. </span>SNE<a class="headerlink" href="#sne" title="此标题的永久链接">#</a></h3>
 <p>  随机近邻嵌入(Stochastic Neighbor Embedding,SNE)的主要思想是：若两数据在高维空间相似(距离很近)，那么通过某种降维映射至2-3维空间时，它们应该离的很近。</p>
-<p>  使用条件概率<span class="math notranslate nohighlight">\(p_{j|i}\)</span>来评价数据点<span class="math notranslate nohighlight">\(\pmb{x}_i,\pmb{x}_j\)</span>的相似性。高维空间的距离可以通过高斯分布进行计算，</p>
+<p>  使用条件概率<span class="math notranslate nohighlight">\(p_{j|i}\)</span>来评价数据点<span class="math notranslate nohighlight">\(\pmb{x}_i,\pmb{x}_j\)</span>的相似性。高维空间的距离可以通过<strong>高斯分布</strong>进行近似计算，</p>
 <div class="math notranslate nohighlight">
 \[
 \textrm{P}\{\textrm{高维空间}\pmb{x}_j是\pmb{x}_i的邻居\}\triangleq p_{j|i}=\frac{\exp(-\Vert\pmb{x}_i-\pmb{x}_j\Vert^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\Vert\pmb{x}_i-\pmb{x}_k\Vert^2/(2\sigma_i^2))}
@@ -1134,9 +1147,45 @@ t_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 <li><p><strong>拥挤问题</strong>。不同的类簇挤在一起即为拥挤问题。</p></li>
 </ol>
 </section>
+<hr class="docutils" />
 <section id="id20">
 <h3><span class="section-number">1.6.2. </span>对称SNE<a class="headerlink" href="#id20" title="此标题的永久链接">#</a></h3>
-<p>  针对SNE的不对称问题</p>
+<p>  针对SNE的不对称问题，可以在低维和高维空间构造联合分布，使之任意<span class="math notranslate nohighlight">\(i,j\)</span>都有<span class="math notranslate nohighlight">\(p_{ij}=p_{ji}, q_{ij}=q_{ji}\)</span>。在低维空间构造，</p>
+<div class="math notranslate nohighlight">
+\[
+q_{ij}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)}{\sum_{k\neq l} \exp(-\Vert \pmb{y}_k-\pmb{y}_l\Vert^2}
+\]</div>
+<p>但在高维空间，按<span class="math notranslate nohighlight">\(q_{ij}\)</span>的形式构造<span class="math notranslate nohighlight">\(p_{ij}\)</span>则会存在问题。如果有一个离群点存在，则会造成离群点<span class="math notranslate nohighlight">\(i\)</span>与其余点<span class="math notranslate nohighlight">\(j\)</span>的<span class="math notranslate nohighlight">\(p_{ij}\)</span>都比较小。这就意味着，无论离群点映射在低维空间的任何位置，惩罚值都不会太大。所以需要采用其它方法。以下是一种简单直观的方法，既满足对称性又符合离群点的惩罚值不会过小。</p>
+<div class="math notranslate nohighlight">
+\[
+p_{ij}=\frac{p_{j|i}+p_{i|j}}{2n}\quad (n\textrm{为数据总量})
+\]</div>
+<p>此时，目标函数和梯度变为，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}=\sum_i\sum_j p_{ij}\log\frac{p_{ij}}{q_{ij}},\quad\frac{\partial \mathcal{L}}{\partial\pmb{y}_i}=4\sum_j (p_{ij}-q_{ij})(\pmb{y}_i-\pmb{y}_j)
+\]</div>
+<p>  虽然梯度计算简化了也解决了不对称问题，但效果只是略优于SNE,拥挤问题仍未解决。</p>
+</section>
+<hr class="docutils" />
+<section id="t-sne">
+<h3><span class="section-number">1.6.3. </span>t-SNE<a class="headerlink" href="#t-sne" title="此标题的永久链接">#</a></h3>
+<p>  拥挤问题实质上是高维空间距离分布和低维空间距离分布的差异造成的。例如，100维空间可以存在101个点两两距离相等，但在2维空间，最多只能保证3个点两两距离相等。因此高维空间的距离关系完整保持到低维空间是很困难的。从维度上来说，随着维度的增加，大部分数据点之间距离越来越远，如果将这种距离关系保留到低维空间，必定会出现拥挤问题。</p>
+<p>  对于这个问题，可以引入t分布来改进。首先考察一下<strong>低维使用<span class="math notranslate nohighlight">\(t\)</span>分布，高维使用正态分布</strong>的情况。<div align="center">
+<img alt="difference between t-dist and norm" src="../_images/norm-t-dist.png" /></p>
+</div>
+<p>从图中可以看出，高维空间较近的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更近。高维空间较远的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更远。换句话说，映射至低维空间后，高维空间较远的点，在低维空间距离更远；高维空间较近的点，低维空间距离更近。</p>
+<p>  引入<span class="math notranslate nohighlight">\(t\)</span>分布。在高维空间使用高斯分布，在低维空间使用<span class="math notranslate nohighlight">\(t\)</span>分布。可以使得高维空间较近的点在低维空间距离更近，高维空间较远的点在低维空间距离更远。这就达到了同一类簇内的点聚合的更紧密，不同类簇之间的点更加疏远的目标。在低维空间定义自由度为1的<span class="math notranslate nohighlight">\(t\)</span>分布重新定义<span class="math notranslate nohighlight">\(q_{ij}\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+q_{ij}=\frac{(1+\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)^{-1}}{\sum_{k\neq l}(1+\Vert \pmb{y}_k-\pmb{y}_l\Vert^2)^{-1}}
+\]</div>
+<p>仍然使用KL散度来衡量高维空间正态分布与低维空间<span class="math notranslate nohighlight">\(t\)</span>分布之间的差异程度，此时，梯度变为，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\pmb{y}_i}=4\sum_{j}(p_{ij}-q_{ij})(1+\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)^{-1}
+\]</div>
+<p>  仍然使用随机梯度下降法训练，即可得到<span class="math notranslate nohighlight">\(\hat{\pmb{Y}}\)</span>。这就是t-SNE算法。原文参考(<a class="reference external" href="https://papers.nips.cc/paper/2002/file/6150ccc6069bea6b5716254057a194ef-Paper.pdf">Stochastic Neighbor Embedding</a>,<a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">Visualizing Data using t-SNE</a>).</p>
 </section>
 </section>
 </section>
@@ -1221,6 +1270,7 @@ t_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.6. 随机近邻嵌入</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sne">1.6.1. SNE</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id20">1.6.2. 对称SNE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-sne">1.6.3. t-SNE</a></li>
 </ul>
 </li>
 </ul>
