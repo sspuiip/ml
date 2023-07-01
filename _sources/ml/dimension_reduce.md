@@ -824,7 +824,7 @@ $$
 $$
 
 
-<div style="background-color: lightgray">
+<div style="background-color: #F8F8F8  ">
 
 &emsp;&emsp;提示：使用链式法则求解。令$p_{ij}=p_{i|j}$, $q_{ij}=q_{i|j}$,以及，
 
@@ -938,7 +938,13 @@ $$
 
 &emsp;&emsp;拥挤问题实质上是高维空间距离分布和低维空间距离分布的差异造成的。例如，100维空间可以存在101个点两两距离相等，但在2维空间，最多只能保证3个点两两距离相等。因此高维空间的距离关系完整保持到低维空间是很困难的。从维度上来说，随着维度的增加，大部分数据点之间距离越来越远，如果将这种距离关系保留到低维空间，必定会出现拥挤问题。
 
-&emsp;&emsp;对于这个问题，可以引入t分布来改进。首先考察一下**低维使用$t$分布，高维使用正态分布**的情况。<div align="center">
+&emsp;&emsp;首先,考虑一下两个分布：正态分布与$t$分布。<div align="center">
+![difference between t-dist and norm](../img/norm-t-fit.png)
+</div>
+
+这里可以看出，正态分布为了照顾异常点，会偏离大部分样本所在位置，且方差大。$t$分布尾部较高，对异常点不敏感，更鲁棒。需要注意的是：如果没有异常点，这两个分布相差不大。
+
+&emsp;&emsp;对于这个问题，可以引入t分布来改进。考察一下**低维使用$t$分布，高维使用正态分布**的情况。<div align="center">
 ![difference between t-dist and norm](../img/norm-t-dist.png)
 </div>
 

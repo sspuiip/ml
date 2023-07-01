@@ -1073,7 +1073,7 @@ q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Ver
 \[
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})
 \]</div>
-<div style="background-color: lightgray">
+<div style="background-color: #F8F8F8  ">
 <p>  提示：使用链式法则求解。令<span class="math notranslate nohighlight">\(p_{ij}=p_{i|j}\)</span>, <span class="math notranslate nohighlight">\(q_{ij}=q_{i|j}\)</span>,以及，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1171,7 +1171,11 @@ p_{ij}=\frac{p_{j|i}+p_{i|j}}{2n}\quad (n\textrm{为数据总量})
 <section id="t-sne">
 <h3><span class="section-number">1.6.3. </span>t-SNE<a class="headerlink" href="#t-sne" title="此标题的永久链接">#</a></h3>
 <p>  拥挤问题实质上是高维空间距离分布和低维空间距离分布的差异造成的。例如，100维空间可以存在101个点两两距离相等，但在2维空间，最多只能保证3个点两两距离相等。因此高维空间的距离关系完整保持到低维空间是很困难的。从维度上来说，随着维度的增加，大部分数据点之间距离越来越远，如果将这种距离关系保留到低维空间，必定会出现拥挤问题。</p>
-<p>  对于这个问题，可以引入t分布来改进。首先考察一下<strong>低维使用<span class="math notranslate nohighlight">\(t\)</span>分布，高维使用正态分布</strong>的情况。<div align="center">
+<p>  首先,考虑一下两个分布：正态分布与<span class="math notranslate nohighlight">\(t\)</span>分布。<div align="center">
+<img alt="difference between t-dist and norm" src="../_images/norm-t-fit.png" /></p>
+</div>
+<p>这里可以看出，正态分布为了照顾异常点，会偏离大部分样本所在位置，且方差大。<span class="math notranslate nohighlight">\(t\)</span>分布尾部较高，对异常点不敏感，更鲁棒。需要注意的是：如果没有异常点，这两个分布相差不大。</p>
+<p>  对于这个问题，可以引入t分布来改进。考察一下<strong>低维使用<span class="math notranslate nohighlight">\(t\)</span>分布，高维使用正态分布</strong>的情况。<div align="center">
 <img alt="difference between t-dist and norm" src="../_images/norm-t-dist.png" /></p>
 </div>
 <p>从图中可以看出，高维空间较近的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更近。高维空间较远的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更远。换句话说，映射至低维空间后，高维空间较远的点，在低维空间距离更远；高维空间较近的点，低维空间距离更近。</p>
