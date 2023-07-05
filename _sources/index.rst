@@ -12,6 +12,7 @@
    :numbered:
 
    ml/dimension_reduce.md
+   ml/neuro_representation.md
    
 .. toctree::
    :maxdepth: 2
