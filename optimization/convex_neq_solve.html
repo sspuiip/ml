@@ -299,16 +299,17 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 增广Lagrangian乘子法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2.2. 混合约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.3.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.3.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.3.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.3.2.2. <strong>代理对偶间隙</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -327,6 +328,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <p>  求解约束优化问题的标准方法是将约束优化问题转化为无约束优化问题：主要有3种：Lagrangian乘子法、罚函数法和增广Lagrangian乘子法。</p>
+<hr class="docutils" />
 <section id="lagrangian">
 <h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="此标题的永久链接">#</a></h2>
 <p>  考虑等式约束的凸优化问题，</p>
@@ -371,11 +373,12 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 \end{split}
 \end{split}\]</div>
 </section>
-<section id="id2">
-<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<hr class="docutils" />
+<section id="lagrangian-alm">
+<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法(ALM)<a class="headerlink" href="#lagrangian-alm" title="此标题的永久链接">#</a></h2>
 <p>  将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。</p>
-<section id="id3">
-<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<section id="id2">
+<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h3>
 <p>  考虑等式约束优化问题。记<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top\)</span>。对Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda})\)</span>加惩罚函数，即，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -410,8 +413,8 @@ L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b}
 \end{split}
 \end{split}\]</div>
 </section>
-<section id="id4">
-<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<section id="id3">
+<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  考虑不等式和等式约束同时存在的混合约束问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -441,11 +444,47 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 \end{split}\]</div>
 </section>
 </section>
-<section id="id5">
-<h2><span class="section-number">3.3. </span>内点法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
+<hr class="docutils" />
+<section id="admm">
+<h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="此标题的永久链接">#</a></h2>
+<p>  考虑有以下约束问题，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\min\limits_{\pmb{x},\pmb{z}}\quad &amp;f(\pmb{x})+g(\pmb{z})\\
+\textrm{s.t.}\quad &amp;\pmb{Ax}+\pmb{Bz}=\pmb{c}\\
+\end{split}
+\end{split}\]</div>
+<p>其增广拉格朗日函数可以写为</p>
+<div class="math notranslate nohighlight">
+\[
+L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambda},\pmb{Ax}+\pmb{Bz}-\pmb{c}\rangle+\frac{\rho}{2}\Vert\pmb{Ax}+\pmb{Bz}-\pmb{c} \Vert_2^2
+\]</div>
+<p>则ADMM的原始变量更新替换为交替更新，即，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{x}^{t+1}&amp;=\arg\min\limits_{\pmb{x}}L_\rho(\pmb{x},\pmb{z}^t,\pmb{\lambda}^t)\\
+\pmb{z}^{t+1}&amp;=\arg\min\limits_{\pmb{z}}L_\rho(\pmb{x}^{t+1},\pmb{z},\pmb{\lambda}^t)\\
+\pmb{\lambda}^{t+1}&amp;=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
+\end{split}
+\end{split}\]</div>
+<p>  做为区别，以下是ALM的更新迭代，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+(\pmb{x}^{t+1},\pmb{z}^{t+1})&amp;=\arg\min\limits_{\pmb{x},\pmb{z}} L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}^t)\\
+\pmb{\lambda}^{t+1}&amp;=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
+\end{split}
+\end{split}\]</div>
+<p>  总的来说，ALM原始变量的更新倾向于“联合更新”，而ADMM原始变量的更新则倾向于“交替更新”。</p>
+</section>
+<hr class="docutils" />
+<section id="id4">
+<h2><span class="section-number">3.4. </span>内点法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h2>
 <p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
-<section id="id6">
-<h3><span class="section-number">3.3.1. </span>障碍法<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
+<section id="id5">
+<h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h3>
 <p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -612,8 +651,8 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{equation}
   \end{split}\]</div>
 </section>
-<section id="id7">
-<h3><span class="section-number">3.3.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
+<section id="id6">
+<h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
 <p>   原对偶内点法和障碍方法非常相似，但也有一些差别。</p>
 <ul class="simple">
 <li><p>仅有一层迭代，没有障碍方法的内部迭代和外部迭代的区分。每次迭代时同时更新原对偶变量。</p></li>
@@ -621,8 +660,8 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 <li><p>在原对偶内点法中，原对偶迭代值不需要是可行的。</p></li>
 </ul>
 <p>   原对偶方法经常比障碍方法有效，特别是高精度场合，因为它们可以展现超线性收敛性质。原对偶内点法相对于障碍方法所具有的另一个优点是，它们可以有效处理可行但不严格可行的问题。</p>
-<section id="id8">
-<h4><span class="section-number">3.3.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h4>
+<section id="id7">
+<h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h4>
 <p>  如同障碍方法，我们从修改KKT条件开始，该条件可以表述为<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0, t&gt;0\)</span>，其中</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -685,8 +724,8 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </li>
 </ul>
 </section>
-<section id="id9">
-<h4><span class="section-number">3.3.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h4>
+<section id="id8">
+<h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h4>
 <p>  在原-对偶内点法中，迭代点<span class="math notranslate nohighlight">\(\pmb{x}_k,\lambda_k,\nu_k\)</span>不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤<span class="math notranslate nohighlight">\(k\)</span>计算对偶间隙<span class="math notranslate nohighlight">\(\eta_k\)</span>。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -761,16 +800,17 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2. 增广Lagrangian乘子法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.2.2. 混合约束</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.3. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.3.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.3.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.3.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">3.3.2.2. <strong>代理对偶间隙</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
 </ul>
 </li>
 </ul>
