@@ -2,6 +2,7 @@
 
 &emsp;&emsp;求解约束优化问题的标准方法是将约束优化问题转化为无约束优化问题：主要有3种：Lagrangian乘子法、罚函数法和增广Lagrangian乘子法。
 
+---
 
 ## Lagrangian乘子法
 
@@ -52,8 +53,9 @@ $$
 \end{split}
 $$
 
+---
 
-## 增广Lagrangian乘子法
+## 增广Lagrangian乘子法(ALM)
 
 &emsp;&emsp;将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。
 
@@ -132,7 +134,48 @@ $$
 \end{split}
 $$
 
+---
 
+## 交替方向乘子法(ADMM)
+
+&emsp;&emsp;考虑有以下约束问题，
+
+$$
+\begin{split}
+\min\limits_{\pmb{x},\pmb{z}}\quad &f(\pmb{x})+g(\pmb{z})\\
+\textrm{s.t.}\quad &\pmb{Ax}+\pmb{Bz}=\pmb{c}\\
+\end{split}
+$$
+
+其增广拉格朗日函数可以写为
+
+$$
+L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambda},\pmb{Ax}+\pmb{Bz}-\pmb{c}\rangle+\frac{\rho}{2}\Vert\pmb{Ax}+\pmb{Bz}-\pmb{c} \Vert_2^2
+$$
+
+则ADMM的原始变量更新替换为交替更新，即，
+
+$$
+\begin{split}
+\pmb{x}^{t+1}&=\arg\min\limits_{\pmb{x}}L_\rho(\pmb{x},\pmb{z}^t,\pmb{\lambda}^t)\\
+\pmb{z}^{t+1}&=\arg\min\limits_{\pmb{z}}L_\rho(\pmb{x}^{t+1},\pmb{z},\pmb{\lambda}^t)\\
+\pmb{\lambda}^{t+1}&=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
+\end{split}
+$$
+
+&emsp;&emsp;做为区别，以下是ALM的更新迭代，
+
+$$
+\begin{split}
+(\pmb{x}^{t+1},\pmb{z}^{t+1})&=\arg\min\limits_{\pmb{x},\pmb{z}} L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}^t)\\
+\pmb{\lambda}^{t+1}&=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
+\end{split}
+$$
+
+&emsp;&emsp;总的来说，ALM原始变量的更新倾向于“联合更新”，而ADMM原始变量的更新则倾向于“交替更新”。
+
+
+---
 
 ## 内点法
 &emsp;&emsp;用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。
