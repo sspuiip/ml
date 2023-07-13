@@ -317,15 +317,15 @@ document.write(`
 <p>  自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：</p>
 <ol class="arabic simple">
 <li><p>原码空间<span class="math notranslate nohighlight">\(\mathcal{X}\in\mathbb{R}^n\)</span>与编码空间<span class="math notranslate nohighlight">\(\mathcal{Z}\in\mathbb{R}^m\)</span>。</p></li>
-<li><p>编码函数（参数为<span class="math notranslate nohighlight">\(\phi\)</span>）<span class="math notranslate nohighlight">\(E_\phi :\mathcal{X}\rightarrow\mathcal{Z}\)</span>与解码函数（参数为<span class="math notranslate nohighlight">\(\theta\)</span>）<span class="math notranslate nohighlight">\(D_\theta :\mathcal{Z}\rightarrow \mathcal{X}\)</span>。</p></li>
+<li><p>编码函数（参数为<span class="math notranslate nohighlight">\(\phi\)</span>）<span class="math notranslate nohighlight">\(E_\phi :\mathcal{X}\rightarrow\mathcal{Z}\)</span>与解码函数（参数为<span class="math notranslate nohighlight">\(\theta\)</span>）<span class="math notranslate nohighlight">\(D_\theta :\mathcal{Z}\rightarrow \mathcal{X}\)</span>.</p></li>
 </ol>
-<img alt="AutoEncdoer" src="../_images/Autoencoder.png" width='50%'/>
 <p>  对于任意<span class="math notranslate nohighlight">\(\pmb{x}\in\mathcal{X}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[
 \pmb{z}\triangleq E_\phi(\pmb{x})=\sigma(\pmb{Wx}+\pmb{b}),\quad \pmb{\hat{x}}\triangleq D_\theta (\pmb{z})=\sigma(\pmb{Hz}+\pmb{d})
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{W},\pmb{H}\)</span>分别为编码层参数和解码层参数，<span class="math notranslate nohighlight">\(\sigma\)</span>为激活函数。</p>
+<p><img alt="AutoEncoder" src="../_images/autoencoder.png" /></p>
 <ul class="simple">
 <li><p><strong>训练自编码器</strong></p></li>
 </ul>

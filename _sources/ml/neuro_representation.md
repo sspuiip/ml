@@ -2,13 +2,15 @@
 
 ## 自编码器(AutoEncoder)
 
+
+
 &emsp;&emsp;自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：
 
 1. 原码空间$\mathcal{X}\in\mathbb{R}^n$与编码空间$\mathcal{Z}\in\mathbb{R}^m$。
 
-2. 编码函数（参数为$\phi$）$E_\phi :\mathcal{X}\rightarrow\mathcal{Z}$与解码函数（参数为$\theta$）$D_\theta :\mathcal{Z}\rightarrow \mathcal{X}$。
+2. 编码函数（参数为$\phi$）$E_\phi :\mathcal{X}\rightarrow\mathcal{Z}$与解码函数（参数为$\theta$）$D_\theta :\mathcal{Z}\rightarrow \mathcal{X}$.
 
-<img alt="AutoEncdoer" src="../_images/Autoencoder.png" width='50%'/>
+
 
 &emsp;&emsp;对于任意$\pmb{x}\in\mathcal{X}$,
 
@@ -17,6 +19,8 @@ $$
 $$
 
 其中，$\pmb{W},\pmb{H}$分别为编码层参数和解码层参数，$\sigma$为激活函数。
+
+![AutoEncoder](../img/autoencoder.png)
 
 - **训练自编码器**
 
