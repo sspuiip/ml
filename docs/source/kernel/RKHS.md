@@ -150,14 +150,59 @@ $$
 解此微分方程，可知$y(x)$满足直线方程，即，
 
 $$
-y=kx+c
+\boxed{y=kx+c}
 $$
 
 通过边界点，可以计算出$k,c$。由此，通过变分法，我们得到了结论：两点之间直线距离最短。
 
-- **例2**.
+- **例2**. 最速降线问题。
 
-https://zhuanlan.zhihu.com/p/139018146
+&emsp;&emsp;该问题的泛函上节已知为
+
+$$
+t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx
+$$
+
+利用变分法，令$G(y,y',x)=\sqrt{\frac{1+y'^2}{2gy}}$，可求得Euler-Lagrange方程的两个偏导数，
+
+$$
+\frac{\partial G}{\partial y}=-\frac12\sqrt{\frac{1+y'^2}{y^3}},\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{y(1+y'^2)}}
+$$
+
+可得Euler方程如下，
+
+$$
+\frac12\sqrt{\frac{1+y'^2}{y^3}}+\frac{d}{dx}\left(\frac{y'}{\sqrt{y(1+y'^2)}}\right)=0
+$$
+
+注意到，
+
+$$
+\frac{d}{dx}\left[G-y'\frac{\partial G}{\partial y'}\right]=y'\frac{\partial G}{\partial y}+y''\frac{\partial G}{\partial y'}-y''\frac{\partial G}{\partial y'}-y'\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0
+$$
+
+因此有，
+
+$$
+G-y'\frac{\partial G}{\partial y'}=C
+$$
+
+做三角代换可得，
+
+$$
+y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
+$$
+
+上式对$\theta$求导，可得$x=r(\theta-\sin\theta)+x_0$。根据曲线过原点$(0,0)$及$(p,q)$可解出$x_0=0$以及$r$，最终结果为，
+
+$$
+\boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
+$$
+
+
+解此方程，最终得到
+
+[参考1](https://zhuanlan.zhihu.com/p/139018146)
 
 
 
