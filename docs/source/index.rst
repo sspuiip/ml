@@ -20,6 +20,7 @@
    :numbered:
 
    kernel/base.md
+   kernel/RKHS.md
 
 
 
