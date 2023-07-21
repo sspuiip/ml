@@ -1,0 +1,575 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>2. 再生核希尔伯特空间 &#8212; MLBOOK 1.0 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/RKHS';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" />
+    <link rel="prev" title="1. 核函数基础" href="base.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">MLBOOK 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 再生核希尔伯特空间</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/kernel/RKHS.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>再生核希尔伯特空间</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">2. </span>再生核希尔伯特空间<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">2.1. </span>基本概念<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<section id="id3">
+<h3><span class="section-number">2.1.1. </span>泛函<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<p>  首先来了解什么是泛函。<strong>泛函</strong>(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。</p>
+<blockquote>
+<div><p>假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式<span class="math notranslate nohighlight">\(J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx\)</span>.</p>
+</div></blockquote>
+<p>  可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。</p>
+<ul class="simple">
+<li><p><strong>例1</strong>. 两点间直线距离最短问题.</p></li>
+</ul>
+<p><img alt="两点间直线距离最短" src="../_images/functional1.png" /></p>
+<p>  如上图所示，从坐标原点<span class="math notranslate nohighlight">\((0,0)\)</span>到点<span class="math notranslate nohighlight">\((a,b)\)</span>的连接曲线为<span class="math notranslate nohighlight">\(y=y(x)\)</span>，曲线的弧长微分为<span class="math notranslate nohighlight">\(ds=\sqrt{1+\left( \frac{dy}{dx}\right)^2}dx\)</span>，总弧长为<span class="math notranslate nohighlight">\(s=\int_0^a (1+y'^2)^{1/2}dx\)</span>。可以看出<span class="math notranslate nohighlight">\(s\)</span>为一个标量，而等式右边为<span class="math notranslate nohighlight">\(y'(x)\)</span>的函数，即泛函，可记为<span class="math notranslate nohighlight">\(s(y')\)</span>。最终问题转化为：寻找曲线<span class="math notranslate nohighlight">\(y=y(x)\)</span>，使得泛函<span class="math notranslate nohighlight">\(s(y')\)</span>最小。</p>
+<ul class="simple">
+<li><p><strong>例2</strong>. 最速降线问题</p></li>
+</ul>
+<p><img alt="最速降线问题" src="../_images/functional2.png" /></p>
+<p>  如上图所示，有一物体从原点<span class="math notranslate nohighlight">\((0,0)\)</span>沿着曲线到达<span class="math notranslate nohighlight">\(A\)</span>点<span class="math notranslate nohighlight">\((a,b)\)</span>，若忽略摩擦力，那么沿着什么形状的曲线路径下降时间最短？物体从点<span class="math notranslate nohighlight">\((0,0)\)</span>运动到<span class="math notranslate nohighlight">\(P\)</span>点时，失去的势能为<span class="math notranslate nohighlight">\(mgy\)</span>，获得的动能为<span class="math notranslate nohighlight">\(mv^2/2\)</span>，由能量守恒定律可知，</p>
+<div class="math notranslate nohighlight">
+\[
+v^2=2gy
+\]</div>
+<p>在<span class="math notranslate nohighlight">\(P\)</span>点处，物体的运动速度为，</p>
+<div class="math notranslate nohighlight">
+\[
+v=\frac{ds}{dt}=\frac{\sqrt{1+y'^2}dx}{dt}
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(s\)</span>表示曲线弧长，<span class="math notranslate nohighlight">\(t\)</span>为运动时间。由上式可知，<span class="math notranslate nohighlight">\(dt=\frac{\sqrt{1+y'^2}dx}{v}\)</span>，将<span class="math notranslate nohighlight">\(v\)</span>代入，可得，</p>
+<div class="math notranslate nohighlight">
+\[
+dt=\sqrt{\frac{1+y'^2}{2gy}}dx
+\]</div>
+<p>最终可得物体从<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间为(等式两边同时积分)，</p>
+<div class="math notranslate nohighlight">
+\[
+t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]
+\]</div>
+<p>物体由<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间<span class="math notranslate nohighlight">\(t\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的函数。问题最终转变为满足条件<span class="math notranslate nohighlight">\(y(0)=0,y(a)=b\)</span>的所有连续函数<span class="math notranslate nohighlight">\(y=y(x)\)</span>中，找出一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得<span class="math notranslate nohighlight">\(J[y]\)</span>最小。</p>
+<hr class="docutils" />
+<section id="id4">
+<h4><span class="section-number">2.1.1.1. </span>泛函极值求解–变分法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h4>
+<p>  对于引入的泛函问题<span class="math notranslate nohighlight">\(J[y]\)</span>，如何求其函数变时的极值<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>呢？一个可行的办法是使用变分法(Calculus of Variations)。传统的微积分中一个基本问题是寻找变最<span class="math notranslate nohighlight">\(x\)</span>的值使得函数<span class="math notranslate nohighlight">\(y(x)\)</span>的值大化(或最小化)。类似的，变分法能够寻找到一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得泛函<span class="math notranslate nohighlight">\(F[y]\)</span>的值最大（或最小）。</p>
+<p>  传统的函数中，可以对变量<span class="math notranslate nohighlight">\(x\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon\)</span>展开函数，即</p>
+<div class="math notranslate nohighlight">
+\[
+y(x+\epsilon)=y(x)+\frac{dy}{dx}\epsilon+O(\epsilon^2)
+\]</div>
+<p>类似的，对函数<span class="math notranslate nohighlight">\(y(x)\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon \eta(x)\)</span>，可以展开泛函，即</p>
+<div class="math notranslate nohighlight">
+\[
+F[y(x)+\epsilon \eta(x)]=F[y(x)]+\epsilon\int\frac{\delta F}{\delta y(x)}\eta(x)dx+O(\epsilon^2)
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\frac{\delta F}{\delta y(x)}\)</span>为泛函<span class="math notranslate nohighlight">\(F[y]\)</span>关于<span class="math notranslate nohighlight">\(y(x)\)</span>的导数。上式可以看成函数展开的一个自然扩展。可以看出，泛函<span class="math notranslate nohighlight">\(F[y]\)</span>依赖<span class="math notranslate nohighlight">\(y\)</span>在所有点<span class="math notranslate nohighlight">\(x\)</span>的值。</p>
+<p>  现考虑更一般的泛函<span class="math notranslate nohighlight">\(F[y]\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+F[y]=\int G(y(x),y'(x),x)dx
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(y(x)\)</span>的值在积分边界上假定是固定的。现在对函数<span class="math notranslate nohighlight">\(y\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon \eta(x)\)</span>，可以得到</p>
+<div class="math notranslate nohighlight">
+\[
+F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}\eta(x)+\frac{\partial G}{\partial y'}\eta'(x)\right\}dx+O(\epsilon^2)
+\]</div>
+<p>注意：<span class="math notranslate nohighlight">\(\delta y=\epsilon \eta(x), \delta y'=\epsilon \eta'(x)\)</span>。对等式右边第二项使用分部积分可得，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\epsilon\int\frac{\partial G}{\partial y'}\eta'(x)dx&amp;=\epsilon\int\frac{\partial G}{\partial y'}d\eta(x)\\
+&amp;=\left.\frac{\partial G}{\partial y'}\delta y\right|_{\textrm{boundary}_{\textrm{inf}}}^{\textrm{boundary}_{\textrm{sup}}}-\epsilon\int\eta(x)\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)\\
+&amp;=-\epsilon\int\eta(x)\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)\qquad (\textrm{在积分区域的边界}\delta y=0 )
+\end{split}
+\end{split}\]</div>
+<p>将上式结果代回，可得</p>
+<div class="math notranslate nohighlight">
+\[
+F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}-\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)\right\}\eta(x)dx+O(\epsilon^2)
+\]</div>
+<p>若泛函在<span class="math notranslate nohighlight">\(y(x)\)</span>取得极值，则必有，</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{\frac{\partial G}{\partial y}-\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0}
+\]</div>
+<p>这便是变分法的核心公式，也称之为Euler-Lagrange方程。有了该公式，就可以找出所寻求的极值点<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>。一般来说，Euler方程是一个二阶微分方程，<span class="math notranslate nohighlight">\(y(x)\)</span>的通解中含有的两个待定常数刚好通过两个边界条件确定。</p>
+</section>
+<section id="id5">
+<h4><span class="section-number">2.1.1.2. </span>含参变量的定积分<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
+<p>  变分法中，对于泛函求导问题（求导与积分先后顺序问题），可以参考含变量的定积分。含变量的定积分一般具有如下形式，</p>
+<div class="math notranslate nohighlight">
+\[
+I(y)=\int_a^b f(x,y)dx
+\]</div>
+<blockquote>
+<div><p><strong>定理1</strong>. 若函数<span class="math notranslate nohighlight">\(f(x,y)\)</span>在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>连续。</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>定理2</strong>.  若函数<span class="math notranslate nohighlight">\(f(x,y),f_y'(x,y)\)</span>都在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>上具有连续导数<span class="math notranslate nohighlight">\(I'[y]=\int_a^b f'_y(x,y)dx\)</span>.</p>
+</div></blockquote>
+<p>证明过程可参考《数学分析》ISBN：9787040427806。</p>
+</section>
+<hr class="docutils" />
+<section id="id6">
+<h4><span class="section-number">2.1.1.3. </span>例子<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h4>
+<ul class="simple">
+<li><p><strong>例1</strong>. 求解两点间最短路径。</p></li>
+</ul>
+<p>  该问题的泛函已知为，</p>
+<div class="math notranslate nohighlight">
+\[
+s=\int_0^a (1+y'^2)^{1/2}dx
+\]</div>
+<p>使用变分法，令<span class="math notranslate nohighlight">\(G(y,y',x)=\sqrt{1+y'^2}\)</span>，使用Euler-Lagrange方程来寻找<span class="math notranslate nohighlight">\(s\)</span>有极值的函数<span class="math notranslate nohighlight">\(y(x)\)</span>。注意到，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial G}{\partial y}=0,\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{1+y'^2}}
+\]</div>
+<p>代入Euler-Lagrange方程，可知，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dx}\left(\frac{y'}{\sqrt{1+y'^2}} \right)=0
+\]</div>
+<p>解此微分方程，可知<span class="math notranslate nohighlight">\(y(x)\)</span>满足直线方程，即，</p>
+<div class="math notranslate nohighlight">
+\[
+y=kx+c
+\]</div>
+<p>通过边界点，可以计算出<span class="math notranslate nohighlight">\(k,c\)</span>。由此，通过变分法，我们得到了结论：两点之间直线距离最短。</p>
+<ul class="simple">
+<li><p><strong>例2</strong>.</p></li>
+</ul>
+<p>https://zhuanlan.zhihu.com/p/139018146</p>
+<p>  一个特殊的泛函： Dirac evaluation functional.</p>
+<blockquote>
+<div><p><strong>定义1(Evaluation Functional)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> be a Hilbert space of functions <span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>, defined on a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For a fixed <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>，map <span class="math notranslate nohighlight">\(\delta_x :\mathcal{H}\rightarrow\mathbb{R}\)</span>，<span class="math notranslate nohighlight">\(\delta_x :f\rightarrow  f(x)\)</span> is called the (Dirac) evaluation functional at <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div></blockquote>
+<p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="base.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../optimization/convex_prob.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>凸优化问题</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022, SSPUIIP.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
