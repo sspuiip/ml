@@ -306,6 +306,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.1.2. 再生核Hilbert空间</a></li>
 </ul>
 </li>
 </ul>
@@ -327,7 +328,10 @@ document.write(`
 <h3><span class="section-number">2.1.1. </span>泛函<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  首先来了解什么是泛函。<strong>泛函</strong>(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。</p>
 <blockquote>
-<div><p>假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式<span class="math notranslate nohighlight">\(J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx\)</span>.</p>
+<div><p><strong>定义0 (泛函)</strong>. 假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式
+$<span class="math notranslate nohighlight">\(
+J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
+\)</span>$</p>
 </div></blockquote>
 <p>  可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。</p>
 <ul class="simple">
@@ -445,19 +449,72 @@ s=\int_0^a (1+y'^2)^{1/2}dx
 <p>解此微分方程，可知<span class="math notranslate nohighlight">\(y(x)\)</span>满足直线方程，即，</p>
 <div class="math notranslate nohighlight">
 \[
-y=kx+c
+\boxed{y=kx+c}
 \]</div>
 <p>通过边界点，可以计算出<span class="math notranslate nohighlight">\(k,c\)</span>。由此，通过变分法，我们得到了结论：两点之间直线距离最短。</p>
 <ul class="simple">
-<li><p><strong>例2</strong>.</p></li>
+<li><p><strong>例2</strong>. 最速降线问题。</p></li>
 </ul>
-<p>https://zhuanlan.zhihu.com/p/139018146</p>
-<p>  一个特殊的泛函： Dirac evaluation functional.</p>
+<p>  该问题的泛函上节已知为</p>
+<div class="math notranslate nohighlight">
+\[
+t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx
+\]</div>
+<p>利用变分法，令<span class="math notranslate nohighlight">\(G(y,y',x)=\sqrt{\frac{1+y'^2}{2gy}}\)</span>，可求得Euler-Lagrange方程的两个偏导数，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial G}{\partial y}=-\frac12\sqrt{\frac{1+y'^2}{y^3}},\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{y(1+y'^2)}}
+\]</div>
+<p>可得Euler方程如下，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac12\sqrt{\frac{1+y'^2}{y^3}}+\frac{d}{dx}\left(\frac{y'}{\sqrt{y(1+y'^2)}}\right)=0
+\]</div>
+<p>注意到，</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{d}{dx}\left[G-y'\frac{\partial G}{\partial y'}\right]=y'\frac{\partial G}{\partial y}+y''\frac{\partial G}{\partial y'}-y''\frac{\partial G}{\partial y'}-y'\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0
+\]</div>
+<p>因此有，</p>
+<div class="math notranslate nohighlight">
+\[
+G-y'\frac{\partial G}{\partial y'}=C
+\]</div>
+<p>做三角代换可得，</p>
+<div class="math notranslate nohighlight">
+\[
+y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
+\]</div>
+<p>上式对<span class="math notranslate nohighlight">\(\theta\)</span>求导，可得<span class="math notranslate nohighlight">\(x=r(\theta-\sin\theta)+x_0\)</span>。根据曲线过原点<span class="math notranslate nohighlight">\((0,0)\)</span>及<span class="math notranslate nohighlight">\((p,q)\)</span>可解出<span class="math notranslate nohighlight">\(x_0=0\)</span>以及<span class="math notranslate nohighlight">\(r\)</span>，最终结果为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
+\end{split}\]</div>
+<p>解此方程，最终得到</p>
+<p><a class="reference external" href="https://zhuanlan.zhihu.com/p/139018146">参考1</a></p>
+</section>
+</section>
+<section id="hilbert">
+<h3><span class="section-number">2.1.2. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接">#</a></h3>
+<p>  一个特殊的泛函：求值泛函(Dirac evaluation functional).</p>
 <blockquote>
-<div><p><strong>定义1(Evaluation Functional)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> be a Hilbert space of functions <span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>, defined on a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For a fixed <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>，map <span class="math notranslate nohighlight">\(\delta_x :\mathcal{H}\rightarrow\mathbb{R}\)</span>，<span class="math notranslate nohighlight">\(\delta_x :f\rightarrow  f(x)\)</span> is called the (Dirac) evaluation functional at <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div><p><strong>定义1 (Evaluation Functional)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> be a Hilbert space of functions <span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>, defined on a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For a fixed <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>，map <span class="math notranslate nohighlight">\(\delta_x :\mathcal{H}\rightarrow\mathbb{R}\)</span>，<span class="math notranslate nohighlight">\(\delta_x :f\rightarrow  f(x)\)</span> is called the (Dirac) evaluation functional at <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div></blockquote>
+<p>显然，求值泛函<span class="math notranslate nohighlight">\(\delta_x\)</span>是一个线性泛函，因为对于<span class="math notranslate nohighlight">\(\forall f,g\in\mathcal{H}, \forall \alpha,\beta\in\mathbb{R}\)</span>以下等式成立，</p>
+<div class="math notranslate nohighlight">
+\[
+\delta_x(\alpha f+\beta g)=(\alpha f+\beta g)(x)=\alpha f(x)+\beta g(x)=\alpha \delta_x(f)+\beta\delta_x(g)
+\]</div>
+<blockquote>
+<div><p><strong>定义2 (RKHS)</strong>. 设<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个定义在非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>上的函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>构成的Hilbert空间，若函数<span class="math notranslate nohighlight">\(\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\)</span>满足：</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\forall x \in \mathcal{X},\kappa(\cdot,x)\in\mathbb{R}\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)\)</span>;</p></li>
+<li><p>特别地，<span class="math notranslate nohighlight">\(\forall x,y\in\mathcal{X}\)</span>，有<span class="math notranslate nohighlight">\(\kappa(x,y)=\langle \kappa(\cdot,x),\kappa(\cdot,y)\rangle_\mathcal{H}\)</span>;</p></li>
+</ol>
+<p>其中，<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}\)</span>是内积。则称<span class="math notranslate nohighlight">\(k\)</span>为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的再生核函数，<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为再生核Hilbert空间。</p>
 </div></blockquote>
 <p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
-</section>
 </section>
 </section>
 </section>
@@ -517,6 +574,7 @@ y=kx+c
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.1.2. 再生核Hilbert空间</a></li>
 </ul>
 </li>
 </ul>

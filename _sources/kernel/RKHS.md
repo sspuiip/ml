@@ -9,7 +9,10 @@
 
 &emsp;&emsp;首先来了解什么是泛函。**泛函**(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。
 
->假设有映射$F[y]: \mathcal{C}\rightarrow \mathbb{B}$，其中$\forall y(x)\in \mathcal{C}$，$\mathcal{C}$为函数集, $y$为$x$的函数，$x\in\mathcal{X}$,数集$\mathbb{B}\subseteq \mathbb{R}$，则称$F$是$y(x)$的泛函。一般记为积分形式$J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx$.
+>**定义0 (泛函)**. 假设有映射$F[y]: \mathcal{C}\rightarrow \mathbb{B}$，其中$\forall y(x)\in \mathcal{C}$，$\mathcal{C}$为函数集, $y$为$x$的函数，$x\in\mathcal{X}$,数集$\mathbb{B}\subseteq \mathbb{R}$，则称$F$是$y(x)$的泛函。一般记为积分形式
+> $$
+> J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
+> $$
 
 &emsp;&emsp;可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。
 
@@ -150,20 +153,80 @@ $$
 解此微分方程，可知$y(x)$满足直线方程，即，
 
 $$
-y=kx+c
+\boxed{y=kx+c}
 $$
 
 通过边界点，可以计算出$k,c$。由此，通过变分法，我们得到了结论：两点之间直线距离最短。
 
-- **例2**.
+- **例2**. 最速降线问题。
 
-https://zhuanlan.zhihu.com/p/139018146
+&emsp;&emsp;该问题的泛函上节已知为
+
+$$
+t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx
+$$
+
+利用变分法，令$G(y,y',x)=\sqrt{\frac{1+y'^2}{2gy}}$，可求得Euler-Lagrange方程的两个偏导数，
+
+$$
+\frac{\partial G}{\partial y}=-\frac12\sqrt{\frac{1+y'^2}{y^3}},\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{y(1+y'^2)}}
+$$
+
+可得Euler方程如下，
+
+$$
+\frac12\sqrt{\frac{1+y'^2}{y^3}}+\frac{d}{dx}\left(\frac{y'}{\sqrt{y(1+y'^2)}}\right)=0
+$$
+
+注意到，
+
+$$
+\frac{d}{dx}\left[G-y'\frac{\partial G}{\partial y'}\right]=y'\frac{\partial G}{\partial y}+y''\frac{\partial G}{\partial y'}-y''\frac{\partial G}{\partial y'}-y'\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0
+$$
+
+因此有，
+
+$$
+G-y'\frac{\partial G}{\partial y'}=C
+$$
+
+做三角代换可得，
+
+$$
+y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
+$$
+
+上式对$\theta$求导，可得$x=r(\theta-\sin\theta)+x_0$。根据曲线过原点$(0,0)$及$(p,q)$可解出$x_0=0$以及$r$，最终结果为，
+
+$$
+\boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
+$$
+
+
+解此方程，最终得到
+
+[参考1](https://zhuanlan.zhihu.com/p/139018146)
 
 
 
+### 再生核Hilbert空间
 
-&emsp;&emsp;一个特殊的泛函： Dirac evaluation functional.
+&emsp;&emsp;一个特殊的泛函：求值泛函(Dirac evaluation functional).
 
-> **定义1(Evaluation Functional)**. Let $\mathcal{H}$ be a Hilbert space of functions $f:\mathcal{X}\rightarrow \mathbb{R}$, defined on a non-empty set $\mathcal{X}$. For a fixed $x\in\mathcal{X}$，map $\delta_x :\mathcal{H}\rightarrow\mathbb{R}$，$\delta_x :f\rightarrow  f(x)$ is called the (Dirac) evaluation functional at $x$.
+> **定义1 (Evaluation Functional)**. Let $\mathcal{H}$ be a Hilbert space of functions $f:\mathcal{X}\rightarrow \mathbb{R}$, defined on a non-empty set $\mathcal{X}$. For a fixed $x\in\mathcal{X}$，map $\delta_x :\mathcal{H}\rightarrow\mathbb{R}$，$\delta_x :f\rightarrow  f(x)$ is called the (Dirac) evaluation functional at $x$.
+
+显然，求值泛函$\delta_x$是一个线性泛函，因为对于$\forall f,g\in\mathcal{H}, \forall \alpha,\beta\in\mathbb{R}$以下等式成立，
+
+$$
+\delta_x(\alpha f+\beta g)=(\alpha f+\beta g)(x)=\alpha f(x)+\beta g(x)=\alpha \delta_x(f)+\beta\delta_x(g)
+$$
+
+> **定义2 (RKHS)**. 设$\mathcal{H}$是一个定义在非空集合$\mathcal{X}$上的函数$f:\mathcal{X}\rightarrow \mathbb{R}$构成的Hilbert空间，若函数$\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$满足：
+>1. $\forall x \in \mathcal{X},\kappa(\cdot,x)\in\mathbb{R}$;
+>2. $\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)$;
+>3. 特别地，$\forall x,y\in\mathcal{X}$，有$\kappa(x,y)=\langle \kappa(\cdot,x),\kappa(\cdot,y)\rangle_\mathcal{H}$;
+>
+>其中，$\langle\cdot,\cdot\rangle_\mathcal{H}$是内积。则称$k$为$\mathcal{H}$的再生核函数，$\mathcal{H}$为再生核Hilbert空间。
+
 
 [参考1](http://songcy.net/posts/story-of-basis-and-kernel-part-2/)[参考2](https://www.cnblogs.com/zhangcn/p/13289236.html)
