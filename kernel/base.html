@@ -299,8 +299,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数的基本运算</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2. 投影</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 核函数的基本运算</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. 投影</a></li>
 </ul>
             </nav>
         </div>
@@ -315,7 +320,117 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">1. </span>核函数基础<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>核函数的基本运算<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.1. </span>核函数<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<section id="id3">
+<h3><span class="section-number">1.1.1. </span>示例<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<p>  首先来看一个核函数的例子。假设有XOR数据集<span class="math notranslate nohighlight">\(X = \{(0,0),(1,0),(0,1),(1,1)\}\)</span>，<span class="math notranslate nohighlight">\(y=\{0,1,1,0\}\)</span>，则该XOR异或问题在原输入空间很难分开两类样本，</p>
+<p><img alt="XOR输入空间" src="../_images/inputspace.png" /></p>
+<p>  如果我们对原输入空间样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>做如下映射<span class="math notranslate nohighlight">\(\phi :\mathbb{R}^2\rightarrow\mathbb{R}^3\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+\phi: \pmb{x}=(x_1,x_2)\rightarrow \phi(\pmb{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)
+\]</div>
+<p>不难发现，原空间不可分的XOR问题在新特征空间变的可分，如下图所示</p>
+<p><img alt="特征空间" src="../_images/featurespace.png" /></p>
+<p>  因此，原空间难以解决的问题映射至新特征空间后可以得到解决。特征映射成为了关键步骤。那么特征映射<span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>是否必须显式的计算呢？下面，我们来分析一下新特征空间两个任意数据点<span class="math notranslate nohighlight">\(\phi(\pmb{x}),\phi(\pmb{z})\)</span>之间的相似性。采用未正则化的余弦相似性来度量，可知</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\langle\phi(\pmb{x}),\phi(\pmb{z})\rangle&amp;=\langle (x_1^2,\sqrt{2}x_1x_2,x_2^2),(z_1^2,\sqrt{2}z_1z_2,z_2^2)\rangle\\
+&amp;=x_1^2z_1^2+x_2^2z_2^2+2x_1x_2z_1z_2\\
+&amp;=(x_1z_1+x_2z_2)^2\\
+&amp;=\langle\pmb{x},\pmb{z}\rangle^2\\
+&amp;\triangleq\kappa(\pmb{x},\pmb{z})
+\end{split}
+\end{split}\]</div>
+<p>  经过上式分析，我们发现特征映射后的向量做内积运算等价于原空间向量内积的平方。换句话说，我们可以不用显式计算映射<span class="math notranslate nohighlight">\(\phi\)</span>，直接计算<span class="math notranslate nohighlight">\(\kappa(\pmb{x},\pmb{z})\)</span>就可以实现特征映射后的效果，这一技巧也称之为核技巧(kernel trick), 函数<span class="math notranslate nohighlight">\(\kappa(\cdot,\cdot)\)</span>也称之为核函数。</p>
+<p><img alt="核函数示例" src="../_images/kernelfun.jpeg" /></p>
+</section>
+<section id="id4">
+<h3><span class="section-number">1.1.2. </span>什么是核函数<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<p><strong>定义1(inner product)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>  be a vector space over <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. A function <span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span> is said to be an inner product on <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> if</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0\)</span> if and only if <span class="math notranslate nohighlight">\(f=0\)</span></p></li>
+</ol>
+<p>  A Hilber space is a space on which an inner product is defined, along with an additional technical condition.</p>
+<p><strong>定义2(Kernel)</strong>.  Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>  be a non-empty set. A fucntion <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span> is called a kernel if there exists an <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert space and a map <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span> such that <span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
+\]</div>
+<p><strong>Lemma(Sums of kernels are kernels)</strong>. Given <span class="math notranslate nohighlight">\(\alpha &gt;0\)</span> and <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span> all kernels on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, then <span class="math notranslate nohighlight">\(\alpha k\)</span> and <span class="math notranslate nohighlight">\(k_1+k_2\)</span> are kernels on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p><strong>Lemma(Mapping between spaces)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> and <span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span> be sets, and define a map <span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. Define the kernel <span class="math notranslate nohighlight">\(k\)</span> on <span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. Then the kernel <span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p><strong>Lemma(Products of kernels are kernels)</strong>. Given <span class="math notranslate nohighlight">\(k_1\)</span> on <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> and <span class="math notranslate nohighlight">\(k_2\)</span> on <span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, then <span class="math notranslate nohighlight">\(k_1\times k_2\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>. If <span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, then <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p><strong>Lemma(Polynomial kernels)</strong>. Let <span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>， and let <span class="math notranslate nohighlight">\(m\ge 1\)</span> be an integer and <span class="math notranslate nohighlight">\(c\ge 0\)</span> be a positive real. then</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x')=(\langle x,x'\rangle+c)^m
+\]</div>
+<p>is a valid kernel.</p>
+<p>  Can we extends this combination of sum and product rule to sums with infinitely many terms? It turn s out we we can, as long as these don’t blow up.</p>
+<p><strong>Definition</strong> The space <span class="math notranslate nohighlight">\(\ell_p\)</span>  of <span class="math notranslate nohighlight">\(p\)</span>-summable sequences is defined as all sequences <span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span> for which</p>
+<div class="math notranslate nohighlight">
+\[
+ \sum_{i=1}^{\infty}a_i^p &lt;\infty
+ \]</div>
+<p>  Kernels can be defined in terms of sequences in <span class="math notranslate nohighlight">\(\ell_2\)</span>.</p>
+<p><strong>Lemma</strong>. Given a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, and a sequence of functions <span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span> in <span class="math notranslate nohighlight">\(\ell_2\)</span> where <span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>th coordinate of the feature map <span class="math notranslate nohighlight">\(\phi(x)\)</span>. Then</p>
+<div class="math notranslate nohighlight">
+\[
+ k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
+ \]</div>
+<p>is a well-defined kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
+<p>  Taylor series expansions may be used to define kernels that have infinityly many features.</p>
+<p><strong>Definition(Taylor series kernel)</strong>. Assume we can define the Taylor series</p>
+<div class="math notranslate nohighlight">
+\[
+f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
+\]</div>
+<p>for <span class="math notranslate nohighlight">\(r\in (0,\infty]\)</span>, with <span class="math notranslate nohighlight">\(a_n\ge 0\)</span> for all <span class="math notranslate nohighlight">\(n\ge 0\)</span>. Define <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> to be the <span class="math notranslate nohighlight">\(\sqrt{r}\)</span>-ball in <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>, Then for <span class="math notranslate nohighlight">\(x,x'\in\mathbb{R}^d\)</span> such that <span class="math notranslate nohighlight">\(\Vert x\Vert &lt;\sqrt{r}\)</span>, we have the kernel</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
+\]</div>
+<p><strong>proof</strong>. Non-negative weighted sums of kernels are kernels, and products of kernels are kernels, so the following is a kernel if it converges,</p>
+<div class="math notranslate nohighlight">
+\[
+ k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
+\]</div>
+<p>We have by Cauchy-Schwarz that</p>
+<div class="math notranslate nohighlight">
+\[
+  |\langle x,x'\rangle |\le \Vert x\Vert\Vert x'\Vert&lt;r
+ \]</div>
+<p>so the Taylor series converges.</p>
+<p>  An example of a Taylor series kernel is the exponential.</p>
+<p><strong>Example(Exponential kernel)</strong>. The exponential kernel on <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+ k(x,x')=\exp(\langle x,x'\rangle)
+ \]</div>
+<p>  We may conbine all the results above to obtain the following(product rule, mapping rule, et al.)</p>
+<p><strong>Example(Gaussian kernel)</strong>. The Gaussian kernel on <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> is defined as</p>
+<div class="math notranslate nohighlight">
+\[
+ k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
+ \]</div>
+<p>proof.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ \begin{split}
+ k_1(x,x')&amp;=\exp\left\{\frac{\langle x,x'\rangle}{\gamma^2}\right\}\\
+ \underbrace{k_1(x,x')}_{\textrm{normalize}}&amp;=\frac{\exp\{\frac{\langle x,x'\rangle}{\gamma^2}\}}{  \sqrt{\exp\left\{\frac{\Vert x\Vert^2}{\gamma^2} \right\}    \exp\left\{\frac{\Vert x'\Vert^2}{\gamma^2} \right\}}     }\\
+ &amp;=\exp\left\{{\frac{2\langle x,x'\rangle}{\gamma^2}-\frac{\langle x,x\rangle}{\gamma^2}-\frac{2\langle x',x'\rangle}{\gamma^2}}\right\}\\
+ &amp;=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)\\\\
+ &amp;=k(x,x')
+ \end{split}
+ \end{split}\]</div>
+</section>
+</section>
+<section id="id5">
+<h2><span class="section-number">1.2. </span>核函数的基本运算<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
 <ol class="arabic simple">
 <li><p>模长</p></li>
 </ol>
@@ -391,8 +506,8 @@ document.write(`
 \end{split}
 \end{split}\]</div>
 </section>
-<section id="id3">
-<h2><span class="section-number">1.2. </span>投影<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<section id="id6">
+<h2><span class="section-number">1.3. </span>投影<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的<strong>投影</strong><span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -459,8 +574,13 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数的基本运算</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2. 投影</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 示例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 核函数的基本运算</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. 投影</a></li>
 </ul>
   </nav></div>
 
