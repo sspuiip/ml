@@ -208,8 +208,27 @@ $$
 [参考1](https://zhuanlan.zhihu.com/p/139018146)
 
 
+## 线性算子
 
-### 再生核Hilbert空间
+>&emsp;&emsp;**定义1 (线性算子)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$称之为线性算子，当且仅当以下条件成立：
+>> - 齐次性(homogeneity): $A(\alpha f)=\alpha (Af),\quad \forall \alpha\in \mathbb{K},f\in \mathcal{F}$
+>> - 可加性(additivity): $A(f+g)=Af+Ag,\quad\forall f,g\in\mathcal{F}$
+>
+>其中$\mathcal{F,G}$为定义在$\mathbb{K}$上的赋范向量空间（例如：$\mathcal{X}\subset \mathbb{R}\rightarrow \mathbb{R} $ 映射函数的Banach空间并定义$L_p$范数）。
+
+&emsp;&emsp;**例1** 令$\mathcal{F}$为一个内积空间，对于$g\in\mathcal{F}$，算子$A_g :\mathcal{F}\rightarrow\mathbb{K}$， $A_g(f):=\langle f,g\rangle_\mathcal{F}$是一个线性算子。注意到算子$A_g$的像是一个潜在的域$\mathbb{K}$，而这正是定义在$\mathbb{K}$上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标题值也称之为$\mathcal{F}$空间的泛函(functionals)。
+
+>&emsp;&emsp;**定义2 (连续性)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$在$f_0\subset \mathcal{F}$是连续的，如果对于任意$\epsilon >0$，总存在一个$\delta =\delta(\epsilon,f_0)>0$，满足
+
+$$
+\Vert f-f_0\Vert_\mathcal{F}<\delta,\quad \textrm{implies}\quad\Vert Af-Af_0\Vert_\mathcal{G}<\epsilon.
+$$
+
+&emsp;&emsp;当$A$在$\mathcal{F}$的每一个点都是连续的，则$A$在$\mathcal{F}$是**连续的**。换句话说，$\mathcal{F}$中的一个收敛序列映射到$\mathcal{G}$中的一个收敛序列。
+
+
+
+## 再生核Hilbert空间
 
 &emsp;&emsp;一个特殊的泛函：求值泛函(Dirac evaluation functional).
 
