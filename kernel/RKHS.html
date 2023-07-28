@@ -508,7 +508,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </div></blockquote>
 <p>其中<span class="math notranslate nohighlight">\(\mathcal{F,G}\)</span>为定义在<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>上的赋范向量空间（例如：<span class="math notranslate nohighlight">\(\mathcal{X}\subset \mathbb{R}\rightarrow \mathbb{R} \)</span> 映射函数的Banach空间并定义<span class="math notranslate nohighlight">\(L_p\)</span>范数）。</p>
 </div></blockquote>
-<p>  <strong>例1</strong> 令<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>为一个内积空间，对于<span class="math notranslate nohighlight">\(g\in\mathcal{F}\)</span>，算子<span class="math notranslate nohighlight">\(A_g :\mathcal{F}\rightarrow\mathbb{K}\)</span>， <span class="math notranslate nohighlight">\(A_g(f):=\langle f,g\rangle_\mathcal{F}\)</span>是一个线性算子。注意到算子<span class="math notranslate nohighlight">\(A_g\)</span>的像是一个潜在的域<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>，而这正是定义在<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标题值也称之为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>空间的泛函(functionals)。</p>
+<p>  <strong>例1</strong> 令<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>为一个内积空间，对于<span class="math notranslate nohighlight">\(g\in\mathcal{F}\)</span>，算子<span class="math notranslate nohighlight">\(A_g :\mathcal{F}\rightarrow\mathbb{K}\)</span>， <span class="math notranslate nohighlight">\(A_g(f):=\langle f,g\rangle_\mathcal{F}\)</span>是一个线性算子。注意到算子<span class="math notranslate nohighlight">\(A_g\)</span>的像是一个潜在的域<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>，而这正是定义在<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标量值算子也称之为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>空间的泛函(functionals)。</p>
 <blockquote>
 <div><p>  <strong>定义2 (连续性)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>在<span class="math notranslate nohighlight">\(f_0\subset \mathcal{F}\)</span>是连续的，如果对于任意<span class="math notranslate nohighlight">\(\epsilon &gt;0\)</span>，总存在一个<span class="math notranslate nohighlight">\(\delta =\delta(\epsilon,f_0)&gt;0\)</span>，满足</p>
 </div></blockquote>
@@ -517,6 +517,53 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \Vert f-f_0\Vert_\mathcal{F}&lt;\delta,\quad \textrm{implies}\quad\Vert Af-Af_0\Vert_\mathcal{G}&lt;\epsilon.
 \]</div>
 <p>  当<span class="math notranslate nohighlight">\(A\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的每一个点都是连续的，则<span class="math notranslate nohighlight">\(A\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是<strong>连续的</strong>。换句话说，<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的一个收敛序列映射到<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>中的一个收敛序列。</p>
+<p>  <strong>例子</strong>. 对于<span class="math notranslate nohighlight">\(g\in\mathcal{F}, A_g:\mathcal{F}\rightarrow\mathbb{K}\)</span>，并且<span class="math notranslate nohighlight">\(A_g(f):=\langle f,g\rangle_\mathcal{F}\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是连续的。</p>
+<div class="math notranslate nohighlight">
+\[
+|A_g(f_1)-A_g(f_2)|=|\langle f_1-f_2,g\rangle_\mathcal{F}|\le \Vert g\Vert_{\mathcal{F}}\Vert f_1-f_2\Vert_\mathcal{F}
+\]</div>
+<blockquote>
+<div><p>  <strong>定义3 (算子范数(Operator norm))</strong>. 线性算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>的算子范数定义为，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+\Vert A\Vert=\sup_{f\in\mathcal{F}}\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}
+\]</div>
+<blockquote>
+<div><p>  <strong>定义4 (有界算子(Bounded operator))</strong>. 如果<span class="math notranslate nohighlight">\(\Vert A\Vert &lt;\infty\)</span>，则称算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>是有界算子。</p>
+</div></blockquote>
+<p>  可以看出<span class="math notranslate nohighlight">\(A\)</span>是有界算子当且仅当对于所有的<span class="math notranslate nohighlight">\(f\in\mathcal{F}\)</span>，存在一个非负实数<span class="math notranslate nohighlight">\(\lambda\)</span>，使之<span class="math notranslate nohighlight">\(\Vert Af\Vert_\mathcal{G}\le\lambda\Vert f\Vert_\mathcal{F}\)</span>成立，并且最小的<span class="math notranslate nohighlight">\(\lambda\)</span>恰好是算子范数。</p>
+<p>  有界算子可以重写为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}&amp;\le\Vert A\Vert\\
+\Vert Af\Vert_\mathcal{G}&amp;\le\Vert A\Vert\Vert f\Vert_\mathcal{F}
+\end{split}
+\end{split}\]</div>
+<p>可以看出，<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的一个有界子集(bounded subset)映射到了<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>的一个有界子集。</p>
+<p>注意：在微积分中，一个有界函数是指其范围是是有界集合的函数。这个定义与上面的定义不同，上面的定义简单地说明<span class="math notranslate nohighlight">\(A\)</span>对<span class="math notranslate nohighlight">\(f\)</span>的影响是由<span class="math notranslate nohighlight">\(f\)</span>的范数的一些缩放所限制的。对于算子范数(operator norm)有一种有用的几何解释:<span class="math notranslate nohighlight">\(A\)</span>将<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的封闭单位球映射到<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>中的封闭球的一个子集，中心为<span class="math notranslate nohighlight">\(0\in\mathcal{G}\)</span>，半径为<span class="math notranslate nohighlight">\(\Vert A\Vert\)</span>。同时注意：任何赋范、有限维空间的线性算子是有界的。</p>
+<blockquote>
+<div><p>  <strong>定理</strong>. 假设<span class="math notranslate nohighlight">\((\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})\)</span>是赋范线性空间，如果<span class="math notranslate nohighlight">\(L\)</span>是一个线性算子，则以下3个条件是等价的：</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(L\)</span>是一个有界算子.</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是连续的.</p></li>
+<li><p><span class="math notranslate nohighlight">\(L\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中一点(one point)是连续的.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<blockquote>
+<div><p>  <strong>定义5 (代数对偶(Algebraic dual))</strong>. 如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个赋范空间，那么线性泛函<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathbb{K}\)</span>的空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>称为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的代数对偶空间(Algebraic dual)。</p>
+</div></blockquote>
+<blockquote>
+<div><p>  <strong>定义6 (拓扑空间对偶(Topological dual))</strong>.
+如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个赋范空间，那么连续线性泛函<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathbb{K}\)</span>的空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>称为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的拓扑对偶空间(Topological dual)。</p>
+</div></blockquote>
+<p>  在有限维空间，上述两个定义是一致的。但是在无限维空间不在适用。前面的例子已知，内积空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中形如<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>的泛函是线性和连续的，也就是它们存在于<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的拓扑对偶空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>。这也显示如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间，则<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>的所有元素都具有<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>形式。</p>
+<blockquote>
+<div><p>  <strong>定理 (Riesz representation)</strong>. 在一个Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>， 所有的连续线性泛函都具有<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>的形式<span class="math notranslate nohighlight">\(\textrm{for some } g \in \mathcal{F}\)</span>。</p>
+</div></blockquote>
 </section>
 <section id="hilbert">
 <h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接">#</a></h2>
