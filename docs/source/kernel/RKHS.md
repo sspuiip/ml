@@ -216,7 +216,7 @@ $$
 >
 >其中$\mathcal{F,G}$为定义在$\mathbb{K}$上的赋范向量空间（例如：$\mathcal{X}\subset \mathbb{R}\rightarrow \mathbb{R} $ 映射函数的Banach空间并定义$L_p$范数）。
 
-&emsp;&emsp;**例1** 令$\mathcal{F}$为一个内积空间，对于$g\in\mathcal{F}$，算子$A_g :\mathcal{F}\rightarrow\mathbb{K}$， $A_g(f):=\langle f,g\rangle_\mathcal{F}$是一个线性算子。注意到算子$A_g$的像是一个潜在的域$\mathbb{K}$，而这正是定义在$\mathbb{K}$上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标题值也称之为$\mathcal{F}$空间的泛函(functionals)。
+&emsp;&emsp;**例1** 令$\mathcal{F}$为一个内积空间，对于$g\in\mathcal{F}$，算子$A_g :\mathcal{F}\rightarrow\mathbb{K}$， $A_g(f):=\langle f,g\rangle_\mathcal{F}$是一个线性算子。注意到算子$A_g$的像是一个潜在的域$\mathbb{K}$，而这正是定义在$\mathbb{K}$上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标量值算子也称之为$\mathcal{F}$空间的泛函(functionals)。
 
 >&emsp;&emsp;**定义2 (连续性)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$在$f_0\subset \mathcal{F}$是连续的，如果对于任意$\epsilon >0$，总存在一个$\delta =\delta(\epsilon,f_0)>0$，满足
 
@@ -226,7 +226,50 @@ $$
 
 &emsp;&emsp;当$A$在$\mathcal{F}$的每一个点都是连续的，则$A$在$\mathcal{F}$是**连续的**。换句话说，$\mathcal{F}$中的一个收敛序列映射到$\mathcal{G}$中的一个收敛序列。
 
+&emsp;&emsp;**例子**. 对于$g\in\mathcal{F}, A_g:\mathcal{F}\rightarrow\mathbb{K}$，并且$A_g(f):=\langle f,g\rangle_\mathcal{F}$在$\mathcal{F}$是连续的。
 
+$$
+|A_g(f_1)-A_g(f_2)|=|\langle f_1-f_2,g\rangle_\mathcal{F}|\le \Vert g\Vert_{\mathcal{F}}\Vert f_1-f_2\Vert_\mathcal{F}
+$$
+
+>&emsp;&emsp;**定义3 (算子范数(Operator norm))**. 线性算子$A:\mathcal{F}\rightarrow\mathcal{G}$的算子范数定义为，
+
+$$
+\Vert A\Vert=\sup_{f\in\mathcal{F}}\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}
+$$
+
+
+>&emsp;&emsp;**定义4 (有界算子(Bounded operator))**. 如果$\Vert A\Vert <\infty$，则称算子$A:\mathcal{F}\rightarrow\mathcal{G}$是有界算子。
+
+&emsp;&emsp;可以看出$A$是有界算子当且仅当对于所有的$f\in\mathcal{F}$，存在一个非负实数$\lambda$，使之$\Vert Af\Vert_\mathcal{G}\le\lambda\Vert f\Vert_\mathcal{F}$成立，并且最小的$\lambda$恰好是算子范数。
+
+&emsp;&emsp;有界算子可以重写为，
+
+$$
+\begin{split}
+\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}&\le\Vert A\Vert\\
+\Vert Af\Vert_\mathcal{G}&\le\Vert A\Vert\Vert f\Vert_\mathcal{F}
+\end{split}
+$$
+
+可以看出，$\mathcal{F}$的一个有界子集(bounded subset)映射到了$\mathcal{G}$的一个有界子集。
+
+注意：在微积分中，一个有界函数是指其范围是是有界集合的函数。这个定义与上面的定义不同，上面的定义简单地说明$A$对$f$的影响是由$f$的范数的一些缩放所限制的。对于算子范数(operator norm)有一种有用的几何解释:$A$将$\mathcal{F}$中的封闭单位球映射到$\mathcal{G}$中的封闭球的一个子集，中心为$0\in\mathcal{G}$，半径为$\Vert A\Vert$。同时注意：任何赋范、有限维空间的线性算子是有界的。
+
+>&emsp;&emsp;**定理**. 假设$(\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})$是赋范线性空间，如果$L$是一个线性算子，则以下3个条件是等价的：
+>>1. $L$是一个有界算子.
+>>2. $L$在$\mathcal{F}$是连续的.
+>>3. $L$在$\mathcal{F}$中一点(one point)是连续的.
+
+
+>&emsp;&emsp;**定义5 (代数对偶(Algebraic dual))**. 如果$\mathcal{F}$是一个赋范空间，那么线性泛函$A:\mathcal{F}\rightarrow \mathbb{K}$的空间$\mathcal{F}'$称为$\mathcal{F}$的代数对偶空间(Algebraic dual)。
+
+>&emsp;&emsp;**定义6 (拓扑空间对偶(Topological dual))**.
+ 如果$\mathcal{F}$是一个赋范空间，那么连续线性泛函$A:\mathcal{F}\rightarrow \mathbb{K}$的空间$\mathcal{F}'$称为$\mathcal{F}$的拓扑对偶空间(Topological dual)。
+
+ &emsp;&emsp;在有限维空间，上述两个定义是一致的。但是在无限维空间不在适用。前面的例子已知，内积空间$\mathcal{F}$中形如$\langle \cdot,g\rangle_\mathcal{F}$的泛函是线性和连续的，也就是它们存在于$\mathcal{F}$的拓扑对偶空间$\mathcal{F}'$。这也显示如果$\mathcal{F}$是一个Hilbert空间，则$\mathcal{F}'$的所有元素都具有$\langle \cdot,g\rangle_\mathcal{F}$形式。
+
+ >&emsp;&emsp;**定理 (Riesz representation)**. 在一个Hilbert空间$\mathcal{F}$， 所有的连续线性泛函都具有$\langle \cdot,g\rangle_\mathcal{F}$的形式$\textrm{for some } g \in \mathcal{F}$。
 
 ## 再生核Hilbert空间
 
