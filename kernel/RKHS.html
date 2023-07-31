@@ -309,7 +309,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -567,6 +571,9 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </section>
 <section id="hilbert">
 <h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接">#</a></h2>
+<section id="id8">
+<h3><span class="section-number">2.3.1. </span>求值泛函<a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h3>
+<p>  令<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为一个从非空集<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>到复数域<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>的函数Hilbert空间。</p>
 <p>  一个特殊的泛函：求值泛函(Dirac evaluation functional).</p>
 <blockquote>
 <div><p><strong>定义1 (Evaluation Functional)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> be a Hilbert space of functions <span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>, defined on a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For a fixed <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>，map <span class="math notranslate nohighlight">\(\delta_x :\mathcal{H}\rightarrow\mathbb{R}\)</span>，<span class="math notranslate nohighlight">\(\delta_x :f\rightarrow  f(x)\)</span> is called the (Dirac) evaluation functional at <span class="math notranslate nohighlight">\(x\)</span>.</p>
@@ -576,16 +583,56 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \[
 \delta_x(\alpha f+\beta g)=(\alpha f+\beta g)(x)=\alpha f(x)+\beta g(x)=\alpha \delta_x(f)+\beta\delta_x(g)
 \]</div>
+<p>  因此，一个自然的问题就是泛函是否连续（等价于线性算子的有界性）？这正是RKHS是如何定义的。</p>
 <blockquote>
-<div><p><strong>定义2 (RKHS)</strong>. 设<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个定义在非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>上的函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>构成的Hilbert空间，若函数<span class="math notranslate nohighlight">\(\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\)</span>满足：</p>
+<div><p><strong>定义2 (Reproducing kernel Hilbert space, RKHS)</strong>. 一个从非空集<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>到数域<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>函数的Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个RKHS空间，如果<span class="math notranslate nohighlight">\(\forall x \in \mathcal{X}, \delta_x\)</span> 是连续的。</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Coroallary (<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>范数收敛隐含着逐点收敛)</strong>. 如果两个函数RKHS范数收敛，则它们在每次一个点都收敛，即如果<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}\Vert f_n -f\Vert_{\mathcal{H}}=0\)</span>, 则有<span class="math notranslate nohighlight">\(\lim_{n\rightarrow\infty}f_n(x)=f(x), \forall x \in\mathcal{X}\)</span>。</p>
+</div></blockquote>
+<p>  证明. 对于任意<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>有，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+|f_n(x)-f(x)|&amp;=|\delta_x f_n -\delta_x f|\\
+&amp;\le \Vert\delta_x\Vert\Vert f_n-f\Vert_\mathcal{H}
+\end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\Vert\delta_x\Vert\)</span>为求值泛函的范数（在RKHS的定义中，该算子是有界的）。</p>
+<p>  <strong>例</strong>. 如果不是一个RKHS，则范数收敛不一定隐含逐点收敛。令<span class="math notranslate nohighlight">\(\mathcal{H}=L_2([0,1])\)</span>，且度量为，</p>
+<div class="math notranslate nohighlight">
+\[
+\Vert f_1 -f_2\Vert_{\mathcal{H}}=\left(\int_0^1 |f_1(x)-f_2(x)|^2\right)^{1/2}
+\]</div>
+<p>考虑函数序列<span class="math notranslate nohighlight">\(\{q_n\}, q_n=x^n\)</span>，则有</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\lim_{n\rightarrow \infty}\Vert q_n -0\Vert_{\mathcal{H}}&amp;=\lim_{n\rightarrow\infty}\left(\int_0^1 x^{2n}dx\right)^{1/2}\\
+&amp;=\lim_{n\rightarrow \infty}\frac{1}{\sqrt{2n+1}}\\
+&amp;=0
+\end{split}
+\end{split}\]</div>
+<p>且有<span class="math notranslate nohighlight">\(q_n(1)=1,\forall n\)</span>。也就是说求值泛函在点1是不连续的。</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
+<p>  下面从核函数的角度来探讨RKHS。</p>
+<blockquote>
+<div><p><strong>定义3 (Reproducing kernel Hilbert space, RKHS)</strong>. 设<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个定义在非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>上的函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>构成的Hilbert空间，若函数<span class="math notranslate nohighlight">\(\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\)</span>满足：</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\forall x \in \mathcal{X},\kappa(\cdot,x)\in\mathbb{R}\)</span>;</p></li>
-<li><p><span class="math notranslate nohighlight">\(\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)\)</span>;  （<strong>the reproducing property, 再生性</strong>）</p></li>
 <li><p>特别地，<span class="math notranslate nohighlight">\(\forall x,y\in\mathcal{X}\)</span>，有<span class="math notranslate nohighlight">\(\kappa(x,y)=\langle \kappa(\cdot,x),\kappa(\cdot,y)\rangle_\mathcal{H}\)</span>;</p></li>
 </ol>
 <p>其中，<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}\)</span>是内积。则称<span class="math notranslate nohighlight">\(k\)</span>为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的再生核函数，<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为再生核Hilbert空间。</p>
 </div></blockquote>
+<p>  这个定义产生了很多的疑问。核函数与RKHS的定义有什么关系？这个核函数存在吗？它有什么属性？首先来回答前两个问题。</p>
+<blockquote>
+<div><p><strong>定理 (核函数存在性)</strong>. <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个再生核希尔伯特空间(即，其求值函数<span class="math notranslate nohighlight">\(\delta_x\)</span>是连续的线性算子)，当且仅当<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>具有再生核。</p>
+</div></blockquote>
 <p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
+</section>
 </section>
 </section>
 
@@ -647,7 +694,11 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

@@ -273,6 +273,11 @@ $$
 
 ## 再生核Hilbert空间
 
+### 求值泛函
+
+&emsp;&emsp;令$\mathcal{H}$为一个从非空集$\mathcal{X}$到复数域$\mathbb{R}$的函数Hilbert空间。
+
+
 &emsp;&emsp;一个特殊的泛函：求值泛函(Dirac evaluation functional).
 
 > **定义1 (Evaluation Functional)**. Let $\mathcal{H}$ be a Hilbert space of functions $f:\mathcal{X}\rightarrow \mathbb{R}$, defined on a non-empty set $\mathcal{X}$. For a fixed $x\in\mathcal{X}$，map $\delta_x :\mathcal{H}\rightarrow\mathbb{R}$，$\delta_x :f\rightarrow  f(x)$ is called the (Dirac) evaluation functional at $x$.
@@ -283,12 +288,55 @@ $$
 \delta_x(\alpha f+\beta g)=(\alpha f+\beta g)(x)=\alpha f(x)+\beta g(x)=\alpha \delta_x(f)+\beta\delta_x(g)
 $$
 
-> **定义2 (RKHS)**. 设$\mathcal{H}$是一个定义在非空集合$\mathcal{X}$上的函数$f:\mathcal{X}\rightarrow \mathbb{R}$构成的Hilbert空间，若函数$\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$满足：
+&emsp;&emsp;因此，一个自然的问题就是泛函是否连续（等价于线性算子的有界性）？这正是RKHS是如何定义的。
+
+> **定义2 (Reproducing kernel Hilbert space, RKHS)**. 一个从非空集$\mathcal{X}$到数域$\mathbb{R}$函数的Hilbert空间$\mathcal{H}$是一个RKHS空间，如果$\forall x \in \mathcal{X}, \delta_x$ 是连续的。
+
+>**Coroallary ($\mathcal{H}$范数收敛隐含着逐点收敛)**. 如果两个函数RKHS范数收敛，则它们在每次一个点都收敛，即如果$\lim_{n\rightarrow \infty}\Vert f_n -f\Vert_{\mathcal{H}}=0$, 则有$\lim_{n\rightarrow\infty}f_n(x)=f(x), \forall x \in\mathcal{X}$。
+
+&emsp;&emsp;证明. 对于任意$x\in\mathcal{X}$有，
+
+$$
+\begin{split}
+|f_n(x)-f(x)|&=|\delta_x f_n -\delta_x f|\\
+&\le \Vert\delta_x\Vert\Vert f_n-f\Vert_\mathcal{H}
+\end{split}
+$$
+
+其中，$\Vert\delta_x\Vert$为求值泛函的范数（在RKHS的定义中，该算子是有界的）。
+
+&emsp;&emsp;**例**. 如果不是一个RKHS，则范数收敛不一定隐含逐点收敛。令$\mathcal{H}=L_2([0,1])$，且度量为，
+
+$$
+\Vert f_1 -f_2\Vert_{\mathcal{H}}=\left(\int_0^1 |f_1(x)-f_2(x)|^2\right)^{1/2}
+$$
+
+考虑函数序列$\{q_n\}, q_n=x^n$，则有
+
+$$
+\begin{split}
+\lim_{n\rightarrow \infty}\Vert q_n -0\Vert_{\mathcal{H}}&=\lim_{n\rightarrow\infty}\left(\int_0^1 x^{2n}dx\right)^{1/2}\\
+&=\lim_{n\rightarrow \infty}\frac{1}{\sqrt{2n+1}}\\
+&=0
+\end{split}
+$$
+
+且有$q_n(1)=1,\forall n$。也就是说求值泛函在点1是不连续的。
+
+
+### 再生核
+&emsp;&emsp;下面从核函数的角度来探讨RKHS。
+
+> **定义3 (Reproducing kernel Hilbert space, RKHS)**. 设$\mathcal{H}$是一个定义在非空集合$\mathcal{X}$上的函数$f:\mathcal{X}\rightarrow \mathbb{R}$构成的Hilbert空间，若函数$\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$满足：
 >1. $\forall x \in \mathcal{X},\kappa(\cdot,x)\in\mathbb{R}$;
->2. $\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)$;
+>2. $\forall x \in \mathcal{X},\forall f \in \mathcal{H},\langle f,\kappa(\cdot,x)\rangle_\mathcal{H}=f(x)$;  （**the reproducing property, 再生性**）
 >3. 特别地，$\forall x,y\in\mathcal{X}$，有$\kappa(x,y)=\langle \kappa(\cdot,x),\kappa(\cdot,y)\rangle_\mathcal{H}$;
 >
 >其中，$\langle\cdot,\cdot\rangle_\mathcal{H}$是内积。则称$k$为$\mathcal{H}$的再生核函数，$\mathcal{H}$为再生核Hilbert空间。
 
+
+&emsp;&emsp;这个定义产生了很多的疑问。核函数与RKHS的定义有什么关系？这个核函数存在吗？它有什么属性？首先来回答前两个问题。
+
+> **定理 (核函数存在性)**. $\mathcal{H}$是一个再生核希尔伯特空间(即，其求值函数$\delta_x$是连续的线性算子)，当且仅当$\mathcal{H}$具有再生核。
 
 [参考1](http://songcy.net/posts/story-of-basis-and-kernel-part-2/)[参考2](https://www.cnblogs.com/zhangcn/p/13289236.html)
