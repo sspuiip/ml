@@ -631,6 +631,65 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <blockquote>
 <div><p><strong>定理 (核函数存在性)</strong>. <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个再生核希尔伯特空间(即，其求值函数<span class="math notranslate nohighlight">\(\delta_x\)</span>是连续的线性算子)，当且仅当<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>具有再生核。</p>
 </div></blockquote>
+<p>  <strong>证明</strong>. 给定一个Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>，并具有再生属性<span class="math notranslate nohighlight">\(\langle f,k(\cdot,x)\rangle_\mathcal{H}=f(x)\)</span>，则有</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+|\delta_x[f]|&amp;=|f(x)|\\
+&amp;=|\langle f,k(\cdot,x)\rangle_\mathcal{H}|\\
+&amp;\le \underbrace{\Vert k(\cdot,x)\Vert_\mathcal{H}\cdot\Vert f\Vert_\mathcal{H}}_{\textrm{Cauchy-Schwarz inequality}}\\
+&amp;=k(x,x)^{1/2}\cdot\Vert f\Vert_\mathcal{H}
+\end{split}
+\end{split}\]</div>
+<p>因此，求值泛函<span class="math notranslate nohighlight">\(\delta_x\)</span>是一个有界线性算子。</p>
+<p>  下面来证明另一个方向。先定义<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的对偶空间<span class="math notranslate nohighlight">\(\mathcal{H}'\)</span>，假设<span class="math notranslate nohighlight">\(\delta_x \in \mathcal{H}' :\mathcal{F}\rightarrow \mathbb{K} \)</span>是一个有界线性算子。由Riesz表示定理可以得知，必然存在一个元素<span class="math notranslate nohighlight">\(f_{\delta_x}\in\mathcal{H}\)</span>满足，</p>
+<div class="math notranslate nohighlight">
+\[
+\delta_x [f]=\langle f,f_{\delta_x}\rangle_{\mathcal{H}}
+\]</div>
+<p>且存在一个等距反线性同构<span class="math notranslate nohighlight">\(I:\mathcal{H}'\rightarrow\mathcal{H}\)</span>，使之<span class="math notranslate nohighlight">\(\delta_x\rightarrow f_{\delta_{x}}\)</span>成立。在<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>定义一个再生核，</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x')=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}
+\]</div>
+<p>这给了我们一个规范的特征映射<span class="math notranslate nohighlight">\(k(\cdot,x')=I\delta_{x'}\)</span>，因此可知</p>
+<div class="math notranslate nohighlight">
+\[
+k(x,x')\underbrace{=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}}_{(1)}\underbrace{=\langle I\delta_x,I\delta_{x'}\rangle_{\mathcal{H}}}_{(2)}=\delta_x (I\delta_{x'})=I\delta_{x'}(x)
+\]</div>
+<p>其中等式(1)使用了反线性等距(anti-linear isometry)，等式(2)使用了<span class="math notranslate nohighlight">\(I\delta_x = f_{\delta_x}\)</span>。因此，这个规范特征映射再生属性，</p>
+<div class="math notranslate nohighlight">
+\[
+f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x')\rangle_\mathcal{H}
+\]</div>
+<p>因此，<span class="math notranslate nohighlight">\(k\)</span>是一个再生核。</p>
+<p>  从上述定理可以看出，<span class="math notranslate nohighlight">\(k(\cdot,x)\)</span>实际上是在<span class="math notranslate nohighlight">\(x\)</span>点求值算子的一种表示。</p>
+<blockquote>
+<div><p><strong>定义 (正定函数)</strong>. 一个函数<span class="math notranslate nohighlight">\(h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}\)</span>是正定的，如果<span class="math notranslate nohighlight">\(\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}\)</span>,</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+\sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)\ge 0
+\]</div>
+<blockquote>
+<div><p>若等号成立仅当<span class="math notranslate nohighlight">\(a_i,a_j=0\)</span>，则称函数<span class="math notranslate nohighlight">\(h(\cdot,\cdot)\)</span>是严格正定的（stricklly positive definite）。</p>
+</div></blockquote>
+<p>  根据上述定义可知，任意内积函数是一个正定函数。更一般地有如下引理。</p>
+<blockquote>
+<div><p><strong>Lemma</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间（RKHS不是必要的）,<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>是一个非空集合且有映射<span class="math notranslate nohighlight">\(\phi :\mathcal{X}\rightarrow \mathcal{F}\)</span>，则<span class="math notranslate nohighlight">\(h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}\)</span>是一个正定函数(positive definite function)。</p>
+</div></blockquote>
+<p>  <strong>证明</strong>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)&amp;=\sum_{i=1}^n\sum_{j=1}^n \langle a_i\phi(x_i), a_j\phi(x_j)\rangle\\
+&amp;=\left\Vert \sum_{i=1}^n a_i\phi(x_i) \right\Vert_{\mathcal{F}}^2
+\end{split}
+\end{split}\]</div>
+<blockquote>
+<div><p><strong>Corollary</strong>. 再生核函数是正定的。</p>
+</div></blockquote>
+<p>  <strong>证明</strong>. 对于RKHS空间的一个再生核<span class="math notranslate nohighlight">\(k\)</span>有，<span class="math notranslate nohighlight">\(k(x,y)=\langle k(\cdot,x),k(\cdot,y)\rangle_\mathcal{H}\)</span>，容易验证<span class="math notranslate nohighlight">\(\phi : x\rightarrow k(\cdot,x)\)</span>。</p>
 <p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
 </section>
 </section>
