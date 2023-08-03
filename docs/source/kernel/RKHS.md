@@ -339,4 +339,70 @@ $$
 
 > **定理 (核函数存在性)**. $\mathcal{H}$是一个再生核希尔伯特空间(即，其求值函数$\delta_x$是连续的线性算子)，当且仅当$\mathcal{H}$具有再生核。
 
+&emsp;&emsp;**证明**. 给定一个Hilbert空间$\mathcal{H}$，并具有再生属性$\langle f,k(\cdot,x)\rangle_\mathcal{H}=f(x)$，则有
+
+$$
+\begin{split}
+|\delta_x[f]|&=|f(x)|\\
+&=|\langle f,k(\cdot,x)\rangle_\mathcal{H}|\\
+&\le \underbrace{\Vert k(\cdot,x)\Vert_\mathcal{H}\cdot\Vert f\Vert_\mathcal{H}}_{\textrm{Cauchy-Schwarz inequality}}\\
+&=k(x,x)^{1/2}\cdot\Vert f\Vert_\mathcal{H}
+\end{split}
+$$
+
+因此，求值泛函$\delta_x$是一个有界线性算子。
+
+&emsp;&emsp;下面来证明另一个方向。先定义$\mathcal{H}$的对偶空间$\mathcal{H}'$，假设$\delta_x \in \mathcal{H}' :\mathcal{F}\rightarrow \mathbb{K} $是一个有界线性算子。由Riesz表示定理可以得知，必然存在一个元素$f_{\delta_x}\in\mathcal{H}$满足，
+
+$$
+\delta_x [f]=\langle f,f_{\delta_x}\rangle_{\mathcal{H}}
+$$
+
+且存在一个等距反线性同构$I:\mathcal{H}'\rightarrow\mathcal{H}$，使之$\delta_x\rightarrow f_{\delta_{x}}$成立。在$\mathcal{H}$定义一个再生核，
+
+$$
+k(x,x')=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}
+$$
+
+这给了我们一个规范的特征映射$k(\cdot,x')=I\delta_{x'}$，因此可知
+
+$$
+k(x,x')\underbrace{=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}}_{(1)}\underbrace{=\langle I\delta_x,I\delta_{x'}\rangle_{\mathcal{H}}}_{(2)}=\delta_x (I\delta_{x'})=I\delta_{x'}(x)
+$$
+
+其中等式(1)使用了反线性等距(anti-linear isometry)，等式(2)使用了$I\delta_x = f_{\delta_x}$。因此，这个规范特征映射再生属性，
+
+$$
+f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x')\rangle_\mathcal{H}
+$$
+
+因此，$k$是一个再生核。
+
+&emsp;&emsp;从上述定理可以看出，$k(\cdot,x)$实际上是在$x$点求值算子的一种表示。
+
+> **定义 (正定函数)**. 一个函数$h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}$是正定的，如果$\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}$,
+
+$$
+\sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)\ge 0
+$$
+
+>若等号成立仅当$a_i,a_j=0$，则称函数$h(\cdot,\cdot)$是严格正定的（stricklly positive definite）。
+
+&emsp;&emsp;根据上述定义可知，任意内积函数是一个正定函数。更一般地有如下引理。
+
+> **Lemma**. 若$\mathcal{F}$是一个Hilbert空间（RKHS不是必要的）,$\mathcal{X}$是一个非空集合且有映射$\phi :\mathcal{X}\rightarrow \mathcal{F}$，则$h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}$是一个正定函数(positive definite function)。
+
+&emsp;&emsp;**证明**.
+
+$$
+\begin{split}
+\sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)&=\sum_{i=1}^n\sum_{j=1}^n \langle a_i\phi(x_i), a_j\phi(x_j)\rangle\\
+&=\left\Vert \sum_{i=1}^n a_i\phi(x_i) \right\Vert_{\mathcal{F}}^2
+\end{split}
+$$
+
+> **Corollary**. 再生核函数是正定的。
+
+&emsp;&emsp;**证明**. 对于RKHS空间的一个再生核$k$有，$k(x,y)=\langle k(\cdot,x),k(\cdot,y)\rangle_\mathcal{H}$，容易验证$\phi : x\rightarrow k(\cdot,x)$。
+
 [参考1](http://songcy.net/posts/story-of-basis-and-kernel-part-2/)[参考2](https://www.cnblogs.com/zhangcn/p/13289236.html)
