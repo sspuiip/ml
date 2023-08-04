@@ -3,6 +3,7 @@
 
 ### 示例
 
+
 &emsp;&emsp;首先来看一个核函数的例子。假设有XOR数据集$X = \{(0,0),(1,0),(0,1),(1,1)\}$，$y=\{0,1,1,0\}$，则该XOR异或问题在原输入空间很难分开两类样本，
 
 ![XOR输入空间](../img/inputspace.png)
@@ -33,19 +34,20 @@ $$
 
 ![核函数示例](../img/kernelfun.jpeg)
 
+
 ### 什么是核函数
 
- **定义1(inner product)**. Let $\mathcal{H}$  be a vector space over $\mathbb{R}$. A function $\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}$ is said to be an inner product on $\mathcal{H}$ if
+ **定义1(内积(inner product))**. 令 $\mathcal{H}$ 为一个向量空间，则一个函数$\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}$定义为$\mathcal{H}$的内积，如果满足以下条件：
 
  1. $\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}$
  2. $\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}$
  3. $\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0$ if and only if $f=0$
 
-&emsp;&emsp;A Hilber space is a space on which an inner product is defined, along with an additional technical condition.
+&emsp;&emsp;希尔伯空间是定义了内积的一个空间，并附加了一个技术性条件(A Hilber space is a space on which an inner product is defined, along with an additional technical condition)。
 
 
 
-**定义2(Kernel)**.  Let $\mathcal{X}$  be a non-empty set. A fucntion $k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}$ is called a kernel if there exists an $\mathbb{R}$-Hilbert space and a map $\phi:\mathcal{X}\rightarrow \mathcal{H}$ such that $\forall x,x'\in \mathcal{X}$，
+**定义2(Kernel)**.  令$\mathcal{X}$为一个非空集合。一个函数 $k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}$称之为核函数，如果存在一个$\mathbb{R}$-Hilbert空间以及映射 $\phi:\mathcal{X}\rightarrow \mathcal{H}$且满足$\forall x,x'\in \mathcal{X}$，
 
 $$
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
@@ -54,94 +56,105 @@ $$
 
 
 
-**Lemma(Sums of kernels are kernels)**. Given $\alpha >0$ and $k,k_1,k_2$ all kernels on $\mathcal{X}$, then $\alpha k$ and $k_1+k_2$ are kernels on $\mathcal{X}$.
+**Lemma(Sums of kernels are kernels)**. 给定$\alpha >0$以及 $k,k_1,k_2$为核函数定义在域$\mathcal{X}$, 则有$\alpha k$和$k_1+k_2$都是定义在$\mathcal{X}$的核函数.
 
-**Lemma(Mapping between spaces)**. Let $\mathcal{X}$ and $\tilde{\mathcal{X}}$ be sets, and define a map $A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}$. Define the kernel $k$ on $\tilde{\mathcal{X}}$. Then the kernel $k(A(x),A(x'))$ is a kernel on $\mathcal{X}$.
+**Lemma(Mapping between spaces)**. 若$\mathcal{X}$ 和$\tilde{\mathcal{X}}$为非空集，且有一个映射$A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}$. 若有$k$定义在域$\tilde{\mathcal{X}}$. 则$k(A(x),A(x'))$是一个定义在$\mathcal{X}$的核函数.
 
-**Lemma(Products of kernels are kernels)**. Given $k_1$ on $\mathcal{X}_1$ and $k_2$ on $\mathcal{X}_2$, then $k_1\times k_2$ is a kernel on $\mathcal{X}_1\times\mathcal{X}_2$. If $\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}$, then $k=k_1\times k_2$ is a kernel on $\mathcal{X}$.
+**Lemma(Products of kernels are kernels)**. 给定$k_1$定义在域 $\mathcal{X}_1$ 以及$k_2$定义在域$\mathcal{X}_2$, 则 $k_1\times k_2$是一个定义在域$\mathcal{X}_1\times\mathcal{X}_2$的核函数。如果$\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}$, 则 $k=k_1\times k_2$ 是一个定义在域$\mathcal{X}$的核函数。
 
 
 
-**Lemma(Polynomial kernels)**. Let $x,x'\in \mathbb{R}^d$ for $d\ge 1$， and let $m\ge 1$ be an integer and $c\ge 0$ be a positive real. then
+**Lemma(Polynomial kernels)**. 假设$x,x'\in \mathbb{R}^d$ for $d\ge 1$，且$m\ge 1$是一个整数，以及$c\ge 0$是一个正实数，则有
 
 $$
 k(x,x')=(\langle x,x'\rangle+c)^m
 $$
 
-is a valid kernel.
+是一个核函数。
 
-&emsp;&emsp;Can we extends this combination of sum and product rule to sums with infinitely many terms? It turn s out we we can, as long as these don't blow up.
+&emsp;&emsp;我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。
 
- **Definition** The space $\ell_p$  of $p$-summable sequences is defined as all sequences $(a_i)_{i\ge 1}$ for which
+ **Definition** 关于$p$-可求和序列的空间$\ell_p$，定义为对所有的$(a_i)_{i\ge 1}$都有
 
  $$
  \sum_{i=1}^{\infty}a_i^p <\infty
  $$
 
-&emsp;&emsp;Kernels can be defined in terms of sequences in $\ell_2$.
+&emsp;&emsp;核函数可以用$\ell_2$序列来定义。
 
- **Lemma**. Given a non-empty set $\mathcal{X}$, and a sequence of functions $(\phi_i(x))_{i\ge 1}$ in $\ell_2$ where $\phi_i :\mathcal{X}\rightarrow \mathbb{R}$ is the $i$th coordinate of the feature map $\phi(x)$. Then
+ **Lemma**. 给定一个非空集合$\mathcal{X}$, 以及$\ell_2$空间的一个函数序列$(\phi_i(x))_{i\ge 1}$，其中映射$\phi_i :\mathcal{X}\rightarrow \mathbb{R}$ 是特征映射$\phi(x)$的第$i$th坐标，则有
 
  $$
  k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
  $$
- is a well-defined kernel on $\mathcal{X}$.
 
-&emsp;&emsp;Taylor series expansions may be used to define kernels that have infinityly many features.
+是一个定义在域$\mathcal{X}$的核函数。
 
-**Definition(Taylor series kernel)**. Assume we can define the Taylor series
+&emsp;&emsp;泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。
+
+**Definition(泰勒级数核 (Taylor series kernel))**. 假设我们可以定义泰勒级数
 
 $$
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|<r,z\in\mathbb{R}
 $$
 
-for $r\in (0,\infty]$, with $a_n\ge 0$ for all $n\ge 0$. Define $\mathcal{X}$ to be the $\sqrt{r}$-ball in $\mathbb{R}^d$, Then for $x,x'\in\mathbb{R}^d$ such that $\Vert x\Vert <\sqrt{r}$, we have the kernel
+for $r\in (0,\infty]$, with $a_n\ge 0$ for all $n\ge 0$. 可定义$\mathcal{X}$为空间$\mathbb{R}^d$的$\sqrt{r}$-球, 则如果$x,x'\in\mathbb{R}^d$满足$\Vert x\Vert <\sqrt{r}$, 我们有以下核函数
 
 $$
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 $$
 
- **proof**. Non-negative weighted sums of kernels are kernels, and products of kernels are kernels, so the following is a kernel if it converges,
+ **证明**. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，
 
  $$
  k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
 $$
 
- We have by Cauchy-Schwarz that
+根据Cauchy-Schwarz不等式
 
  $$
   |\langle x,x'\rangle |\le \Vert x\Vert\Vert x'\Vert<r
  $$
 
-so the Taylor series converges.
+因此泰勒级数核收敛.
 
-&emsp;&emsp;An example of a Taylor series kernel is the exponential.
+&emsp;&emsp;泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。
 
- **Example(Exponential kernel)**. The exponential kernel on $\mathbb{R}^d$ is defined as 
+ **Example(指数核 (Exponential kernel))**. 域$\mathbb{R}^d$的指数核定义为 
 
  $$
  k(x,x')=\exp(\langle x,x'\rangle)
  $$
 
-&emsp;&emsp;We may conbine all the results above to obtain the following(product rule, mapping rule, et al.)
+&emsp;&emsp;我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)
 
-**Example(Gaussian kernel)**. The Gaussian kernel on $\mathbb{R}^d$ is defined as 
+**Example(高斯核 Gaussian kernel)**. 定义在域$\mathbb{R}^d$的高斯核为 
 
  $$
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  $$
 
- proof. 
+ **证明**. 对于指数核函数$k_1$进行正则化， 
 
  $$
  \begin{split}
  k_1(x,x')&=\exp\left\{\frac{\langle x,x'\rangle}{\gamma^2}\right\}\\
+\end{split}
+ $$
+
+ 则有，
+
+ $$
+ \begin{split}
  \underbrace{k_1(x,x')}_{\textrm{normalize}}&=\frac{\exp\{\frac{\langle x,x'\rangle}{\gamma^2}\}}{  \sqrt{\exp\left\{\frac{\Vert x\Vert^2}{\gamma^2} \right\}    \exp\left\{\frac{\Vert x'\Vert^2}{\gamma^2} \right\}}     }\\
  &=\exp\left\{{\frac{2\langle x,x'\rangle}{\gamma^2}-\frac{\langle x,x\rangle}{\gamma^2}-\frac{2\langle x',x'\rangle}{\gamma^2}}\right\}\\
  &=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)\\\\
  &=k(x,x')
  \end{split}
  $$
+
+因此可得，高斯核为指数核$k_1$的标准化结果。显然高斯核也是一个核函数。
+
 
 
 ## 核函数的基本运算
