@@ -348,85 +348,92 @@ document.write(`
 </section>
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>什么是核函数<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
-<p><strong>定义1(inner product)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>  be a vector space over <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>. A function <span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span> is said to be an inner product on <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> if</p>
+<p><strong>定义1(内积(inner product))</strong>. 令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0\)</span> if and only if <span class="math notranslate nohighlight">\(f=0\)</span></p></li>
 </ol>
-<p>  A Hilber space is a space on which an inner product is defined, along with an additional technical condition.</p>
-<p><strong>定义2(Kernel)</strong>.  Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>  be a non-empty set. A fucntion <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span> is called a kernel if there exists an <span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert space and a map <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span> such that <span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+<p>  希尔伯空间是定义了内积的一个空间，并附加了一个技术性条件(A Hilber space is a space on which an inner product is defined, along with an additional technical condition)。</p>
+<p><strong>定义2(Kernel)</strong>.  令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 \]</div>
-<p><strong>Lemma(Sums of kernels are kernels)</strong>. Given <span class="math notranslate nohighlight">\(\alpha &gt;0\)</span> and <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span> all kernels on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, then <span class="math notranslate nohighlight">\(\alpha k\)</span> and <span class="math notranslate nohighlight">\(k_1+k_2\)</span> are kernels on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
-<p><strong>Lemma(Mapping between spaces)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> and <span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span> be sets, and define a map <span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. Define the kernel <span class="math notranslate nohighlight">\(k\)</span> on <span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. Then the kernel <span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
-<p><strong>Lemma(Products of kernels are kernels)</strong>. Given <span class="math notranslate nohighlight">\(k_1\)</span> on <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> and <span class="math notranslate nohighlight">\(k_2\)</span> on <span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, then <span class="math notranslate nohighlight">\(k_1\times k_2\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>. If <span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, then <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> is a kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
-<p><strong>Lemma(Polynomial kernels)</strong>. Let <span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>， and let <span class="math notranslate nohighlight">\(m\ge 1\)</span> be an integer and <span class="math notranslate nohighlight">\(c\ge 0\)</span> be a positive real. then</p>
+<p><strong>Lemma(Sums of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+<p><strong>Lemma(Mapping between spaces)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+<p><strong>Lemma(Products of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
+<p><strong>Lemma(Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有</p>
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=(\langle x,x'\rangle+c)^m
 \]</div>
-<p>is a valid kernel.</p>
-<p>  Can we extends this combination of sum and product rule to sums with infinitely many terms? It turn s out we we can, as long as these don’t blow up.</p>
-<p><strong>Definition</strong> The space <span class="math notranslate nohighlight">\(\ell_p\)</span>  of <span class="math notranslate nohighlight">\(p\)</span>-summable sequences is defined as all sequences <span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span> for which</p>
+<p>是一个核函数。</p>
+<p>  我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。</p>
+<p><strong>Definition</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
 <div class="math notranslate nohighlight">
 \[
  \sum_{i=1}^{\infty}a_i^p &lt;\infty
  \]</div>
-<p>  Kernels can be defined in terms of sequences in <span class="math notranslate nohighlight">\(\ell_2\)</span>.</p>
-<p><strong>Lemma</strong>. Given a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, and a sequence of functions <span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span> in <span class="math notranslate nohighlight">\(\ell_2\)</span> where <span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> is the <span class="math notranslate nohighlight">\(i\)</span>th coordinate of the feature map <span class="math notranslate nohighlight">\(\phi(x)\)</span>. Then</p>
+<p>  核函数可以用<span class="math notranslate nohighlight">\(\ell_2\)</span>序列来定义。</p>
+<p><strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有</p>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
  \]</div>
-<p>is a well-defined kernel on <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>.</p>
-<p>  Taylor series expansions may be used to define kernels that have infinityly many features.</p>
-<p><strong>Definition(Taylor series kernel)</strong>. Assume we can define the Taylor series</p>
+<p>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
+<p>  泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。</p>
+<p><strong>Definition(泰勒级数核 (Taylor series kernel))</strong>. 假设我们可以定义泰勒级数</p>
 <div class="math notranslate nohighlight">
 \[
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
 \]</div>
-<p>for <span class="math notranslate nohighlight">\(r\in (0,\infty]\)</span>, with <span class="math notranslate nohighlight">\(a_n\ge 0\)</span> for all <span class="math notranslate nohighlight">\(n\ge 0\)</span>. Define <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> to be the <span class="math notranslate nohighlight">\(\sqrt{r}\)</span>-ball in <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>, Then for <span class="math notranslate nohighlight">\(x,x'\in\mathbb{R}^d\)</span> such that <span class="math notranslate nohighlight">\(\Vert x\Vert &lt;\sqrt{r}\)</span>, we have the kernel</p>
+<p>for <span class="math notranslate nohighlight">\(r\in (0,\infty]\)</span>, with <span class="math notranslate nohighlight">\(a_n\ge 0\)</span> for all <span class="math notranslate nohighlight">\(n\ge 0\)</span>. 可定义<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为空间<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的<span class="math notranslate nohighlight">\(\sqrt{r}\)</span>-球, 则如果<span class="math notranslate nohighlight">\(x,x'\in\mathbb{R}^d\)</span>满足<span class="math notranslate nohighlight">\(\Vert x\Vert &lt;\sqrt{r}\)</span>, 我们有以下核函数</p>
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \]</div>
-<p><strong>proof</strong>. Non-negative weighted sums of kernels are kernels, and products of kernels are kernels, so the following is a kernel if it converges,</p>
+<p><strong>证明</strong>. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，</p>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
 \]</div>
-<p>We have by Cauchy-Schwarz that</p>
+<p>根据Cauchy-Schwarz不等式</p>
 <div class="math notranslate nohighlight">
 \[
   |\langle x,x'\rangle |\le \Vert x\Vert\Vert x'\Vert&lt;r
  \]</div>
-<p>so the Taylor series converges.</p>
-<p>  An example of a Taylor series kernel is the exponential.</p>
-<p><strong>Example(Exponential kernel)</strong>. The exponential kernel on <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> is defined as</p>
+<p>因此泰勒级数核收敛.</p>
+<p>  泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。</p>
+<p><strong>Example(指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核定义为</p>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(\langle x,x'\rangle)
  \]</div>
-<p>  We may conbine all the results above to obtain the following(product rule, mapping rule, et al.)</p>
-<p><strong>Example(Gaussian kernel)</strong>. The Gaussian kernel on <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span> is defined as</p>
+<p>  我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)</p>
+<p><strong>Example(高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  \]</div>
-<p>proof.</p>
+<p><strong>证明</strong>. 对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
  k_1(x,x')&amp;=\exp\left\{\frac{\langle x,x'\rangle}{\gamma^2}\right\}\\
+\end{split}
+ \end{split}\]</div>
+<p>则有，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ \begin{split}
  \underbrace{k_1(x,x')}_{\textrm{normalize}}&amp;=\frac{\exp\{\frac{\langle x,x'\rangle}{\gamma^2}\}}{  \sqrt{\exp\left\{\frac{\Vert x\Vert^2}{\gamma^2} \right\}    \exp\left\{\frac{\Vert x'\Vert^2}{\gamma^2} \right\}}     }\\
  &amp;=\exp\left\{{\frac{2\langle x,x'\rangle}{\gamma^2}-\frac{\langle x,x\rangle}{\gamma^2}-\frac{2\langle x',x'\rangle}{\gamma^2}}\right\}\\
  &amp;=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)\\\\
  &amp;=k(x,x')
  \end{split}
  \end{split}\]</div>
+<p>因此可得，高斯核为指数核<span class="math notranslate nohighlight">\(k_1\)</span>的标准化结果。显然高斯核也是一个核函数。</p>
 </section>
 </section>
 <section id="id5">
