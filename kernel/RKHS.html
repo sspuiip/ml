@@ -311,7 +311,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -664,6 +667,8 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 \]</div>
 <p>因此，<span class="math notranslate nohighlight">\(k\)</span>是一个再生核。</p>
 <p>  从上述定理可以看出，<span class="math notranslate nohighlight">\(k(\cdot,x)\)</span>实际上是在<span class="math notranslate nohighlight">\(x\)</span>点求值算子的一种表示。</p>
+<section id="rkhs">
+<h4><span class="section-number">2.3.2.1. </span>RKHS具体化<a class="headerlink" href="#rkhs" title="此标题的永久链接">#</a></h4>
 <blockquote>
 <div><p><strong>定义 (正定函数)</strong>. 一个函数<span class="math notranslate nohighlight">\(h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}\)</span>是正定的，如果<span class="math notranslate nohighlight">\(\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}\)</span>,</p>
 </div></blockquote>
@@ -676,7 +681,7 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 </div></blockquote>
 <p>  根据上述定义可知，任意内积函数是一个正定函数。更一般地有如下引理。</p>
 <blockquote>
-<div><p><strong>Lemma</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间（RKHS不是必要的）,<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>是一个非空集合且有映射<span class="math notranslate nohighlight">\(\phi :\mathcal{X}\rightarrow \mathcal{F}\)</span>，则<span class="math notranslate nohighlight">\(h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}\)</span>是一个正定函数(positive definite function)。</p>
+<div><p><strong>Lemma (核函数一定是正定函数)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间（RKHS不是必要的）,<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>是一个非空集合且有映射<span class="math notranslate nohighlight">\(\phi :\mathcal{X}\rightarrow \mathcal{F}\)</span>，则<span class="math notranslate nohighlight">\(h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}\)</span>是一个正定函数(positive definite function)。</p>
 </div></blockquote>
 <p>  <strong>证明</strong>.</p>
 <div class="math notranslate nohighlight">
@@ -687,10 +692,16 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 \end{split}
 \end{split}\]</div>
 <blockquote>
-<div><p><strong>Corollary</strong>. 再生核函数是正定的。</p>
+<div><p><strong>Corollary</strong>. 再生核函数是正定核函数。</p>
 </div></blockquote>
 <p>  <strong>证明</strong>. 对于RKHS空间的一个再生核<span class="math notranslate nohighlight">\(k\)</span>有，<span class="math notranslate nohighlight">\(k(x,y)=\langle k(\cdot,x),k(\cdot,y)\rangle_\mathcal{H}\)</span>，容易验证<span class="math notranslate nohighlight">\(\phi : x\rightarrow k(\cdot,x)\)</span>。</p>
+<p>  正定核函数是否也是再生核函数？</p>
+<blockquote>
+<div><p><strong>定理 (Moore-Aronszajn)</strong>. 正定核函数<span class="math notranslate nohighlight">\(k\)</span>唯一对应一个再生核Hilbert空间，且<span class="math notranslate nohighlight">\(k\)</span>就是其核函数。</p>
+</div></blockquote>
+<p>  有了Moore-Aronszajn定理，可以只关注于构造对称、正定的函数即可。</p>
 <p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
+</section>
 </section>
 </section>
 </section>
@@ -755,7 +766,10 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
