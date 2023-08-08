@@ -380,6 +380,8 @@ $$
 
 &emsp;&emsp;从上述定理可以看出，$k(\cdot,x)$实际上是在$x$点求值算子的一种表示。
 
+#### RKHS具体化
+
 > **定义 (正定函数)**. 一个函数$h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}$是正定的，如果$\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}$,
 
 $$
@@ -390,7 +392,7 @@ $$
 
 &emsp;&emsp;根据上述定义可知，任意内积函数是一个正定函数。更一般地有如下引理。
 
-> **Lemma**. 若$\mathcal{F}$是一个Hilbert空间（RKHS不是必要的）,$\mathcal{X}$是一个非空集合且有映射$\phi :\mathcal{X}\rightarrow \mathcal{F}$，则$h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}$是一个正定函数(positive definite function)。
+> **Lemma (核函数一定是正定函数)**. 若$\mathcal{F}$是一个Hilbert空间（RKHS不是必要的）,$\mathcal{X}$是一个非空集合且有映射$\phi :\mathcal{X}\rightarrow \mathcal{F}$，则$h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}$是一个正定函数(positive definite function)。
 
 &emsp;&emsp;**证明**.
 
@@ -401,8 +403,14 @@ $$
 \end{split}
 $$
 
-> **Corollary**. 再生核函数是正定的。
+> **Corollary**. 再生核函数是正定核函数。
 
 &emsp;&emsp;**证明**. 对于RKHS空间的一个再生核$k$有，$k(x,y)=\langle k(\cdot,x),k(\cdot,y)\rangle_\mathcal{H}$，容易验证$\phi : x\rightarrow k(\cdot,x)$。
+
+&emsp;&emsp;正定核函数是否也是再生核函数？
+
+> **定理 (Moore-Aronszajn)**. 正定核函数$k$唯一对应一个再生核Hilbert空间，且$k$就是其核函数。
+
+&emsp;&emsp;有了Moore-Aronszajn定理，可以只关注于构造对称、正定的函数即可。
 
 [参考1](http://songcy.net/posts/story-of-basis-and-kernel-part-2/)[参考2](https://www.cnblogs.com/zhangcn/p/13289236.html)
