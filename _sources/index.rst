@@ -21,6 +21,7 @@
 
    kernel/base.md
    kernel/RKHS.md
+   kernel/MMD.md
 
 
 

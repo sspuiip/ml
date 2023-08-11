@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>2. 表示学习 &#8212; MLBOOK 1.0 文档</title>
+    <title>3. 最大均值差 (Maximum Mean Discrepancy) &#8212; MLBOOK 1.0 文档</title>
   
   
   
@@ -43,11 +43,11 @@
     <script src="../_static/translations.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/neuro_representation';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/MMD';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 核函数基础" href="../kernel/base.html" />
-    <link rel="prev" title="1. 数据降维" href="dimension_reduce.html" />
+    <link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" />
+    <link rel="prev" title="2. 再生核希尔伯特空间" href="RKHS.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -125,15 +125,15 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 表示学习</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差 (Maximum Mean Discrepancy)</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RKHS.html">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 最大均值差 (Maximum Mean Discrepancy)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul class="nav bd-sidenav">
@@ -208,7 +208,7 @@
       
       
       
-      <li><a href="../_sources/ml/neuro_representation.md" target="_blank"
+      <li><a href="../_sources/kernel/MMD.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -290,7 +290,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>表示学习</h1>
+    <h1>最大均值差 (Maximum Mean Discrepancy)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -300,7 +300,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoder">2.1. 自编码器(AutoEncoder)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
 </ul>
             </nav>
         </div>
@@ -312,40 +313,63 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">2. </span>表示学习<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
-<section id="autoencoder">
-<h2><span class="section-number">2.1. </span>自编码器(AutoEncoder)<a class="headerlink" href="#autoencoder" title="此标题的永久链接">#</a></h2>
-<p>  自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：</p>
-<ol class="arabic simple">
-<li><p>原码空间<span class="math notranslate nohighlight">\(\mathcal{X}\in\mathbb{R}^n\)</span>与编码空间<span class="math notranslate nohighlight">\(\mathcal{Z}\in\mathbb{R}^m\)</span>。</p></li>
-<li><p>编码函数（参数为<span class="math notranslate nohighlight">\(\phi\)</span>）<span class="math notranslate nohighlight">\(E_\phi :\mathcal{X}\rightarrow\mathcal{Z}\)</span>与解码函数（参数为<span class="math notranslate nohighlight">\(\theta\)</span>）<span class="math notranslate nohighlight">\(D_\theta :\mathcal{Z}\rightarrow \mathcal{X}\)</span>.</p></li>
-</ol>
-<p>  对于任意<span class="math notranslate nohighlight">\(\pmb{x}\in\mathcal{X}\)</span>,</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="maximum-mean-discrepancy">
+<h1><span class="section-number">3. </span>最大均值差 (Maximum Mean Discrepancy)<a class="headerlink" href="#maximum-mean-discrepancy" title="此标题的永久链接">#</a></h1>
+<section id="mean-embedding">
+<h2><span class="section-number">3.1. </span>均值嵌入 (Mean Embedding)<a class="headerlink" href="#mean-embedding" title="此标题的永久链接">#</a></h2>
+<p>  若给定一集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的一个Borel概率测度<span class="math notranslate nohighlight">\(P\)</span>，则概率分布<span class="math notranslate nohighlight">\(P\)</span>的特征映射为，</p>
 <div class="math notranslate nohighlight">
 \[
-\pmb{z}\triangleq E_\phi(\pmb{x})=\sigma(\pmb{Wx}+\pmb{b}),\quad \pmb{\hat{x}}\triangleq D_\theta (\pmb{z})=\sigma(\pmb{Hz}+\pmb{d})
+\mu_P=(...,\mathbb{E}_P[\varphi_i(x)],...)
 \]</div>
-<p>其中，<span class="math notranslate nohighlight">\(\pmb{W},\pmb{H}\)</span>分别为编码层参数和解码层参数，<span class="math notranslate nohighlight">\(\sigma\)</span>为激活函数。</p>
-<p><img alt="AutoEncoder" src="../_images/autoencoder.png" /></p>
-<ul class="simple">
-<li><p><strong>训练自编码器</strong></p></li>
-</ul>
-<p>  自编码器的目标是对于样本<span class="math notranslate nohighlight">\(\pmb{x}\sim q(\pmb{x}) \in\mathcal{X}\)</span>的重构误差测度<span class="math notranslate nohighlight">\(d:\pmb{X}\times\pmb{X}\rightarrow [0,\infty]\)</span>尽可能的小，即</p>
+<p>对于正定函数<span class="math notranslate nohighlight">\(k(x,y)\)</span>,<span class="math notranslate nohighlight">\(x\sim P, y\sim Q\)</span>,则有，</p>
 <div class="math notranslate nohighlight">
 \[
-\min\limits_{\theta,\phi} \quad \mathcal{L}(\phi,\theta)=\mathbb{E}_{x\sim q}[d(\pmb{x},D_\theta (E_\phi (\pmb{x})))]
+\langle \mu_P,\mu_Q\rangle_\mathcal{F}=\mathbb{E}_{P,Q}[k(x,y)]
 \]</div>
-<p>  一般来说，<span class="math notranslate nohighlight">\(q(\pmb{x})\)</span>取值为经验分布，</p>
+<p>  <strong>例</strong>. 对于有限维内积空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，可以定义关于内积的期望，</p>
 <div class="math notranslate nohighlight">
-\[
-q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
-\]</div>
-<p>以及<span class="math notranslate nohighlight">\(d(\pmb{x},\pmb{x}')=\Vert \pmb{x}-\pmb{x}'\Vert_2^2\)</span>. 因此，寻找最估自编码器就等价于一个最小二乘优化，即</p>
+\[\begin{split}
+\varphi(x)=k(\cdot,x)=\begin{bmatrix} x\\ x^2\end{bmatrix},\quad f(\cdot)=\begin{bmatrix} a\\ b \end{bmatrix}
+\end{split}\]</div>
+<p>则有，</p>
 <div class="math notranslate nohighlight">
-\[
-\min\limits_{\theta,\phi}\quad\frac{1}{N}\sum_{i=1}^N \left\Vert \pmb{x}-D_\theta (E_\phi (\pmb{x}))\right\Vert_2^2
-\]</div>
+\[\begin{split}
+f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} x\\ x^2 \end{bmatrix}=ax+bx^2
+\end{split}\]</div>
+<p>  若有随机变量<span class="math notranslate nohighlight">\(x\sim P\)</span>，则</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbb{E}_P[f(x)]=\mathbb{E}_P\left(\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} x\\ x^2 \end{bmatrix} \right)=\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} \mathbb{E}_P[x]\\ \mathbb{E}_P[x^2] \end{bmatrix}\triangleq \begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} \mathbb{E}_P[\varphi_1(x)]\\ \mathbb{E}_P[\varphi_2(x)] \end{bmatrix} =\langle f,\mu_P\rangle_\mathcal{F}
+\end{split}\]</div>
+<p>  上述<span class="math notranslate nohighlight">\(\mu_P\)</span>即为<strong>均值嵌入(Mean Embedding)</strong>。若是无穷维，均值嵌入还存在吗？也就是说，是否存在一个<span class="math notranslate nohighlight">\(\mu_P\in\mathcal{F}\)</span>，使得<span class="math notranslate nohighlight">\(\mathbb{E}_P[f(x)]=\langle f,\mu_P\rangle_\mathcal{F}=\langle f,\mathbb{E}_P[\varphi(x)]\rangle_\mathcal{F}\)</span>成立？</p>
+<blockquote>
+<div><p><strong>定理 (均值嵌入存在性)</strong>. 如果<span class="math notranslate nohighlight">\(\mathbb{E}_P \sqrt{k(x,x)}&lt;\infty\)</span>，则<span class="math notranslate nohighlight">\(\exists \mu_P \in \mathcal{F} \)</span>.</p>
+</div></blockquote>
+<p>  <strong>证明</strong>. 线性算子<span class="math notranslate nohighlight">\(T_Pf\triangleq \mathbb{E}_P[f(x)]\)</span>，<span class="math notranslate nohighlight">\(\forall f\in \mathcal{F}\)</span>是有界的。因为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+|T_Pf|&amp;=|\mathbb{E}_P[f(x)]|\\
+&amp;\le \mathbb{E}_P|f(x)|\\
+&amp;=\mathbb{E}_P|\langle f,\varphi(x)\rangle_\mathcal{F}|\\
+&amp;\le\mathbb{E}_P\left(\sqrt{k(x,x)}\cdot\Vert f\Vert_\mathcal{F} \right)
+\end{split}
+\end{split}\]</div>
+<p>因此，通过Riesz定理(<span class="math notranslate nohighlight">\(\lambda_{T_P}=\mathbb{E}_P\sqrt{k(x,x)}\)</span>)可知，<span class="math notranslate nohighlight">\(\exists \mu_P\in\mathcal{F}\)</span>满足<span class="math notranslate nohighlight">\(T_P f=\langle f,\mu_P\rangle_\mathcal{F}\)</span>。</p>
+<p>  注意：Riesz定理是指在Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，所有有界的线性算子<span class="math notranslate nohighlight">\(A\)</span>可以表示为<span class="math notranslate nohighlight">\(\langle \cdot,g_A\rangle_\mathcal{F}\)</span>对于某些<span class="math notranslate nohighlight">\(g_A\in \mathcal{F}\)</span>，即<span class="math notranslate nohighlight">\(Af=\langle f,g_A\rangle_\mathcal{F}\)</span>。同时，有界线性算子是指满足<span class="math notranslate nohighlight">\(Af\le \lambda_A \Vert f\Vert_\mathcal{F}\)</span>条件。</p>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h2><span class="section-number">3.2. </span>最大均值差分<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h2>
+<p>  所谓的最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\textrm{MMD}^2(P,Q)&amp;=\Vert \mu_P -\mu_Q\Vert_\mathcal{F}^2\\
+&amp;=\mathbb{E}_P k(x,x')+\mathbb{E}_Q k(y,y')-2\mathbb{E}_{P,Q}k(x,y)
+\end{split}
+\end{split}\]</div>
 </section>
 </section>
 
@@ -362,20 +386,20 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="dimension_reduce.html"
+       href="RKHS.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>数据降维</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>再生核希尔伯特空间</p>
       </div>
     </a>
     <a class="right-next"
-       href="../kernel/base.html"
+       href="../optimization/convex_prob.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>凸优化问题</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -397,7 +421,8 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#autoencoder">2.1. 自编码器(AutoEncoder)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
 </ul>
   </nav></div>
 
