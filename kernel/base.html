@@ -301,11 +301,14 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 示例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.2.1. 常用核函数</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 核函数的基本运算</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. 投影</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2. 特征映射的基本运算</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.3. 投影</a></li>
 </ul>
             </nav>
         </div>
@@ -346,44 +349,64 @@ document.write(`
 <p>  经过上式分析，我们发现特征映射后的向量做内积运算等价于原空间向量内积的平方。换句话说，我们可以不用显式计算映射<span class="math notranslate nohighlight">\(\phi\)</span>，直接计算<span class="math notranslate nohighlight">\(\kappa(\pmb{x},\pmb{z})\)</span>就可以实现特征映射后的效果，这一技巧也称之为核技巧(kernel trick), 函数<span class="math notranslate nohighlight">\(\kappa(\cdot,\cdot)\)</span>也称之为核函数。</p>
 <p><img alt="核函数示例" src="../_images/kernelfun.jpeg" /></p>
 </section>
+<hr class="docutils" />
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>什么是核函数<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
-<p><strong>定义1(内积(inner product))</strong>. 令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
+<blockquote>
+<div><p><strong>定义1(内积(inner product))</strong>. 令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
+</div></blockquote>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0\)</span> if and only if <span class="math notranslate nohighlight">\(f=0\)</span></p></li>
 </ol>
 <p>  希尔伯空间是定义了内积的一个空间，并附加了一个技术性条件(A Hilber space is a space on which an inner product is defined, along with an additional technical condition)。</p>
-<p><strong>定义2(Kernel)</strong>.  令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+<blockquote>
+<div><p><strong>定义2(核函数, Kernel)</strong>.  令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 \]</div>
-<p><strong>Lemma(Sums of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-<p><strong>Lemma(Mapping between spaces)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-<p><strong>Lemma(Products of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
-<p><strong>Lemma(Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有</p>
+<blockquote>
+<div><p><strong>Lemma(Sums of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Lemma(Mapping between spaces)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Lemma(Products of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
+</div></blockquote>
+<hr class="docutils" />
+<section id="id5">
+<h4><span class="section-number">1.1.2.1. </span>常用核函数<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
+<blockquote>
+<div><p><strong>定义 (多项式核函数, Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有如下核函数：</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=(\langle x,x'\rangle+c)^m
 \]</div>
-<p>是一个核函数。</p>
 <p>  我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。</p>
-<p><strong>Definition</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
+<blockquote>
+<div><p><strong>定义 (<span class="math notranslate nohighlight">\(l_p\)</span>空间)</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
  \sum_{i=1}^{\infty}a_i^p &lt;\infty
  \]</div>
 <p>  核函数可以用<span class="math notranslate nohighlight">\(\ell_2\)</span>序列来定义。</p>
-<p><strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有</p>
+<blockquote>
+<div><p><strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
  \]</div>
-<p>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
 <p>  泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。</p>
-<p><strong>Definition(泰勒级数核 (Taylor series kernel))</strong>. 假设我们可以定义泰勒级数</p>
+<blockquote>
+<div><p><strong>定义 (泰勒级数核， Taylor series kernel)</strong>. 假设我们可以定义泰勒级数</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
@@ -393,7 +416,7 @@ f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
 \[
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \]</div>
-<p><strong>证明</strong>. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，</p>
+<p>  <strong>证明</strong>. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，</p>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
@@ -405,18 +428,22 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
  \]</div>
 <p>因此泰勒级数核收敛.</p>
 <p>  泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。</p>
-<p><strong>Example(指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核定义为</p>
+<blockquote>
+<div><p><strong>定义 (指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核定义为</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(\langle x,x'\rangle)
  \]</div>
 <p>  我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)</p>
-<p><strong>Example(高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
+<blockquote>
+<div><p><strong>示例 (高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  \]</div>
-<p><strong>证明</strong>. 对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
+<p>  <strong>证明</strong>. 对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
@@ -434,10 +461,27 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
  \end{split}
  \end{split}\]</div>
 <p>因此可得，高斯核为指数核<span class="math notranslate nohighlight">\(k_1\)</span>的标准化结果。显然高斯核也是一个核函数。</p>
+<p>  高斯核的特征映射为无穷维。下面对其特征映射进行分解，为简化计算，可先假设<span class="math notranslate nohighlight">\(\gamma =1 \)</span>。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\kappa(x,x')&amp;=\exp(-x^2)\exp(-x'^2)\exp(2xx')\\
+&amp;=\exp(-x^2)\exp(-x'^2)\underbrace{\sum_{n=0}^\infty\frac{(2xx')^n}{n!}}_{\textrm{Taylor}展开式}\\
+&amp;=\sum_{n=0}^\infty \exp(-x^2)\exp(-x'^2)\sqrt{\frac{2^n}{n!}}\sqrt{\frac{2^n}{n!}}x^n x'^n\\
+&amp;=\sum_{n=0}^\infty\underbrace{\left(\exp(-x^2)\sqrt{\frac{2^n}{n!}}x^n\right)}_{\phi(x)}\underbrace{\left(\exp(-x'^2)\sqrt{\frac{2^n}{n!}}x'^n\right)}_{\phi(x')}
+\end{split}
+\end{split}\]</div>
+<p>可知，特征映射为，</p>
+<div class="math notranslate nohighlight">
+\[
+\phi(x)=\exp(-x^2)(1,\sqrt{\frac{2^1}{1!}}x^1,\sqrt{\frac{2^2}{2!}}x^2,...,\sqrt{\frac{2^n}{n!}}x^n,...)
+\]</div>
 </section>
 </section>
-<section id="id5">
-<h2><span class="section-number">1.2. </span>核函数的基本运算<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
+</section>
+<hr class="docutils" />
+<section id="id6">
+<h2><span class="section-number">1.2. </span>特征映射的基本运算<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h2>
 <ol class="arabic simple">
 <li><p>模长</p></li>
 </ol>
@@ -513,8 +557,9 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \end{split}
 \end{split}\]</div>
 </section>
-<section id="id6">
-<h2><span class="section-number">1.3. </span>投影<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h2>
+<hr class="docutils" />
+<section id="id7">
+<h2><span class="section-number">1.3. </span>投影<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的<strong>投影</strong><span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -583,11 +628,14 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 示例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.1.2. 什么是核函数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.1.2.1. 常用核函数</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2. 核函数的基本运算</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.3. 投影</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2. 特征映射的基本运算</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.3. 投影</a></li>
 </ul>
   </nav></div>
 
