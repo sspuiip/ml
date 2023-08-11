@@ -34,10 +34,10 @@ $$
 
 ![核函数示例](../img/kernelfun.jpeg)
 
-
+---
 ### 什么是核函数
 
- **定义1(内积(inner product))**. 令 $\mathcal{H}$ 为一个向量空间，则一个函数$\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}$定义为$\mathcal{H}$的内积，如果满足以下条件：
+ >**定义1(内积(inner product))**. 令 $\mathcal{H}$ 为一个向量空间，则一个函数$\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}$定义为$\mathcal{H}$的内积，如果满足以下条件：
 
  1. $\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}$
  2. $\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}$
@@ -47,7 +47,7 @@ $$
 
 
 
-**定义2(Kernel)**.  令$\mathcal{X}$为一个非空集合。一个函数 $k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}$称之为核函数，如果存在一个$\mathbb{R}$-Hilbert空间以及映射 $\phi:\mathcal{X}\rightarrow \mathcal{H}$且满足$\forall x,x'\in \mathcal{X}$，
+>**定义2(核函数, Kernel)**.  令$\mathcal{X}$为一个非空集合。一个函数 $k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}$称之为核函数，如果存在一个$\mathbb{R}$-Hilbert空间以及映射 $\phi:\mathcal{X}\rightarrow \mathcal{H}$且满足$\forall x,x'\in \mathcal{X}$，
 
 $$
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
@@ -56,25 +56,25 @@ $$
 
 
 
-**Lemma(Sums of kernels are kernels)**. 给定$\alpha >0$以及 $k,k_1,k_2$为核函数定义在域$\mathcal{X}$, 则有$\alpha k$和$k_1+k_2$都是定义在$\mathcal{X}$的核函数.
+>**Lemma(Sums of kernels are kernels)**. 给定$\alpha >0$以及 $k,k_1,k_2$为核函数定义在域$\mathcal{X}$, 则有$\alpha k$和$k_1+k_2$都是定义在$\mathcal{X}$的核函数.
 
-**Lemma(Mapping between spaces)**. 若$\mathcal{X}$ 和$\tilde{\mathcal{X}}$为非空集，且有一个映射$A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}$. 若有$k$定义在域$\tilde{\mathcal{X}}$. 则$k(A(x),A(x'))$是一个定义在$\mathcal{X}$的核函数.
+>**Lemma(Mapping between spaces)**. 若$\mathcal{X}$ 和$\tilde{\mathcal{X}}$为非空集，且有一个映射$A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}$. 若有$k$定义在域$\tilde{\mathcal{X}}$. 则$k(A(x),A(x'))$是一个定义在$\mathcal{X}$的核函数.
 
-**Lemma(Products of kernels are kernels)**. 给定$k_1$定义在域 $\mathcal{X}_1$ 以及$k_2$定义在域$\mathcal{X}_2$, 则 $k_1\times k_2$是一个定义在域$\mathcal{X}_1\times\mathcal{X}_2$的核函数。如果$\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}$, 则 $k=k_1\times k_2$ 是一个定义在域$\mathcal{X}$的核函数。
+>**Lemma(Products of kernels are kernels)**. 给定$k_1$定义在域 $\mathcal{X}_1$ 以及$k_2$定义在域$\mathcal{X}_2$, 则 $k_1\times k_2$是一个定义在域$\mathcal{X}_1\times\mathcal{X}_2$的核函数。如果$\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}$, 则 $k=k_1\times k_2$ 是一个定义在域$\mathcal{X}$的核函数。
 
+---
+#### 常用核函数
 
-
-**Lemma(Polynomial kernels)**. 假设$x,x'\in \mathbb{R}^d$ for $d\ge 1$，且$m\ge 1$是一个整数，以及$c\ge 0$是一个正实数，则有
+>**定义 (多项式核函数, Polynomial kernels)**. 假设$x,x'\in \mathbb{R}^d$ for $d\ge 1$，且$m\ge 1$是一个整数，以及$c\ge 0$是一个正实数，则有如下核函数：
 
 $$
 k(x,x')=(\langle x,x'\rangle+c)^m
 $$
 
-是一个核函数。
 
 &emsp;&emsp;我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。
 
- **Definition** 关于$p$-可求和序列的空间$\ell_p$，定义为对所有的$(a_i)_{i\ge 1}$都有
+>**定义 ($l_p$空间)** 关于$p$-可求和序列的空间$\ell_p$，定义为对所有的$(a_i)_{i\ge 1}$都有
 
  $$
  \sum_{i=1}^{\infty}a_i^p <\infty
@@ -82,17 +82,15 @@ $$
 
 &emsp;&emsp;核函数可以用$\ell_2$序列来定义。
 
- **Lemma**. 给定一个非空集合$\mathcal{X}$, 以及$\ell_2$空间的一个函数序列$(\phi_i(x))_{i\ge 1}$，其中映射$\phi_i :\mathcal{X}\rightarrow \mathbb{R}$ 是特征映射$\phi(x)$的第$i$th坐标，则有
+ >**Lemma**. 给定一个非空集合$\mathcal{X}$, 以及$\ell_2$空间的一个函数序列$(\phi_i(x))_{i\ge 1}$，其中映射$\phi_i :\mathcal{X}\rightarrow \mathbb{R}$ 是特征映射$\phi(x)$的第$i$th坐标，则有一个定义在域$\mathcal{X}$的核函数
 
  $$
  k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
  $$
 
-是一个定义在域$\mathcal{X}$的核函数。
-
 &emsp;&emsp;泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。
 
-**Definition(泰勒级数核 (Taylor series kernel))**. 假设我们可以定义泰勒级数
+ >**定义 (泰勒级数核， Taylor series kernel)**. 假设我们可以定义泰勒级数
 
 $$
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|<r,z\in\mathbb{R}
@@ -104,7 +102,7 @@ $$
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 $$
 
- **证明**. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，
+&emsp;&emsp;**证明**. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，
 
  $$
  k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
@@ -120,7 +118,7 @@ $$
 
 &emsp;&emsp;泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。
 
- **Example(指数核 (Exponential kernel))**. 域$\mathbb{R}^d$的指数核定义为 
+>**定义 (指数核 (Exponential kernel))**. 域$\mathbb{R}^d$的指数核定义为 
 
  $$
  k(x,x')=\exp(\langle x,x'\rangle)
@@ -128,13 +126,15 @@ $$
 
 &emsp;&emsp;我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)
 
-**Example(高斯核 Gaussian kernel)**. 定义在域$\mathbb{R}^d$的高斯核为 
+
+
+>**示例 (高斯核 Gaussian kernel)**. 定义在域$\mathbb{R}^d$的高斯核为 
 
  $$
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  $$
 
- **证明**. 对于指数核函数$k_1$进行正则化， 
+ &emsp;&emsp;**证明**. 对于指数核函数$k_1$进行正则化， 
 
  $$
  \begin{split}
@@ -155,9 +155,25 @@ $$
 
 因此可得，高斯核为指数核$k_1$的标准化结果。显然高斯核也是一个核函数。
 
+&emsp;&emsp;高斯核的特征映射为无穷维。下面对其特征映射进行分解，为简化计算，可先假设$\gamma =1 $。
 
+$$
+\begin{split}
+\kappa(x,x')&=\exp(-x^2)\exp(-x'^2)\exp(2xx')\\
+&=\exp(-x^2)\exp(-x'^2)\underbrace{\sum_{n=0}^\infty\frac{(2xx')^n}{n!}}_{\textrm{Taylor}展开式}\\
+&=\sum_{n=0}^\infty \exp(-x^2)\exp(-x'^2)\sqrt{\frac{2^n}{n!}}\sqrt{\frac{2^n}{n!}}x^n x'^n\\
+&=\sum_{n=0}^\infty\underbrace{\left(\exp(-x^2)\sqrt{\frac{2^n}{n!}}x^n\right)}_{\phi(x)}\underbrace{\left(\exp(-x'^2)\sqrt{\frac{2^n}{n!}}x'^n\right)}_{\phi(x')}
+\end{split}
+$$
 
-## 核函数的基本运算
+可知，特征映射为，
+
+$$
+\phi(x)=\exp(-x^2)(1,\sqrt{\frac{2^1}{1!}}x^1,\sqrt{\frac{2^2}{2!}}x^2,...,\sqrt{\frac{2^n}{n!}}x^n,...)
+$$
+
+---
+## 特征映射的基本运算
 
 1. 模长
 
@@ -224,7 +240,7 @@ $$
 \end{split}
 $$
 
-
+---
 ## 投影
 
  $\phi(\pmb{x})$在向量$\pmb{w}$上的**投影**$P_{\pmb{w}}(\phi(\pmb{x}))$为，
