@@ -16,7 +16,7 @@
    
 .. toctree::
    :maxdepth: 2
-   :caption: 核函数
+   :caption: 核方法
    :numbered:
 
    kernel/base.md
