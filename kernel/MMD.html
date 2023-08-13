@@ -129,7 +129,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核函数</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RKHS.html">2. 再生核希尔伯特空间</a></li>
@@ -302,6 +302,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3. 最大均值差分作为一种积分概率度量</a></li>
 </ul>
             </nav>
         </div>
@@ -362,12 +363,95 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 <hr class="docutils" />
 <section id="id1">
 <h2><span class="section-number">3.2. </span>最大均值差分<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h2>
-<p>  所谓的最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。</p>
+<blockquote>
+<div><p><strong>定义</strong>. 最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。</p>
+</div></blockquote>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
 \textrm{MMD}^2(P,Q)&amp;=\Vert \mu_P -\mu_Q\Vert_\mathcal{F}^2\\
-&amp;=\mathbb{E}_P k(x,x')+\mathbb{E}_Q k(y,y')-2\mathbb{E}_{P,Q}k(x,y)
+&amp;=\underbrace{\mathbb{E}_P k(x,x')+\mathbb{E}_Q k(y,y')}_{\textrm{within distrib. similarity}}-\underbrace{2\mathbb{E}_{P,Q}k(x,y)}_{\textrm{cross-distrib. similarity}}
+\end{split}
+\end{split}\]</div>
+<p>  <strong>证明</strong>.</p>
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}\begin{split}
+\begin{split}
+\textrm{MMD}^2(P,Q)&amp;=\Vert \mu_P -\mu_Q\Vert_\mathcal{F}^2\\
+&amp;=\langle \mu_P-\mu_Q,\mu_P-\mu_Q\rangle_\mathcal{F}\\
+&amp;=\langle\mu_P,\mu_P\rangle+\langle\mu_Q,\mu_Q\rangle-2\langle\mu_P,\mu_Q\rangle\\
+&amp;=\underbrace{\mathbb{E}_P[\mu_P(x)]}_{\mathbb{E}_P[f(x)]=\langle f,\varphi(x)\rangle_\mathcal{F}}+...\\
+&amp;=\underbrace{\mathbb{E}_P[\langle\mu_P,k(\cdot,x)\rangle]}_{\mu_P\triangleq(...,\mathbb{E}_P[\varphi_i(x)],...)}+...\\
+&amp;=\mathbb{E}_P[k(x,x')]+\mathbb{E}_Q[k(y,y')]-2\mathbb{E}_{P,Q}[k(x,y)]\\\end{split}\\\end{split}
+\end{aligned}\end{align} \]</div>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2><span class="section-number">3.3. </span>最大均值差分作为一种积分概率度量<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<p><strong>(1). 积分概率度量(Integral Probability Metric, IPM)</strong></p>
+<p>  IPM主要用于衡量两个概率分布之间的距离(相似性)。IPM寻求某种限制条件的函数集<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的连续函数<span class="math notranslate nohighlight">\(f\)</span>，使得该函数能够提供更多的矩信息，然后寻找最优<span class="math notranslate nohighlight">\(f\)</span>使得概率分布<span class="math notranslate nohighlight">\(P(x)\)</span>与<span class="math notranslate nohighlight">\(Q(x)\)</span>之间的差异最大，该最大差异即为两分布之间的距离，即</p>
+<div class="math notranslate nohighlight">
+\[
+d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]\triangleq\textrm{IPM}(P,Q)
+\]</div>
+<p>  选择不同的函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，会导致IPM具有不同形式。如</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Name</p></th>
+<th class="head text-left"><p>Formula</p></th>
+<th class="head text-left"><p>Condition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><strong>Dudley</strong></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  \)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>Wasserstein</strong></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(W(P,Q)=\inf_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) \)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f:\Vert f\Vert_L \le 1 \}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> is separable.</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>Maximum Mean Discrepancy</strong></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\textrm{MMD}(P,Q)=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{f:\Vert f\Vert_\mathcal{H}\le 1 \}\)</span>,<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为RKHS，<span class="math notranslate nohighlight">\(k\)</span>为其再生核。</p></td>
+</tr>
+</tbody>
+</table>
+<hr class="docutils" />
+<p><strong>(2). MMD积分概率度量</strong></p>
+<p>  MMD没有直接定义函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，而是通过核方法在内积空间间接定义了连续函数<span class="math notranslate nohighlight">\(f\)</span>，使得<span class="math notranslate nohighlight">\(f\)</span>可以隐式计算所有阶次的统计量。MMD将<span class="math notranslate nohighlight">\(f\)</span>限制在再生核希尔伯特空间的单位球内<span class="math notranslate nohighlight">\(\Vert f\Vert_{\mathcal{H}}\le 1\)</span>。</p>
+<blockquote>
+<div><p><strong>定义</strong>. MMD积分概率度量定义为，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+\textrm{MMD}(f,P,Q)\triangleq\sup_{\Vert f\Vert_\mathcal{H}\le 1}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
+\]</div>
+<p>  由Riesz定理可知，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\textrm{MMD}(f,P,Q)&amp;=\sup_{\Vert f\Vert_\mathcal{H}\le 1}\langle f,\mathbb{E}_P[\varphi(x)]\rangle_\mathcal{H}-\langle f,\mathbb{E}_Q[\varphi(x)]\rangle_\mathcal{H}\\
+&amp;=\sup_{\Vert f\Vert_\mathcal{H}\le 1}\langle f,\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]\rangle_\mathcal{H}
+\end{split}
+\end{split}\]</div>
+<p>两向量内积的最大值必定在两向量同方向上最得，即，</p>
+<div class="math notranslate nohighlight">
+\[
+f^*=\frac{\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]}{\Vert \mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]\Vert_\mathcal{H}}
+\]</div>
+<p>代入原式即可得，</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{\textrm{MMD}(f,P,Q)=\Vert\mu_P-\mu_Q \Vert_\mathcal{H}}
+\]</div>
+<p>  应用蒙特卡罗估计，可以计算出MMD。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\textrm{MMD}^2(f,P,Q)&amp;=\Vert\mu_P-\mu_Q \Vert_\mathcal{H}^2\\
+&amp;\approx\left\Vert\frac1m\sum_{i=1}^m\varphi(x_i)-\frac1n\sum_{j=1}\varphi(x_j) \right\Vert_\mathcal{H}^2\\
+&amp;\approx \boxed{\frac{1}{m^2}\sum_{i=1}^m\sum_{i'=1}^m k(x_i,x_{i'})+\frac{1}{n^2}\sum_{j=1}^n\sum_{j'=1}^m k(x_j,x_{j'})-\frac{2}{mn}\sum_{i=1}^m\sum_{j=1}^n k(x_i,x_j)}
 \end{split}
 \end{split}\]</div>
 </section>
@@ -423,6 +507,7 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3. 最大均值差分作为一种积分概率度量</a></li>
 </ul>
   </nav></div>
 
