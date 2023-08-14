@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>3. 最大均值差 (Maximum Mean Discrepancy) &#8212; MLBOOK 1.0 文档</title>
+    <title>3. 最大均值差 (MMD) &#8212; MLBOOK 1.0 文档</title>
   
   
   
@@ -133,7 +133,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 最大均值差 (Maximum Mean Discrepancy)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 最大均值差 (MMD)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul class="nav bd-sidenav">
@@ -290,7 +290,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>最大均值差 (Maximum Mean Discrepancy)</h1>
+    <h1>最大均值差 (MMD)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -301,8 +301,8 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3. 最大均值差分作为一种积分概率度量</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-mean-discrepancy">3.2. 最大均值差分(Maximum Mean Discrepancy)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3. 一种积分概率度量</a></li>
 </ul>
             </nav>
         </div>
@@ -314,8 +314,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="maximum-mean-discrepancy">
-<h1><span class="section-number">3. </span>最大均值差 (Maximum Mean Discrepancy)<a class="headerlink" href="#maximum-mean-discrepancy" title="此标题的永久链接">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="mmd">
+<h1><span class="section-number">3. </span>最大均值差 (MMD)<a class="headerlink" href="#mmd" title="此标题的永久链接">#</a></h1>
 <section id="mean-embedding">
 <h2><span class="section-number">3.1. </span>均值嵌入 (Mean Embedding)<a class="headerlink" href="#mean-embedding" title="此标题的永久链接">#</a></h2>
 <p>  若给定一集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的一个Borel概率测度<span class="math notranslate nohighlight">\(P\)</span>，则概率分布<span class="math notranslate nohighlight">\(P\)</span>的特征映射为，</p>
@@ -361,8 +361,8 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 <p>  注意：Riesz定理是指在Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，所有有界的线性算子<span class="math notranslate nohighlight">\(A\)</span>可以表示为<span class="math notranslate nohighlight">\(\langle \cdot,g_A\rangle_\mathcal{F}\)</span>对于某些<span class="math notranslate nohighlight">\(g_A\in \mathcal{F}\)</span>，即<span class="math notranslate nohighlight">\(Af=\langle f,g_A\rangle_\mathcal{F}\)</span>。同时，有界线性算子是指满足<span class="math notranslate nohighlight">\(Af\le \lambda_A \Vert f\Vert_\mathcal{F}\)</span>条件。</p>
 </section>
 <hr class="docutils" />
-<section id="id1">
-<h2><span class="section-number">3.2. </span>最大均值差分<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h2>
+<section id="maximum-mean-discrepancy">
+<h2><span class="section-number">3.2. </span>最大均值差分(Maximum Mean Discrepancy)<a class="headerlink" href="#maximum-mean-discrepancy" title="此标题的永久链接">#</a></h2>
 <blockquote>
 <div><p><strong>定义</strong>. 最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。</p>
 </div></blockquote>
@@ -386,8 +386,8 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 \end{aligned}\end{align} \]</div>
 </section>
 <hr class="docutils" />
-<section id="id2">
-<h2><span class="section-number">3.3. </span>最大均值差分作为一种积分概率度量<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<section id="id1">
+<h2><span class="section-number">3.3. </span>一种积分概率度量<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h2>
 <p><strong>(1). 积分概率度量(Integral Probability Metric, IPM)</strong></p>
 <p>  IPM主要用于衡量两个概率分布之间的距离(相似性)。IPM寻求某种限制条件的函数集<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的连续函数<span class="math notranslate nohighlight">\(f\)</span>，使得该函数能够提供更多的矩信息，然后寻找最优<span class="math notranslate nohighlight">\(f\)</span>使得概率分布<span class="math notranslate nohighlight">\(P(x)\)</span>与<span class="math notranslate nohighlight">\(Q(x)\)</span>之间的差异最大，该最大差异即为两分布之间的距离，即</p>
 <div class="math notranslate nohighlight">
@@ -405,7 +405,7 @@ d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 <tbody>
 <tr class="row-even"><td class="text-center"><p><strong>Dudley</strong></p></td>
 <td class="text-left"><p><span class="math notranslate nohighlight">\(D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]\)</span></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  \)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \\ \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \\ \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  \)</span></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p><strong>Wasserstein</strong></p></td>
 <td class="text-left"><p><span class="math notranslate nohighlight">\(W(P,Q)=\inf_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) \)</span></p></td>
@@ -506,8 +506,8 @@ f^*=\frac{\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]}{\Vert \mathbb{E}_P[
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.2. 最大均值差分</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.3. 最大均值差分作为一种积分概率度量</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-mean-discrepancy">3.2. 最大均值差分(Maximum Mean Discrepancy)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.3. 一种积分概率度量</a></li>
 </ul>
   </nav></div>
 

@@ -10,9 +10,10 @@
 &emsp;&emsp;首先来了解什么是泛函。**泛函**(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。
 
 >**定义0 (泛函)**. 假设有映射$F[y]: \mathcal{C}\rightarrow \mathbb{B}$，其中$\forall y(x)\in \mathcal{C}$，$\mathcal{C}$为函数集, $y$为$x$的函数，$x\in\mathcal{X}$,数集$\mathbb{B}\subseteq \mathbb{R}$，则称$F$是$y(x)$的泛函。一般记为积分形式
-> $$
-> J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
-> $$
+
+$$
+J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
+$$
 
 &emsp;&emsp;可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。
 
@@ -47,7 +48,7 @@ $$
 最终可得物体从$O$点运动到$A$点所需的时间为(等式两边同时积分)，
 
 $$
-t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]
+\boxed{t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]}
 $$
 
 物体由$O$点运动到$A$点所需的时间$t$是$y(x)$的函数。问题最终转变为满足条件$y(0)=0,y(a)=b$的所有连续函数$y=y(x)$中，找出一个函数$y(x)$使得$J[y]$最小。
@@ -120,7 +121,11 @@ $$
 
 >**定理1**. 若函数$f(x,y)$在闭区域$a\le x\le b,c\le y\le d$上连续，则$I[y]$在闭区域$c\le y\le d$连续。
 
->**定理2**.  若函数$f(x,y),f_y'(x,y)$都在闭区域$a\le x\le b,c\le y\le d$上连续，则$I[y]$在闭区域$c\le y\le d$上具有连续导数$I'[y]=\int_a^b f'_y(x,y)dx$.
+>**定理2**.  若函数$f(x,y),f_y'(x,y)$都在闭区域$a\le x\le b,c\le y\le d$上连续，则$I[y]$在闭区域$c\le y\le d$上具有连续导数
+
+$$
+I'[y]=\int_a^b f'_y(x,y)dx
+$$
 
 证明过程可参考《数学分析》ISBN：9787040427806。
 
@@ -203,14 +208,12 @@ $$
 $$
 
 
-解此方程，最终得到
-
 [参考1](https://zhuanlan.zhihu.com/p/139018146)
 
-
+---
 ## 线性算子
 
->&emsp;&emsp;**定义1 (线性算子)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$称之为线性算子，当且仅当以下条件成立：
+>**定义1 (线性算子)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$称之为线性算子，当且仅当以下条件成立：
 >> - 齐次性(homogeneity): $A(\alpha f)=\alpha (Af),\quad \forall \alpha\in \mathbb{K},f\in \mathcal{F}$
 >> - 可加性(additivity): $A(f+g)=Af+Ag,\quad\forall f,g\in\mathcal{F}$
 >
@@ -218,7 +221,7 @@ $$
 
 &emsp;&emsp;**例1** 令$\mathcal{F}$为一个内积空间，对于$g\in\mathcal{F}$，算子$A_g :\mathcal{F}\rightarrow\mathbb{K}$， $A_g(f):=\langle f,g\rangle_\mathcal{F}$是一个线性算子。注意到算子$A_g$的像是一个潜在的域$\mathbb{K}$，而这正是定义在$\mathbb{K}$上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标量值算子也称之为$\mathcal{F}$空间的泛函(functionals)。
 
->&emsp;&emsp;**定义2 (连续性)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$在$f_0\subset \mathcal{F}$是连续的，如果对于任意$\epsilon >0$，总存在一个$\delta =\delta(\epsilon,f_0)>0$，满足
+>**定义2 (连续性)**. 一个函数$A:\mathcal{F}\rightarrow \mathcal{G}$在$f_0\subset \mathcal{F}$是连续的，如果对于任意$\epsilon >0$，总存在一个$\delta =\delta(\epsilon,f_0)>0$，满足
 
 $$
 \Vert f-f_0\Vert_\mathcal{F}<\delta,\quad \textrm{implies}\quad\Vert Af-Af_0\Vert_\mathcal{G}<\epsilon.
@@ -232,14 +235,14 @@ $$
 |A_g(f_1)-A_g(f_2)|=|\langle f_1-f_2,g\rangle_\mathcal{F}|\le \Vert g\Vert_{\mathcal{F}}\Vert f_1-f_2\Vert_\mathcal{F}
 $$
 
->&emsp;&emsp;**定义3 (算子范数(Operator norm))**. 线性算子$A:\mathcal{F}\rightarrow\mathcal{G}$的算子范数定义为，
+>**定义3 (算子范数(Operator norm))**. 线性算子$A:\mathcal{F}\rightarrow\mathcal{G}$的算子范数定义为，
 
 $$
 \Vert A\Vert=\sup_{f\in\mathcal{F}}\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}
 $$
 
 
->&emsp;&emsp;**定义4 (有界算子(Bounded operator))**. 如果$\Vert A\Vert <\infty$，则称算子$A:\mathcal{F}\rightarrow\mathcal{G}$是有界算子。
+>**定义4 (有界算子(Bounded operator))**. 如果$\Vert A\Vert <\infty$，则称算子$A:\mathcal{F}\rightarrow\mathcal{G}$是有界算子。
 
 &emsp;&emsp;可以看出$A$是有界算子当且仅当对于所有的$f\in\mathcal{F}$，存在一个非负实数$\lambda$，使之$\Vert Af\Vert_\mathcal{G}\le\lambda\Vert f\Vert_\mathcal{F}$成立，并且最小的$\lambda$恰好是算子范数。
 
@@ -256,21 +259,22 @@ $$
 
 注意：在微积分中，一个有界函数是指其范围是是有界集合的函数。这个定义与上面的定义不同，上面的定义简单地说明$A$对$f$的影响是由$f$的范数的一些缩放所限制的。对于算子范数(operator norm)有一种有用的几何解释:$A$将$\mathcal{F}$中的封闭单位球映射到$\mathcal{G}$中的封闭球的一个子集，中心为$0\in\mathcal{G}$，半径为$\Vert A\Vert$。同时注意：任何赋范、有限维空间的线性算子是有界的。
 
->&emsp;&emsp;**定理**. 假设$(\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})$是赋范线性空间，如果$L$是一个线性算子，则以下3个条件是等价的：
+>**定理**. 假设$(\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})$是赋范线性空间，如果$L$是一个线性算子，则以下3个条件是等价的：
 >>1. $L$是一个有界算子.
 >>2. $L$在$\mathcal{F}$是连续的.
 >>3. $L$在$\mathcal{F}$中一点(one point)是连续的.
 
 
->&emsp;&emsp;**定义5 (代数对偶(Algebraic dual))**. 如果$\mathcal{F}$是一个赋范空间，那么线性泛函$A:\mathcal{F}\rightarrow \mathbb{K}$的空间$\mathcal{F}'$称为$\mathcal{F}$的代数对偶空间(Algebraic dual)。
+>**定义5 (代数对偶(Algebraic dual))**. 如果$\mathcal{F}$是一个赋范空间，那么线性泛函$A:\mathcal{F}\rightarrow \mathbb{K}$的空间$\mathcal{F}'$称为$\mathcal{F}$的代数对偶空间(Algebraic dual)。
 
->&emsp;&emsp;**定义6 (拓扑空间对偶(Topological dual))**.
+>**定义6 (拓扑空间对偶(Topological dual))**.
  如果$\mathcal{F}$是一个赋范空间，那么连续线性泛函$A:\mathcal{F}\rightarrow \mathbb{K}$的空间$\mathcal{F}'$称为$\mathcal{F}$的拓扑对偶空间(Topological dual)。
 
  &emsp;&emsp;在有限维空间，上述两个定义是一致的。但是在无限维空间不在适用。前面的例子已知，内积空间$\mathcal{F}$中形如$\langle \cdot,g\rangle_\mathcal{F}$的泛函是线性和连续的，也就是它们存在于$\mathcal{F}$的拓扑对偶空间$\mathcal{F}'$。这也显示如果$\mathcal{F}$是一个Hilbert空间，则$\mathcal{F}'$的所有元素都具有$\langle \cdot,g\rangle_\mathcal{F}$形式。
 
- >&emsp;&emsp;**定理 (Riesz representation)**. 在一个Hilbert空间$\mathcal{F}$， 所有的连续线性泛函都具有$\langle \cdot,g\rangle_\mathcal{F}$的形式$\textrm{for some } g \in \mathcal{F}$。
+ >**定理 (Riesz representation)**. 在一个Hilbert空间$\mathcal{F}$， 所有的连续线性泛函$A$都存在$g_A\in \mathcal{H}$，具有$\langle \cdot,g_A\rangle_\mathcal{F}$的形式，使得$Af=\langle f,g_A \rangle_\mathcal{H}, \forall f\in \mathcal{H}$成立。
 
+---
 ## 再生核Hilbert空间
 
 ### 求值泛函
@@ -290,7 +294,7 @@ $$
 
 &emsp;&emsp;因此，一个自然的问题就是泛函是否连续（等价于线性算子的有界性）？这正是RKHS是如何定义的。
 
-> **定义2 (Reproducing kernel Hilbert space, RKHS)**. 一个从非空集$\mathcal{X}$到数域$\mathbb{R}$函数的Hilbert空间$\mathcal{H}$是一个RKHS空间，如果$\forall x \in \mathcal{X}, \delta_x$ 是连续的。
+>**定义2 (Reproducing kernel Hilbert space, RKHS)**. 一个从非空集$\mathcal{X}$到数域$\mathbb{R}$函数的Hilbert空间$\mathcal{H}$是一个RKHS空间，如果$\forall x \in \mathcal{X}, \delta_x$ 是连续的。
 
 >**Coroallary ($\mathcal{H}$范数收敛隐含着逐点收敛)**. 如果两个函数RKHS范数收敛，则它们在每次一个点都收敛，即如果$\lim_{n\rightarrow \infty}\Vert f_n -f\Vert_{\mathcal{H}}=0$, 则有$\lim_{n\rightarrow\infty}f_n(x)=f(x), \forall x \in\mathcal{X}$。
 
@@ -323,8 +327,9 @@ $$
 
 且有$q_n(1)=1,\forall n$。也就是说求值泛函在点1是不连续的。
 
-
+---
 ### 再生核
+
 &emsp;&emsp;下面从核函数的角度来探讨RKHS。
 
 > **定义3 (Reproducing kernel Hilbert space, RKHS)**. 设$\mathcal{H}$是一个定义在非空集合$\mathcal{X}$上的函数$f:\mathcal{X}\rightarrow \mathbb{R}$构成的Hilbert空间，若函数$\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}$满足：
@@ -337,7 +342,7 @@ $$
 
 &emsp;&emsp;这个定义产生了很多的疑问。核函数与RKHS的定义有什么关系？这个核函数存在吗？它有什么属性？首先来回答前两个问题。
 
-> **定理 (核函数存在性)**. $\mathcal{H}$是一个再生核希尔伯特空间(即，其求值函数$\delta_x$是连续的线性算子)，当且仅当$\mathcal{H}$具有再生核。
+>**定理 (核函数存在性)**. $\mathcal{H}$是一个再生核希尔伯特空间(即，其求值函数$\delta_x$是连续的线性算子)，当且仅当$\mathcal{H}$具有再生核。
 
 &emsp;&emsp;**证明**. 给定一个Hilbert空间$\mathcal{H}$，并具有再生属性$\langle f,k(\cdot,x)\rangle_\mathcal{H}=f(x)$，则有
 
@@ -382,7 +387,7 @@ $$
 
 #### RKHS具体化
 
-> **定义 (正定函数)**. 一个函数$h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}$是正定的，如果$\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}$,
+>**定义 (正定函数)**. 一个函数$h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}$是正定的，如果$\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}$,
 
 $$
 \sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)\ge 0
@@ -392,7 +397,7 @@ $$
 
 &emsp;&emsp;根据上述定义可知，任意内积函数是一个正定函数。更一般地有如下引理。
 
-> **Lemma (核函数一定是正定函数)**. 若$\mathcal{F}$是一个Hilbert空间（RKHS不是必要的）,$\mathcal{X}$是一个非空集合且有映射$\phi :\mathcal{X}\rightarrow \mathcal{F}$，则$h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}$是一个正定函数(positive definite function)。
+>**Lemma (核函数一定是正定函数)**. 若$\mathcal{F}$是一个Hilbert空间（RKHS不是必要的）,$\mathcal{X}$是一个非空集合且有映射$\phi :\mathcal{X}\rightarrow \mathcal{F}$，则$h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}$是一个正定函数(positive definite function)。
 
 &emsp;&emsp;**证明**.
 
@@ -409,7 +414,7 @@ $$
 
 &emsp;&emsp;正定核函数是否也是再生核函数？
 
-> **定理 (Moore-Aronszajn)**. 正定核函数$k$唯一对应一个再生核Hilbert空间，且$k$就是其核函数。
+>**定理 (Moore-Aronszajn)**. 正定核函数$k$唯一对应一个再生核Hilbert空间，且$k$就是其核函数。
 
 &emsp;&emsp;有了Moore-Aronszajn定理，可以只关注于构造对称、正定的函数即可。
 

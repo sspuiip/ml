@@ -46,7 +46,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/RKHS';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 最大均值差 (Maximum Mean Discrepancy)" href="MMD.html" />
+    <link rel="next" title="3. 最大均值差 (MMD)" href="MMD.html" />
     <link rel="prev" title="1. 核函数基础" href="base.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -133,7 +133,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差 (Maximum Mean Discrepancy)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差 (MMD)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul class="nav bd-sidenav">
@@ -337,11 +337,12 @@ document.write(`
 <h3><span class="section-number">2.1.1. </span>泛函<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  首先来了解什么是泛函。<strong>泛函</strong>(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。</p>
 <blockquote>
-<div><p><strong>定义0 (泛函)</strong>. 假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式
-$<span class="math notranslate nohighlight">\(
-J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
-\)</span>$</p>
+<div><p><strong>定义0 (泛函)</strong>. 假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式</p>
 </div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
+\]</div>
 <p>  可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。</p>
 <ul class="simple">
 <li><p><strong>例1</strong>. 两点间直线距离最短问题.</p></li>
@@ -370,7 +371,7 @@ dt=\sqrt{\frac{1+y'^2}{2gy}}dx
 <p>最终可得物体从<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间为(等式两边同时积分)，</p>
 <div class="math notranslate nohighlight">
 \[
-t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]
+\boxed{t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]}
 \]</div>
 <p>物体由<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间<span class="math notranslate nohighlight">\(t\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的函数。问题最终转变为满足条件<span class="math notranslate nohighlight">\(y(0)=0,y(a)=b\)</span>的所有连续函数<span class="math notranslate nohighlight">\(y=y(x)\)</span>中，找出一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得<span class="math notranslate nohighlight">\(J[y]\)</span>最小。</p>
 <hr class="docutils" />
@@ -430,8 +431,12 @@ I(y)=\int_a^b f(x,y)dx
 <div><p><strong>定理1</strong>. 若函数<span class="math notranslate nohighlight">\(f(x,y)\)</span>在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>连续。</p>
 </div></blockquote>
 <blockquote>
-<div><p><strong>定理2</strong>.  若函数<span class="math notranslate nohighlight">\(f(x,y),f_y'(x,y)\)</span>都在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>上具有连续导数<span class="math notranslate nohighlight">\(I'[y]=\int_a^b f'_y(x,y)dx\)</span>.</p>
+<div><p><strong>定理2</strong>.  若函数<span class="math notranslate nohighlight">\(f(x,y),f_y'(x,y)\)</span>都在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>上具有连续导数</p>
 </div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+I'[y]=\int_a^b f'_y(x,y)dx
+\]</div>
 <p>证明过程可参考《数学分析》ISBN：9787040427806。</p>
 </section>
 <hr class="docutils" />
@@ -499,15 +504,15 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \[\begin{split}
 \boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
 \end{split}\]</div>
-<p>解此方程，最终得到</p>
 <p><a class="reference external" href="https://zhuanlan.zhihu.com/p/139018146">参考1</a></p>
 </section>
 </section>
 </section>
+<hr class="docutils" />
 <section id="id7">
 <h2><span class="section-number">2.2. </span>线性算子<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h2>
 <blockquote>
-<div><p>  <strong>定义1 (线性算子)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>称之为线性算子，当且仅当以下条件成立：</p>
+<div><p><strong>定义1 (线性算子)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>称之为线性算子，当且仅当以下条件成立：</p>
 <blockquote>
 <div><ul class="simple">
 <li><p>齐次性(homogeneity): <span class="math notranslate nohighlight">\(A(\alpha f)=\alpha (Af),\quad \forall \alpha\in \mathbb{K},f\in \mathcal{F}\)</span></p></li>
@@ -518,7 +523,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </div></blockquote>
 <p>  <strong>例1</strong> 令<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>为一个内积空间，对于<span class="math notranslate nohighlight">\(g\in\mathcal{F}\)</span>，算子<span class="math notranslate nohighlight">\(A_g :\mathcal{F}\rightarrow\mathbb{K}\)</span>， <span class="math notranslate nohighlight">\(A_g(f):=\langle f,g\rangle_\mathcal{F}\)</span>是一个线性算子。注意到算子<span class="math notranslate nohighlight">\(A_g\)</span>的像是一个潜在的域<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>，而这正是定义在<span class="math notranslate nohighlight">\(\mathbb{K}\)</span>上的一个平凡的赋范线性空间(normed linear space over itself)。这样的标量值算子也称之为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>空间的泛函(functionals)。</p>
 <blockquote>
-<div><p>  <strong>定义2 (连续性)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>在<span class="math notranslate nohighlight">\(f_0\subset \mathcal{F}\)</span>是连续的，如果对于任意<span class="math notranslate nohighlight">\(\epsilon &gt;0\)</span>，总存在一个<span class="math notranslate nohighlight">\(\delta =\delta(\epsilon,f_0)&gt;0\)</span>，满足</p>
+<div><p><strong>定义2 (连续性)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>在<span class="math notranslate nohighlight">\(f_0\subset \mathcal{F}\)</span>是连续的，如果对于任意<span class="math notranslate nohighlight">\(\epsilon &gt;0\)</span>，总存在一个<span class="math notranslate nohighlight">\(\delta =\delta(\epsilon,f_0)&gt;0\)</span>，满足</p>
 </div></blockquote>
 <div class="math notranslate nohighlight">
 \[
@@ -531,14 +536,14 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 |A_g(f_1)-A_g(f_2)|=|\langle f_1-f_2,g\rangle_\mathcal{F}|\le \Vert g\Vert_{\mathcal{F}}\Vert f_1-f_2\Vert_\mathcal{F}
 \]</div>
 <blockquote>
-<div><p>  <strong>定义3 (算子范数(Operator norm))</strong>. 线性算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>的算子范数定义为，</p>
+<div><p><strong>定义3 (算子范数(Operator norm))</strong>. 线性算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>的算子范数定义为，</p>
 </div></blockquote>
 <div class="math notranslate nohighlight">
 \[
 \Vert A\Vert=\sup_{f\in\mathcal{F}}\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}
 \]</div>
 <blockquote>
-<div><p>  <strong>定义4 (有界算子(Bounded operator))</strong>. 如果<span class="math notranslate nohighlight">\(\Vert A\Vert &lt;\infty\)</span>，则称算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>是有界算子。</p>
+<div><p><strong>定义4 (有界算子(Bounded operator))</strong>. 如果<span class="math notranslate nohighlight">\(\Vert A\Vert &lt;\infty\)</span>，则称算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>是有界算子。</p>
 </div></blockquote>
 <p>  可以看出<span class="math notranslate nohighlight">\(A\)</span>是有界算子当且仅当对于所有的<span class="math notranslate nohighlight">\(f\in\mathcal{F}\)</span>，存在一个非负实数<span class="math notranslate nohighlight">\(\lambda\)</span>，使之<span class="math notranslate nohighlight">\(\Vert Af\Vert_\mathcal{G}\le\lambda\Vert f\Vert_\mathcal{F}\)</span>成立，并且最小的<span class="math notranslate nohighlight">\(\lambda\)</span>恰好是算子范数。</p>
 <p>  有界算子可以重写为，</p>
@@ -552,7 +557,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <p>可以看出，<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的一个有界子集(bounded subset)映射到了<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>的一个有界子集。</p>
 <p>注意：在微积分中，一个有界函数是指其范围是是有界集合的函数。这个定义与上面的定义不同，上面的定义简单地说明<span class="math notranslate nohighlight">\(A\)</span>对<span class="math notranslate nohighlight">\(f\)</span>的影响是由<span class="math notranslate nohighlight">\(f\)</span>的范数的一些缩放所限制的。对于算子范数(operator norm)有一种有用的几何解释:<span class="math notranslate nohighlight">\(A\)</span>将<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的封闭单位球映射到<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>中的封闭球的一个子集，中心为<span class="math notranslate nohighlight">\(0\in\mathcal{G}\)</span>，半径为<span class="math notranslate nohighlight">\(\Vert A\Vert\)</span>。同时注意：任何赋范、有限维空间的线性算子是有界的。</p>
 <blockquote>
-<div><p>  <strong>定理</strong>. 假设<span class="math notranslate nohighlight">\((\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})\)</span>是赋范线性空间，如果<span class="math notranslate nohighlight">\(L\)</span>是一个线性算子，则以下3个条件是等价的：</p>
+<div><p><strong>定理</strong>. 假设<span class="math notranslate nohighlight">\((\mathcal{F},\Vert\cdot\Vert_\mathcal{F}), (\mathcal{G},\Vert\cdot\Vert_\mathcal{G})\)</span>是赋范线性空间，如果<span class="math notranslate nohighlight">\(L\)</span>是一个线性算子，则以下3个条件是等价的：</p>
 <blockquote>
 <div><ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(L\)</span>是一个有界算子.</p></li>
@@ -562,17 +567,18 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </div></blockquote>
 </div></blockquote>
 <blockquote>
-<div><p>  <strong>定义5 (代数对偶(Algebraic dual))</strong>. 如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个赋范空间，那么线性泛函<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathbb{K}\)</span>的空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>称为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的代数对偶空间(Algebraic dual)。</p>
+<div><p><strong>定义5 (代数对偶(Algebraic dual))</strong>. 如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个赋范空间，那么线性泛函<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathbb{K}\)</span>的空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>称为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的代数对偶空间(Algebraic dual)。</p>
 </div></blockquote>
 <blockquote>
-<div><p>  <strong>定义6 (拓扑空间对偶(Topological dual))</strong>.
+<div><p><strong>定义6 (拓扑空间对偶(Topological dual))</strong>.
 如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个赋范空间，那么连续线性泛函<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathbb{K}\)</span>的空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>称为<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的拓扑对偶空间(Topological dual)。</p>
 </div></blockquote>
 <p>  在有限维空间，上述两个定义是一致的。但是在无限维空间不在适用。前面的例子已知，内积空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中形如<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>的泛函是线性和连续的，也就是它们存在于<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的拓扑对偶空间<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>。这也显示如果<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间，则<span class="math notranslate nohighlight">\(\mathcal{F}'\)</span>的所有元素都具有<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>形式。</p>
 <blockquote>
-<div><p>  <strong>定理 (Riesz representation)</strong>. 在一个Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>， 所有的连续线性泛函都具有<span class="math notranslate nohighlight">\(\langle \cdot,g\rangle_\mathcal{F}\)</span>的形式<span class="math notranslate nohighlight">\(\textrm{for some } g \in \mathcal{F}\)</span>。</p>
+<div><p><strong>定理 (Riesz representation)</strong>. 在一个Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>， 所有的连续线性泛函<span class="math notranslate nohighlight">\(A\)</span>都存在<span class="math notranslate nohighlight">\(g_A\in \mathcal{H}\)</span>，具有<span class="math notranslate nohighlight">\(\langle \cdot,g_A\rangle_\mathcal{F}\)</span>的形式，使得<span class="math notranslate nohighlight">\(Af=\langle f,g_A \rangle_\mathcal{H}, \forall f\in \mathcal{H}\)</span>成立。</p>
 </div></blockquote>
 </section>
+<hr class="docutils" />
 <section id="hilbert">
 <h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="此标题的永久链接">#</a></h2>
 <section id="id8">
@@ -619,6 +625,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \end{split}\]</div>
 <p>且有<span class="math notranslate nohighlight">\(q_n(1)=1,\forall n\)</span>。也就是说求值泛函在点1是不连续的。</p>
 </section>
+<hr class="docutils" />
 <section id="id9">
 <h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h3>
 <p>  下面从核函数的角度来探讨RKHS。</p>
@@ -733,7 +740,7 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>最大均值差 (Maximum Mean Discrepancy)</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>最大均值差 (MMD)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

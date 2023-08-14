@@ -1,4 +1,4 @@
-# 最大均值差 (Maximum Mean Discrepancy)
+# 最大均值差 (MMD)
 
 ## 均值嵌入 (Mean Embedding)
 
@@ -53,7 +53,7 @@ $$
 
 ---
 
-## 最大均值差分
+## 最大均值差分(Maximum Mean Discrepancy)
 
 >**定义**. 最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。
 
@@ -80,7 +80,7 @@ $$
 
 ---
 
-## 最大均值差分作为一种积分概率度量
+## 一种积分概率度量
 
 **(1). 积分概率度量(Integral Probability Metric, IPM)**
 
@@ -94,7 +94,7 @@ $$
 
 | Name    | Formula    | Condition    |
 | :---: | :--- | :--- |
-| **Dudley**    |  $D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]$   |  $\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  $|
+| **Dudley**    |  $D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]$   |  $\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \\ \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \\ \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  $|
 |**Wasserstein** |$W(P,Q)=\inf_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) $|  $\mathcal{F}=\{ f:\Vert f\Vert_L \le 1 \}$ and $M$ is separable.       |
 | **Maximum Mean Discrepancy** | $\textrm{MMD}(P,Q)=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2$ | $\mathcal{F}=\{f:\Vert f\Vert_\mathcal{H}\le 1 \}$,$\mathcal{H}$为RKHS，$k$为其再生核。|
 
