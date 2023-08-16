@@ -1,148 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="zh-CN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 矩阵性能指标" href="../matrix/base.html" /><link rel="prev" title="2. 优化问题求解(1)" href="convex_solve.html" />
+
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+        <title>3. 优化问题求解(2) - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
 
-<!DOCTYPE html>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 
-<html lang="zh-CN" >
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-    <title>3. 优化问题求解(2) &#8212; MLBOOK 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-  
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/convex_neq_solve';</script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 矩阵性能指标" href="../matrix/base.html" />
-    <link rel="prev" title="2. 优化问题求解(1)" href="convex_solve.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-  
-  
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
-  
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
-  
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
       
-      <div class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-  
-
-<a class="navbar-brand logo" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
   
-  
-  
-    <p class="title logo__title">MLBOOK 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="nav bd-sidenav">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差 (MMD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="current nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="convex_prob.html">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 优化问题求解(2)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">3. 优化问题求解(2)</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
@@ -151,189 +182,51 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-  
-  <div id="rtd-footer-container"></div>
-
+</div>
+</div>
 
       </div>
       
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
     </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/optimization/convex_neq_solve.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script>
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>优化问题求解(2)</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
         </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <p>  求解约束优化问题的标准方法是将约束优化问题转化为无约束优化问题：主要有3种：Lagrangian乘子法、罚函数法和增广Lagrangian乘子法。</p>
 <hr class="docutils" />
 <section id="lagrangian">
 <h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="此标题的永久链接">#</a></h2>
 <p>  考虑等式约束的凸优化问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -341,12 +234,16 @@ document.write(`
 \mathrm{s.t.}\quad &amp;\pmb{Ax}=\pmb{b}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>Lagrangian乘子法将上式转换为无约束问题，即Lagrangian目标函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 L(\pmb{x},\pmb{\lambda})=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})
 \]</div>
+</div>
 <p>则原始优化问题的对偶目标函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -356,17 +253,23 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 &amp;=-f^*(-\pmb{A}^\top\pmb{\lambda})-\pmb{b}^\top\pmb{\lambda}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(f^*(\pmb{y})=\sup\limits_{\pmb{x}}(\pmb{y}^\top\pmb{x}-f(\pmb{x}))\)</span>是<span class="math notranslate nohighlight">\(f(\pmb{x})\)</span>的凸共轭函数，<span class="math notranslate nohighlight">\(\pmb{\lambda}\)</span>为对偶变量。根据Lagrangian乘子法，原始等式约束极小化问题变为对偶极大化问题，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \max\limits_{\pmb{\lambda}\in\mathbb{R}^m}\quad g(\pmb{\lambda})=-f^*(-\pmb{A}^\top\pmb{\lambda})-\pmb{b}^\top\pmb{\lambda}
 \]</div>
+</div>
 <p>假设强对偶性满足，则原始问题与对偶问题的最做优解相同。此时，原始极小化问题的最优解点<span class="math notranslate nohighlight">\(\pmb{x}^*\)</span>可由下式计算，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{x}^*=\arg\min\limits_{\pmb{x}}L(\pmb{x},\pmb{\lambda}^*)
 \]</div>
+</div>
 <p>  在对偶上升法中，由两个步骤组成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -374,6 +277,7 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 \pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k+\mu_k(\pmb{Ax}_{k+1}-\pmb{b})
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="lagrangian-alm">
@@ -382,6 +286,7 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 <section id="id2">
 <h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h3>
 <p>  考虑等式约束优化问题。记<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top\)</span>。对Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda})\)</span>加惩罚函数，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -389,8 +294,10 @@ L_\rho (\pmb{x},\pmb{\lambda})&amp;=f_0(\pmb{x})+\pmb{\lambda}^\top \pmb{h}(\pmb
 &amp;=f_0(\pmb{x})+\sum_{i=1}^q \lambda_i h_i(\pmb{x})+\rho\sum_{i=1}^q \phi(h_i(\pmb{x}))
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(\rho\)</span>为惩罚参数。这种将罚函数与Lagrangian函数相结合，构造出更合适的目标函数的方法称为增广Lagrangian乘子法。</p>
 <p>  求解无约束优化问题<span class="math notranslate nohighlight">\(\min L_\rho (\pmb{x},\pmb{\lambda})\)</span>的对偶上升法由以下两个更新组成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -398,15 +305,19 @@ L_\rho (\pmb{x},\pmb{\lambda})&amp;=f_0(\pmb{x})+\pmb{\lambda}^\top \pmb{h}(\pmb
 \pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k + \rho_k\nabla_{\pmb{\lambda}} L_\rho (\pmb{x}_{k+1},\pmb{\lambda}_k)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可以看出，</p>
 <p>  1. 若<span class="math notranslate nohighlight">\(\rho=0\)</span>，则退化为标准的Lagrangian乘子法。</p>
 <p>  2. 若<span class="math notranslate nohighlight">\(\pmb{\lambda}=0\)</span>，退化为标准罚函数法。</p>
 <p>  <strong>例</strong>：若取<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=\pmb{Ax}-\pmb{b}\)</span>， <span class="math notranslate nohighlight">\(\phi(\pmb{h}(\pmb{x}))=\frac12\lVert \pmb{Ax}-\pmb{b}\rVert_2^2\)</span>，则增广函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b})+\frac{\rho}{2}\lVert \pmb{Ax}-\pmb{b}\rVert_2^2
 \]</div>
+</div>
 <p>对应的对偶上升法更新为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -414,10 +325,12 @@ L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b}
 \pmb{\lambda}_{k+1}&amp;=\pmb{\lambda}_k + \rho_k (\pmb{Ax}_{k+1}-\pmb{b})
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <section id="id3">
 <h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  考虑不等式和等式约束同时存在的混合约束问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -426,7 +339,9 @@ L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b}
  &amp;\pmb{Bx}\preceq \pmb{h}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令非负向量<span class="math notranslate nohighlight">\(\pmb{s}\succeq 0\)</span>为松驰变量，使得<span class="math notranslate nohighlight">\(\pmb{Bx}+\pmb{s}=\pmb{h}\)</span>；以及罚函数<span class="math notranslate nohighlight">\(\phi(\pmb{g}(\pmb{x}))=\frac12 \lVert \pmb{g}(\pmb{x})\rVert_2^2\)</span>，则增广目标函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -434,7 +349,9 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 &amp;+\frac{\rho}{2}(\lVert \pmb{Ax-b}\rVert_2^2+\lVert \pmb{Bx}+\pmb{s}-\pmb{h}\rVert_2^2)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>对应的对偶上升法更新为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -444,12 +361,14 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 \pmb{\nu}_{k+1}&amp;=\pmb{\nu}_k + \rho_k (\pmb{Bx}_{k+1}+\pmb{s}_{k+1}-\pmb{h})
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 </section>
 <hr class="docutils" />
 <section id="admm">
 <h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="此标题的永久链接">#</a></h2>
 <p>  考虑有以下约束问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -457,12 +376,16 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 \textrm{s.t.}\quad &amp;\pmb{Ax}+\pmb{Bz}=\pmb{c}\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其增广拉格朗日函数可以写为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambda},\pmb{Ax}+\pmb{Bz}-\pmb{c}\rangle+\frac{\rho}{2}\Vert\pmb{Ax}+\pmb{Bz}-\pmb{c} \Vert_2^2
 \]</div>
+</div>
 <p>则ADMM的原始变量更新替换为交替更新，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -471,7 +394,9 @@ L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambd
 \pmb{\lambda}^{t+1}&amp;=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  做为区别，以下是ALM的更新迭代，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -479,6 +404,7 @@ L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambd
 \pmb{\lambda}^{t+1}&amp;=\pmb{\lambda}^t+\rho(\pmb{Ax}^{t+1}+\pmb{Bz}^{t+1}-\pmb{c})
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  总的来说，ALM原始变量的更新倾向于“联合更新”，而ADMM原始变量的更新则倾向于“交替更新”。</p>
 </section>
 <hr class="docutils" />
@@ -488,6 +414,7 @@ L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambd
 <section id="id5">
 <h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h3>
 <p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{equation}
@@ -498,7 +425,9 @@ s.t.\quad &amp;f_i(\pmb{x})\leq 0,i=1,2,...,N\\
 \end{split}
 \end{equation}
 \end{split}\]</div>
+</div>
 <p>可以转化为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{equation}
@@ -508,27 +437,35 @@ s.t.\quad &amp;\pmb{Ax}=0\\
 \end{split}
 \end{equation}
 \end{split}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(I_{-}(u)\)</span>是指示性函数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array} \right.
 \end{split}\]</div>
+</div>
 <p>这样，我们就可以转化为等式约束的优化问题，但<span class="math notranslate nohighlight">\(I_{-}(u)\)</span>不可微，因此不能使用需要梯度的下降方法。</p>
 <ul class="simple">
 <li><p><strong>对数障碍</strong></p></li>
 </ul>
 <p>  指示函数不可微，可以使用一个近似的可微函数来代替：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \hat{I}_{-}(u)=-(1/t)\log(-u),\quad t&gt;0
   \]</div>
+</div>
 <p><img alt="barier function" src="../_images/barier_fun.png" /></p>
 <p>  观察函数图像，可以发现对数障碍函数是非减函数，且当<span class="math notranslate nohighlight">\(u&gt;0\)</span>时函数取值为<span class="math notranslate nohighlight">\(\infty\)</span>。因此，定义对数障碍函数为,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \phi(\pmb{x})=-\sum_{i=1}^m\log(-f_i(\pmb{x}))
 \]</div>
+</div>
 <p>  对数障碍函数的梯度和Hessian矩阵为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}
@@ -538,7 +475,9 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}
   \end{equation}
   \end{split}\]</div>
+</div>
 <p>  用<span class="math notranslate nohighlight">\(\hat{I}_{-}\)</span>替换<span class="math notranslate nohighlight">\(I_{-}\)</span>可得到以下近似，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}
@@ -548,7 +487,9 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}
   \end{equation}
   \end{split}\]</div>
+</div>
 <p>  由于<span class="math notranslate nohighlight">\(-(1/t)\log(-u)\)</span>是<span class="math notranslate nohighlight">\(u\)</span>的单增凸函数，上式上的目标函数是可微凸函数。假定恰当的闭性条件成立，则可以用Newton方法来求解。上式等价于以下问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}
@@ -558,15 +499,19 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}
   \end{equation}
 \end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>Central Path</strong></p></li>
 </ul>
 <p>  针对不同的<span class="math notranslate nohighlight">\(t&gt;0\)</span>值，我们定义<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>为相应优化问题的解，那么，Central path就是指所有点<span class="math notranslate nohighlight">\(\pmb{x}^*(t),t&gt;0\)</span>的集合，其中的点被称为central points。所有中心路径上的点由以下充要条件所界定：<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>是严格可行的，即满足，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Ax}^*(t)=\pmb{b},\quad f_i(\pmb{x}^*(t))&lt;0,\quad i=1,...,m
 \]</div>
+</div>
 <p>并且存在<span class="math notranslate nohighlight">\(\hat{\nu}\in\mathbb{R}^p\)</span>使得（<strong>中心路径条件</strong>）</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}
@@ -576,10 +521,12 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}
   \end{equation}
   \end{split}\]</div>
+</div>
 <p>成立。</p>
 <ul class="simple">
 <li><p><strong>中心路径条件的KKT条件解释</strong>。点<span class="math notranslate nohighlight">\(x\)</span>等于<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>的充要条件是存在<span class="math notranslate nohighlight">\(\lambda,\nu\)</span>满足</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \begin{equation}
@@ -591,23 +538,31 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
     \end{split}
     \end{equation}
 \end{split}\]</div>
+</div>
 <p>  KKT条件和中心条件的唯一不同在于<span class="math notranslate nohighlight">\(\lambda_if_i(\pmb{x})=0\)</span>被条件<span class="math notranslate nohighlight">\(-\lambda_if_i(\pmb{x})=1/t\)</span>所替换。从上式可以导出中心路径的一个重要性质：<strong>每次个中心点产生对偶可行解，因而给出最优值<span class="math notranslate nohighlight">\(\pmb{p}^*\)</span>的一个下界</strong>。</p>
 <p>  解释：先定义</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \lambda^*(t)=-\frac{1}{tf_i(\pmb{x}^*(t))},i=1,...,m,\quad \nu^*(t)=\hat{\nu}/t
 \]</div>
+</div>
 <p>，那么<span class="math notranslate nohighlight">\(\lambda^*(t)\)</span>和<span class="math notranslate nohighlight">\(\nu^*(t)\)</span>是对偶可行解。原式可以表示成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \nabla f_0(\pmb{x}^*(t))+\sum_{i=1}^m \lambda^*(t)\nabla f_i(\pmb{x}^*(t))+\pmb{A}^\top\nu^*(t)
   \]</div>
+</div>
 <p>可以看出，<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>使<span class="math notranslate nohighlight">\(\lambda=\lambda^*(t),\nu=\nu^*(t)\)</span>时的Lagrange函数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   L(\pmb{x},\lambda,\nu)=f_0(\pmb{x})+\sum_{i=1}^m\lambda f_i(\pmb{x})+\nu^\top(\pmb{A}\pmb{x}-b)
   \]</div>
+</div>
 <p>达到最小，这意味着和<span class="math notranslate nohighlight">\(\nu^*(t)\)</span>是对偶可行解。因此，对偶函数是有限的，并且，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}
@@ -617,16 +572,20 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}
   \end{equation}
   \end{split}\]</div>
+</div>
 <p>这表明<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>和对偶可行解<span class="math notranslate nohighlight">\(\lambda^*(t),\nu^*(t)\)</span>之间的对偶间隙就是<span class="math notranslate nohighlight">\(m/t\)</span>。作为一个重要的结果，我们有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   f_0(\pmb{x}^*(t))-p^*\leq m/t
   \]</div>
+</div>
 <p>即<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>是和最优值偏差在<span class="math notranslate nohighlight">\(m/t\)</span>之内的次优解。也证实了<span class="math notranslate nohighlight">\(\pmb{x}^*(t)\)</span>随着<span class="math notranslate nohighlight">\(t\rightarrow \infty\)</span>而收敛于最优解。</p>
 <ul class="simple">
 <li><p><strong>障碍函数方法</strong></p></li>
 </ul>
-<table class="table">
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：障碍法</p></th>
 </tr>
@@ -636,7 +595,9 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 </tr>
 </tbody>
 </table>
+</div>
 <p>  Newton步径<span class="math notranslate nohighlight">\(\Delta \pmb{x}_{nt}\)</span>以及相关的对偶变量由以下线性方程确定，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{equation}\begin{bmatrix}
@@ -652,6 +613,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{bmatrix}
   \end{equation}
   \end{split}\]</div>
+</div>
 </section>
 <section id="id6">
 <h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
@@ -665,50 +627,65 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 <section id="id7">
 <h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h4>
 <p>  如同障碍方法，我们从修改KKT条件开始，该条件可以表述为<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0, t&gt;0\)</span>，其中</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 r_t(\pmb{x},\pmb{\lambda,\nu})=\begin{bmatrix} \nabla f_0(\pmb{x})+D\pmb{f}(\pmb{x})^\top\pmb{\lambda}+\pmb{A}^\top\pmb{\nu}\\-\pmb{diag}(\pmb{\lambda})\pmb{f}(\pmb{x})-(1/t)\pmb{1}\\\pmb{Ax-b} \end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>此处的<span class="math notranslate nohighlight">\(\pmb{f}:\mathbb{R}^n\rightarrow\mathbb{R}^m\)</span>和它的导数矩阵<span class="math notranslate nohighlight">\(D\pmb{f}\)</span>由下式给出，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{f}(\pmb{x})=\begin{bmatrix} f_1(\pmb{x})\\ \vdots\\f_m(\pmb{x})\end{bmatrix},\quad D\pmb{f}=\begin{bmatrix} \nabla f_1(\pmb{x})^\top\\ \vdots\\\nabla f_m(\pmb{x})^\top\end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>  如果<span class="math notranslate nohighlight">\(\pmb{x,\lambda,\nu}\)</span>满足<span class="math notranslate nohighlight">\(r_t(\pmb{x,\lambda,\nu})=0\)</span>（且<span class="math notranslate nohighlight">\(f_i(\pmb{x})&lt;0)\)</span>，则<span class="math notranslate nohighlight">\(\pmb{x}=\pmb{x}^*(t),\lambda=\lambda^*(t),\nu=\nu^*(t)\)</span>。特别地<span class="math notranslate nohighlight">\(\pmb{x}\)</span>是<strong>原可行的</strong>，<span class="math notranslate nohighlight">\(\lambda,\nu\)</span>是<strong>对偶可行的</strong>，对偶间隙为<span class="math notranslate nohighlight">\(m/t\)</span>。</p>
 <p>  我们将<span class="math notranslate nohighlight">\(r_t\)</span>的成分命名为如下：</p>
 <ol class="arabic simple">
 <li><p><strong>对偶残差</strong></p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 r_{dual}=\nabla f_0(\pmb{x})+D\pmb{f}(\pmb{x})^\top\lambda+\pmb{A}^\top\nu
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>原残差</strong></p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 r_{pri}=\pmb{Ax-b}
 \]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p><strong>中心残差</strong>(修改的互补性条件)</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 \]</div>
+</div>
 <ul>
 <li><p>先固定<span class="math notranslate nohighlight">\(t\)</span>，考虑从满足<span class="math notranslate nohighlight">\(\pmb{f}(\pmb{x})\prec 0,\lambda \succ0\)</span>的点<span class="math notranslate nohighlight">\((\pmb{x},\lambda,\nu)\)</span>开始求解非线性方程<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0\)</span>的Newton步径。将当前点和Newton步径分别记为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \pmb{y}=(\pmb{x},\lambda,\nu),\quad \Delta \pmb{y}=(\Delta \pmb{x},\Delta\lambda,\Delta \nu)
   \]</div>
+</div>
 <p>决定Newton步径的线性方程为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   r_t(\pmb{y}+\Delta \pmb{y})\approx r_t(\pmb{y})+Dr_t(\pmb{y})\Delta \pmb{y}=0
   \]</div>
+</div>
 <p>即，<span class="math notranslate nohighlight">\(\Delta \pmb{y}=-Dr_t(\pmb{y})^{-1}r_t(\pmb{y})\)</span>。于是我们有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
   \begin{bmatrix} \nabla^2 f_0(\pmb{x})+\sum_{i=1}^m\lambda_i\nabla^2f_i(\pmb{x})&amp;D\pmb{f}(\pmb{x})^\top&amp;\pmb{A}^\top\\
@@ -722,6 +699,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
   r_{dual}\\r_{cent}\\r_{pri}
   \end{bmatrix}
   \end{split}\]</div>
+</div>
 <p>所谓<strong>原对偶搜索方向</strong><span class="math notranslate nohighlight">\(\Delta y_{pd}=(\Delta x_{pd},\Delta\lambda_{pd},\Delta\nu_{pd})\)</span>就是上式的解。</p>
 </li>
 </ul>
@@ -729,14 +707,17 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 <section id="id8">
 <h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h4>
 <p>  在原-对偶内点法中，迭代点<span class="math notranslate nohighlight">\(\pmb{x}_k,\lambda_k,\nu_k\)</span>不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤<span class="math notranslate nohighlight">\(k\)</span>计算对偶间隙<span class="math notranslate nohighlight">\(\eta_k\)</span>。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\eta}(\pmb{x},\lambda)=-\pmb{f}(\pmb{x})^\top\lambda
 \]</div>
+</div>
 <p>该代理间隙有可能成为对偶间隙，当<span class="math notranslate nohighlight">\(\pmb{x}\)</span>是原问题可行且<span class="math notranslate nohighlight">\(\lambda,\nu\)</span>是对偶可行时（即，<span class="math notranslate nohighlight">\(r_{\mathrm{pri}}=0 \wedge r_{\mathrm{dual}}=0\)</span>）。注意：参数<span class="math notranslate nohighlight">\(t\)</span>对应的代理间隙为<span class="math notranslate nohighlight">\(\hat{\eta}=m/\hat{\eta}\)</span>.</p>
 <ul>
 <li><p><strong>原-对偶方法</strong></p>
-<table class="table">
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：原-对偶方法</p></th>
 </tr>
@@ -746,128 +727,103 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
-</section>
-</section>
-</section>
-</section>
-
-
-                </article>
-              
-
-              
-              
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="convex_solve.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>优化问题求解(1)</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../matrix/base.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>矩阵性能指标</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div></div>
-  
 </div>
+</li>
+</ul>
+</section>
+</section>
+</section>
+</section>
 
-                </footer>
-              
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../matrix/base.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">1. </span>矩阵性能指标</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="convex_solve.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">2. </span>优化问题求解(1)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2023, SSPUIIP
             </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
             
           </div>
-          <footer class="bd-footer-content">
+          <div class="right-details">
             
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  <p class="copyright">
-    
-      © Copyright 2022, SSPUIIP.
-      <br/>
-    
-  </p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
+          </div>
+        </div>
         
-
-      </main>
+      </footer>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">3. 优化问题求解(2)</a><ul>
+<li><a class="reference internal" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
+<li><a class="reference internal" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul>
+<li><a class="reference internal" href="#id2">3.2.1. 等式约束</a></li>
+<li><a class="reference internal" href="#id3">3.2.2. 混合约束</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
+<li><a class="reference internal" href="#id4">3.4. 内点法</a><ul>
+<li><a class="reference internal" href="#id5">3.4.1. 障碍法</a></li>
+<li><a class="reference internal" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul>
+<li><a class="reference internal" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
+<li><a class="reference internal" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <footer class="bd-footer">
-  </footer>
-  </body>
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

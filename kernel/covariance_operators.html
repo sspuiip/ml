@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="prev" title="7. 矩阵分解" href="../matrix/decomposition.html" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 凸优化问题" href="../optimization/convex_prob.html" /><link rel="prev" title="3. 最大均值差" href="MMD.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
-        <title>1. 不确定模型 - Machine Learning Fundation 1.0 文档</title>
+        <title>4. 协方差算子 - Machine Learning Fundation 1.0 文档</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -160,11 +160,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RKHS.html">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">4. 协方差算子</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul>
@@ -183,8 +183,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 不确定模型</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
 </div>
@@ -220,92 +220,148 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
-<p>  <strong>数学模型</strong>是一种用变量和数学符号建立起来的等式、不等式集，用于描述客观事物的特征、内在联系的模型。若客观事物的特征具有某种不确定性，此类模型也称为<strong>随机模型</strong>。</p>
-<p>  随机变量的数字特征一般有：均值、方差、中位数、众数等。</p>
-<section id="id2">
-<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
-<p>  从整体<span class="math notranslate nohighlight">\(\pmb{X}\)</span>抽取一个样本<span class="math notranslate nohighlight">\((\pmb{X}_1,...,\pmb{X}_n)\)</span>，则样本服从特定的分布，一般有：卡方分布、t分布、F分布等。</p>
-<p>  - <strong>卡方分布</strong></p>
-<p>  若<span class="math notranslate nohighlight">\(\pmb{X}_i \sim \mathcal{N}(0,1)\)</span>，且<span class="math notranslate nohighlight">\(\pmb{X}_i\)</span>相互独立，则统计量</p>
+<h1><span class="section-number">4. </span>协方差算子<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<p>  在再生核希尔伯特空间理论中，协方差算子是一种很重要且广泛应用的工具。类似于协方差矩阵的无穷维版本。首先介绍Hilbert-Schmidt算子，然后引入协方差算子，并解释其亦是一种Hilbert-Schmidt算子。</p>
+<section id="hilbert-schmidt">
+<h2><span class="section-number">4.1. </span>Hilbert-Schmidt算子<a class="headerlink" href="#hilbert-schmidt" title="此标题的永久链接">#</a></h2>
+<p>  若有可分离(separable)希尔伯特特征空间<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>，且<span class="math notranslate nohighlight">\((e_i)_{i\in I}, (f_j)_{j\in J}\)</span>分别为<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>的一组正交基，其中索引集<span class="math notranslate nohighlight">\(I,J\)</span>是有限集或是可数集。若有紧致(compact)线性算子<span class="math notranslate nohighlight">\(L:\mathcal{G}\rightarrow \mathcal{F}, M:\mathcal{G}\rightarrow \mathcal{F}\)</span>，则可定义Hilbert-Schmidt范式.</p>
+<blockquote>
+<div><p><strong>定义 (Hilbert-Schmidt算子)</strong>. 若有以下Hilbert-Schmidt范式</p>
+</div></blockquote>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\chi=\sum_i^n\pmb{X}_i^2\sim \chi^2(n)
+\Vert L\Vert_{\textrm{HS}}^2\triangleq \sum_{j\in J}\Vert Lf_j\Vert_\mathcal{F}^2=\sum_{i\in I}\sum_{j\in J}|\langle Lf_j,e_i\rangle_{\mathcal{F}}|^2
 \]</div>
 </div>
-<p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的<span class="math notranslate nohighlight">\(\chi^2\)</span>分分布。</p>
-<p>  - <strong>t分布</strong></p>
-<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(0,1), \pmb{Y}\sim \chi^2(n)\)</span>，则统计量，</p>
+<p>是有限的(<span class="math notranslate nohighlight">\(&lt;\infty\)</span>)，则称<span class="math notranslate nohighlight">\(L\)</span>为Hilbert-Schmidty算子。</p>
+<blockquote>
+<div><p><strong>定义 (Hilbert-Schmidt算子空间与内积)</strong>. Hibert-Schmidty算子从<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>映射至<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>（即<span class="math notranslate nohighlight">\(\delta:\mathcal{G}\rightarrow\mathcal{F}\)</span>），并形成一个Hilbert空间，记为<span class="math notranslate nohighlight">\(\textrm{HS}(\mathcal{G},\mathcal{F})\)</span>，其内积定义为</p>
+</div></blockquote>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-T = \frac{\pmb{X}}{\sqrt{\pmb{Y}/n}}\sim t(n)
+\langle L,M\rangle_{\textrm{HS}}=\sum_{j\in J}\langle Lf_j,Mf_j\rangle_\mathcal{F}.
 \]</div>
 </div>
-<p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的t分布。</p>
-<p>  - <strong>F分布</strong></p>
-<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \chi^2(n_1), \pmb{Y}\sim \chi^2(n_2)\)</span>，则统计量，</p>
+<p>该内积定义与正交基的选择无关。</p>
+<p>  显然，根据上述内积定义可知，Hilbert-Schmidty范式可以通过内积计算得到。</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\langle L,L\rangle_{\textrm{HS}}&amp;=\sum_{j\in J}\underbrace{\langle Lf_j,Lf_j\rangle_\mathcal{F}}_{\mathcal{F}空间内积}\\
+&amp;=\sum_{j\in J}\underbrace{\Vert Lf_j\Vert_\mathcal{F}^2}_{\textrm{parseval's identity}}\\
+&amp;=\sum_{i\in I}\sum_{j\in J}|\langle Lf_j,e_i\rangle_\mathcal{F}|^2\\
+&amp;=\Vert L\Vert_{\textrm{HS}}^2
+\end{split}
+\end{split}\]</div>
+</div>
+<blockquote>
+<div><p><strong>定义 (内积2)</strong>. 内积的另一种等价形式，</p>
+</div></blockquote>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
+\langle L,M\rangle_{\textrm{HS}}=\sum_{i\in I}\sum_{j\in J}\langle Lf_j,e_i\rangle_\mathcal{F}\langle Mf_j,e_i\rangle_\mathcal{F}
 \]</div>
 </div>
-<p>服从第一自由度为<span class="math notranslate nohighlight">\(n_1\)</span>和第二自由度为<span class="math notranslate nohighlight">\(n_2\)</span>的F分布。</p>
-</section>
-<section id="id3">
-<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
-<p>  参数的区间估计与假设检验可以看成一个问题的两个方面（都需要假设样本的分布）。<strong>区间估计</strong>是用统计量构建一个区间来估计未知参数，并指明此区间可以覆盖住这个参数的可靠程度。<strong>假设检验</strong>则利用样本数据对某个事先做出的统计假设按照某种设计好的方法（符合某种抽样分布）进行检验，判断假设是否正确。</p>
-<section id="mu">
-<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="此标题的永久链接">#</a></h3>
-<section id="id4">
-<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h4>
-<p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(\mu,\sigma^2)\)</span>，则样本均值为<span class="math notranslate nohighlight">\(\bar{\pmb{X}}=\frac1n \sum_{i=1}^n \pmb{X}_i\)</span>，样本方差为<span class="math notranslate nohighlight">\(\pmb{S}^2=\frac{1}{n-1}\sum_{i=1}^n (\pmb{X}_i-\bar{\pmb{X}})^2\)</span>。</p>
-<p>  <strong>重要结论</strong></p>
-<p>  1. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>，即<span class="math notranslate nohighlight">\(E[\bar{\pmb{X}}]=\mu, D[\pmb{\bar{X}}]=\sigma/\sqrt{n}, E[S^2]=\sigma^2\)</span>。</p>
-<p>  2. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{S/\sqrt{n}}\sim \mathcal{t}(n-1)\)</span></p>
-<p>  3. <span class="math notranslate nohighlight">\(\frac{(n-1)S^2}{\sigma^2}\sim \mathcal{\chi}^2(n-1)\)</span></p>
-<p>  4. <span class="math notranslate nohighlight">\(\bar{\pmb{X}}\)</span>与<span class="math notranslate nohighlight">\(S^2\)</span>相互独立。</p>
-<ol class="arabic simple">
-<li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>未知，使用t分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
-</ol>
+<p>  下面开始验证两种定义的等价性。任何<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的元素都可以展开为正交基的形式，即</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\frac{a}{2}}(n-1)  \right\}=1-a
+Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{i'}
 \]</div>
 </div>
-<p>  即置信区间为<span class="math notranslate nohighlight">\([\bar{\pmb{X}}-\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1),\bar{\pmb{X}}+\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1)]\)</span></p>
-<ol class="arabic simple" start="2">
-<li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>已知，使用正态分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
-</ol>
-<p>  方法与t检验相似。</p>
-</section>
-<section id="id5">
-<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
-<ol class="arabic simple">
-<li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
-</ol>
+<p>代入原定义可知，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\langle L,M\rangle_{\textrm{HS}}&amp;\triangleq\sum_{j\in J}\langle Lf_j,Mf_j\rangle_\mathcal{F}\\
+&amp;=\sum_{j\in J}\left\langle \sum_{i\in I}\alpha_i^{(j)}e_i, \sum_{i'\in I}\beta_{i'}^{(j)}e_{i'}\right\rangle_\mathcal{F}\\
+&amp;=\sum_{j\in J}\sum_{i\in I}\alpha_i^{(j)}\beta_{i'}^{(j)}\\
+&amp;=\sum_{i\in I}\sum_{j\in J}\langle Lf_j,e_i\rangle_\mathcal{F}\langle Mf_j,e_i\rangle_\mathcal{F}
+\end{split}
+\end{split}\]</div>
+</div>
+<hr class="docutils" />
+<section id="rank-one">
+<h3><span class="section-number">4.1.1. </span>Rank-one算子<a class="headerlink" href="#rank-one" title="此标题的永久链接">#</a></h3>
+<p>  给定<span class="math notranslate nohighlight">\(b\in\mathcal{G},a\in\mathcal{F}\)</span>，可以定义张量积(tensor product)<span class="math notranslate nohighlight">\(a\otimes b\)</span>为rank-one算子<span class="math notranslate nohighlight">\(:\mathcal{G}\rightarrow \mathcal{F}\)</span>,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{S_w\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2),\quad S_w=\frac{(n-1)S_1^2}{\sigma^2}+\frac{(n-1)S_2^2}{\sigma^2}
+(b\otimes a)f\rightarrow \langle f,a\rangle_\mathcal{F}b
 \]</div>
 </div>
-<ol class="arabic simple" start="2">
-<li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2\neq\sigma_2^2\neq\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
-</ol>
+<p>这是标准外积的推广，即如果<span class="math notranslate nohighlight">\(a,b,f\)</span>都是向量，则有<span class="math notranslate nohighlight">\((ba^\top)f=(a^\top f)b\)</span>成立。</p>
+<p>  该算子是Hilbert-Schmidt算子吗？下面来计算算子的范数，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\Vert a\otimes b\Vert_{\textrm{HS}}^2&amp;=\sum_{j\in J}\Vert (a\otimes b)f_j\Vert_\mathcal{F}^2\\
+&amp;=\sum_{j\in J}\Vert a\langle b, f_j\rangle_\mathcal{G}\Vert_\mathcal{F}^2\\
+&amp;=\Vert a\Vert_\mathcal{F}^2\sum_{j\in J}|\langle b,f_j\rangle_\mathcal{G}|^2\\
+&amp;=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2
+\end{split}
+\end{split}\]</div>
+</div>
+<p>因此，该算子是一个Hilbert-Schmidt算子。</p>
+<p>  给定另一个Hilbert-Schmidt算子<span class="math notranslate nohighlight">\(L\in \textrm{HS}(\mathcal{G},\mathcal{F})\)</span>，则有如下结果，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-\frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}}}\sim t(\tilde{\nu}),\quad \tilde{\nu}=\left(\frac{S_1^2}{\sigma^2}+\frac{S_2^2}{\sigma^2}\right)^2\left/\left(\frac{(S_1^2)^2}{n_1^2(n_1-1)}+ \frac{(S_2^2)^2}{n_2^2(n_2-1)}\right)\right.
+\boxed{\langle L,a\otimes b\rangle_{\textrm{HS}}=\langle a,Lb\rangle_{\mathcal{F}}}
 \]</div>
 </div>
-</section>
-</section>
-<section id="sigma">
-<h3><span class="section-number">1.2.2. </span><span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测<a class="headerlink" href="#sigma" title="此标题的永久链接">#</a></h3>
+<p>一个特别的结果是，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\boxed{\langle u\otimes v,a\otimes b\rangle_{\textrm{HS}}=\langle u,a\rangle_\mathcal{F}\langle b,v\rangle_\mathcal{G}}
+\]</div>
+</div>
+<p>  <strong>证明</strong>. <span class="math notranslate nohighlight">\(b\)</span>可以由<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>的正交基展开为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
+\]</div>
+</div>
+<p>则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\langle a,Lb\rangle&amp;=\left\langle a,L\left(  \sum_j \langle b, f_j\rangle_\mathcal{G} f_j\right)\right\rangle_\mathcal{F}\\
+&amp;=\left\langle a,\sum_j L\left(   \langle b, f_j\rangle_\mathcal{G} f_j\right)\right\rangle_\mathcal{F},\qquad L(f+g)=L(f)+L(g)\\
+&amp;=\left\langle a,\sum_j \langle b, f_j\rangle_\mathcal{G} L\left(    f_j\right)\right\rangle_\mathcal{F}, \qquad L(\alpha f)=\alpha L(f) \\
+&amp;=\sum_j \left\langle a,\langle b, f_j\rangle_\mathcal{G} L\left(    f_j\right) \right\rangle_\mathcal{F},\qquad \langle a,b+c\rangle=\langle a,b\rangle+\langle a,c\rangle \\
+&amp;=\sum_j\langle b,f_j\rangle_\mathcal{G}\langle a,Lf_j\rangle_\mathcal{F},\qquad \langle a,kb\rangle=k\langle a,b\rangle
+\end{split}
+\end{split}\]</div>
+</div>
+<p>以及，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\langle a\otimes b,L\rangle_{\textrm{HS}}&amp;=\sum_j\langle Lf_j,(a\otimes b)f_j\rangle_\mathcal{F}\\
+&amp;=\sum_j\langle Lf_j,\langle b,f_j\rangle_\mathcal{G}a\rangle_\mathcal{F},\qquad (a\otimes b)f_j=\langle b,f_j\rangle_\mathcal{G}a\\
+&amp;=\sum_j\langle b,f_j\rangle_\mathcal{G}\langle Lf_j,a\rangle_\mathcal{F}
+\end{split}
+\end{split}\]</div>
+</div>
+<p>显然，上述两个等式相等是成立的。特别地，如果我们用<span class="math notranslate nohighlight">\(u\otimes v\)</span>代替<span class="math notranslate nohighlight">\(L\)</span>，则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\langle a\otimes b,u\otimes v\rangle_{\textrm{HS}}=\langle a,(u\otimes v)b\rangle_\mathcal{F}
+=\langle b,v\rangle_{\mathcal{G}}\langle a,u\rangle_\mathcal{F}
+\]</div>
+</div>
 </section>
 </section>
 </section>
@@ -315,15 +371,23 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
       <footer>
         
         <div class="related-pages">
-          
-          <a class="prev-page" href="../matrix/decomposition.html">
+          <a class="next-page" href="../optimization/convex_prob.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">1. </span>凸优化问题</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="MMD.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title"><span class="section-number">7. </span>矩阵分解</div>
+                <div class="title"><span class="section-number">3. </span>最大均值差</div>
                 
               </div>
             </a>
@@ -357,15 +421,9 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">1. 不确定模型</a><ul>
-<li><a class="reference internal" href="#id2">1.1. 抽样分布</a></li>
-<li><a class="reference internal" href="#id3">1.2. 参数区间估计与假设检验</a><ul>
-<li><a class="reference internal" href="#mu">1.2.1. <span class="math notranslate nohighlight">\(\mu\)</span>均值检测</a><ul>
-<li><a class="reference internal" href="#id4">1.2.1.1. 单个总体</a></li>
-<li><a class="reference internal" href="#id5">1.2.1.2. 两个总体</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#sigma">1.2.2. <span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测</a></li>
+<li><a class="reference internal" href="#">4. 协方差算子</a><ul>
+<li><a class="reference internal" href="#hilbert-schmidt">4.1. Hilbert-Schmidt算子</a><ul>
+<li><a class="reference internal" href="#rank-one">4.1.1. Rank-one算子</a></li>
 </ul>
 </li>
 </ul>

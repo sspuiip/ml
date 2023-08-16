@@ -1,148 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="zh-CN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="3. 优化问题求解(2)" href="convex_neq_solve.html" /><link rel="prev" title="1. 凸优化问题" href="convex_prob.html" />
+
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+        <title>2. 优化问题求解(1) - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
 
-<!DOCTYPE html>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 
-<html lang="zh-CN" >
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-    <title>2. 优化问题求解(1) &#8212; MLBOOK 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-  
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/convex_solve';</script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 优化问题求解(2)" href="convex_neq_solve.html" />
-    <link rel="prev" title="1. 凸优化问题" href="convex_prob.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-  
-  
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
-  
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
-  
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
       
-      <div class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-  
-
-<a class="navbar-brand logo" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
   
-  
-  
-    <p class="title logo__title">MLBOOK 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="nav bd-sidenav">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差 (MMD)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="current nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
@@ -151,269 +182,161 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-  
-  <div id="rtd-footer-container"></div>
-
+</div>
+</div>
 
       </div>
       
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
     </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/optimization/convex_solve.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script>
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>优化问题求解(1)</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 下降法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 最速下降法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton">2.1.2. Newton法</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2. 梯度投影法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3. 共轭梯度下降法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.2. 共轭梯度法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.3. 案例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.4. 一般函数的共轭梯度法</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.4. Newton方法</a></li>
-</ul>
-            </nav>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
         </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">2. </span>优化问题求解(1)<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
 <p>  基本思想：利用优化序列</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\mu_k\Delta\mathbf{x}_k,\quad k=1,2,\cdots\tag{1}
 \]</div>
+</div>
 <p>寻找最优点<span class="math notranslate nohighlight">\(\mathbf{x}_{opt}\)</span>。<span class="math notranslate nohighlight">\(\mu_k\)</span>为第<span class="math notranslate nohighlight">\(k\)</span>次迭代的步长，<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_k\)</span>为搜索方向其值为一个向量<span class="math notranslate nohighlight">\(\Delta\mathbf{x}\in\mathbb{R}^n\)</span>。最小化算法要求迭代过程中目标函数是下降的，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)
 \]</div>
+</div>
 <p>所以该方法称为<font color='red'><strong>下降法</strong></font>。</p>
 <section id="id3">
 <h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
 <p>  由Taylor公式可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})- f(\mathbf{x}_k)\approx\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k\tag{2}
 \]</div>
+</div>
 <p>显然，当<span class="math notranslate nohighlight">\(0\le\theta\le \pi/2\)</span>, 令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta\mathbf{x}_k=-\nabla f(\mathbf{x}_k)\cos\theta\tag{3}
 \]</div>
+</div>
 <p>必然有，<span class="math notranslate nohighlight">\(f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)\)</span>成立。</p>
 <ul class="simple">
 <li><p>取<span class="math notranslate nohighlight">\(\theta=0\)</span>，则<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_k=-\nabla f(\mathbf{x}_k)\)</span>，即搜索方向为负梯度方向，步长为<span class="math notranslate nohighlight">\(\lVert \nabla f(\mathbf{x}_k)\rVert_2^2\)</span>，故下降方向具有最大的下降步伐。与之对应的下降法称为<font color='red'><strong>最速下降法</strong></font>。</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\mu_k\nabla f(\mathbf{x}_k)\tag{4}
 \]</div>
+</div>
 </section>
 <section id="newton">
 <h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="此标题的永久链接">#</a></h3>
 <p>  Taylor公式展开至二阶有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})\approx f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k+\frac12(\Delta\mathbf{x}_k)^\top\nabla^2f(\mathbf{x}_k)(\Delta\mathbf{x}_k)\tag{5}
 \]</div>
+</div>
 <p>显然最优化下降方向应该是让二阶展开式最得最小值的方向，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min\limits_{\Delta\mathbf{x}_k}\left[f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k+\frac12(\Delta\mathbf{x}_k)^\top\nabla^2f(\mathbf{x}_k)(\Delta\mathbf{x}_k)\right]\tag{6}
 \]</div>
+</div>
 <p>对二阶展开式求导，可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial f(\mathbf{x}_k+\Delta\mathbf{x}_k)}{\partial \Delta\mathbf{x}_k}=\nabla f(\mathbf{x}_k)+\nabla^2f(\mathbf{x}_k)\Delta\mathbf{x}_k=0\tag{7}
 \]</div>
+</div>
 <p>则有最优搜索方向，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta\mathbf{x}_k=-\nabla^2f(\mathbf{x}_k)\nabla f(\mathbf{x}_k)\tag{8}
 \]</div>
+</div>
 <p>该下降方向也称之为Newton步或Newton下降方向，记为<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_{nt}\)</span>，相应的方法称为<font color='red'><strong>Newton法</strong></font>。</p>
 </section>
 </section>
 <section id="id4">
 <h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h2>
 <p>  梯度下降法中变元是无约束的。若有约束<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{C}\)</span>，则梯度下降法中的更新公式应用投影代替，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathcal{P}_\mathcal{C}(\mathbf{x}_k-\mu_k\nabla f(\mathbf{x}_k))\tag{9}
 \]</div>
+</div>
 <p>这一算法称为梯度投影法，也称为投影梯度法。投影算子<span class="math notranslate nohighlight">\(\mathcal{P}_\mathcal{C}(\mathbf{y})\)</span>定义为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{y})=\arg\min\limits_{\mathbf{x}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{y}\rVert_2^2\tag{10}
 \]</div>
+</div>
 <p>  <strong>例</strong>. 到超平面<span class="math notranslate nohighlight">\(\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}\)</span>的投影，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{x})=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\lVert\mathbf{a}\rVert_2^2}\mathbf{a}
 \]</div>
+</div>
 <p>  求解过程：投影问题为如下优化问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{x})=\arg\min\limits_{\mathbf{z}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2 \quad s.t.\quad \mathbf{a}^\top\mathbf{x}-b=0
 \]</div>
+</div>
 <p>则Lagrangian函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \mathbf{a}^\top\mathbf{z}-b)
 \]</div>
+</div>
 <p>对Lagrangian函数求偏导并令其等于0，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -421,16 +344,21 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \frac{\partial L}{\partial \lambda}&amp;=\mathbf{a}^\top\mathbf{z}-b=0\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>解上述方程组，将<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{x}-\lambda \mathbf{a}\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{a}^\top\mathbf{z}-b=0\)</span>，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \lambda = \frac{\mathbf{a}^\top\mathbf{x}-b}{\mathbf{a}^\top\mathbf{a}}
 \]</div>
+</div>
 <p>再将<span class="math notranslate nohighlight">\(\lambda\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0\)</span>，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{z}=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\mathbf{a}^\top\mathbf{a}}\mathbf{a}
 \]</div>
+</div>
 </section>
 <section id="id5">
 <h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
@@ -439,41 +367,52 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <p>  为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。</p>
 <p><img alt="alt Conjugate Gradient Descent" src="../_images/conj_desc.png" /></p>
 <p>  与前面两种下降方法类似，共轭梯度下降也是通过迭代来寻找最优点，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\alpha_k\mathbf{d}_k\tag{11}
 \]</div>
+</div>
 <p>  <strong>不同之处</strong>在于，每次迭代的下降方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>与其它任何一次方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_j,j\neq i\)</span>都是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的；此外，<span class="math notranslate nohighlight">\(\alpha_i\)</span>是<span class="math notranslate nohighlight">\(\min\limits_{\alpha}f(\mathbf{x}_{i-1}+\alpha\mathbf{d}_i)\)</span>的最优值。</p>
 <p>  为了简要描述共轭的思想，以上图为例，坐标轴可以指定为搜索方向。第一步沿着水平方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_1\)</span>分量部分。第二步没着垂直方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_2\)</span>分量部分，然后结束搜索过程就可以确定<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的值。如果定义<span class="math notranslate nohighlight">\(\mathbf{e}_i=\mathbf{x}^*-\mathbf{x}_i\)</span>，则可以发现,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_i^\top\mathbf{e}_{i+1}=0
 \]</div>
+</div>
 <p>共轭梯度下降法源于二次规划问题的求解，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min\limits_{\mathbf{x}}\quad \frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}-\mathbf{b}^\top\mathbf{x}\quad(\mathbf{A}\succeq0)
 \]</div>
+</div>
 <p>其梯度为<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})=\mathbf{Ax}-b\triangleq r(\mathbf{x})\)</span>，则求解最优值<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>等价于求解方程组<span class="math notranslate nohighlight">\(\mathbf{Ax}-\mathbf{b}=\mathbf{0}\)</span>。如果<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么必然可以构建一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，显然基的每个向量与其它基向量是共轭的。</p>
 <p>  下降方向能不能和这些基向量建立联系呢？答案是肯定的。易知，最优解<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span>可以表示为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*=\sum_{i=0}^{n-1}\alpha_i\mathbf{d}_i\tag{12}
 \]</div>
+</div>
 <p>如果<span class="math notranslate nohighlight">\(\alpha_i,\mathbf{d}_i\)</span>都已知，则<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>可通过上式确定。</p>
 <section id="mathbf-a">
 <h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="此标题的永久链接">#</a></h3>
 <p>  <strong>定义1</strong>.假设<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么称向量<span class="math notranslate nohighlight">\(\mathbf{d}_i,\mathbf{d}_j\)</span>是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的，如果满足，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_i^\top\mathbf{A}\mathbf{d}_j=0,\quad i\neq j.
 \]</div>
+</div>
 <p>  <strong>定理1</strong>. 两两向量相互<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量集<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>构成了一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，即<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>线性无关。</p>
 <p>  有了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭就可以来确定式(12)的各参数值了。</p>
 <ul class="simple">
 <li><p>首先求<span class="math notranslate nohighlight">\(\alpha_i\)</span>的表达式。</p></li>
 </ul>
 <p>  对式(12)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>，利用<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -481,13 +420,17 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{b}}{\mathbf{d}_k^\top\mathbf{Ad}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可以看出，<span class="math notranslate nohighlight">\(\alpha_k\)</span>只与搜索方向<span class="math notranslate nohighlight">\(\mathbf{d}_k\)</span>有关，因此，只需要迭代<span class="math notranslate nohighlight">\(n\)</span>次就可以计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*=\sum_{i=0}^{n-1}\frac{\mathbf{d}_i^\top\mathbf{b}}{\mathbf{d}_i^\top\mathbf{Ad}_i}\mathbf{d}_i
 \]</div>
+</div>
 <p>  为了演示上述过程在<span class="math notranslate nohighlight">\(n\)</span>步计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，引入如下定理。</p>
 <p>  <strong>定理2</strong>. 假设<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量，<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>是初使点，令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -496,23 +439,31 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \alpha_k&amp;=\frac{\mathbf{g}_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}=\frac{(\mathbf{b}-\mathbf{Ax})_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则迭代<span class="math notranslate nohighlight">\(n\)</span>次后，<span class="math notranslate nohighlight">\(\mathbf{x}_n=\mathbf{x}^*\)</span>。</p>
 <p>  <strong>证明</strong>. 从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的误差<span class="math notranslate nohighlight">\(\mathbf{e}_0\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1}
 \]</div>
+</div>
 <p>从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>可以表示为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_k-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{k-1}\mathbf{d}_{k-1}
 \]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>的残差为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{g}_k=\mathbf{b}-\mathbf{Ax}_k=\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
 \]</div>
+</div>
 <p>因此可得<span class="math notranslate nohighlight">\(\alpha_k\)</span>如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -520,7 +471,9 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)}{\mathbf{d}_k^\top\mathbf{Ad}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>但仍然需要提前知道<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>才能计算<span class="math notranslate nohighlight">\(\alpha_k\)</span>。下面分析一下分子项。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -528,12 +481,15 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 &amp;=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>上式中，用到了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性，因此可以得知<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}_k-\mathbf{x}_0)=0\)</span>。</p>
 <p>  最终有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \alpha_k=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)}{\mathbf{d}_k^\top\mathbf{Ad}_k}=\frac{\mathbf{d}_k^\top\mathbf{g}_k}{\mathbf{d}_k^\top\mathbf{Ad}_k}\tag{13}
 \]</div>
+</div>
 </section>
 <section id="id6">
 <h3><span class="section-number">2.3.2. </span>共轭梯度法<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
@@ -541,21 +497,27 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <p>  假设有<span class="math notranslate nohighlight">\(D=\{\mathbf{d}_1,...,\mathbf{d}_n\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭向量集，则函数<span class="math notranslate nohighlight">\(f(\mathbf{x}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_n\mathbf{d}_n)\)</span>的最小化可以从<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_1\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，然后从<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_2\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>，如此继续就可以达到函数的最小值点。这种优化方法称之为共轭梯度法。</p>
 <p>  上一节根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭已解决了<span class="math notranslate nohighlight">\(\alpha_i\)</span>的计算问题，剩下的工作就是要解决<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>的计算问题。</p>
 <p>  线性共轭梯度法一般使用以下规则来确定共轭方向<span class="math notranslate nohighlight">\(\mathbf{d}_{k+1}\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_{k+1}=\mathbf{g}_k+\beta_k\mathbf{d}_{k}\tag{14}
 \]</div>
+</div>
 <p>即，下一个搜索方向是上一个搜索方向与负梯度的线性组合。那么，<span class="math notranslate nohighlight">\(\beta_k\)</span>怎么确定呢？</p>
 <p>  显然，根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可知，<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=0\)</span>，因此，对式(14)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}+\beta_k\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}=0
 \]</div>
+</div>
 <p>整理可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \beta_k=-\frac{\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}}\tag{15}
 \]</div>
+</div>
 <p>至此，线性共轭梯度算法的所有参数<span class="math notranslate nohighlight">\((\alpha_i,\beta_i)\)</span>已确定。</p>
 <p>  对于二次凸函数，共轭梯度法的计算步骤如下：</p>
 <ol class="arabic simple">
@@ -569,15 +531,19 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <section id="id7">
 <h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h3>
 <p>  <strong>例1</strong>. 考虑如下二次规划，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{x}
 \]</div>
+</div>
 <p>  其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbf{A}=\left[\begin{array}{cc}\frac12&amp;\frac12\\\frac12&amp;1\end{array}\right],\quad\mathbf{b}=\left[\begin{array}{c}0\\2\end{array}\right]
 \end{split}\]</div>
+</div>
 <p>求函数最小值，以及变量最优解<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -622,30 +588,38 @@ f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{
 <ol class="arabic simple">
 <li><p>给定初使点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>，允许误差<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>。</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{y}_0=\mathbf{x}_0,\mathbf{d}_0=-\nabla f(\mathbf{y}_0),k=1,j=1
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>若<span class="math notranslate nohighlight">\(\lVert\nabla f(\mathbf{y}_j)\rVert&lt;\epsilon\)</span>则停止计算。否则一维搜索，求<span class="math notranslate nohighlight">\(\alpha_j\)</span>满足下式，</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alpha\mathbf{d}_j)
 \]</div>
+</div>
 <p>令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{y}_{j+1}=\mathbf{y}_j+\alpha_j\mathbf{d}_j
 \]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p>如果<span class="math notranslate nohighlight">\(j&lt;n\)</span>，则进行步骤4；否则进行步骤5.</p></li>
 <li><p>令<span class="math notranslate nohighlight">\(\mathbf{d}_{j+1}=-\nabla f(\mathbf{y}_{j+1})+\beta_j\mathbf{d}_j\)</span>，<span class="math notranslate nohighlight">\(j=j+1;\)</span>转步骤2。 其中，</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \beta_j=\frac{\lVert\nabla f(\mathbf{y}_{j+1})\rVert^2}{\lVert\nabla f(\mathbf{y}_{j})\rVert^2}
 \]</div>
+</div>
 <ol class="arabic simple" start="5">
 <li><p>令<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1\)</span>转步骤2.</p></li>
 </ol>
@@ -655,14 +629,17 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 <h2><span class="section-number">2.4. </span>Newton方法<a class="headerlink" href="#id9" title="此标题的永久链接">#</a></h2>
 <ul>
 <li><p><strong>Newton步径</strong>.  对于<span class="math notranslate nohighlight">\(x\in \mathbf{dom}f\)</span>，我们称向量</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \Delta \mathbf{x}_{nt}=-\nabla^2f(\mathbf{x})^{-1}\nabla f(\mathbf{x})
   \]</div>
+</div>
 <p>为<span class="math notranslate nohighlight">\(f\)</span>在<span class="math notranslate nohighlight">\(x\)</span>处的Newton步径。该步径是下降方向（除非<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>是最优点）。由<span class="math notranslate nohighlight">\(\nabla^2f( \mathbf{x})\)</span>的正定性可知，除非<span class="math notranslate nohighlight">\(\nabla f( \mathbf{x})=0\)</span>，否则就有，<span class="math notranslate nohighlight">\(\nabla f( \mathbf{x})^\top\Delta  \mathbf{x}_{nt}=-\nabla f( \mathbf{x})^\top\nabla^2f( \mathbf{x})^{-1}\nabla f( \mathbf{x})&lt;0\)</span>。</p>
 </li>
 </ul>
-<table class="table">
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>Newton方法(阻尼Newton)</p></th>
 </tr>
@@ -672,24 +649,31 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 </tr>
 </tbody>
 </table>
+</div>
 <p>这实际上是通用下降方法，只是采用Newton步径为搜索方向。</p>
 <ul class="simple">
 <li><p><strong>Newton步的由来</strong>. 函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在第<span class="math notranslate nohighlight">\(n\)</span>步点<span class="math notranslate nohighlight">\(\mathbf{x}_n\)</span>处Taylor展开至第2阶近似，</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   f(\mathbf{x})=f(\mathbf{x}_n)+\nabla f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)+\frac{1}{2}\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)^2
   \]</div>
+</div>
 <p>使用<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的最小点为新的探索点<span class="math notranslate nohighlight">\(\mathbf{x}_{n+1}\)</span>，因此，对式(67)左右同时求导，并令：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \nabla f(\mathbf{x})=\nabla f(\mathbf{x}_n)+\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)=0
   \]</div>
+</div>
 <p>从而求得迭代公式：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \mathbf{x}=\mathbf{x}_n-\nabla^2 f(\mathbf{x}_n)^{-1}\nabla f(\mathbf{x}_n)=\mathbf{x}_n+\Delta \mathbf{x}_{nt}
   \]</div>
+</div>
 <ul class="simple">
 <li><p>Newton方法<strong>示例</strong></p></li>
 </ul>
@@ -764,119 +748,93 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 </section>
 </section>
 
-
-                </article>
-              
-
-              
-              
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="convex_prob.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>凸优化问题</p>
+        </article>
       </div>
-    </a>
-    <a class="right-next"
-       href="convex_neq_solve.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>优化问题求解(2)</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div></div>
-  
-</div>
-
-                </footer>
-              
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="convex_neq_solve.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">3. </span>优化问题求解(2)</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="convex_prob.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">1. </span>凸优化问题</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2023, SSPUIIP
             </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 下降法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 最速下降法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#newton">2.1.2. Newton法</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.2. 梯度投影法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.3. 共轭梯度下降法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.3.2. 共轭梯度法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.3.3. 案例</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.4. 一般函数的共轭梯度法</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.4. Newton方法</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
             
           </div>
-          <footer class="bd-footer-content">
+          <div class="right-details">
             
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  <p class="copyright">
-    
-      © Copyright 2022, SSPUIIP.
-      <br/>
-    
-  </p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
+          </div>
+        </div>
         
-
-      </main>
+      </footer>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">2. 优化问题求解(1)</a><ul>
+<li><a class="reference internal" href="#id2">2.1. 下降法</a><ul>
+<li><a class="reference internal" href="#id3">2.1.1. 最速下降法</a></li>
+<li><a class="reference internal" href="#newton">2.1.2. Newton法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4">2.2. 梯度投影法</a></li>
+<li><a class="reference internal" href="#id5">2.3. 共轭梯度下降法</a><ul>
+<li><a class="reference internal" href="#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
+<li><a class="reference internal" href="#id6">2.3.2. 共轭梯度法</a></li>
+<li><a class="reference internal" href="#id7">2.3.3. 案例</a></li>
+<li><a class="reference internal" href="#id8">2.3.4. 一般函数的共轭梯度法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">2.4. Newton方法</a></li>
+</ul>
+</li>
+</ul>
 
-  <footer class="bd-footer">
-  </footer>
-  </body>
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

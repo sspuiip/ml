@@ -1,148 +1,179 @@
+<!doctype html>
+<html class="no-js" lang="zh-CN">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="3. 最大均值差" href="MMD.html" /><link rel="prev" title="1. 核函数基础" href="base.html" />
+
+    <!-- Generated with Sphinx 6.2.1 and Furo 2023.07.26 -->
+        <title>2. 再生核希尔伯特空间 - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=369552022d0b975c8e74270ce6eabe0fb7978f24" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    
+    
 
 
-<!DOCTYPE html>
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
 
 
-<html lang="zh-CN" >
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-
-    <title>2. 再生核希尔伯特空间 &#8212; MLBOOK 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-  
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
-
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/RKHS';</script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 最大均值差 (MMD)" href="MMD.html" />
-    <link rel="prev" title="1. 核函数基础" href="base.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
-
-  
-  
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
-  
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
-  
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
       
-      <div class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-  
-
-<a class="navbar-brand logo" href="../index.html">
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
   
   
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
   
-  
-  
-    <p class="title logo__title">MLBOOK 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">机器学习</span></p>
-<ul class="nav bd-sidenav">
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">机器学习</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="current nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差 (MMD)</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="covariance_operators.html">4. 协方差算子</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
@@ -151,185 +182,44 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 </ul>
 
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-  
-  <div id="rtd-footer-container"></div>
-
+</div>
+</div>
 
       </div>
       
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
     </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/kernel/RKHS.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-<script>
-document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
-  </button>
-`);
-</script>
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>再生核希尔伯特空间</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
-            
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
         </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+        <article role="main">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">2. </span>再生核希尔伯特空间<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>基本概念<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
@@ -339,10 +229,12 @@ document.write(`
 <blockquote>
 <div><p><strong>定义0 (泛函)</strong>. 假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
 \]</div>
+</div>
 <p>  可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。</p>
 <ul class="simple">
 <li><p><strong>例1</strong>. 两点间直线距离最短问题.</p></li>
@@ -354,52 +246,69 @@ J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
 </ul>
 <p><img alt="最速降线问题" src="../_images/functional2.png" /></p>
 <p>  如上图所示，有一物体从原点<span class="math notranslate nohighlight">\((0,0)\)</span>沿着曲线到达<span class="math notranslate nohighlight">\(A\)</span>点<span class="math notranslate nohighlight">\((a,b)\)</span>，若忽略摩擦力，那么沿着什么形状的曲线路径下降时间最短？物体从点<span class="math notranslate nohighlight">\((0,0)\)</span>运动到<span class="math notranslate nohighlight">\(P\)</span>点时，失去的势能为<span class="math notranslate nohighlight">\(mgy\)</span>，获得的动能为<span class="math notranslate nohighlight">\(mv^2/2\)</span>，由能量守恒定律可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 v^2=2gy
 \]</div>
+</div>
 <p>在<span class="math notranslate nohighlight">\(P\)</span>点处，物体的运动速度为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 v=\frac{ds}{dt}=\frac{\sqrt{1+y'^2}dx}{dt}
 \]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(s\)</span>表示曲线弧长，<span class="math notranslate nohighlight">\(t\)</span>为运动时间。由上式可知，<span class="math notranslate nohighlight">\(dt=\frac{\sqrt{1+y'^2}dx}{v}\)</span>，将<span class="math notranslate nohighlight">\(v\)</span>代入，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 dt=\sqrt{\frac{1+y'^2}{2gy}}dx
 \]</div>
+</div>
 <p>最终可得物体从<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间为(等式两边同时积分)，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx=J[y]}
 \]</div>
+</div>
 <p>物体由<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间<span class="math notranslate nohighlight">\(t\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的函数。问题最终转变为满足条件<span class="math notranslate nohighlight">\(y(0)=0,y(a)=b\)</span>的所有连续函数<span class="math notranslate nohighlight">\(y=y(x)\)</span>中，找出一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得<span class="math notranslate nohighlight">\(J[y]\)</span>最小。</p>
 <hr class="docutils" />
 <section id="id4">
 <h4><span class="section-number">2.1.1.1. </span>泛函极值求解–变分法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h4>
 <p>  对于引入的泛函问题<span class="math notranslate nohighlight">\(J[y]\)</span>，如何求其函数变时的极值<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>呢？一个可行的办法是使用变分法(Calculus of Variations)。传统的微积分中一个基本问题是寻找变最<span class="math notranslate nohighlight">\(x\)</span>的值使得函数<span class="math notranslate nohighlight">\(y(x)\)</span>的值大化(或最小化)。类似的，变分法能够寻找到一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得泛函<span class="math notranslate nohighlight">\(F[y]\)</span>的值最大（或最小）。</p>
 <p>  传统的函数中，可以对变量<span class="math notranslate nohighlight">\(x\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon\)</span>展开函数，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 y(x+\epsilon)=y(x)+\frac{dy}{dx}\epsilon+O(\epsilon^2)
 \]</div>
+</div>
 <p>类似的，对函数<span class="math notranslate nohighlight">\(y(x)\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon \eta(x)\)</span>，可以展开泛函，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 F[y(x)+\epsilon \eta(x)]=F[y(x)]+\epsilon\int\frac{\delta F}{\delta y(x)}\eta(x)dx+O(\epsilon^2)
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\frac{\delta F}{\delta y(x)}\)</span>为泛函<span class="math notranslate nohighlight">\(F[y]\)</span>关于<span class="math notranslate nohighlight">\(y(x)\)</span>的导数。上式可以看成函数展开的一个自然扩展。可以看出，泛函<span class="math notranslate nohighlight">\(F[y]\)</span>依赖<span class="math notranslate nohighlight">\(y\)</span>在所有点<span class="math notranslate nohighlight">\(x\)</span>的值。</p>
 <p>  现考虑更一般的泛函<span class="math notranslate nohighlight">\(F[y]\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 F[y]=\int G(y(x),y'(x),x)dx
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(y(x)\)</span>的值在积分边界上假定是固定的。现在对函数<span class="math notranslate nohighlight">\(y\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon \eta(x)\)</span>，可以得到</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}\eta(x)+\frac{\partial G}{\partial y'}\eta'(x)\right\}dx+O(\epsilon^2)
 \]</div>
+</div>
 <p>注意：<span class="math notranslate nohighlight">\(\delta y=\epsilon \eta(x), \delta y'=\epsilon \eta'(x)\)</span>。对等式右边第二项使用分部积分可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -408,35 +317,44 @@ F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}
 &amp;=-\epsilon\int\eta(x)\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)\qquad (\textrm{在积分区域的边界}\delta y=0 )
 \end{split}
 \end{split}\]</div>
+</div>
 <p>将上式结果代回，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}-\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)\right\}\eta(x)dx+O(\epsilon^2)
 \]</div>
+</div>
 <p>若泛函在<span class="math notranslate nohighlight">\(y(x)\)</span>取得极值，则必有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\frac{\partial G}{\partial y}-\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0}
 \]</div>
+</div>
 <p>这便是变分法的核心公式，也称之为Euler-Lagrange方程。有了该公式，就可以找出所寻求的极值点<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>。一般来说，Euler方程是一个二阶微分方程，<span class="math notranslate nohighlight">\(y(x)\)</span>的通解中含有的两个待定常数刚好通过两个边界条件确定。</p>
 </section>
 <section id="id5">
 <h4><span class="section-number">2.1.1.2. </span>含参变量的定积分<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
 <p>  变分法中，对于泛函求导问题（求导与积分先后顺序问题），可以参考含变量的定积分。含变量的定积分一般具有如下形式，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 I(y)=\int_a^b f(x,y)dx
 \]</div>
+</div>
 <blockquote>
 <div><p><strong>定理1</strong>. 若函数<span class="math notranslate nohighlight">\(f(x,y)\)</span>在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>连续。</p>
 </div></blockquote>
 <blockquote>
 <div><p><strong>定理2</strong>.  若函数<span class="math notranslate nohighlight">\(f(x,y),f_y'(x,y)\)</span>都在闭区域<span class="math notranslate nohighlight">\(a\le x\le b,c\le y\le d\)</span>上连续，则<span class="math notranslate nohighlight">\(I[y]\)</span>在闭区域<span class="math notranslate nohighlight">\(c\le y\le d\)</span>上具有连续导数</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 I'[y]=\int_a^b f'_y(x,y)dx
 \]</div>
+</div>
 <p>证明过程可参考《数学分析》ISBN：9787040427806。</p>
 </section>
 <hr class="docutils" />
@@ -446,64 +364,86 @@ I'[y]=\int_a^b f'_y(x,y)dx
 <li><p><strong>例1</strong>. 求解两点间最短路径。</p></li>
 </ul>
 <p>  该问题的泛函已知为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 s=\int_0^a (1+y'^2)^{1/2}dx
 \]</div>
+</div>
 <p>使用变分法，令<span class="math notranslate nohighlight">\(G(y,y',x)=\sqrt{1+y'^2}\)</span>，使用Euler-Lagrange方程来寻找<span class="math notranslate nohighlight">\(s\)</span>有极值的函数<span class="math notranslate nohighlight">\(y(x)\)</span>。注意到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial G}{\partial y}=0,\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{1+y'^2}}
 \]</div>
+</div>
 <p>代入Euler-Lagrange方程，可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{d}{dx}\left(\frac{y'}{\sqrt{1+y'^2}} \right)=0
 \]</div>
+</div>
 <p>解此微分方程，可知<span class="math notranslate nohighlight">\(y(x)\)</span>满足直线方程，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{y=kx+c}
 \]</div>
+</div>
 <p>通过边界点，可以计算出<span class="math notranslate nohighlight">\(k,c\)</span>。由此，通过变分法，我们得到了结论：两点之间直线距离最短。</p>
 <ul class="simple">
 <li><p><strong>例2</strong>. 最速降线问题。</p></li>
 </ul>
 <p>  该问题的泛函上节已知为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 t=\int_0^a\sqrt{\frac{1+y'^2}{2gy}}dx
 \]</div>
+</div>
 <p>利用变分法，令<span class="math notranslate nohighlight">\(G(y,y',x)=\sqrt{\frac{1+y'^2}{2gy}}\)</span>，可求得Euler-Lagrange方程的两个偏导数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial G}{\partial y}=-\frac12\sqrt{\frac{1+y'^2}{y^3}},\quad\frac{\partial G}{\partial y'}=\frac{y'}{\sqrt{y(1+y'^2)}}
 \]</div>
+</div>
 <p>可得Euler方程如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac12\sqrt{\frac{1+y'^2}{y^3}}+\frac{d}{dx}\left(\frac{y'}{\sqrt{y(1+y'^2)}}\right)=0
 \]</div>
+</div>
 <p>注意到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{d}{dx}\left[G-y'\frac{\partial G}{\partial y'}\right]=y'\frac{\partial G}{\partial y}+y''\frac{\partial G}{\partial y'}-y''\frac{\partial G}{\partial y'}-y'\frac{d}{dx}\left(\frac{\partial G}{\partial y'}\right)=0
 \]</div>
+</div>
 <p>因此有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 G-y'\frac{\partial G}{\partial y'}=C
 \]</div>
+</div>
 <p>做三角代换可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \]</div>
+</div>
 <p>上式对<span class="math notranslate nohighlight">\(\theta\)</span>求导，可得<span class="math notranslate nohighlight">\(x=r(\theta-\sin\theta)+x_0\)</span>。根据曲线过原点<span class="math notranslate nohighlight">\((0,0)\)</span>及<span class="math notranslate nohighlight">\((p,q)\)</span>可解出<span class="math notranslate nohighlight">\(x_0=0\)</span>以及<span class="math notranslate nohighlight">\(r\)</span>，最终结果为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
 \end{split}\]</div>
+</div>
 <p><a class="reference external" href="https://zhuanlan.zhihu.com/p/139018146">参考1</a></p>
 </section>
 </section>
@@ -525,28 +465,35 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <blockquote>
 <div><p><strong>定义2 (连续性)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>在<span class="math notranslate nohighlight">\(f_0\subset \mathcal{F}\)</span>是连续的，如果对于任意<span class="math notranslate nohighlight">\(\epsilon &gt;0\)</span>，总存在一个<span class="math notranslate nohighlight">\(\delta =\delta(\epsilon,f_0)&gt;0\)</span>，满足</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert f-f_0\Vert_\mathcal{F}&lt;\delta,\quad \textrm{implies}\quad\Vert Af-Af_0\Vert_\mathcal{G}&lt;\epsilon.
 \]</div>
+</div>
 <p>  当<span class="math notranslate nohighlight">\(A\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的每一个点都是连续的，则<span class="math notranslate nohighlight">\(A\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是<strong>连续的</strong>。换句话说，<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的一个收敛序列映射到<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>中的一个收敛序列。</p>
 <p>  <strong>例子</strong>. 对于<span class="math notranslate nohighlight">\(g\in\mathcal{F}, A_g:\mathcal{F}\rightarrow\mathbb{K}\)</span>，并且<span class="math notranslate nohighlight">\(A_g(f):=\langle f,g\rangle_\mathcal{F}\)</span>在<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是连续的。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 |A_g(f_1)-A_g(f_2)|=|\langle f_1-f_2,g\rangle_\mathcal{F}|\le \Vert g\Vert_{\mathcal{F}}\Vert f_1-f_2\Vert_\mathcal{F}
 \]</div>
+</div>
 <blockquote>
 <div><p><strong>定义3 (算子范数(Operator norm))</strong>. 线性算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>的算子范数定义为，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert A\Vert=\sup_{f\in\mathcal{F}}\frac{\Vert Af\Vert_\mathcal{G}}{\Vert f\Vert_\mathcal{F}}
 \]</div>
+</div>
 <blockquote>
 <div><p><strong>定义4 (有界算子(Bounded operator))</strong>. 如果<span class="math notranslate nohighlight">\(\Vert A\Vert &lt;\infty\)</span>，则称算子<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow\mathcal{G}\)</span>是有界算子。</p>
 </div></blockquote>
 <p>  可以看出<span class="math notranslate nohighlight">\(A\)</span>是有界算子当且仅当对于所有的<span class="math notranslate nohighlight">\(f\in\mathcal{F}\)</span>，存在一个非负实数<span class="math notranslate nohighlight">\(\lambda\)</span>，使之<span class="math notranslate nohighlight">\(\Vert Af\Vert_\mathcal{G}\le\lambda\Vert f\Vert_\mathcal{F}\)</span>成立，并且最小的<span class="math notranslate nohighlight">\(\lambda\)</span>恰好是算子范数。</p>
 <p>  有界算子可以重写为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -554,6 +501,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \Vert Af\Vert_\mathcal{G}&amp;\le\Vert A\Vert\Vert f\Vert_\mathcal{F}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可以看出，<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的一个有界子集(bounded subset)映射到了<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>的一个有界子集。</p>
 <p>注意：在微积分中，一个有界函数是指其范围是是有界集合的函数。这个定义与上面的定义不同，上面的定义简单地说明<span class="math notranslate nohighlight">\(A\)</span>对<span class="math notranslate nohighlight">\(f\)</span>的影响是由<span class="math notranslate nohighlight">\(f\)</span>的范数的一些缩放所限制的。对于算子范数(operator norm)有一种有用的几何解释:<span class="math notranslate nohighlight">\(A\)</span>将<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的封闭单位球映射到<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>中的封闭球的一个子集，中心为<span class="math notranslate nohighlight">\(0\in\mathcal{G}\)</span>，半径为<span class="math notranslate nohighlight">\(\Vert A\Vert\)</span>。同时注意：任何赋范、有限维空间的线性算子是有界的。</p>
 <blockquote>
@@ -589,10 +537,12 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <div><p><strong>定义1 (Evaluation Functional)</strong>. Let <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> be a Hilbert space of functions <span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>, defined on a non-empty set <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>. For a fixed <span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>，map <span class="math notranslate nohighlight">\(\delta_x :\mathcal{H}\rightarrow\mathbb{R}\)</span>，<span class="math notranslate nohighlight">\(\delta_x :f\rightarrow  f(x)\)</span> is called the (Dirac) evaluation functional at <span class="math notranslate nohighlight">\(x\)</span>.</p>
 </div></blockquote>
 <p>显然，求值泛函<span class="math notranslate nohighlight">\(\delta_x\)</span>是一个线性泛函，因为对于<span class="math notranslate nohighlight">\(\forall f,g\in\mathcal{H}, \forall \alpha,\beta\in\mathbb{R}\)</span>以下等式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \delta_x(\alpha f+\beta g)=(\alpha f+\beta g)(x)=\alpha f(x)+\beta g(x)=\alpha \delta_x(f)+\beta\delta_x(g)
 \]</div>
+</div>
 <p>  因此，一个自然的问题就是泛函是否连续（等价于线性算子的有界性）？这正是RKHS是如何定义的。</p>
 <blockquote>
 <div><p><strong>定义2 (Reproducing kernel Hilbert space, RKHS)</strong>. 一个从非空集<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>到数域<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>函数的Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个RKHS空间，如果<span class="math notranslate nohighlight">\(\forall x \in \mathcal{X}, \delta_x\)</span> 是连续的。</p>
@@ -601,6 +551,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <div><p><strong>Coroallary (<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>范数收敛隐含着逐点收敛)</strong>. 如果两个函数RKHS范数收敛，则它们在每次一个点都收敛，即如果<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}\Vert f_n -f\Vert_{\mathcal{H}}=0\)</span>, 则有<span class="math notranslate nohighlight">\(\lim_{n\rightarrow\infty}f_n(x)=f(x), \forall x \in\mathcal{X}\)</span>。</p>
 </div></blockquote>
 <p>  证明. 对于任意<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -608,13 +559,17 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 &amp;\le \Vert\delta_x\Vert\Vert f_n-f\Vert_\mathcal{H}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\Vert\delta_x\Vert\)</span>为求值泛函的范数（在RKHS的定义中，该算子是有界的）。</p>
 <p>  <strong>例</strong>. 如果不是一个RKHS，则范数收敛不一定隐含逐点收敛。令<span class="math notranslate nohighlight">\(\mathcal{H}=L_2([0,1])\)</span>，且度量为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert f_1 -f_2\Vert_{\mathcal{H}}=\left(\int_0^1 |f_1(x)-f_2(x)|^2\right)^{1/2}
 \]</div>
+</div>
 <p>考虑函数序列<span class="math notranslate nohighlight">\(\{q_n\}, q_n=x^n\)</span>，则有</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -623,6 +578,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 &amp;=0
 \end{split}
 \end{split}\]</div>
+</div>
 <p>且有<span class="math notranslate nohighlight">\(q_n(1)=1,\forall n\)</span>。也就是说求值泛函在点1是不连续的。</p>
 </section>
 <hr class="docutils" />
@@ -643,6 +599,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <div><p><strong>定理 (核函数存在性)</strong>. <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个再生核希尔伯特空间(即，其求值函数<span class="math notranslate nohighlight">\(\delta_x\)</span>是连续的线性算子)，当且仅当<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>具有再生核。</p>
 </div></blockquote>
 <p>  <strong>证明</strong>. 给定一个Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>，并具有再生属性<span class="math notranslate nohighlight">\(\langle f,k(\cdot,x)\rangle_\mathcal{H}=f(x)\)</span>，则有</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -652,27 +609,36 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 &amp;=k(x,x)^{1/2}\cdot\Vert f\Vert_\mathcal{H}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>因此，求值泛函<span class="math notranslate nohighlight">\(\delta_x\)</span>是一个有界线性算子。</p>
 <p>  下面来证明另一个方向。先定义<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的对偶空间<span class="math notranslate nohighlight">\(\mathcal{H}'\)</span>，假设<span class="math notranslate nohighlight">\(\delta_x \in \mathcal{H}' :\mathcal{F}\rightarrow \mathbb{K} \)</span>是一个有界线性算子。由Riesz表示定理可以得知，必然存在一个元素<span class="math notranslate nohighlight">\(f_{\delta_x}\in\mathcal{H}\)</span>满足，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \delta_x [f]=\langle f,f_{\delta_x}\rangle_{\mathcal{H}}
 \]</div>
+</div>
 <p>且存在一个等距反线性同构<span class="math notranslate nohighlight">\(I:\mathcal{H}'\rightarrow\mathcal{H}\)</span>，使之<span class="math notranslate nohighlight">\(\delta_x\rightarrow f_{\delta_{x}}\)</span>成立。在<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>定义一个再生核，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}
 \]</div>
+</div>
 <p>这给了我们一个规范的特征映射<span class="math notranslate nohighlight">\(k(\cdot,x')=I\delta_{x'}\)</span>，因此可知</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 k(x,x')\underbrace{=\langle \delta_x,\delta_{x'}\rangle_{\mathcal{H}'}}_{(1)}\underbrace{=\langle I\delta_x,I\delta_{x'}\rangle_{\mathcal{H}}}_{(2)}=\delta_x (I\delta_{x'})=I\delta_{x'}(x)
 \]</div>
+</div>
 <p>其中等式(1)使用了反线性等距(anti-linear isometry)，等式(2)使用了<span class="math notranslate nohighlight">\(I\delta_x = f_{\delta_x}\)</span>。因此，这个规范特征映射再生属性，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x')\rangle_\mathcal{H}
 \]</div>
+</div>
 <p>因此，<span class="math notranslate nohighlight">\(k\)</span>是一个再生核。</p>
 <p>  从上述定理可以看出，<span class="math notranslate nohighlight">\(k(\cdot,x)\)</span>实际上是在<span class="math notranslate nohighlight">\(x\)</span>点求值算子的一种表示。</p>
 <section id="rkhs">
@@ -680,10 +646,12 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 <blockquote>
 <div><p><strong>定义 (正定函数)</strong>. 一个函数<span class="math notranslate nohighlight">\(h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}\)</span>是正定的，如果<span class="math notranslate nohighlight">\(\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}\)</span>,</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \sum_{i=1}^n\sum_{j=1}^n a_ia_jh(x_i,x_j)\ge 0
 \]</div>
+</div>
 <blockquote>
 <div><p>若等号成立仅当<span class="math notranslate nohighlight">\(a_i,a_j=0\)</span>，则称函数<span class="math notranslate nohighlight">\(h(\cdot,\cdot)\)</span>是严格正定的（stricklly positive definite）。</p>
 </div></blockquote>
@@ -692,6 +660,7 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 <div><p><strong>Lemma (核函数一定是正定函数)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>是一个Hilbert空间（RKHS不是必要的）,<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>是一个非空集合且有映射<span class="math notranslate nohighlight">\(\phi :\mathcal{X}\rightarrow \mathcal{F}\)</span>，则<span class="math notranslate nohighlight">\(h(x,y)=\langle \phi(x),\phi(y)\rangle_\mathcal{F}\)</span>是一个正定函数(positive definite function)。</p>
 </div></blockquote>
 <p>  <strong>证明</strong>.</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -699,6 +668,7 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 &amp;=\left\Vert \sum_{i=1}^n a_i\phi(x_i) \right\Vert_{\mathcal{F}}^2
 \end{split}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><p><strong>Corollary</strong>. 再生核函数是正定核函数。</p>
 </div></blockquote>
@@ -714,123 +684,97 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 </section>
 </section>
 
-
-                </article>
-              
-
-              
-              
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="base.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
+        </article>
       </div>
-    </a>
-    <a class="right-next"
-       href="MMD.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>最大均值差 (MMD)</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div></div>
-  
-</div>
-
-                </footer>
-              
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="MMD.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">3. </span>最大均值差</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="base.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">1. </span>核函数基础</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2023, SSPUIIP
             </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
             
           </div>
-          <footer class="bd-footer-content">
+          <div class="right-details">
             
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  <p class="copyright">
-    
-      © Copyright 2022, SSPUIIP.
-      <br/>
-    
-  </p>
-
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
+          </div>
+        </div>
         
-
-      </main>
+      </footer>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">2. 再生核希尔伯特空间</a><ul>
+<li><a class="reference internal" href="#id2">2.1. 基本概念</a><ul>
+<li><a class="reference internal" href="#id3">2.1.1. 泛函</a><ul>
+<li><a class="reference internal" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
+<li><a class="reference internal" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
+<li><a class="reference internal" href="#id6">2.1.1.3. 例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">2.2. 线性算子</a></li>
+<li><a class="reference internal" href="#hilbert">2.3. 再生核Hilbert空间</a><ul>
+<li><a class="reference internal" href="#id8">2.3.1. 求值泛函</a></li>
+<li><a class="reference internal" href="#id9">2.3.2. 再生核</a><ul>
+<li><a class="reference internal" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
-  <footer class="bd-footer">
-  </footer>
-  </body>
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/furo.js"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>
