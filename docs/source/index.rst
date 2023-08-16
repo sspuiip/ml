@@ -22,6 +22,7 @@
    kernel/base.md
    kernel/RKHS.md
    kernel/MMD.md
+   kernel/covariance_operators.md
 
 
 
