@@ -75,7 +75,7 @@ $$
 \Vert a\otimes b\Vert_{\textrm{HS}}^2&=\sum_{j\in J}\Vert (a\otimes b)f_j\Vert_\mathcal{F}^2\\
 &=\sum_{j\in J}\Vert a\langle b, f_j\rangle_\mathcal{G}\Vert_\mathcal{F}^2\\
 &=\Vert a\Vert_\mathcal{F}^2\sum_{j\in J}|\langle b,f_j\rangle_\mathcal{G}|^2\\
-&=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2
+&=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2 < \infty
 \end{split}
 $$
 
@@ -126,4 +126,22 @@ $$
 $$
 \langle a\otimes b,u\otimes v\rangle_{\textrm{HS}}=\langle a,(u\otimes v)b\rangle_\mathcal{F}
 =\langle b,v\rangle_{\mathcal{G}}\langle a,u\rangle_\mathcal{F}
+$$
+
+---
+
+### Cross-covariance算子
+
+&emsp;&emsp;定义算子前，我们先假设$\mathcal{F},\mathcal{G}$为再生核Hilbert空间，其核分别为$k$和$l$，对应的特征映射分别为$\phi,\psi$。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，
+
+$$
+\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y
+
+)]
+$$
+
+其中$\tilde{C}_{XY}$未中心化，中心化的协方差算子为，
+
+$$
+C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
 $$

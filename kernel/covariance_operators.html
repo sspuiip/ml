@@ -304,7 +304,7 @@ Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{
 \Vert a\otimes b\Vert_{\textrm{HS}}^2&amp;=\sum_{j\in J}\Vert (a\otimes b)f_j\Vert_\mathcal{F}^2\\
 &amp;=\sum_{j\in J}\Vert a\langle b, f_j\rangle_\mathcal{G}\Vert_\mathcal{F}^2\\
 &amp;=\Vert a\Vert_\mathcal{F}^2\sum_{j\in J}|\langle b,f_j\rangle_\mathcal{G}|^2\\
-&amp;=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2
+&amp;=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2 &lt; \infty
 \end{split}
 \end{split}\]</div>
 </div>
@@ -360,6 +360,24 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 \[
 \langle a\otimes b,u\otimes v\rangle_{\textrm{HS}}=\langle a,(u\otimes v)b\rangle_\mathcal{F}
 =\langle b,v\rangle_{\mathcal{G}}\langle a,u\rangle_\mathcal{F}
+\]</div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="cross-covariance">
+<h3><span class="section-number">4.1.2. </span>Cross-covariance算子<a class="headerlink" href="#cross-covariance" title="此标题的永久链接">#</a></h3>
+<p>  定义算子前，我们先假设<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>为再生核Hilbert空间，其核分别为<span class="math notranslate nohighlight">\(k\)</span>和<span class="math notranslate nohighlight">\(l\)</span>，对应的特征映射分别为<span class="math notranslate nohighlight">\(\phi,\psi\)</span>。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[ \begin{align}\begin{aligned}
+\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y\\)]
+\end{aligned}\end{align} \]</div>
+</div>
+<p>其中<span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>未中心化，中心化的协方差算子为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
 \]</div>
 </div>
 </section>
@@ -424,6 +442,7 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 <li><a class="reference internal" href="#">4. 协方差算子</a><ul>
 <li><a class="reference internal" href="#hilbert-schmidt">4.1. Hilbert-Schmidt算子</a><ul>
 <li><a class="reference internal" href="#rank-one">4.1.1. Rank-one算子</a></li>
+<li><a class="reference internal" href="#cross-covariance">4.1.2. Cross-covariance算子</a></li>
 </ul>
 </li>
 </ul>
