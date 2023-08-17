@@ -60,13 +60,13 @@ $$
 
 ### Rank-one算子
 
-&emsp;&emsp;给定$b\in\mathcal{G},a\in\mathcal{F}$，可以定义张量积(tensor product)$a\otimes b$为rank-one算子$:\mathcal{G}\rightarrow \mathcal{F}$,
+&emsp;&emsp;给定$b\in\mathcal{G},a\in\mathcal{F}$，可以定义张量积$a\otimes b$(tensor product)为rank-one算子$a\otimes b:\mathcal{G}\rightarrow \mathcal{F}$,
 
 $$
-(b\otimes a)f\rightarrow \langle f,a\rangle_\mathcal{F}b
+(a\otimes b)g\rightarrow \langle g,b\rangle_\mathcal{G}a
 $$
 
-这是标准外积的推广，即如果$a,b,f$都是向量，则有$(ba^\top)f=(a^\top f)b$成立。
+这是标准外积的推广，即如果$a,b,g$都是向量，则有$(ab^\top)g=(b^\top g)a$成立。
 
 &emsp;&emsp;该算子是Hilbert-Schmidt算子吗？下面来计算算子的范数，
 
@@ -135,13 +135,17 @@ $$
 &emsp;&emsp;定义算子前，我们先假设$\mathcal{F},\mathcal{G}$为再生核Hilbert空间，其核分别为$k$和$l$，对应的特征映射分别为$\phi,\psi$。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，
 
 $$
-\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y
-
-)]
+\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y)]
 $$
 
 其中$\tilde{C}_{XY}$未中心化，中心化的协方差算子为，
 
 $$
 C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
+$$
+
+&emsp;&emsp;注意：$\phi(x)\otimes \psi(y)$是$\textrm{HS}(\mathcal{G},\mathcal{L})$空间的一个随机变量（已证明$\forall A\in\textrm{HS}(\mathcal{G},\mathcal{L})$,线性形式(linear form)$\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}$是可度量的）。为了使得该随机变量的期望存在，必要条件$\phi(x)\otimes\psi(y)$的范式(norm)有界，也就是$\mathbb{E}_{XY}[\Vert \phi(x)\otimes\psi(y)\Vert_{\textrm{HS}}]<\infty$。若给定期望(记为, $\tilde{C}_{XY}$)存在，则这个期望是某个成员且惟一，且满足，
+
+$$
+\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 $$

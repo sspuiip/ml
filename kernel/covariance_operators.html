@@ -288,14 +288,14 @@ Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{
 <hr class="docutils" />
 <section id="rank-one">
 <h3><span class="section-number">4.1.1. </span>Rank-one算子<a class="headerlink" href="#rank-one" title="此标题的永久链接">#</a></h3>
-<p>  给定<span class="math notranslate nohighlight">\(b\in\mathcal{G},a\in\mathcal{F}\)</span>，可以定义张量积(tensor product)<span class="math notranslate nohighlight">\(a\otimes b\)</span>为rank-one算子<span class="math notranslate nohighlight">\(:\mathcal{G}\rightarrow \mathcal{F}\)</span>,</p>
+<p>  给定<span class="math notranslate nohighlight">\(b\in\mathcal{G},a\in\mathcal{F}\)</span>，可以定义张量积<span class="math notranslate nohighlight">\(a\otimes b\)</span>(tensor product)为rank-one算子<span class="math notranslate nohighlight">\(a\otimes b:\mathcal{G}\rightarrow \mathcal{F}\)</span>,</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-(b\otimes a)f\rightarrow \langle f,a\rangle_\mathcal{F}b
+(a\otimes b)g\rightarrow \langle g,b\rangle_\mathcal{G}a
 \]</div>
 </div>
-<p>这是标准外积的推广，即如果<span class="math notranslate nohighlight">\(a,b,f\)</span>都是向量，则有<span class="math notranslate nohighlight">\((ba^\top)f=(a^\top f)b\)</span>成立。</p>
+<p>这是标准外积的推广，即如果<span class="math notranslate nohighlight">\(a,b,g\)</span>都是向量，则有<span class="math notranslate nohighlight">\((ab^\top)g=(b^\top g)a\)</span>成立。</p>
 <p>  该算子是Hilbert-Schmidt算子吗？下面来计算算子的范数，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
@@ -369,15 +369,22 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 <p>  定义算子前，我们先假设<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>为再生核Hilbert空间，其核分别为<span class="math notranslate nohighlight">\(k\)</span>和<span class="math notranslate nohighlight">\(l\)</span>，对应的特征映射分别为<span class="math notranslate nohighlight">\(\phi,\psi\)</span>。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
-\[ \begin{align}\begin{aligned}
-\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y\\)]
-\end{aligned}\end{align} \]</div>
+\[
+\tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y)]
+\]</div>
 </div>
 <p>其中<span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>未中心化，中心化的协方差算子为，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
+\]</div>
+</div>
+<p>  注意：<span class="math notranslate nohighlight">\(\phi(x)\otimes \psi(y)\)</span>是<span class="math notranslate nohighlight">\(\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>空间的一个随机变量（已证明<span class="math notranslate nohighlight">\(\forall A\in\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>,线性形式(linear form)<span class="math notranslate nohighlight">\(\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}\)</span>是可度量的）。为了使得该随机变量的期望存在，必要条件<span class="math notranslate nohighlight">\(\phi(x)\otimes\psi(y)\)</span>的范式(norm)有界，也就是<span class="math notranslate nohighlight">\(\mathbb{E}_{XY}[\Vert \phi(x)\otimes\psi(y)\Vert_{\textrm{HS}}]&lt;\infty\)</span>。若给定期望(记为, <span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>)存在，则这个期望是某个成员且惟一，且满足，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 \]</div>
 </div>
 </section>
