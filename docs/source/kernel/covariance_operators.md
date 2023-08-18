@@ -132,6 +132,8 @@ $$
 
 ### Cross-covariance算子
 
+#### Cross-covariance算子定义
+
 &emsp;&emsp;定义算子前，我们先假设$\mathcal{F},\mathcal{G}$为再生核Hilbert空间，其核分别为$k$和$l$，对应的特征映射分别为$\phi,\psi$。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，
 
 $$
@@ -148,4 +150,51 @@ $$
 
 $$
 \langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
+$$
+
+&emsp;&emsp;**证明**. 算子$T_{XY}$验证有界性。
+
+$$
+\begin{split}
+T_{XY}: \textrm{HS}(\mathcal{G},\mathcal{F})&\rightarrow \mathbb{R}\\
+A&\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
+\end{split}
+$$
+
+**当$\mathbb{E}_{XY}[\Vert\phi(x)\otimes \psi(y)\Vert_{\textrm{HS}}]<\infty$，可知算子$T_{XY}$是有界的。**
+
+&emsp;&emsp;因为，
+
+$$
+\begin{split}
+|\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}|&\le\mathbb{E}_{XY}|\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}|\\
+&\le\Vert A\Vert_{\textrm{HS}}\mathbb{E}_{XY}[\Vert \phi(x)\otimes \psi(y)\Vert_{\textrm{HS}}]
+\end{split}
+$$
+
+通过Riesz表示定理可知，对于有界线性算子$T_{XY}$，总存在一个$\mathbb{E}_{XY}\langle \cdot,\phi(x)\otimes\psi(y)\rangle_{\textrm{HS}}$，使得$T_{XY}A$可以写成内积的形式$T_{XY}A=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}$。
+
+&emsp;&emsp;上述条件可以继续简化，
+
+$$
+\begin{split}
+\mathbb{E}_{XY}[\Vert \phi(x)\otimes \psi(y)\Vert_{\textrm{HS}}]&=\mathbb{E}_{XY}(\Vert \phi(x)\Vert_\mathcal{F}\Vert \psi(y)\Vert_\mathcal{G})\\
+&=\mathbb{E}_{XY}\left(\sqrt{k(x,x)l(y,y)} \right)<\infty
+\end{split}
+$$
+
+简化后的结果可以当作一个弱条件(weaker condition)来使用。这个条件是上述Jensen's不等式所隐含的。
+
+#### 特例——$f\otimes g$
+
+&emsp;&emsp;当$A=f\otimes g$时，
+
+$$
+\begin{split}
+\langle f\otimes g,\tilde{C}_{XY}\rangle_{\textrm{HS}}&=\langle f,\tilde{C}_{XY}g\rangle_\mathcal{F}\\
+&=\mathbb{E}_{XY}\langle \phi(x)\otimes \psi(y),f\otimes g\rangle_{\textrm{HS}}\\
+&=\mathbb{E}_{XY}[\langle f,\phi(x)\rangle_\mathcal{F}\langle g,\psi(y)\rangle_\mathcal{G}]\\
+&=\mathbb{E}_{XY}[f(x)g(y)]\\
+&=\textrm{cov}(f,g)
+\end{split}
 $$
