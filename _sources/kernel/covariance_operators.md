@@ -217,7 +217,7 @@ $$
 $$
 \begin{split}
 \textrm{COCO}(P_{XY})&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}[f(x),g(y)]\\
-&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}\left[\left(\sum_{j=1}^\infty f_j\varphi_j(x)\right)\left(\sum_{j=1}^\infty f_j\phi_j(y)\right)  \right]
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}\left[\left(\sum_{j=1}^\infty f_j\varphi_j(x)\right)\left(\sum_{j=1}^\infty g_j\phi_j(y)\right)  \right]
 \end{split}
 $$
 
@@ -225,10 +225,10 @@ $$
 
 $$
 \begin{split}
-\textrm{COCO}(P_{XY})&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}\left[\left(\sum_{j=1}^\infty f_j\tilde{\varphi}_j(x)\right)\left(\sum_{j=1}^\infty f_j\tilde{\phi}_j(y)\right)  \right]\\
+\textrm{COCO}(P_{XY})&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}\left[\left(\sum_{j=1}^\infty f_j\tilde{\varphi}_j(x)\right)\left(\sum_{j=1}^\infty g_j\tilde{\phi}_j(y)\right)  \right]\\
 &=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}[\langle f,\tilde{\varphi}(x)\rangle_\mathcal{F},\langle g,\tilde{\phi}(y)\rangle_\mathcal{G}]\\
 &=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}\langle \tilde{\varphi}(x)\otimes\tilde{\phi}(y),f\otimes g \rangle_{\textrm{HS}} \\
-&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\langle f,C_{XY}g\rangle_\mathcal{F}\\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\langle f,C_{\tilde{\varphi}(x)\tilde{\phi}(y)}g\rangle_\mathcal{F}\\
 &=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\begin{bmatrix}f_1\\f_2\\ \vdots\end{bmatrix}^\top\underbrace{\mathbb{E}_{xy}\left(\begin{bmatrix}\tilde{\varphi}_1(x) \\ \tilde{\varphi}_2(x)\\\vdots \end{bmatrix} \begin{bmatrix}\tilde{\phi}_1(y) & \tilde{\phi}_2(y)&\cdots \end{bmatrix}\right)}_{C_{\tilde{\varphi}(x)\tilde{\phi}(y)}}\begin{bmatrix}g_1\\g_2\\ \vdots\end{bmatrix}
 \end{split}
 $$
