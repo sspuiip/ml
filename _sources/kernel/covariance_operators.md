@@ -195,6 +195,42 @@ $$
 &=\mathbb{E}_{XY}\langle \phi(x)\otimes \psi(y),f\otimes g\rangle_{\textrm{HS}}\\
 &=\mathbb{E}_{XY}[\langle f,\phi(x)\rangle_\mathcal{F}\langle g,\psi(y)\rangle_\mathcal{G}]\\
 &=\mathbb{E}_{XY}[f(x)g(y)]\\
-&=\textrm{cov}(f,g)
+&=\textrm{cov}(f(x),g(y)),\qquad \{\phi(x)=\phi(x)-\mathbb{E}_x\phi(x), \psi(y)=\psi(y)-\mathbb{E}_y\psi(y)\}
 \end{split}
 $$
+
+---
+## 约束协方差
+
+&emsp;&emsp;一般来说，传统的协方差是指，若有随机变量$x,y$，则使用协方差可以判断两随机变量是否独立，即
+
+$$
+\textrm{cov}(x,y)=\mathbb{E}_{xy}[xy]-\mathbb{E}[x]\mathbb{E}[y]
+$$
+
+更一般地，已有工作证明，
+
+>**定理**[1](https://proceedings.mlr.press/r5/gretton05a.html). 随机变量$x$与$y$是独立的当且仅当对于每一对连续有界算子$f,g$，都有$\textrm{cov}(f(x),g(y))=0$成立。
+
+由此可以引出约束协方差(constrained covariance, COCO)的定义，
+
+$$
+\begin{split}
+\textrm{COCO}(P_{XY})&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}[f(x),g(y)]\\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}\left[\left(\sum_{j=1}^\infty f_j\varphi_j(x)\right)\left(\sum_{j=1}^\infty f_j\phi_j(y)\right)  \right]
+\end{split}
+$$
+
+若对特征映射中心化，即$\tilde{\varphi}(x)=\varphi(x)-\mathbb{E}_x\varphi(x), \tilde{\phi}(y)=\phi(y)-\mathbb{E}_y\phi(y)$，则COCO转变为以下形式，
+
+$$
+\begin{split}
+\textrm{COCO}(P_{XY})&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}\left[\left(\sum_{j=1}^\infty f_j\tilde{\varphi}_j(x)\right)\left(\sum_{j=1}^\infty f_j\tilde{\phi}_j(y)\right)  \right]\\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}[\langle f,\tilde{\varphi}(x)\rangle_\mathcal{F},\langle g,\tilde{\phi}(y)\rangle_\mathcal{G}]\\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\mathbb{E}_{xy}\langle \tilde{\varphi}(x)\otimes\tilde{\phi}(y),f\otimes g \rangle_{\textrm{HS}} \\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\langle f,C_{XY}g\rangle_\mathcal{F}\\
+&=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\begin{bmatrix}f_1\\f_2\\ \vdots\end{bmatrix}^\top\underbrace{\mathbb{E}_{xy}\left(\begin{bmatrix}\tilde{\varphi}_1(x) \\ \tilde{\varphi}_2(x)\\\vdots \end{bmatrix} \begin{bmatrix}\tilde{\phi}_1(y) & \tilde{\phi}_2(y)&\cdots \end{bmatrix}\right)}_{C_{\tilde{\varphi}(x)\tilde{\phi}(y)}}\begin{bmatrix}g_1\\g_2\\ \vdots\end{bmatrix}
+\end{split}
+$$
+
+可以看出，COCO即为$C_{\tilde{\varphi}(x)\tilde{\phi}(y)}$的最大奇异值。
