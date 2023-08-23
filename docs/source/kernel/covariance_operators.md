@@ -149,7 +149,7 @@ $$
 &emsp;&emsp;注意：$\phi(x)\otimes \psi(y)$是$\textrm{HS}(\mathcal{G},\mathcal{L})$空间的一个随机变量（已证明$\forall A\in\textrm{HS}(\mathcal{G},\mathcal{L})$,线性形式(linear form)$\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}$是可度量的）。为了使得该随机变量的期望存在，必要条件$\phi(x)\otimes\psi(y)$的范式(norm)有界，也就是$\mathbb{E}_{XY}[\Vert \phi(x)\otimes\psi(y)\Vert_{\textrm{HS}}]<\infty$。若给定期望(记为, $\tilde{C}_{XY}$)存在，则这个期望是某个成员且惟一，且满足，
 
 $$
-\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
+\boxed{\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}}
 $$
 
 &emsp;&emsp;**证明**. 算子$T_{XY}$验证有界性。
@@ -234,3 +234,65 @@ $$
 $$
 
 可以看出，COCO即为$C_{\tilde{\varphi}(x)\tilde{\phi}(y)}$的最大奇异值。
+
+### COCO的估计
+
+&emsp;&emsp;给定样本集$\{(x_i,y_i)\}_{i=1}^n\sim P_{XY}$，COCO的经验估计${\textrm{COCO}_{\textrm{emp}}}$(empirical)怎么计算？${\textrm{COCO}_{\textrm{emp}}}$是下式的最大特征值$\gamma_{\textrm{max}}$，
+
+$$
+\begin{bmatrix}0 & \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&0\\0&\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
+$$
+
+&emsp;&emsp;其中，$\tilde{K}_{ij}=\langle \phi(x_i)-\hat{\mu}_x,\phi(x_j)-\hat{\mu}_x\rangle_\mathcal{F}\triangleq\langle\tilde{\phi}(x_i),\tilde{\phi}(x_j)\rangle_\mathcal{F}$，以及$\tilde{L}_{ij}=\langle\tilde{\psi}(y_i),\tilde{\psi}(y_j)\rangle_\mathcal{G}$。
+
+**proof**. 
+
+1. 首先，协方差算子可以根据下式估计，
+
+$$
+\hat{C}_{XY}\triangleq\frac1n\sum_{i=1}^n\phi(x_i)\otimes\psi(y_i)-\hat{\mu}_x\otimes\hat{\mu}_y;\quad\hat{\mu}_x=\frac1n\sum_i^n\phi(x_i)
+$$
+
+引入中心化矩阵$H=I_n-n^{-1}11^\top$，则有
+
+$$
+\hat{C}_{XY}=\frac1n XHY^\top
+$$
+
+其中，
+
+$$
+X=\begin{bmatrix}\phi(x_1)&\phi(x_2)&\cdots&\phi(x_n)\end{bmatrix};\quad Y=\begin{bmatrix}\psi(y_1)&\psi(y_2)&\cdots&\psi(y_n)\end{bmatrix}
+$$
+
+1. 构造拉格朗日函数，
+
+$$
+\mathcal{L}(f,g,\lambda,\gamma)=-f^\top \hat{C}_{XY} g+\frac{\lambda}{2}\left(\Vert f\Vert_\mathcal{F}^2-1 \right)+\frac{\gamma}{2}\left(\Vert g\Vert_\mathcal{G}^2-1\right)
+$$
+
+其中，
+
+$$
+f=\sum_{i=1}^n\alpha_i[\phi(x_i)-\hat{\mu}_x]=XH\alpha; \quad g=YH\beta
+$$
+
+容易得到，
+
+$$
+f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Vert^2=\alpha^\top HXX^\top H\alpha=\alpha^\top\tilde{K}\alpha;\quad \Vert g\Vert^2_\mathcal{G}=\beta^\top \tilde{L}\beta
+$$
+
+整理后代入拉格朗日函数，
+
+$$
+\mathcal{L}(\alpha,\beta,\lambda,\gamma)=-\frac1n\alpha^\top\tilde{K}\tilde{L}\beta+\frac{\lambda}{2}(\alpha^\top\tilde{K}\alpha-1)+\frac{\gamma}{2}(\beta^\top \tilde{L}\beta-1)
+$$
+
+&emsp;&emsp;求偏导后整理得到，
+
+$$
+\begin{bmatrix}0 & \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&0\\0&\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
+$$
+
+即，$\gamma$最优值为上式最大特征值$\gamma_{\textrm{max}}$。
