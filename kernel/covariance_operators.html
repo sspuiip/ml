@@ -310,7 +310,10 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.2. 约束协方差</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.2. 约束协方差</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coco">4.2.1. COCO的估计</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -456,7 +459,7 @@ C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
 <p>  注意：<span class="math notranslate nohighlight">\(\phi(x)\otimes \psi(y)\)</span>是<span class="math notranslate nohighlight">\(\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>空间的一个随机变量（已证明<span class="math notranslate nohighlight">\(\forall A\in\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>,线性形式(linear form)<span class="math notranslate nohighlight">\(\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}\)</span>是可度量的）。为了使得该随机变量的期望存在，必要条件<span class="math notranslate nohighlight">\(\phi(x)\otimes\psi(y)\)</span>的范式(norm)有界，也就是<span class="math notranslate nohighlight">\(\mathbb{E}_{XY}[\Vert \phi(x)\otimes\psi(y)\Vert_{\textrm{HS}}]&lt;\infty\)</span>。若给定期望(记为, <span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>)存在，则这个期望是某个成员且惟一，且满足，</p>
 <div class="math notranslate nohighlight">
 \[
-\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
+\boxed{\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}}
 \]</div>
 <p>  <strong>证明</strong>. 算子<span class="math notranslate nohighlight">\(T_{XY}\)</span>验证有界性。</p>
 <div class="math notranslate nohighlight">
@@ -534,6 +537,61 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 \end{split}
 \end{split}\]</div>
 <p>可以看出，COCO即为<span class="math notranslate nohighlight">\(C_{\tilde{\varphi}(x)\tilde{\phi}(y)}\)</span>的最大奇异值。</p>
+<section id="coco">
+<h3><span class="section-number">4.2.1. </span>COCO的估计<a class="headerlink" href="#coco" title="此标题的永久链接">#</a></h3>
+<p>  给定样本集<span class="math notranslate nohighlight">\(\{(x_i,y_i)\}_{i=1}^n\sim P_{XY}\)</span>，COCO的经验估计<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>(empirical)怎么计算？<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>是下式的最大特征值<span class="math notranslate nohighlight">\(\gamma_{\textrm{max}}\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}0 &amp; \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&amp;0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&amp;0\\0&amp;\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
+\end{split}\]</div>
+<p>  其中，<span class="math notranslate nohighlight">\(\tilde{K}_{ij}=\langle \phi(x_i)-\hat{\mu}_x,\phi(x_j)-\hat{\mu}_x\rangle_\mathcal{F}\triangleq\langle\tilde{\phi}(x_i),\tilde{\phi}(x_j)\rangle_\mathcal{F}\)</span>，以及<span class="math notranslate nohighlight">\(\tilde{L}_{ij}=\langle\tilde{\psi}(y_i),\tilde{\psi}(y_j)\rangle_\mathcal{G}\)</span>。</p>
+<p><strong>proof</strong>.</p>
+<ol class="arabic simple">
+<li><p>首先，协方差算子可以根据下式估计，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\hat{C}_{XY}\triangleq\frac1n\sum_{i=1}^n\phi(x_i)\otimes\psi(y_i)-\hat{\mu}_x\otimes\hat{\mu}_y;\quad\hat{\mu}_x=\frac1n\sum_i^n\phi(x_i)
+\]</div>
+<p>引入中心化矩阵<span class="math notranslate nohighlight">\(H=I_n-n^{-1}11^\top\)</span>，则有</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{C}_{XY}=\frac1n XHY^\top
+\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[
+X=\begin{bmatrix}\phi(x_1)&amp;\phi(x_2)&amp;\cdots&amp;\phi(x_n)\end{bmatrix};\quad Y=\begin{bmatrix}\psi(y_1)&amp;\psi(y_2)&amp;\cdots&amp;\psi(y_n)\end{bmatrix}
+\]</div>
+<ol class="arabic simple">
+<li><p>构造拉格朗日函数，</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(f,g,\lambda,\gamma)=-f^\top \hat{C}_{XY} g+\frac{\lambda}{2}\left(\Vert f\Vert_\mathcal{F}^2-1 \right)+\frac{\gamma}{2}\left(\Vert g\Vert_\mathcal{G}^2-1\right)
+\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[
+f=\sum_{i=1}^n\alpha_i[\phi(x_i)-\hat{\mu}_x]=XH\alpha; \quad g=YH\beta
+\]</div>
+<p>容易得到，</p>
+<div class="math notranslate nohighlight">
+\[
+f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Vert^2=\alpha^\top HXX^\top H\alpha=\alpha^\top\tilde{K}\alpha;\quad \Vert g\Vert^2_\mathcal{G}=\beta^\top \tilde{L}\beta
+\]</div>
+<p>整理后代入拉格朗日函数，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\alpha,\beta,\lambda,\gamma)=-\frac1n\alpha^\top\tilde{K}\tilde{L}\beta+\frac{\lambda}{2}(\alpha^\top\tilde{K}\alpha-1)+\frac{\gamma}{2}(\beta^\top \tilde{L}\beta-1)
+\]</div>
+<p>  求偏导后整理得到，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}0 &amp; \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&amp;0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&amp;0\\0&amp;\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
+\end{split}\]</div>
+<p>即，<span class="math notranslate nohighlight">\(\gamma\)</span>最优值为上式最大特征值<span class="math notranslate nohighlight">\(\gamma_{\textrm{max}}\)</span>。</p>
+</section>
 </section>
 </section>
 
@@ -594,7 +652,10 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.2. 约束协方差</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.2. 约束协方差</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coco">4.2.1. COCO的估计</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
