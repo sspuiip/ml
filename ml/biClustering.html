@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>5. 特殊矩阵 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>1. BiClustering &#8212; Machine Learning Fundation 1.0 文档</title>
   
   
   
@@ -42,13 +42,11 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
     <script src="../_static/translations.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/special_matrix';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/biClustering';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="6. 子空间分析" href="subspace.html" />
-    <link rel="prev" title="4. 矩阵微分" href="matrixdiff.html" />
+    <link rel="next" title="1. 核函数基础" href="../kernel/base.html" />
+    <link rel="prev" title="3. EM算法概述" href="EM.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -137,13 +135,13 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EM.html">3. EM算法概述</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. BiClustering</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
 <ul class="nav bd-sidenav">
@@ -159,14 +157,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. 特殊矩阵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="decomposition.html">7. 矩阵分解</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
@@ -225,7 +223,7 @@
       
       
       
-      <li><a href="../_sources/matrix/special_matrix.md" target="_blank"
+      <li><a href="../_sources/ml/biClustering.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -307,7 +305,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>特殊矩阵</h1>
+    <h1>BiClustering</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -317,9 +315,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian">5.1. Hermitian矩阵</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2. 酉矩阵</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.3. 正交矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
 </ul>
             </nav>
         </div>
@@ -331,57 +327,12 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">5. </span>特殊矩阵<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
-<section id="hermitian">
-<h2><span class="section-number">5.1. </span>Hermitian矩阵<a class="headerlink" href="#hermitian" title="此标题的永久链接">#</a></h2>
-<p>  <strong>定义 (Hermitian矩阵).</strong> 对于矩阵<span class="math notranslate nohighlight">\(A\in \mathbb{C}^{m\times m}\)</span>，若<span class="math notranslate nohighlight">\(a_{ij}=a^*_{ij}(\forall i,j | 1\le i&lt;j \le m) \)</span>，即复矩阵的共轭转置<span class="math notranslate nohighlight">\(A^H=A\)</span>，则称矩阵<span class="math notranslate nohighlight">\(A\)</span>为Hermitian矩阵。</p>
-<p>  <strong>定义 (共轭).</strong> 两个实部相等，虚部相反的复数互为共轭复数。如<span class="math notranslate nohighlight">\(z=a+bi,\bar{z}=a-bi\)</span>。</p>
-<p>简言之，矩阵对称元素共轭即为Hermitian矩阵，若矩阵为实矩阵，则该Hermitian矩阵为实对称矩阵。</p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head text-center"><p></p></th>
-<th class="head text-center"><p>Hermitain矩阵</p></th>
-<th class="head text-center"><p>实对称矩阵</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-center"><p>对称元素</p></td>
-<td class="text-center"><p>共轭</p></td>
-<td class="text-center"><p>相等</p></td>
-</tr>
-</tbody>
-</table>
-<p>  <strong>例1</strong>：</p>
-<div class="highlight-matlab notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="p">=</span>
-<span class="w">   </span><span class="mf">1.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span>
-<span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span>
-<span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">3.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span>
-
-<span class="n">A</span><span class="o">&#39;</span><span class="p">=</span>
-<span class="w">   </span><span class="mf">1.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span>
-<span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">3</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">2.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span>
-<span class="w">   </span><span class="mf">4.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">5.0000</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">6</span><span class="p">.</span>0000<span class="nb">i</span><span class="w">   </span><span class="mf">3.0000</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span>0000<span class="nb">i</span>
-
-<span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">A</span><span class="o">&#39;</span>
-<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span>
-<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span>
-<span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span><span class="w">   </span><span class="mi">1</span>
-</pre></div>
-</div>
-</section>
-<section id="id2">
-<h2><span class="section-number">5.2. </span>酉矩阵<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
-<p>  <strong>定义（酉矩阵）</strong> 复正方矩阵<span class="math notranslate nohighlight">\(U\in \mathbb{C}^{n\times n}\)</span>，若<span class="math notranslate nohighlight">\(UU^H=U^HU=I\)</span>，则该矩阵为酉矩阵。</p>
-<p>  <strong>性质</strong></p>
-<p>  1. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A^H,A^{-1},A^\top,A^i,A^*\)</span>均为酉矩阵，且<span class="math notranslate nohighlight">\(|\mathrm{det}(A)|=1,\mathrm{rank}(A)=m\)</span>。</p>
-<p>  2. 若<span class="math notranslate nohighlight">\(A_{m\times m},B_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(AB\)</span>为酉矩阵。</p>
-<p>  3. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则有<span class="math notranslate nohighlight">\(\forall B_{m\times n}\)</span>有，<span class="math notranslate nohighlight">\(\lVert AB\rVert_F=\lVert B\rVert_F\)</span>；对于<span class="math notranslate nohighlight">\(\forall B_{n\times m}\)</span>有，<span class="math notranslate nohighlight">\(\lVert BA\rVert_F=\lVert B\rVert_F\)</span>；对于<span class="math notranslate nohighlight">\(\forall x_{m\times 1}\)</span>有，<span class="math notranslate nohighlight">\(\lVert Ax\rVert_F=\lVert x\rVert_F\)</span>。</p>
-<p>  4. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A\)</span>的所有行组成标准正交组；所有列组成标准正交组；<span class="math notranslate nohighlight">\(A\)</span>非奇异且<span class="math notranslate nohighlight">\(U^H=U^{-1}\)</span>。</p>
-</section>
-<section id="id3">
-<h2><span class="section-number">5.3. </span>正交矩阵<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
-<p>  <strong>定义（正交矩阵）</strong> 实矩阵<span class="math notranslate nohighlight">\(Q\in\mathbb{R}^{n\times n}\)</span>，若有<span class="math notranslate nohighlight">\(QQ^\top=Q^\top Q=I\)</span>，则该矩阵为正交矩阵。正交矩阵是酉矩阵的特例，即矩阵元素为实值的酉矩阵。</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="biclustering">
+<h1><span class="section-number">1. </span>BiClustering<a class="headerlink" href="#biclustering" title="此标题的永久链接">#</a></h1>
+<p>Given a data matrix with rows and columns, BiClustering (block clustering, co-clustering or two-mode clustering) is able to cluster rows and columns simultaneously. A Bicluster is a subset of rows which exhibit similar behavior across a subset of columns, or vice versa.</p>
+<section id="biclustring-via-singlular-value-decomposition">
+<h2><span class="section-number">1.1. </span>Biclustring via singlular value decomposition<a class="headerlink" href="#biclustring-via-singlular-value-decomposition" title="此标题的永久链接">#</a></h2>
+<p><img alt="RoBic" src="../_images/robic_bicluster.png" /></p>
 </section>
 </section>
 
@@ -397,20 +348,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="matrixdiff.html"
+       href="EM.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>矩阵微分</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>EM算法概述</p>
       </div>
     </a>
     <a class="right-next"
-       href="subspace.html"
+       href="../kernel/base.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">6. </span>子空间分析</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -429,9 +380,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hermitian">5.1. Hermitian矩阵</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2. 酉矩阵</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.3. 正交矩阵</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
 </ul>
   </nav></div>
 

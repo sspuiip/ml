@@ -8,11 +8,19 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 机器学习
+   :caption: 监督学习
    :numbered:
 
    ml/dimension_reduce.md
    ml/neuro_representation.md
+   ml/EM.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 无监督学习
+   :numbered:
+
+   ml/biClustering.md
    
 .. toctree::
    :maxdepth: 2

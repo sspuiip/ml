@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="zh-CN" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>3. EM算法概述 &#8212; Machine Learning Fundation 1.0 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="../_static/translations.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/EM';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="1. BiClustering" href="biClustering.html" />
+    <link rel="prev" title="2. 表示学习" href="neuro_representation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. EM算法概述</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="biClustering.html">1. BiClustering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/ml/EM.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>EM算法概述</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.1. EM算法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1.1. EM算法推导</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.2. 案例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.1.3. 实验代码</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="em">
+<h1><span class="section-number">3. </span>EM算法概述<a class="headerlink" href="#em" title="此标题的永久链接">#</a></h1>
+<p>  概率模型一般都含有观测变量、隐变量。如果只有观测变量，则可以直接使用极大似然估计；如果模型含有隐变量时，则需要对极大似然估计法进行改进，这种改进就是EM算法。EM算法也称为含有隐变量概率模型的参数极大化似然估计法。EM算法是一种迭代算法，每次迭代由两步组成：E步，求隐变量的期望；M步，求模型的最大化。因此，这一算法也称为期望极大算法（expectation maximinzation algorithm）。</p>
+<section id="id1">
+<h2><span class="section-number">3.1. </span>EM算法<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h2>
+<p>  令<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>为数据<span class="math notranslate nohighlight">\(i\)</span>的可观测变量，<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>为隐变量或缺失变量，则可观测数据的最大对数似然为，</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\pmb{\theta})=\sum_{i=1}^N \log p(\pmb{x}_i|\pmb{\theta})=\sum_{i=1}^N\log\left[ \sum_{\pmb{z}_i}p(\pmb{x}_i,\pmb{z}_i|\pmb{\theta}) \right]
+\]</div>
+<p>很明显，这个问题难于优化，因为<span class="math notranslate nohighlight">\(\log\)</span>不能被塞进到<code class="docutils literal notranslate"><span class="pre">sum</span></code>求和运算中(包含和的对数)。EM算法绕开这个问题如下，首先定义<strong>完全数据对数似然</strong>（complete data log likelihood）,</p>
+<div class="math notranslate nohighlight">
+\[
+\ell_c(\pmb{\theta})\triangleq\sum_{i=1}^N\log p(\pmb{x}_i,\pmb{z}_i|\pmb{\theta})
+\]</div>
+<p>因为<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>未知，上式不能直接计算。可以定义<strong>期望完全数据对数似然</strong>(expected complete data log likelihood)，</p>
+<div class="math notranslate nohighlight">
+\[
+Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}[\ell_c (\pmb{\theta}|\mathcal{D},\pmb{\theta}^{t-1})]
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(t\)</span>为当前迭代，<span class="math notranslate nohighlight">\(Q\)</span>为辅助函数(auxiliary function)，期望是关于旧参数<span class="math notranslate nohighlight">\(\pmb{\theta}^{t-1}\)</span>和观测数据<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>的。E步的目标正是计算<span class="math notranslate nohighlight">\(Q\)</span>函数。M步的目标为优化<span class="math notranslate nohighlight">\(Q\)</span>函数的参数<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{\theta}^t =\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t-1})
+\]</div>
+<p>最大后验则对应以下优化，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{\theta}^t =\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t-1})+\log p(\pmb{\theta})
+\]</div>
+<section id="id2">
+<h3><span class="section-number">3.1.1. </span>EM算法推导<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h3>
+<p>  对于一个含有隐变量的概率模型，目标是极大化观测数据<span class="math notranslate nohighlight">\(Y\)</span>关于参数<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>的对数似然函数，即极大化下式，</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\pmb{\theta})=\log p(\pmb{Y}|\pmb{\theta})=\log\sum_{\pmb{Z}}p(\pmb{Y},\pmb{Z}|\pmb{\theta})
+\]</div>
+<p>上式的极大化困难主要是含有未观测变量。EM通过迭代的方法逐步近似极大化<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>，希望达到<span class="math notranslate nohighlight">\(\ell(\pmb{\theta}^t)&gt;\ell(\pmb{\theta}^{t-1})\)</span>。现考虑，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\ell(\pmb{\theta})-\ell(\pmb{\theta}^{i})&amp;=\log\left(\sum_{\pmb{Z}} p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta}) \right)-\log p(\pmb{Y}|\pmb{\theta}^i)\\
+&amp;=\log\left(\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)   \frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)} \right)-\log p(\pmb{Y}|\pmb{\theta}^i)\\
+&amp;\ge \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)} -\log p(\pmb{Y}|\pmb{\theta}^i)\\
+&amp;=\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}
+\end{split}
+\end{split}\]</div>
+<p>则有，</p>
+<div class="math notranslate nohighlight">
+\[
+\ell(\pmb{\theta})\ge\ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\triangleq B(\pmb{\theta},\pmb{\theta}^i)
+\]</div>
+<p>显然有<span class="math notranslate nohighlight">\( \ell(\pmb{\theta}^i)=B(\pmb{\theta}^i,\pmb{\theta}^i)\)</span>成立。因此，可以使<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>增大的任何<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>都可以使得<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>增大。<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>也称之为<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>的一个下界。为此，可以极大化<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>，即</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{\theta}^{t+1}=\arg\max\limits_{\pmb{\theta}}B(\pmb{\theta},\pmb{\theta}^i)
+\]</div>
+<p>具体地，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{\theta}^{t+1}&amp;=\arg\max\limits_{\pmb{\theta}}B(\pmb{\theta},\pmb{\theta}^i)\\
+&amp;=\arg\max\limits_{\pmb{\theta}}\left( \ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\right)\\
+&amp;=\arg\max\limits_{\pmb{\theta}}\left( \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta}) \right)\\
+&amp;= \arg\max\limits_{\pmb{\theta}}\left( \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i) p(\pmb{Y},\pmb{Z}|\pmb{\theta})  \right)\\
+&amp;=\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t})
+\end{split}
+\end{split}\]</div>
+<p>到此，EM算法每次迭代都是通过不断极大化下界来极大化对数似然函数，从而实现隐变量概率模型的极大似然估计。</p>
+</section>
+<section id="id3">
+<h3><span class="section-number">3.1.2. </span>案例<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<p>  假设有3枚硬币<span class="math notranslate nohighlight">\(A,B,C\)</span>，按以下规则投掷，并记录实验结果。先投掷<span class="math notranslate nohighlight">\(A\)</span>，若<span class="math notranslate nohighlight">\(A\)</span>的结果为正面，则投掷硬币<span class="math notranslate nohighlight">\(B\)</span>的结果记录为实验结果；若<span class="math notranslate nohighlight">\(A\)</span>的结果为反面，则投掷硬币<span class="math notranslate nohighlight">\(C\)</span>的结果记录为实验结果。假设整个实验只能观测到实验结果，不能观测到掷硬币的过程，独立重复<span class="math notranslate nohighlight">\(n\)</span>次试验，若观测到以下结果：</p>
+<div class="math notranslate nohighlight">
+\[
+1,1,0,1,0,0,0,1,1,0,...
+\]</div>
+<p>问这3枚硬币正面出现的概率是多少？</p>
+<p>  现假设硬币<span class="math notranslate nohighlight">\(A,B,C\)</span>正面向上的概率分别为<span class="math notranslate nohighlight">\(\pi,p,q\)</span>，<span class="math notranslate nohighlight">\(y\)</span>为一次实验的观测结果，<span class="math notranslate nohighlight">\(z\)</span>为<span class="math notranslate nohighlight">\(A\)</span>的投掷结果，则一次投掷的过程可以用以下模型来建模，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(y|\theta)&amp;=\sum_zp(y,z|\theta)=\sum_zp(y|z,\theta)p(z)\\
+&amp;=p(z=1)p(y|z=1)+p(z=0)p(y|z=0)\\
+&amp;=\pi p^y(1-p)^{1-y}+(1-\pi)q^y(1-q)^{1-y}
+\end{split}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(n\)</span>次实验结果，可以表示为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathcal{L}(\theta)&amp;=\prod_{j=1}^n p(y_j|\theta)\\
+&amp;=\prod_{j=1}^n \left[\pi p^{y_j}(1-p)^{1-y_j}+(1-\pi)q^{y_j}(1-q)^{1-y_j}\right]
+\end{split}
+\end{split}\]</div>
+<p>取对数，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\ell(\theta)&amp;=\sum_{j=1}^n\log p(y_j|\theta)\\
+&amp;=\sum_{j=1}^n\log \left[p(z=1)p(y|z=1)+p(z=0)p(y|z=0)\right] \\
+&amp;=\sum_{j=1}^n\log \left[\pi p^{y_j}(1-p)^{1-y_j}+(1-\pi)q^{y_j}(1-q)^{1-y_j}\right]
+\end{split}
+\end{split}\]</div>
+<p>对该模型使用极大似然估计法，即可得最优参数值<span class="math notranslate nohighlight">\(\hat{\theta}=(\hat{\pi},\hat{p},\hat{q})\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\theta}=\arg\max\limits_{\theta}\ell(\theta)
+\]</div>
+<p>  由于含有隐变量<span class="math notranslate nohighlight">\(z\)</span>，没有确定的观测值，上述问题没有解析解。可以通过迭代的方法求解。EM算法就是一种解决这类问题的迭代方法。</p>
+<p>首先，对所有参数赋初值，<span class="math notranslate nohighlight">\(\theta^{(0)}=(\pi^{(0)},p^{(0)},q^{(0)})\)</span>，然后迭代计算参数的估计值，直至收敛。</p>
+<ul class="simple">
+<li><p>E步： 计算<span class="math notranslate nohighlight">\(\mathbb{E}_{z_j}[\log p(y_j,z_j)]\)</span>。 由题设可知(使用逆概公式)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(z_j=1|y_j)&amp;=\frac{p(y_j|z_j=1)p(z_j=1)}{\sum_{z_j} p(y|z_j)p(z_j)}\\
+&amp;=\frac{p(y_j|z_j=1)p(z_j=1)}{p(y_j|z_j=1)p(z_j=1)+p(y_j|z_j=0)p(z_j=0)}\\
+&amp;=\frac{ \pi^{(i)} {p^{(i)}}^{y_j}(1-p^{(i)})^{1-y_j} }{\pi^{(i)} {p^{(i)}}^{y_j}(1-p^{(i)})^{1-y_j}+(1-\pi^{(i)}) {q^{(i)}}^{y_j}(1-p^{(i)})
+^{1-y_j}  }\\
+&amp;\triangleq\mu_j^{(i+1)}
+\end{split}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>M步：计算参数的新估计值</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pi^{(i+1)}&amp;=\frac1n\sum_{j=1}^n\mu_j^{(i+1)}\\
+p^{(i+1)}&amp;=\frac{\sum_{j=1}^n\mu_j^{(i+1)}y_j}{\sum_{j=1}^n\mu_j^{(i+1)}}\\
+q^{(i+1)}&amp;=\frac{\sum_{j=1}^n(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^n(1-\mu_j^{(i+1)})}
+\end{split}
+\end{split}\]</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">3.1.3. </span>实验代码<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">@author: jimilaw</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">getY</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">EStep</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">,</span><span class="n">Y</span><span class="p">):</span>
+    <span class="n">numerator</span> <span class="o">=</span> <span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span>
+    <span class="n">denominator</span> <span class="o">=</span> <span class="n">pi</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pi</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">q</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">q</span><span class="p">,</span><span class="mi">1</span><span class="o">-</span><span class="n">Y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">numerator</span><span class="o">/</span><span class="n">denominator</span>
+    
+   
+<span class="n">MAX_ITERATION</span><span class="o">=</span><span class="mi">1000</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">Y</span><span class="o">=</span><span class="n">getY</span><span class="p">()</span>
+    <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+    <span class="nb">iter</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="c1"># init param</span>
+    <span class="n">pi</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="n">p</span><span class="o">=</span><span class="mf">0.5</span>
+    <span class="n">q</span><span class="o">=</span><span class="mf">0.5</span>
+    
+    <span class="k">while</span> <span class="nb">iter</span> <span class="o">&lt;</span> <span class="n">MAX_ITERATION</span><span class="p">:</span>
+        <span class="c1"># 1. E步 calculate the expectation of log prob. w.r.t. p(z)</span>
+        <span class="nb">iter</span> <span class="o">=</span> <span class="nb">iter</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">Mu</span> <span class="o">=</span> <span class="n">EStep</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+        
+        <span class="c1"># 2. M步 update param</span>
+        <span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Mu</span><span class="p">)</span><span class="o">/</span><span class="n">n</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Mu</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Mu</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="mi">1</span><span class="o">-</span><span class="n">Mu</span><span class="p">)</span><span class="o">*</span><span class="n">Y</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">Mu</span><span class="p">)</span>
+        
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;最终解：pi=&quot;</span><span class="p">,</span><span class="n">pi</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">p=&quot;</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">q=&quot;</span><span class="p">,</span><span class="n">q</span><span class="p">)</span>
+        
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="neuro_representation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>表示学习</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="biClustering.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>BiClustering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.1. EM算法</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1.1. EM算法推导</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.1.2. 案例</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.1.3. 实验代码</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2022-2023, SSPUIIP.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
