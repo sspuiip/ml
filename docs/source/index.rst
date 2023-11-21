@@ -62,6 +62,7 @@
    :numbered:
 
    mathmodel/statistic_model.md
+   mathmodel/bregman_divergence.md
 
 Indices and tables
 ==================
