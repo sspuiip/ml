@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="zh-CN" >
+<html lang="zh-CN" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3. 优化问题求解(2) &#8212; Machine Learning Fundation 1.0 文档</title>
   
@@ -19,29 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/convex_neq_solve';</script>
@@ -58,7 +57,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -101,12 +100,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -121,6 +128,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -133,7 +141,18 @@
     <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -171,6 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
 </ul>
 
     </div>
@@ -277,6 +298,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -286,6 +308,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -342,14 +365,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>  求解约束优化问题的标准方法是将约束优化问题转化为无约束优化问题：主要有3种：Lagrangian乘子法、罚函数法和增广Lagrangian乘子法。</p>
 <hr class="docutils" />
 <section id="lagrangian">
-<h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="Link to this heading">#</a></h2>
 <p>  考虑等式约束的凸优化问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -394,10 +417,10 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 </section>
 <hr class="docutils" />
 <section id="lagrangian-alm">
-<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法(ALM)<a class="headerlink" href="#lagrangian-alm" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法(ALM)<a class="headerlink" href="#lagrangian-alm" title="Link to this heading">#</a></h2>
 <p>  将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。</p>
 <section id="id2">
-<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>  考虑等式约束优化问题。记<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top\)</span>。对Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda})\)</span>加惩罚函数，即，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -433,7 +456,7 @@ L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b}
 \end{split}\]</div>
 </section>
 <section id="id3">
-<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  考虑不等式和等式约束同时存在的混合约束问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -465,7 +488,7 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 </section>
 <hr class="docutils" />
 <section id="admm">
-<h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="Link to this heading">#</a></h2>
 <p>  考虑有以下约束问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -500,10 +523,10 @@ L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambd
 </section>
 <hr class="docutils" />
 <section id="id4">
-<h2><span class="section-number">3.4. </span>内点法<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">3.4. </span>内点法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
 <section id="id5">
-<h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -671,7 +694,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}\]</div>
 </section>
 <section id="id6">
-<h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <p>   原对偶内点法和障碍方法非常相似，但也有一些差别。</p>
 <ul class="simple">
 <li><p>仅有一层迭代，没有障碍方法的内部迭代和外部迭代的区分。每次迭代时同时更新原对偶变量。</p></li>
@@ -680,7 +703,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 </ul>
 <p>   原对偶方法经常比障碍方法有效，特别是高精度场合，因为它们可以展现超线性收敛性质。原对偶内点法相对于障碍方法所具有的另一个优点是，它们可以有效处理可行但不严格可行的问题。</p>
 <section id="id7">
-<h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
 <p>  如同障碍方法，我们从修改KKT条件开始，该条件可以表述为<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0, t&gt;0\)</span>，其中</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -744,7 +767,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </ul>
 </section>
 <section id="id8">
-<h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
 <p>  在原-对偶内点法中，迭代点<span class="math notranslate nohighlight">\(\pmb{x}_k,\lambda_k,\nu_k\)</span>不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤<span class="math notranslate nohighlight">\(k\)</span>计算对偶间隙<span class="math notranslate nohighlight">\(\eta_k\)</span>。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -779,7 +802,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="convex_solve.html"
@@ -807,6 +830,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -851,6 +875,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022-2023, SSPUIIP.
@@ -877,8 +902,8 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>

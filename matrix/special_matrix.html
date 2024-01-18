@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="zh-CN" >
+<html lang="zh-CN" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>5. 特殊矩阵 &#8212; Machine Learning Fundation 1.0 文档</title>
   
@@ -19,29 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/special_matrix';</script>
@@ -58,7 +57,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -101,12 +100,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -121,6 +128,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -133,7 +141,18 @@
     <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -171,6 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
 </ul>
 
     </div>
@@ -277,6 +298,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -286,6 +308,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -329,12 +352,12 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">5. </span>特殊矩阵<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">5. </span>特殊矩阵<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="hermitian">
-<h2><span class="section-number">5.1. </span>Hermitian矩阵<a class="headerlink" href="#hermitian" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">5.1. </span>Hermitian矩阵<a class="headerlink" href="#hermitian" title="Link to this heading">#</a></h2>
 <p>  <strong>定义 (Hermitian矩阵).</strong> 对于矩阵<span class="math notranslate nohighlight">\(A\in \mathbb{C}^{m\times m}\)</span>，若<span class="math notranslate nohighlight">\(a_{ij}=a^*_{ij}(\forall i,j | 1\le i&lt;j \le m) \)</span>，即复矩阵的共轭转置<span class="math notranslate nohighlight">\(A^H=A\)</span>，则称矩阵<span class="math notranslate nohighlight">\(A\)</span>为Hermitian矩阵。</p>
 <p>  <strong>定义 (共轭).</strong> 两个实部相等，虚部相反的复数互为共轭复数。如<span class="math notranslate nohighlight">\(z=a+bi,\bar{z}=a-bi\)</span>。</p>
 <p>简言之，矩阵对称元素共轭即为Hermitian矩阵，若矩阵为实矩阵，则该Hermitian矩阵为实对称矩阵。</p>
@@ -371,7 +394,7 @@ document.write(`
 </div>
 </section>
 <section id="id2">
-<h2><span class="section-number">5.2. </span>酉矩阵<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">5.2. </span>酉矩阵<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  <strong>定义（酉矩阵）</strong> 复正方矩阵<span class="math notranslate nohighlight">\(U\in \mathbb{C}^{n\times n}\)</span>，若<span class="math notranslate nohighlight">\(UU^H=U^HU=I\)</span>，则该矩阵为酉矩阵。</p>
 <p>  <strong>性质</strong></p>
 <p>  1. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A^H,A^{-1},A^\top,A^i,A^*\)</span>均为酉矩阵，且<span class="math notranslate nohighlight">\(|\mathrm{det}(A)|=1,\mathrm{rank}(A)=m\)</span>。</p>
@@ -380,7 +403,7 @@ document.write(`
 <p>  4. 若<span class="math notranslate nohighlight">\(A_{m\times m}\)</span>为酉矩阵，则<span class="math notranslate nohighlight">\(A\)</span>的所有行组成标准正交组；所有列组成标准正交组；<span class="math notranslate nohighlight">\(A\)</span>非奇异且<span class="math notranslate nohighlight">\(U^H=U^{-1}\)</span>。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">5.3. </span>正交矩阵<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">5.3. </span>正交矩阵<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  <strong>定义（正交矩阵）</strong> 实矩阵<span class="math notranslate nohighlight">\(Q\in\mathbb{R}^{n\times n}\)</span>，若有<span class="math notranslate nohighlight">\(QQ^\top=Q^\top Q=I\)</span>，则该矩阵为正交矩阵。正交矩阵是酉矩阵的特例，即矩阵元素为实值的酉矩阵。</p>
 </section>
 </section>
@@ -394,7 +417,7 @@ document.write(`
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="matrixdiff.html"
@@ -422,6 +445,7 @@ document.write(`
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -453,6 +477,7 @@ document.write(`
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022-2023, SSPUIIP.
@@ -479,8 +504,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>

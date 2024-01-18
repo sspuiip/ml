@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="zh-CN" >
+<html lang="zh-CN" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>4. 协方差算子 &#8212; Machine Learning Fundation 1.0 文档</title>
   
@@ -19,29 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/covariance_operators';</script>
@@ -58,7 +57,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -101,12 +100,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -121,6 +128,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -133,7 +141,18 @@
     <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -171,6 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
 </ul>
 
     </div>
@@ -277,6 +298,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -286,6 +308,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -339,13 +362,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4. </span>协方差算子<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">4. </span>协方差算子<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>  在再生核希尔伯特空间理论中，协方差算子是一种很重要且广泛应用的工具。类似于协方差矩阵的无穷维版本。首先介绍Hilbert-Schmidt算子，然后引入协方差算子，并解释其亦是一种Hilbert-Schmidt算子。</p>
 <section id="hilbert-schmidt">
-<h2><span class="section-number">4.1. </span>Hilbert-Schmidt算子<a class="headerlink" href="#hilbert-schmidt" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">4.1. </span>Hilbert-Schmidt算子<a class="headerlink" href="#hilbert-schmidt" title="Link to this heading">#</a></h2>
 <p>  若有可分离(separable)希尔伯特特征空间<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>，且<span class="math notranslate nohighlight">\((e_i)_{i\in I}, (f_j)_{j\in J}\)</span>分别为<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>的一组正交基，其中索引集<span class="math notranslate nohighlight">\(I,J\)</span>是有限集或是可数集。若有紧致(compact)线性算子<span class="math notranslate nohighlight">\(L:\mathcal{G}\rightarrow \mathcal{F}, M:\mathcal{G}\rightarrow \mathcal{F}\)</span>，则可定义Hilbert-Schmidt范式.</p>
 <blockquote>
 <div><p><strong>定义 (Hilbert-Schmidt算子)</strong>. 若有以下Hilbert-Schmidt范式</p>
@@ -397,7 +420,7 @@ Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{
 \end{split}\]</div>
 <hr class="docutils" />
 <section id="rank-one">
-<h3><span class="section-number">4.1.1. </span>Rank-one算子<a class="headerlink" href="#rank-one" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">4.1.1. </span>Rank-one算子<a class="headerlink" href="#rank-one" title="Link to this heading">#</a></h3>
 <p>  给定<span class="math notranslate nohighlight">\(b\in\mathcal{G},a\in\mathcal{F}\)</span>，可以定义张量积<span class="math notranslate nohighlight">\(a\otimes b\)</span>(tensor product)为rank-one算子<span class="math notranslate nohighlight">\(a\otimes b:\mathcal{G}\rightarrow \mathcal{F}\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[
@@ -459,9 +482,9 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 </section>
 <hr class="docutils" />
 <section id="cross-covariance">
-<h3><span class="section-number">4.1.2. </span>Cross-covariance算子<a class="headerlink" href="#cross-covariance" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">4.1.2. </span>Cross-covariance算子<a class="headerlink" href="#cross-covariance" title="Link to this heading">#</a></h3>
 <section id="id2">
-<h4><span class="section-number">4.1.2.1. </span>Cross-covariance算子定义<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">4.1.2.1. </span>Cross-covariance算子定义<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <p>  定义算子前，我们先假设<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>为再生核Hilbert空间，其核分别为<span class="math notranslate nohighlight">\(k\)</span>和<span class="math notranslate nohighlight">\(l\)</span>，对应的特征映射分别为<span class="math notranslate nohighlight">\(\phi,\psi\)</span>。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -506,7 +529,7 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 <p>简化后的结果可以当作一个弱条件(weaker condition)来使用。这个条件是上述Jensen’s不等式所隐含的。</p>
 </section>
 <section id="f-otimes-g">
-<h4><span class="section-number">4.1.2.2. </span>特例——<span class="math notranslate nohighlight">\(f\otimes g\)</span><a class="headerlink" href="#f-otimes-g" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">4.1.2.2. </span>特例——<span class="math notranslate nohighlight">\(f\otimes g\)</span><a class="headerlink" href="#f-otimes-g" title="Link to this heading">#</a></h4>
 <p>  当<span class="math notranslate nohighlight">\(A=f\otimes g\)</span>时，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -523,7 +546,7 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 </section>
 <hr class="docutils" />
 <section id="id3">
-<h2><span class="section-number">4.2. </span>约束协方差<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">4.2. </span>约束协方差<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  一般来说，传统的协方差是指，若有随机变量<span class="math notranslate nohighlight">\(x,y\)</span>，则使用协方差可以判断两随机变量是否独立，即</p>
 <div class="math notranslate nohighlight">
 \[
@@ -554,7 +577,7 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 \end{split}\]</div>
 <p>可以看出，COCO即为<span class="math notranslate nohighlight">\(C_{\tilde{\varphi}(x)\tilde{\phi}(y)}\)</span>的最大奇异值。</p>
 <section id="coco">
-<h3><span class="section-number">4.2.1. </span>COCO的估计<a class="headerlink" href="#coco" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">4.2.1. </span>COCO的估计<a class="headerlink" href="#coco" title="Link to this heading">#</a></h3>
 <p>  给定样本集<span class="math notranslate nohighlight">\(\{(x_i,y_i)\}_{i=1}^n\sim P_{XY}\)</span>，COCO的经验估计<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>(empirical)怎么计算？<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>是下式的最大特征值<span class="math notranslate nohighlight">\(\gamma_{\textrm{max}}\)</span>，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -620,7 +643,7 @@ f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Ve
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="MMD.html"
@@ -648,6 +671,7 @@ f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Ve
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -689,6 +713,7 @@ f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Ve
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022-2023, SSPUIIP.
@@ -715,8 +740,8 @@ f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Ve
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>

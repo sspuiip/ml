@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="zh-CN" >
+<html lang="zh-CN" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>1. 凸优化问题 &#8212; Machine Learning Fundation 1.0 文档</title>
   
@@ -19,29 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/convex_prob';</script>
@@ -58,7 +57,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -101,12 +100,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -121,6 +128,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -133,7 +141,18 @@
     <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -171,6 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
 </ul>
 
     </div>
@@ -277,6 +298,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -286,6 +308,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -338,12 +361,12 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>凸优化问题<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">1. </span>凸优化问题<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>凸函数<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.1. </span>凸函数<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  所谓的凸函数是指：定义在凸集<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>的任意变量<span class="math notranslate nohighlight">\(\pmb{x},\pmb{y}\)</span>，函数<span class="math notranslate nohighlight">\(f:\mathbb{R}^n\rightarrow \mathbb{R}\)</span>对任意<span class="math notranslate nohighlight">\(0\le\theta\le 1\)</span>都有以下不等式成立，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -358,7 +381,7 @@ f(\theta \pmb{x}+(1-\theta)\pmb{y})\le\theta f(\pmb{x})+(1-\theta)f(\pmb{y})
 \tag{2}
 \]</div>
 <section id="id3">
-<h3><span class="section-number">1.1.1. </span>判定方法<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.1.1. </span>判定方法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <ul>
 <li><p><strong>一阶充要条件</strong></p>
 <ol class="arabic simple">
@@ -385,7 +408,7 @@ f(\theta \pmb{x}+(1-\theta)\pmb{y})\le\theta f(\pmb{x})+(1-\theta)f(\pmb{y})
 </ul>
 </section>
 <section id="id4">
-<h3><span class="section-number">1.1.2. </span>保凸运算与性质判定<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.1.2. </span>保凸运算与性质判定<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>  1. <span class="math notranslate nohighlight">\(f(\pmb{x})\)</span>是凸函数，当且仅当它在所有线段上是凸的。</p>
 <p>  2. 非负线性运算仍为凸函数：若<span class="math notranslate nohighlight">\(a,b\ge 0\)</span>，<span class="math notranslate nohighlight">\(f_1(\pmb{x}), f_2(\pmb{x})\)</span>是凸函数，则<span class="math notranslate nohighlight">\(af_1(\pmb{x})+bf_2(\pmb{x})\)</span>仍为凸函数。</p>
 <p>  3. 凸函数的无穷求和、积分仍是凸函数。</p>
@@ -395,7 +418,7 @@ f(\theta \pmb{x}+(1-\theta)\pmb{y})\le\theta f(\pmb{x})+(1-\theta)f(\pmb{y})
 </section>
 </section>
 <section id="id5">
-<h2><span class="section-number">1.2. </span>凸优化问题<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.2. </span>凸优化问题<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
 <p>  <strong>无约束凸函数优化问题</strong>是指：优化目标为凸函数且定义域为凸集的优化问题。</p>
 <p>  <strong>带约束凸优化问题</strong>是形如，</p>
 <div class="math notranslate nohighlight">
@@ -423,7 +446,7 @@ f(\pmb{x})\ge f(\pmb{x}^*)+\frac12\mu\lVert\pmb{x}-\pmb{x}^*\rVert_2^2,\quad\for
 <p>其中，<span class="math notranslate nohighlight">\(\mu\)</span>是强凸函数<span class="math notranslate nohighlight">\(f(\pmb{x})\)</span>的凸性参数。</p>
 <p>  以上定理说明，约束优化问题的解决方向是：<font color="blue">将约束优化问题转换成无约束的凸优化问题</font>。</p>
 <section id="lagrangian">
-<h3><span class="section-number">1.2.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="Link to this heading">#</a></h3>
 <p>  现<strong>假设</strong>约束极小化问题如下：</p>
 <p>  1. 不等式约束均为凸函数</p>
 <p>  2. 等式约束具有仿射函数形式<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=\pmb{Ax}-\pmb{b}\)</span>。</p>
@@ -464,7 +487,7 @@ p^*=J_P(\pmb{x})=\min\limits_{\pmb{x}}f_0(\pmb{x})=f_0(\pmb{x}^*)
 \]</div>
 </section>
 <section id="id6">
-<h3><span class="section-number">1.2.2. </span>对偶方法<a class="headerlink" href="#id6" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.2. </span>对偶方法<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <p>  极小-极大问题仍然存在问题：一个非凸目标函数(前一节的假设3)的极小化不能转换成另一个凸函数的极小化。</p>
 <p>  我们知道凸函数<span class="math notranslate nohighlight">\(f(\pmb{x})\)</span>的极小化与凹函数<span class="math notranslate nohighlight">\(-f(\pmb{x})\)</span>的极大化等价。基于这一对偶关系，可以将非凸目标函数的极小化转化为凹函数的极大化。这一方法也称为<strong>Lagrangian对偶法</strong>。</p>
 <p>  首先，将Lagrangian函数构造一个极小化目标函数，</p>
@@ -494,7 +517,7 @@ d^*=J_D(\pmb{\lambda^*,\nu^*})\le\min\limits_{\pmb{x}}f_0(\pmb{x})=p^*
 <p>  - <span class="math notranslate nohighlight">\(d^*= p^*\)</span>：强对偶性</p>
 </section>
 <section id="kkt">
-<h3><span class="section-number">1.2.3. </span>KKT条件<a class="headerlink" href="#kkt" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.3. </span>KKT条件<a class="headerlink" href="#kkt" title="Link to this heading">#</a></h3>
 <p>  假设<span class="math notranslate nohighlight">\(\pmb{x}^*,\pmb{\lambda^*,\nu^*}\)</span>分别为具有对偶间隙<span class="math notranslate nohighlight">\(\epsilon=0\)</span>的原始最优点和对偶最优点。</p>
 <p>  由于<span class="math notranslate nohighlight">\(\pmb{x}^*\)</span>使得Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda}^*,\pmb{\nu}^*)\)</span>在所有原始可行点<span class="math notranslate nohighlight">\(\pmb{x}\)</span>中最小化，所以Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda}^*,\pmb{\nu}^*)\)</span>在点点<span class="math notranslate nohighlight">\(\pmb{x}^*\)</span>的梯度向量必为0，</p>
 <div class="math notranslate nohighlight">
@@ -517,7 +540,7 @@ h_i(\pmb{x}^*)&amp;=0, \quad i=1,\cdots,p\\
 <p>  - 第4个条件是Lagrangian对偶法的另一个关键约束。这意味着对于<span class="math notranslate nohighlight">\(f_i(\pmb{x})&gt;0\)</span>的约束，Lagrangian乘子<span class="math notranslate nohighlight">\(\lambda_i\)</span>必须等于0。</p>
 </section>
 <section id="slater">
-<h3><span class="section-number">1.2.4. </span>强对偶性（Slater定理）<a class="headerlink" href="#slater" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.4. </span>强对偶性（Slater定理）<a class="headerlink" href="#slater" title="Link to this heading">#</a></h3>
 <p>  判别强对偶性是否成立的一种简单方法是Slater定理。</p>
 <p>  <strong>定义</strong>:原始不等式约束的可行域的相对内域为</p>
 <div class="math notranslate nohighlight">
@@ -544,7 +567,7 @@ d^*=p^*
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../kernel/covariance_operators.html"
@@ -572,6 +595,7 @@ d^*=p^*
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -612,6 +636,7 @@ d^*=p^*
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022-2023, SSPUIIP.
@@ -638,8 +663,8 @@ d^*=p^*
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>

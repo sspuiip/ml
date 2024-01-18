@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="zh-CN" >
+<html lang="zh-CN" data-content_root="../" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>1. 不确定模型 &#8212; Machine Learning Fundation 1.0 文档</title>
   
@@ -19,34 +18,35 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=365ca57ee442770a23c6" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=365ca57ee442770a23c6"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
-    <script src="../_static/translations.js"></script>
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'mathmodel/statistic_model';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="2. Bregman divergence" href="bregman_divergence.html" />
     <link rel="prev" title="7. 矩阵分解" href="../matrix/decomposition.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -57,7 +57,7 @@
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -100,12 +100,20 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <header>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
   
+  </header>
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -120,6 +128,7 @@
   
     <div class="sidebar-primary-items__start sidebar-primary__section">
         <div class="sidebar-primary-item">
+
   
 
 <a class="navbar-brand logo" href="../index.html">
@@ -132,7 +141,18 @@
     <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -170,6 +190,8 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entropy.html">3. 信息熵</a></li>
 </ul>
 
     </div>
@@ -276,6 +298,7 @@
 </button>
 
 
+
 <script>
 document.write(`
   <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
@@ -285,6 +308,7 @@ document.write(`
   </button>
 `);
 </script>
+
 
 <script>
 document.write(`
@@ -335,14 +359,14 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="此标题的永久链接">#</a></h1>
+<h1><span class="section-number">1. </span>不确定模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>  <strong>数学模型</strong>是一种用变量和数学符号建立起来的等式、不等式集，用于描述客观事物的特征、内在联系的模型。若客观事物的特征具有某种不确定性，此类模型也称为<strong>随机模型</strong>。</p>
 <p>  随机变量的数字特征一般有：均值、方差、中位数、众数等。</p>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.1. </span>抽样分布<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  从整体<span class="math notranslate nohighlight">\(\pmb{X}\)</span>抽取一个样本<span class="math notranslate nohighlight">\((\pmb{X}_1,...,\pmb{X}_n)\)</span>，则样本服从特定的分布，一般有：卡方分布、t分布、F分布等。</p>
 <p>  - <strong>卡方分布</strong></p>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}_i \sim \mathcal{N}(0,1)\)</span>，且<span class="math notranslate nohighlight">\(\pmb{X}_i\)</span>相互独立，则统计量</p>
@@ -367,12 +391,12 @@ F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
 <p>服从第一自由度为<span class="math notranslate nohighlight">\(n_1\)</span>和第二自由度为<span class="math notranslate nohighlight">\(n_2\)</span>的F分布。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="此标题的永久链接">#</a></h2>
+<h2><span class="section-number">1.2. </span>参数区间估计与假设检验<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  参数的区间估计与假设检验可以看成一个问题的两个方面（都需要假设样本的分布）。<strong>区间估计</strong>是用统计量构建一个区间来估计未知参数，并指明此区间可以覆盖住这个参数的可靠程度。<strong>假设检验</strong>则利用样本数据对某个事先做出的统计假设按照某种设计好的方法（符合某种抽样分布）进行检验，判断假设是否正确。</p>
 <section id="mu">
-<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.1. </span><span class="math notranslate nohighlight">\(\mu\)</span>均值检测<a class="headerlink" href="#mu" title="Link to this heading">#</a></h3>
 <section id="id4">
-<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">1.2.1.1. </span>单个总体<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(\mu,\sigma^2)\)</span>，则样本均值为<span class="math notranslate nohighlight">\(\bar{\pmb{X}}=\frac1n \sum_{i=1}^n \pmb{X}_i\)</span>，样本方差为<span class="math notranslate nohighlight">\(\pmb{S}^2=\frac{1}{n-1}\sum_{i=1}^n (\pmb{X}_i-\bar{\pmb{X}})^2\)</span>。</p>
 <p>  <strong>重要结论</strong></p>
 <p>  1. <span class="math notranslate nohighlight">\(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>，即<span class="math notranslate nohighlight">\(E[\bar{\pmb{X}}]=\mu, D[\pmb{\bar{X}}]=\sigma/\sqrt{n}, E[S^2]=\sigma^2\)</span>。</p>
@@ -393,7 +417,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 <p>  方法与t检验相似。</p>
 </section>
 <section id="id5">
-<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="此标题的永久链接">#</a></h4>
+<h4><span class="section-number">1.2.1.2. </span>两个总体<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
 </ol>
@@ -411,7 +435,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 </section>
 </section>
 <section id="sigma">
-<h3><span class="section-number">1.2.2. </span><span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测<a class="headerlink" href="#sigma" title="此标题的永久链接">#</a></h3>
+<h3><span class="section-number">1.2.2. </span><span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测<a class="headerlink" href="#sigma" title="Link to this heading">#</a></h3>
 </section>
 </section>
 </section>
@@ -425,7 +449,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
               
               
                 <footer class="prev-next-footer">
-                  <!-- Previous / next buttons -->
+                  
 <div class="prev-next-area">
     <a class="left-prev"
        href="../matrix/decomposition.html"
@@ -436,6 +460,15 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
         <p class="prev-next-title"><span class="section-number">7. </span>矩阵分解</p>
       </div>
     </a>
+    <a class="right-next"
+       href="bregman_divergence.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>Bregman divergence</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -444,6 +477,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -482,6 +516,7 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
   
   <div class="footer-item">
     
+
   <p class="copyright">
     
       © Copyright 2022-2023, SSPUIIP.
@@ -508,8 +543,8 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=365ca57ee442770a23c6"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=365ca57ee442770a23c6"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
 
   <footer class="bd-footer">
   </footer>
