@@ -249,7 +249,7 @@
 </section>
 <section id="id3">
 <h3><span class="section-number">4.1.2. </span>Gamma分布<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<p>  Gamma函数在统计中出现频率很高，比如常见的三大分布(<span class="math notranslate nohighlight">\(t\)</span>分布，<span class="math notranslate nohighlight">\(\chi^2\)</span>分布，<span class="math notranslate nohighlight">\(F\)</span>分布)、Beta分布、Dirichlet分布等分布的概率密度函数中都有Gamma函数。最直接相关的则是Gamma分布，即</p>
+<p>  Gamma函数在统计中出现频率很高，比如常见的三大分布(<span class="math notranslate nohighlight">\(t\)</span>分布，<span class="math notranslate nohighlight">\(\chi^2\)</span>分布，<span class="math notranslate nohighlight">\(F\)</span>分布)、Beta分布、Dirichlet分布等分布的概率密度函数中都有Gamma函数。最直接相关的则是Gamma分布，其概率密度函数为</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
@@ -257,8 +257,102 @@
 \tag{2}
 \]</div>
 </div>
-<p>由<span class="math notranslate nohighlight">\(\int_0^{\infty} \frac{t^{x-1}e^{-t}}{\Gamma(x)}dt=1\)</span>，易知Gamma分布的概率密度函数。</p>
+<p>由<span class="math notranslate nohighlight">\(\int_0^{\infty} \frac{t^{x-1}e^{-t}}{\Gamma(x)}dt=1\)</span>，易知上式即为Gamma分布的概率密度函数。</p>
+<p>  令<span class="math notranslate nohighlight">\(x=\beta t\)</span>，则可以得到更一般形式的Gamma分布，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Ga}(t|\alpha,\beta)=\frac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma(\alpha)}\tag{3}
+\]</div>
+</div>
+<p>其中，<span class="math notranslate nohighlight">\(\alpha\)</span>称为shape参数，主要决定了分布曲线的形状；<span class="math notranslate nohighlight">\(\beta\)</span>称为rate参数，主要决定曲线的陡峭。</p>
+<p>  <strong>1. Gamma分布与Poisson分布</strong></p>
+<p>  参数为<span class="math notranslate nohighlight">\(\lambda\)</span>的Poissson分布，其分布律为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}\tag{4}
+\]</div>
+</div>
+<p>若取<span class="math notranslate nohighlight">\(\alpha=k+1, \beta=1\)</span>，则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Ga}(x|\alpha=k+1,\beta=1)=\frac{x^k e^{-x}}{\Gamma(k+1)}=\frac{x^k e^{-x}}{k!}=\mathrm{Poi}(X=k|\lambda=x)
+\]</div>
+</div>
+<p>由此可见，两个分布形式上的一致性。只不过Poisson分布是离散的，Gamma分布是连续的。直观上可以认为Poisson分布是Gamma分布的特例——离散版本。</p>
 </section>
+</section>
+<section id="beta">
+<h2><span class="section-number">4.2. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">#</a></h2>
+<p>  假设均匀地从<span class="math notranslate nohighlight">\([0,1]\)</span>随机抽取10个数字，那么第8大的数是哪个数，偏离程度小于0.01就算合格。那么该如何猜这个数字呢？如果对随机抽取的10个数字分别用随机变量<span class="math notranslate nohighlight">\(X_1,...,X_{10}\)</span>来表示，排序后可得到顺序统计量<span class="math notranslate nohighlight">\(X_{(1)},...,X_{(10)}\)</span>。一个可行的办法就是求出<span class="math notranslate nohighlight">\(X_{(8)}\)</span>的概率密度，然后使用概率分布的极值点来猜测。</p>
+<p>  一般来说，<span class="math notranslate nohighlight">\(X_{(k)}\)</span>的分布是什么呢？可以先尝试计算<span class="math notranslate nohighlight">\(X_{(k)}\)</span>落在区间<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>的概率，也就是</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+P(x\le X_{(k)}\le x+\delta x)
+\]</div>
+</div>
+<p>由于在区间<span class="math notranslate nohighlight">\([0,1]\)</span>取数，可以把该区间分割为3个部分：<span class="math notranslate nohighlight">\([0,x),[x,x+\delta x],(x+\delta x,1]\)</span>。先考虑只有一个数落在<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>，则<span class="math notranslate nohighlight">\([0,x)\)</span>落入了<span class="math notranslate nohighlight">\(k-1\)</span>个数，<span class="math notranslate nohighlight">\((x+\delta x,1]\)</span>落入了<span class="math notranslate nohighlight">\(n-k\)</span>个数。考虑以下事件，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+E=&amp;\{ X_1\in [x,x+\delta x],\\
+&amp;X_i \in [0,x)\quad (i=2,...,k),\\
+&amp;X_j \in (x+\delta x,1]\quad (j=k+1,...,n)\}
+\end{split}
+\end{split}\]</div>
+</div>
+<p>则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+P(E)&amp;=\prod_{i=1}^n P(X_i)\\
+&amp;=x^{k-1}(\delta x )\underbrace{(1-x-\delta x)^{n-k}}_{\mathrm{二项式定理展开}}\\
+&amp;=x^{k-1}(1-x)^{n-k}(\delta x) + o(\delta x)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>其中<span class="math notranslate nohighlight">\(o(\delta x)\)</span>为<span class="math notranslate nohighlight">\(\delta x\)</span>的高阶无穷小。因为从<span class="math notranslate nohighlight">\(n\)</span>个数中取一个数的取法有<span class="math notranslate nohighlight">\(n\)</span>种，余下的<span class="math notranslate nohighlight">\(n-1\)</span>个数中取<span class="math notranslate nohighlight">\(k-1\)</span>个数有<span class="math notranslate nohighlight">\(\begin{pmatrix} n-1\\ k-1\end{pmatrix}\)</span>取法，所以，与<span class="math notranslate nohighlight">\(E\)</span>等价的事件有<span class="math notranslate nohighlight">\(n\begin{pmatrix} n-1\\ k-1\end{pmatrix}\)</span>个。</p>
+<p>  若有2个数落在了区间<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>，同理有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+P(E)=x^{k-2}(1-x-\delta x)^{n-k}(\delta x)^2=o(\delta x)
+\]</div>
+</div>
+<p>因此，只要落入区间<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>内的数字超过一个，则对应的概率为<span class="math notranslate nohighlight">\(o(\delta x)\)</span>。于是可以计算落入区间<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>对应的概率，即</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+P(x\le X_{(k)}\le x+\delta x)&amp;=n\begin{pmatrix} n-1\\ k-1\end{pmatrix}P(E)+o(\delta x)\\
+&amp;=n\begin{pmatrix} n-1\\ k-1\end{pmatrix} x^{k-1}(1-x)^{n-k}\delta x + o(\delta x)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>可以得到概率密度函数，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delta x}\\
+&amp;=n\begin{pmatrix} n-1\\ k-1\end{pmatrix} x^{k-1}(1-x)^{n-k}\\
+&amp;=\frac{n!}{(k-1)!(n-k)!}x^{k-1}(1-x)^{n-k}\\
+&amp;=\frac{\Gamma(n+1)}{\Gamma(k)\Gamma(n-k-1)}x^{k-1}(1-x)^{n-k}\\
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  对上式，取<span class="math notranslate nohighlight">\(\alpha=k,\beta=n-k+1\)</span>，则可以得到<strong>Beta分布的概率密度函数</strong>，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Beta}(x|\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\tag{5}
+\]</div>
+</div>
 </section>
 </section>
 
@@ -315,6 +409,7 @@
 <li><a class="reference internal" href="#id3">4.1.2. Gamma分布</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#beta">4.2. Beta分布</a></li>
 </ul>
 </li>
 </ul>
