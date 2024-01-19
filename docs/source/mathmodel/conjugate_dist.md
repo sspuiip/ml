@@ -115,3 +115,14 @@ $$
 \mathrm{Beta}(x|\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\tag{5}
 $$
 
+### Beta-Binomial共轭
+
+&emsp;&emsp;如果继续均匀地在区间$[0,1]$随机抽取5个数，并告之每一个与数字$X_{(8)}$的大小，请问$X_{(8)}$这个数是多少？由于$p=X_{(k)}$这个数在$X_1,...,X_n,Y_1,...,Y_m$，$m+n$个数中中是第$k+m_1$大的，由Beta分布的概率密度函数可知，此时$p=X_{(k)}$的概率密度函数是$\mathrm{Beta}(p|k+m_1,n-k+1+m_2)$。
+
+&emsp;&emsp;上述过程可以总结为：
+
+1. $p=X_{(k)}$是要估计的参数，所推导出的$p$的分布为$f(p)=\mathrm{Beta}(p|k,n-k+1)$，称为$p$的先验分布；
+
+2. 数据$Y_1,...,Y_m$中有$m_1$个数比$p$小，$Y_i$相当于做了$m$次伯努利实验，所以$m_1\sim B(m,p)$；
+
+3. 在给定了来自数据提供的$(m_1,m_2)$的知识后，$p$的后验分布变为了$\mathrm{Beta}(p|k+m_1,n-k+1+m_2)$。
