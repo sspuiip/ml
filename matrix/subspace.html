@@ -1,336 +1,445 @@
-<!doctype html>
-<html class="no-js" lang="zh-CN" data-content_root="../">
-  <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="7. 矩阵分解" href="decomposition.html" /><link rel="prev" title="5. 特殊矩阵" href="special_matrix.html" />
 
-    <!-- Generated with Sphinx 7.2.6 and Furo 2023.09.10 -->
-        <title>6. 子空间分析 - Machine Learning Fundation 1.0 文档</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=135e06be" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=36a5483c" />
-    
-    
+<!DOCTYPE html>
 
 
-<style>
-  body {
-    --color-code-background: #f8f8f8;
-  --color-code-foreground: black;
+<html lang="zh-CN" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6. 子空间分析 &#8212; Machine Learning Fundation 1.0 文档</title>
   
-  }
-  @media not print {
-    body[data-theme="dark"] {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
   
-    }
-    @media (prefers-color-scheme: dark) {
-      body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
   
-      }
-    }
-  }
-</style></head>
-  <body>
-    
-    <script>
-      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
-    </script>
-    
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="svg-toc" viewBox="0 0 24 24">
-    <title>Contents</title>
-    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
-      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
-    </svg>
-  </symbol>
-  <symbol id="svg-menu" viewBox="0 0 24 24">
-    <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </symbol>
-  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
-    <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </symbol>
-  <symbol id="svg-sun" viewBox="0 0 24 24">
-    <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-  </symbol>
-  <symbol id="svg-moon" viewBox="0 0 24 24">
-    <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-    </svg>
-  </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
-</svg>
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
-<label class="overlay sidebar-overlay" for="__navigation">
-  <div class="visually-hidden">Hide navigation sidebar</div>
-</label>
-<label class="overlay toc-overlay" for="__toc">
-  <div class="visually-hidden">Hide table of contents sidebar</div>
-</label>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/subspace';</script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="7. 矩阵分解" href="decomposition.html" />
+    <link rel="prev" title="5. 特殊矩阵" href="special_matrix.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
-<div class="page">
-  <header class="mobile-header">
-    <div class="header-left">
-      <label class="nav-overlay-icon" for="__navigation">
-        <div class="visually-hidden">Toggle site navigation sidebar</div>
-        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
-      </label>
-    </div>
-    <div class="header-center">
-      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
-    </div>
-    <div class="header-right">
-      <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle">
-          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
-          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
-          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
-        </button>
-      </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <div class="visually-hidden">Toggle table of contents sidebar</div>
-        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-      </label>
-    </div>
-  </header>
-  <aside class="sidebar-drawer">
-    <div class="sidebar-container">
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
       
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
   
   
-  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
   
-</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
-  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
-  <input type="hidden" name="check_keywords" value="yes">
-  <input type="hidden" name="area" value="default">
-</form>
-<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul>
+  
+  
+  
+    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="current">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="base.html">1. 矩阵性能指标</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
 <li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
 <li class="toctree-l1"><a class="reference internal" href="special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">6. 子空间分析</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. 子空间分析</a></li>
 <li class="toctree-l1"><a class="reference internal" href="decomposition.html">7. 矩阵分解</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
 </ul>
 
-</div>
-</div>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
 
       </div>
       
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
     </div>
-  </aside>
-  <div class="main">
-    <div class="content">
-      <div class="article-container">
-        <a href="#" class="back-to-top muted-link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
-          </svg>
-          <span>Back to top</span>
-        </a>
-        <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle">
-              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
-              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
-              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
-            </button>
-          </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <div class="visually-hidden">Toggle table of contents sidebar</div>
-            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-          </label>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/matrix/subspace.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>子空间分析</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1. 什么是子空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.1.1. 概念</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.1.2. 正交补</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.1.3. 正交投影</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.2. 列（行）空间与零空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6.2.1. 子空间基的构造</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6.2.1.1. <strong>空间基构造的奇异值分解方法</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
-        <article role="main">
-          <section class="tex2jax_ignore mathjax_ignore" id="id1">
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">6. </span>子空间分析<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
 <h2><span class="section-number">6.1. </span>什么是子空间<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <section id="id3">
 <h3><span class="section-number">6.1.1. </span>概念<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  <strong>定义</strong>  假设<span class="math notranslate nohighlight">\(S=\{\pmb{u}_1,...,\pmb{u}_m\}\)</span>是向量空间<span class="math notranslate nohighlight">\(V\)</span>的向量子集，则<span class="math notranslate nohighlight">\(\pmb{u}_1,...,\pmb{u}_m\)</span>的所有线性组合的集合<span class="math notranslate nohighlight">\(W\)</span>称为由<span class="math notranslate nohighlight">\(\pmb{u}_1,...,\pmb{u}_m\)</span>张成的<strong>子空间</strong>，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 W=\mathrm{span}(\pmb{u}_1,...,\pmb{u}_m)=\{\pmb{u}|\pmb{u}=a_1\pmb{u}_1+...+a_m\pmb{u}_m\}
 \]</div>
-</div>
 <p>其中<span class="math notranslate nohighlight">\(W\)</span>称为子空间的<strong>张成集</strong>，每个向量称为<span class="math notranslate nohighlight">\(W\)</span>的<strong>生成元</strong>。</p>
 </section>
 <section id="id4">
 <h3><span class="section-number">6.1.2. </span>正交补<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>  子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>的交</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 S=S_1\cap S_2\cap ... \cap S_n
 \]</div>
-</div>
 <p>是所有子空间共有的向量组成的集合。</p>
 <p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(S=\{\pmb{0}\}\)</span>，则称子空间<span class="math notranslate nohighlight">\(S_1,...,S_n\)</span>为<strong>无交连</strong>。</p>
 <p>  <strong>定义</strong> 无交连的子空间并集<span class="math notranslate nohighlight">\(S=S_1\cup S_2\cup ... \cup S_n\)</span>称为<strong>子空间的直和</strong>，记为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \]</div>
-</div>
 <p>  <strong>定义</strong> 子空间<span class="math notranslate nohighlight">\(S\)</span>正交的所有向量的集合组成一个向量子空间，称为<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交补</strong>空间，记为<span class="math notranslate nohighlight">\(S^\bot\)</span>。</p>
 <p>  1.  正交连的两个子空间不一定正交，但正交的两个子空间必定是无交连。</p>
 <p>  2.  正交补空间是比正交空间更严格的概念。</p>
 <p>  <strong>定义</strong> 若下式成立，则称子空间为相对于<span class="math notranslate nohighlight">\(\pmb{A}\)</span>不变的，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \forall\pmb{x}\in S \quad\Rightarrow\quad \pmb{Ax}\in S
 \]</div>
-</div>
 </section>
 <section id="id5">
 <h3><span class="section-number">6.1.3. </span>正交投影<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>  假设有两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>，如果有线性变换矩阵<span class="math notranslate nohighlight">\(\pmb{P}\)</span>，将<span class="math notranslate nohighlight">\(\pmb{x}\in\mathbb{R}^n\)</span>映射为子空间<span class="math notranslate nohighlight">\(S\)</span>的向量<span class="math notranslate nohighlight">\(\pmb{x}_1\)</span>，则这种线性变换称为沿着<span class="math notranslate nohighlight">\(H\)</span>的方向到<span class="math notranslate nohighlight">\(S\)</span>的<strong>投影算子</strong>，记为<span class="math notranslate nohighlight">\(\pmb{P}_{S|H}\)</span>。特别地，若<span class="math notranslate nohighlight">\(S,H\)</span>是正交补，则<span class="math notranslate nohighlight">\(\pmb{P}_{S|S^\bot}\)</span>是将<span class="math notranslate nohighlight">\(\pmb{x}\)</span>沿着与子空间<span class="math notranslate nohighlight">\(S\)</span>垂直方向的投影，称为子空间的<strong>正交投影</strong>，记为<span class="math notranslate nohighlight">\(\pmb{P}_S\)</span>。</p>
 <p>  假设两个子空间<span class="math notranslate nohighlight">\(S,H\)</span>其交集为空<span class="math notranslate nohighlight">\(\{\pmb{0}\}\)</span>，其直和空间为<span class="math notranslate nohighlight">\(V=S\oplus H\)</span>，则直和空间向量可分解为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{x}=\pmb{x}_s+\pmb{x}_h
 \]</div>
-</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_s\in S, \pmb{x}_h\in H\)</span>。由于<span class="math notranslate nohighlight">\(S\cap H=\{\pmb{0}\}\)</span>，则该分解唯一。定义一个沿着子空间<span class="math notranslate nohighlight">\(H\)</span>到子空间<span class="math notranslate nohighlight">\(S\)</span>的投影算子<span class="math notranslate nohighlight">\(\pmb{P}_{S|H}\)</span>，即，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Px}=\pmb{x}_s
 \]</div>
-</div>
 <p>代入直和分解向量，则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{x}_h=(\pmb{I}-\pmb{P})\pmb{x}
 \]</div>
-</div>
 <p>即，<span class="math notranslate nohighlight">\(\pmb{I}-\pmb{P}\)</span>是沿着子空间<span class="math notranslate nohighlight">\(S\)</span>到子空间<span class="math notranslate nohighlight">\(H\)</span>的投影算子。因此，可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{x}=\pmb{Px}+(\pmb{I}-\pmb{P})\pmb{x}
 \]</div>
-</div>
 <p>以及，子空间的内部向量投影就是其本身，即<span class="math notranslate nohighlight">\(\pmb{Px}_1=\pmb{x}_1\)</span>,从而有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{P}^2\pmb{x}_1=\pmb{Px}_1=\pmb{x}_1
 \]</div>
-</div>
 <p>也就是幂等性，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{P}^2=\pmb{P}
 \]</div>
-</div>
 <p>  <strong>定义</strong> 若<span class="math notranslate nohighlight">\(Range(\pmb{P})=S,\pmb{P}^2=\pmb{P}\)</span>和<span class="math notranslate nohighlight">\(\pmb{P}^\top=\pmb{P}\)</span>，则矩阵<span class="math notranslate nohighlight">\(\pmb{P}\)</span>称为到子空间<span class="math notranslate nohighlight">\(S\)</span>的<strong>正交投影</strong>。</p>
 <p>  观察可知，线性变换矩阵，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{P}_S=\pmb{A}(\pmb{A}^\mathrm{H}\pmb{A})^{-1}\pmb{A}^\mathrm{H}
 \]</div>
-</div>
 <p>满足正交投影算子定义的幂等性和Hermitian性，且<span class="math notranslate nohighlight">\(\pmb{P}_S\pmb{A}=\pmb{A}\)</span>即满足<span class="math notranslate nohighlight">\(Range(\pmb{P})=S\)</span> <span class="math notranslate nohighlight">\(=Span(\pmb{A})\)</span>。因此该矩阵是到由<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的列向量生成的子空间<span class="math notranslate nohighlight">\(S\)</span>上的正交投影算子。</p>
 </section>
 </section>
 <section id="id6">
 <h2><span class="section-number">6.2. </span>列（行）空间与零空间<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>  <strong>定义 [列（行）空间]</strong> 若<span class="math notranslate nohighlight">\(A=[\pmb{a}_1,...,\pmb{a}_n]\in\mathbb{C}^{m\times n}\)</span>为复矩阵，则列（行）向量的所有线性组合构成一个子空间，称为矩阵的列（行）空间。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -338,36 +447,27 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \mathrm{Row}(A)&amp;=\mathrm{Span}(\pmb{r}_1,...,\pmb{r}_n)\\
 \end{split}
 \end{split}\]</div>
-</div>
 <p>  一般将<span class="math notranslate nohighlight">\(\mathrm{Span}(A)\)</span>作为<span class="math notranslate nohighlight">\(A\)</span>的列空间缩写。类似地，<span class="math notranslate nohighlight">\(\mathrm{Span}(A^H)\)</span>表示<span class="math notranslate nohighlight">\(A\)</span>的复共轭轩置矩阵<span class="math notranslate nohighlight">\(A^H\)</span>的列空间。由于<span class="math notranslate nohighlight">\(A^H\)</span>的列空间就是矩阵<span class="math notranslate nohighlight">\(A\)</span>的复共轭行向量，故有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Row}(A)=\mathrm{Col}(A^H)=\mathrm{Span}(A^H)=\mathrm{Span}(\pmb{r}_1,...,\pmb{r}_m)
 \]</div>
-</div>
 <p>  列（行）空间是直接针对矩阵<span class="math notranslate nohighlight">\(A_{m\times n}\)</span>本身定义的向量子空间。此外还有通过矩阵变换<span class="math notranslate nohighlight">\(\pmb{Ax}\)</span>定义的子空间：变换的值域和零空间。</p>
 <p>  <strong>定义. [值域，零空间]</strong> 若<span class="math notranslate nohighlight">\(\pmb{A}\)</span>是一个复矩阵，则<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的值域(range)定义为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m | \pmb{Ax}=\pmb{y},\quad \pmb{x}\in\mathbb{C}^n\}
 \]</div>
-</div>
 <p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的零空间(null space)也称为<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的核(kernel)，为齐次线性方程<span class="math notranslate nohighlight">\(\pmb{Ax=0}\)</span>的解向量的集合，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Null}(A)=\mathrm{Ker}(A)=\{\pmb{x}\in\mathbb{C}^n|\pmb{Ax=0}\}
 \]</div>
-</div>
 <p>  显然，矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的值域就是<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的列空间，即，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Range}(\pmb{A})=\{\pmb{y}\in\mathbb{C}^m | \pmb{Ax}=\pmb{y}=\sum_j x_j \pmb{a}_j,\quad \pmb{x}\in\mathbb{C}^n\}=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)
 \]</div>
-</div>
 <p>  <strong>性质.</strong></p>
 <p>  1. <span class="math notranslate nohighlight">\(\mathrm{Range}(\pmb{A})=\mathrm{Col}(\pmb{A})=\mathrm{Span}(\pmb{a}_1,...,\pmb{a}_n)\)</span></p>
 <p>  2. <span class="math notranslate nohighlight">\(\mathrm{Row}(\pmb{A})=\mathrm{Col}(\pmb{A}^H)=\mathrm{Range}(\pmb{A}^H)\)</span></p>
@@ -376,35 +476,26 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 <section id="id7">
 <h3><span class="section-number">6.2.1. </span>子空间基的构造<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>  <strong>定理.</strong> 矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}\)</span>的列空间与行空间的维数相等。该维数就是<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的秩<span class="math notranslate nohighlight">\(\mathrm{rank}(\pmb{A})\)</span>，且有如下关系，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{rank}(\pmb{A})+\mathrm{dim}[\mathrm{Null}(\pmb{A})]=n
 \]</div>
-</div>
 <p>  <strong>定理.</strong> 若<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}=\pmb{QR}\)</span>是一个列满秩矩阵的分解，则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Span}(\pmb{a}_1,...,\pmb{a}_k)=\mathrm{Span}(\pmb{q}_1,...,\pmb{q}_k)\quad k=1,...,n
 \]</div>
-</div>
 <p>  下面介绍奇异值分解的基空间标准正交基的构造方法。任意一个矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}\)</span>可以分解为以下形式，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\pmb{U\Sigma V^H}
 \]</div>
-</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{U}=[\pmb{U}_r,\tilde{\pmb{U}}_r]\)</span>，<span class="math notranslate nohighlight">\(\pmb{V}=[\pmb{V}_r,\tilde{\pmb{V}}_r]\)</span>，以及，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{\Sigma}=\begin{bmatrix}\pmb{\Sigma}_r &amp; \pmb{0}\\ \pmb{0}&amp;\pmb{0} \end{bmatrix}_{n\times n}
 \end{split}\]</div>
-</div>
 <p>  因此，可以得到以下等式，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -412,11 +503,9 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 \pmb{A}^H&amp;=\pmb{V}_r\pmb{\Sigma}_r\pmb{U}_r^H=\sum_{i=1}^r\sigma_i\pmb{v}_i\pmb{u}_i^H\\
 \end{split}
 \end{split}\]</div>
-</div>
 <section id="id8">
 <h4><span class="section-number">6.2.1.1. </span><strong>空间基构造的奇异值分解方法</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
 <p>  列空间基<span class="math notranslate nohighlight">\(\mathrm{Col}(\pmb{A})\)</span>为<span class="math notranslate nohighlight">\(r\)</span>个非零奇异值对应的左奇异向量<span class="math notranslate nohighlight">\(\pmb{u}_1,...,\pmb{u}_r\)</span>构成的空间。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -426,112 +515,131 @@ S=S_1 \oplus S_2 \oplus ... \oplus S_n
 &amp;=\mathrm{Span}(\pmb{u}_1,...,\pmb{u}_r)
 \end{split}
 \end{split}\]</div>
-</div>
 <p>  行空间基<span class="math notranslate nohighlight">\(\mathrm{Col}(\pmb{A})\)</span>为<span class="math notranslate nohighlight">\(r\)</span>个非零奇异值对应的右奇异向量<span class="math notranslate nohighlight">\(\pmb{v}_1,...,\pmb{v}_r\)</span>构成的空间，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Row}(\pmb{A})=\mathrm{Col}(\pmb{A}^H)=\mathrm{Span}(\pmb{v}_1,...,\pmb{v}_r)
 \]</div>
-</div>
 <p>  零空间基<span class="math notranslate nohighlight">\(\mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot\)</span>，因此，零空间的基与行空间的基正交。由右奇异向量性质可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{Null}(\pmb{A})=\mathrm{Row}(\pmb{A})^\bot=\mathrm{Span}(\pmb{v}_{r+1},...,\pmb{v}_n)
 \]</div>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="special_matrix.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>特殊矩阵</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="decomposition.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">7. </span>矩阵分解</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
-</section>
-</section>
-</section>
-</section>
-
-        </article>
-      </div>
-      <footer>
-        
-        <div class="related-pages">
-          <a class="next-page" href="decomposition.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title"><span class="section-number">7. </span>矩阵分解</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="special_matrix.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title"><span class="section-number">5. </span>特殊矩阵</div>
-                
-              </div>
-            </a>
-        </div>
-        <div class="bottom-of-page">
-          <div class="left-details">
-            <div class="copyright">
-                Copyright &#169; 2022-2023, SSPUIIP
+                </footer>
+              
             </div>
-            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
             
-            <a href="https://github.com/pradyunsg/furo">Furo</a>
             
-          </div>
-          <div class="right-details">
-            
-          </div>
-        </div>
-        
-      </footer>
-    </div>
-    <aside class="toc-drawer">
-      
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">6. 子空间分析</a><ul>
-<li><a class="reference internal" href="#id2">6.1. 什么是子空间</a><ul>
-<li><a class="reference internal" href="#id3">6.1.1. 概念</a></li>
-<li><a class="reference internal" href="#id4">6.1.2. 正交补</a></li>
-<li><a class="reference internal" href="#id5">6.1.3. 正交投影</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id6">6.2. 列（行）空间与零空间</a><ul>
-<li><a class="reference internal" href="#id7">6.2.1. 子空间基的构造</a><ul>
-<li><a class="reference internal" href="#id8">6.2.1.1. <strong>空间基构造的奇异值分解方法</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-          </div>
-        </div>
-      </div>
-      
-      
-    </aside>
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-</div><script src="../_static/documentation_options.js?v=f115507d"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js?v=32e29ea5"></script>
-    <script src="../_static/translations.js?v=beaddf03"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    </body>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1. 什么是子空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.1.1. 概念</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">6.1.2. 正交补</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">6.1.3. 正交投影</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">6.2. 列（行）空间与零空间</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">6.2.1. 子空间基的构造</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">6.2.1.1. <strong>空间基构造的奇异值分解方法</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022-2023, SSPUIIP.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>
