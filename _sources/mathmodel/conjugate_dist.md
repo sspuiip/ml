@@ -126,3 +126,20 @@ $$
 2. 数据$Y_1,...,Y_m$中有$m_1$个数比$p$小，$Y_i$相当于做了$m$次伯努利实验，所以$m_1\sim B(m,p)$；
 
 3. 在给定了来自数据提供的$(m_1,m_2)$的知识后，$p$的后验分布变为了$\mathrm{Beta}(p|k+m_1,n-k+1+m_2)$。
+
+&emsp;&emsp;根据上述描述，可以将这一过程为，
+
+$$
+\textbf{先验分布}+\textbf{数据似然}=\textbf{后验分布}
+$$
+
+一般来说，对于非负实数$\alpha,\beta$，Beta分布有以下关系，
+
+$$
+\mathrm{Beta}(p|\alpha,\beta)+\textrm{BinomCount}(m_1,m_2)=\mathrm{Beta}(p|\alpha+m_1,\beta+m_2)\tag{6}
+$$
+
+&emsp;&emsp;该公式(6)实际上描述的就是Beta-Binomial共轭。**共轭**的意思就是：数据符合二项分布，参数的先验分布都能保持Beta分布的形式。好处是能够在先验分布中赋予参数明确的物理意义，该解释可以延续到后验分布。
+
+
+
