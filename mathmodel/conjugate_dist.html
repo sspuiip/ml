@@ -341,6 +341,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">4.2. Beta分布</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
 </ul>
 </li>
 </ul>
@@ -477,6 +478,24 @@ f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delt
 \]</div>
 <p>  该公式(6)实际上描述的就是Beta-Binomial共轭。<strong>共轭</strong>的意思就是：数据符合二项分布，参数的先验分布都能保持Beta分布的形式。好处是能够在先验分布中赋予参数明确的物理意义，该解释可以延续到后验分布。</p>
 </section>
+<section id="dirichlet-multinomial">
+<h3><span class="section-number">4.2.2. </span>Dirichlet-Multinomial共轭<a class="headerlink" href="#dirichlet-multinomial" title="Link to this heading">#</a></h3>
+<p>  Beta分布拓展到多维，称为Dirichlet分布，即，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Dir}(\pmb{x}|\pmb{\alpha})=\frac{\Gamma(\alpha_1+\alpha_2+...+\alpha_n)}{\Gamma(\alpha_1)\Gamma(\alpha_2)...\Gamma(\alpha_n)}x_1^{\alpha_1-1}x_2^{\alpha_2-1}...x_n^{\alpha_n-1}\tag{7}
+\]</div>
+<p>与Beta分布类似，Dirichlet分布的共轭分布为Multinomial分布，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathrm{Dir}(\pmb{p}|\pmb{\alpha})+\mathrm{MultCount}(\pmb{m})=\mathrm{Dir}(\pmb{p}|\pmb{\alpha}+\pmb{m}) \tag{8}
+\]</div>
+<p>Multinomial分布为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathrm{Mult}(\pmb{n}|\pmb{p},N)=\begin{pmatrix} N\\ \pmb{n}\end{pmatrix}\prod_{k=1}^K p_k^{n_k}
+\end{split}\]</div>
+</section>
 </section>
 </section>
 
@@ -523,6 +542,7 @@ f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delt
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">4.2. Beta分布</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
 </ul>
 </li>
 </ul>

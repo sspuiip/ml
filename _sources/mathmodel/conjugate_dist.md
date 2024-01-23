@@ -141,5 +141,23 @@ $$
 
 &emsp;&emsp;该公式(6)实际上描述的就是Beta-Binomial共轭。**共轭**的意思就是：数据符合二项分布，参数的先验分布都能保持Beta分布的形式。好处是能够在先验分布中赋予参数明确的物理意义，该解释可以延续到后验分布。
 
+### Dirichlet-Multinomial共轭
 
+&emsp;&emsp;Beta分布拓展到多维，称为Dirichlet分布，即，
+
+$$
+\mathrm{Dir}(\pmb{x}|\pmb{\alpha})=\frac{\Gamma(\alpha_1+\alpha_2+...+\alpha_n)}{\Gamma(\alpha_1)\Gamma(\alpha_2)...\Gamma(\alpha_n)}x_1^{\alpha_1-1}x_2^{\alpha_2-1}...x_n^{\alpha_n-1}\tag{7}
+$$
+
+与Beta分布类似，Dirichlet分布的共轭分布为Multinomial分布，
+
+$$
+\mathrm{Dir}(\pmb{p}|\pmb{\alpha})+\mathrm{MultCount}(\pmb{m})=\mathrm{Dir}(\pmb{p}|\pmb{\alpha}+\pmb{m}) \tag{8}
+$$
+
+Multinomial分布为，
+
+$$
+\mathrm{Mult}(\pmb{n}|\pmb{p},N)=\begin{pmatrix} N\\ \pmb{n}\end{pmatrix}\prod_{k=1}^K p_k^{n_k}
+$$
 
