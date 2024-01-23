@@ -65,6 +65,7 @@
    mathmodel/bregman_divergence.md
    mathmodel/entropy.md
    mathmodel/conjugate_dist.md
+   mathmodel/mcmc.md
    
 
 
