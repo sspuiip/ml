@@ -338,6 +338,15 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-muller">5.1. Box-Muller变换</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2. 接受-拒绝采样</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.3. 重要性采样</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc">5.4. MCMC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.4.1. 马氏链</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#markov-chain-monte-carlo">5.4.2. Markov Chain Monte Carlo</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hasting">5.4.2.1. Metropolis-Hasting采样算法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gibbs">5.4.2.2. Gibbs采样算法</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -351,7 +360,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">5. </span>随机模拟<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-<p>  随机模拟方法的主要思想是随机生成样本，利用这些生成的样本完成近似计算，也称为蒙特卡罗方法(Monte Carlo Simulation)。</p>
+<p>  随机模拟方法的<strong>主要思想</strong>是随机生成样本，利用这些生成的样本完成近似计算，也称为蒙特卡罗方法(Monte Carlo Simulation)。</p>
 <p>  一个常见的示例是用随机模拟的方法近拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。</p>
 <p>  <strong>例</strong>1. 随机模拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。我们知道单位圆的面积<span class="math notranslate nohighlight">\(S=\pi r^2\)</span>，如果我们将<span class="math notranslate nohighlight">\(1/4\)</span>的单位圆置于边长为<span class="math notranslate nohighlight">\(1\)</span>的正方形中，并在此正方形内均匀地随机的生成一个样本集<span class="math notranslate nohighlight">\(\{(x,y)|x,y\sim\mathrm{Uniform}(0,1)\}\)</span>，则<span class="math notranslate nohighlight">\(\pi\)</span>可近似的计算如下：</p>
 <div class="math notranslate nohighlight">
@@ -450,6 +459,56 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <li><p>重复以上过程，直到采样数满足要求。</p></li>
 </ul>
 <p>需要注意的是，合适的<span class="math notranslate nohighlight">\(q\)</span>分布比较难找，且不容易确定<span class="math notranslate nohighlight">\(k\)</span>值。这些问题导致拒绝率升高，无用计算增加。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">qsample</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="mf">4.0</span>
+
+<span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mf">0.7</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">0.3</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">rejection</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mf">0.72</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">accept</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">accept</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">qsample</span><span class="p">()</span>
+            <span class="n">u</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="n">M</span>
+            <span class="k">if</span> <span class="n">u</span><span class="o">&lt;</span><span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+                <span class="n">accept</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">samples</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">x</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span><span class="n">count</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">samples</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">x</span> <span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">x2</span><span class="o">=</span> <span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">realdata</span> <span class="o">=</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.7</span><span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">2.</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">0.3</span><span class="p">)</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x2</span><span class="p">))</span><span class="o">*</span><span class="mf">0.75</span><span class="c1">#0.8</span>
+    <span class="n">box</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">box</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">realdata</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="s1">&#39;k--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">rejection</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
+    <span class="n">t1</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time &quot;</span><span class="p">,</span><span class="n">t1</span><span class="o">-</span><span class="n">t0</span><span class="p">)</span>
+    
+    <span class="n">hist</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="n">density</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">fc</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;p(x)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+    <span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
 </section>
 <section id="id3">
 <h2><span class="section-number">5.3. </span>重要性采样<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
@@ -462,6 +521,209 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 &amp;\approx \frac{1}{N}\sum_{i=1}^N \underbrace{\frac{p(x^{(i)})}{q(x^{(i)})}}_{\mathrm{importance\ weight}}f(x^{(i)}),\quad x^{(i)}\sim q(x)
 \end{split}
 \end{split}\]</div>
+</section>
+<section id="mcmc">
+<h2><span class="section-number">5.4. </span>MCMC<a class="headerlink" href="#mcmc" title="Link to this heading">#</a></h2>
+<p>  与前面的采样方法不同，MCMC算法的<strong>主要思想</strong>是：通过Markov Chain进行状态转移（只需要一个状态转移矩阵），当Markov Chain收敛后(可以证明满足detail平衡条件的马氏链具有稳态分布)，到达所有状态<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的概率正好是某个概率分布<span class="math notranslate nohighlight">\(\pmb{x}_i\sim p(\pmb{x})\)</span>。</p>
+<section id="id4">
+<h3><span class="section-number">5.4.1. </span>马氏链<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
+<p>  简单地说，马氏链就是一个下一状态只与当前状态有关的随机过程，即，</p>
+<div class="math notranslate nohighlight">
+\[
+P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
+\]</div>
+<p>  <strong>例1</strong>. 社会学家经常把人按其经济状态分为3类：上层、中层、下层。决定一个人的收入阶层最重要的因素就是其父母的收入阶层。如果父母的收入属于下层类别，那么他的孩子属于下层收入的概率是0.65，属于中层的概率是0.28，属于上层收入的概率是0.07。事实上，从父代到子代，收入阶层的变化转移概率大致如下，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{P}=\begin{bmatrix}0.65&amp;0.28&amp;0.07\\ 0.15&amp;0.67&amp;0.18\\ 0.12&amp;0.36&amp;0.52 \end{bmatrix}
+\end{split}\]</div>
+<p>假设当前这一代人处在下、中、上层的比例是概率分布向量<span class="math notranslate nohighlight">\(\pi_0=[\pi_0(1),\pi_0(2),\pi_0(3)]\)</span>，那么子代处于三层的比例分布为<span class="math notranslate nohighlight">\(\pi_1=\pi_0\pmb{P}\)</span>，后代的比例分布则是<span class="math notranslate nohighlight">\(\pi_n=\pi_{n-1}\pmb{P}=...=\pi_0\pmb{P}^n\)</span>。若有初始概率<span class="math notranslate nohighlight">\(\pi_0=[0.21,0.68,0.11]\)</span>，则可以计算前<span class="math notranslate nohighlight">\(n\)</span>代人的比例分布最终稳定在<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>，且这一稳定分布与初始概率无关。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Markov chain demo</span>
+
+<span class="c1">#状态转移矩阵</span>
+<span class="k">def</span> <span class="nf">PrMatrix</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.65</span><span class="p">,</span><span class="mf">0.28</span><span class="p">,</span><span class="mf">0.07</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mf">0.15</span><span class="p">,</span><span class="mf">0.67</span><span class="p">,</span><span class="mf">0.18</span><span class="p">],</span>
+                     <span class="p">[</span><span class="mf">0.12</span><span class="p">,</span><span class="mf">0.36</span><span class="p">,</span><span class="mf">0.52</span><span class="p">]])</span> 
+<span class="c1">#迭代with Pi0</span>
+<span class="k">def</span> <span class="nf">iterN</span><span class="p">(</span><span class="n">Pi0</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">pi</span><span class="o">=</span><span class="n">Pi0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pi&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">pi</span><span class="p">)</span>
+        <span class="n">pi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
+        
+<span class="c1">#概率转移矩阵稳定收敛</span>
+<span class="k">def</span> <span class="nf">calcPn</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">Pn</span><span class="o">=</span><span class="n">P</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P&#39;</span><span class="p">,</span><span class="n">Pn</span><span class="p">)</span>
+        <span class="n">Pn</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Pn</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">P</span><span class="o">=</span><span class="n">PrMatrix</span><span class="p">()</span>
+    <span class="n">pi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.21</span><span class="p">,</span><span class="mf">0.68</span><span class="p">,</span><span class="mf">0.11</span><span class="p">])</span>    
+    <span class="n">iterN</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+    
+    <span class="n">pi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.75</span><span class="p">,</span><span class="mf">0.15</span><span class="p">,</span><span class="mf">0.1</span><span class="p">])</span>    
+    <span class="n">iterN</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="mi">25</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>  收敛行为主要由概率转移矩阵<span class="math notranslate nohighlight">\(P\)</span>决定，可以计算一下<span class="math notranslate nohighlight">\(P^n\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\\end{bmatrix}
+\end{split}\]</div>
+<p>当<span class="math notranslate nohighlight">\(n\)</span>足够大时，<span class="math notranslate nohighlight">\(P^n\)</span>矩阵的每一行都是稳定地收敛到<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>这个分布。那么满足什么样的马氏链才能具有这一特征呢？</p>
+<blockquote>
+<div><p><strong>定理（马氏链收敛）</strong>. 如果一个非周期马氏链具有转移概率矩阵<span class="math notranslate nohighlight">\(P\)</span>，且它的任意两个状态是连通，那么<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n\)</span>存在且与<span class="math notranslate nohighlight">\(i\)</span>无关，记<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n=\pi(j)\)</span>，则有</p>
+<ol class="arabic simple">
+<li></li>
+</ol>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\lim_{n\rightarrow \infty}P_{ij}^n=\begin{bmatrix}\pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \end{bmatrix}
+\end{split}\]</div>
+<blockquote>
+<div><ol class="arabic simple" start="2">
+<li><p><span class="math notranslate nohighlight">\(\pi(j)=\sum_{i=1}^\infty \pi(i)P_{ij}\)</span>；</p></li>
+<li><p><span class="math notranslate nohighlight">\(\pi\)</span>是方程<span class="math notranslate nohighlight">\(\pi=\pi P\)</span>的唯一非负解。且<span class="math notranslate nohighlight">\(\sum_{i=0}^\infty \pi_i=1\)</span>。
+<span class="math notranslate nohighlight">\(\pi\)</span>则被称为马氏链的平稳分布。</p></li>
+</ol>
+</div></blockquote>
+</section>
+<section id="markov-chain-monte-carlo">
+<h3><span class="section-number">5.4.2. </span>Markov Chain Monte Carlo<a class="headerlink" href="#markov-chain-monte-carlo" title="Link to this heading">#</a></h3>
+<p>  由于马氏链能收敛到平稳分布<span class="math notranslate nohighlight">\(p(x)\)</span>，如果我们能构造一个转移矩阵为<span class="math notranslate nohighlight">\(P\)</span>的马氏链，使得该马氏链的平稳分布正好是所需的<span class="math notranslate nohighlight">\(p(x)\)</span>，那么我们就可以从任何一个初始状态<span class="math notranslate nohighlight">\(x_0\)</span>出发，沿着马氏链转移，得到一个转移序列<span class="math notranslate nohighlight">\(x_0,x_1,...,x_n,x_{n+1},...\)</span>，只要马氏链在某一个<span class="math notranslate nohighlight">\(n\)</span>处收敛，则后续状态序列就是平稳分布<span class="math notranslate nohighlight">\(\pi=p(x)\)</span>的采样样本<span class="math notranslate nohighlight">\(x_n,x_{n+1},....\)</span>。</p>
+<p>  马氏链的收敛性主要由转移矩阵决定，那么基于马氏链做采样的关键问题就是如何构造转移矩阵<span class="math notranslate nohighlight">\(P\)</span>，并达到平稳分布恰好是所需的分布<span class="math notranslate nohighlight">\(p(x)\)</span>。以下定理给出了具体的条件。</p>
+<blockquote>
+<div><p><strong>定理（细致平稳条件）</strong>. 如果非周期马氏链的转移矩阵<span class="math notranslate nohighlight">\(P\)</span>和分布<span class="math notranslate nohighlight">\(\pi(x)\)</span>满足，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[
+\pi(i)P_{ij}=\pi(j)P_{ji},\quad \forall i,j
+\tag{1}
+\]</div>
+<blockquote>
+<div><p>则<span class="math notranslate nohighlight">\(\pi(x)\)</span>是马氏链的平稳分布，该式也称为细致平稳条件(detailed balance condition)。</p>
+</div></blockquote>
+<!-- &emsp;&emsp;马氏链的收敛性主要由转移矩阵决定，基于马氏链采样的关键问题是如何构造转移矩阵，使得平稳分布是我们所需的分布。 -->
+<section id="metropolis-hasting">
+<h4><span class="section-number">5.4.2.1. </span>Metropolis-Hasting采样算法<a class="headerlink" href="#metropolis-hasting" title="Link to this heading">#</a></h4>
+<p>  假设我们已经有了转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>，用<span class="math notranslate nohighlight">\(q(j|i)\)</span>表示从状态<span class="math notranslate nohighlight">\(i\)</span>转移到状态<span class="math notranslate nohighlight">\(j\)</span>的概率，通常情况下，</p>
+<div class="math notranslate nohighlight">
+\[
+p(i)q(j|i)\neq p(j)q(i|j)
+\]</div>
+<p>不满足细致平稳条件，所以<span class="math notranslate nohighlight">\(p(x)\)</span>不是这个马氏链的平稳分布。那么，能否改造一下使得条件满足呢？引入接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>，使得下式成立，</p>
+<div class="math notranslate nohighlight">
+\[
+p(i)q(j|i)\alpha(j|i)= p(j)q(i|j)\alpha(i|j)
+\]</div>
+<p>显然，令<span class="math notranslate nohighlight">\(\alpha(j|i)=p(j)q(i|j), \alpha(i|j)=p(i)q(j|i)\)</span>，等式成立，即</p>
+<div class="math notranslate nohighlight">
+\[
+p(i)\underbrace{q(j|i)\alpha(j|i)}_{q'(j|i)}=p(j)\underbrace{q(i|j)\alpha(i|j)}_{q'(i|j)}
+\]</div>
+<p><span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的物理意义：状态<span class="math notranslate nohighlight">\(i\)</span>跳转到状态<span class="math notranslate nohighlight">\(j\)</span>时，以<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的概率接受这个跳转。最终把原转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>的一个马氏链改造成了具有转移矩阵<span class="math notranslate nohighlight">\(Q'\)</span>的马氏链，而<span class="math notranslate nohighlight">\(Q'\)</span>恰好满足细致平稳条件，因此马氏链<span class="math notranslate nohighlight">\(Q'\)</span>的平稳分布就是<span class="math notranslate nohighlight">\(p(x)\)</span>。把上述过程整理一下，就可以得到从<span class="math notranslate nohighlight">\(p(x)\)</span>分布采样的MCMC算法。</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>MCMC采样算法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1. 初使化马氏链初使状态<span class="math notranslate nohighlight">\(X_0=x_0\)</span>;<br></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2. while(i &lt; 最大迭代次数){<br>  <span class="math notranslate nohighlight">\(X_i=x_i\)</span>，采样一个样本<span class="math notranslate nohighlight">\(y\sim q(x\vert x_t)\)</span>；<br>   从均匀分布采样<span class="math notranslate nohighlight">\(u\sim \textrm{Uniform}[0,1]\)</span>；<br>  如果<span class="math notranslate nohighlight">\(u&lt;\alpha(y\vert x_t)=p(y)q(x_t\vert y)\)</span>则接受转移<span class="math notranslate nohighlight">\(X_{t+1}=y\)</span>；<br>  否则不接受转移即<span class="math notranslate nohighlight">\(X_{t+1}=x_t\)</span>；<br>}</p></td>
+</tr>
+</tbody>
+</table>
+<p>  上述算法中，接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>可能会偏小会导致马氏链拒绝大量的跳转，也就是到达收敛状态速度会太慢。假设<span class="math notranslate nohighlight">\(\alpha(j|i)=0.1, \alpha(i|j)=0.2\)</span>时满足细致平稳条件，即</p>
+<div class="math notranslate nohighlight">
+\[
+p(i)q(j|i)\times 0.1 = p(j)q(i|j)\times 0.2
+\]</div>
+<p>上式左右两边同时扩大5倍，可以改写成</p>
+<div class="math notranslate nohighlight">
+\[
+p(i)q(j|i)\times 0.5 = p(j)q(i|j)\times 1
+\]</div>
+<p>可以看出，接受率提高了5倍，而细致平稳条件仍满足。这使得我们可以对接受率同比例放大，使得两个数中最大的一个先达到1，这样我们就提高了采样中的跳转接受率。所以可以考虑接受率，</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha(j|i)\triangleq\frac{\alpha(j|i)*K}{\alpha(i|j)*K}=\min\left\{ \frac{p(j)q(i|j)}{p(i)q(j|i)},1\right\}\tag{2}
+\]</div>
+<p>  经过接受率放大后的MCMC算法就是所谓的<strong>Metropolis-Hasting算法</strong>。</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Metropolis-Hasting采样算法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1. 初使化马氏链初使状态<span class="math notranslate nohighlight">\(X_0=x_0\)</span>;<br></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2. while(i &lt; 最大迭代次数){<br>  <span class="math notranslate nohighlight">\(X_i=x_i\)</span>，采样一个样本<span class="math notranslate nohighlight">\(y\sim q(x\vert x_t)\)</span>；<br>   从均匀分布采样<span class="math notranslate nohighlight">\(u\sim \textrm{Uniform}[0,1]\)</span>；<br>  如果<span class="math notranslate nohighlight">\(u&lt;\alpha(y\vert x_t)=\min\left\{ \frac{p(j)q(i\vert j)}{p(i)q(j\vert i)},1\right\}\)</span>则接受转移<span class="math notranslate nohighlight">\(X_{t+1}=y\)</span>；<br>  否则不接受转移即<span class="math notranslate nohighlight">\(X_{t+1}=x_t\)</span>；<br>}</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gibbs">
+<h4><span class="section-number">5.4.2.2. </span>Gibbs采样算法<a class="headerlink" href="#gibbs" title="Link to this heading">#</a></h4>
+<p>  对于上述接受率，一般都存在<span class="math notranslate nohighlight">\(\alpha&lt;1\)</span>的情况，能否找到一个转移矩阵，使得接受率<span class="math notranslate nohighlight">\(\alpha=1\)</span>成立呢？假设有一个二维概率分布<span class="math notranslate nohighlight">\(p(x,y)\)</span>，考查<span class="math notranslate nohighlight">\(x\)</span>坐标相同的两个点<span class="math notranslate nohighlight">\(A(x_1,y_1),B(x_1,y_2)\)</span>，我们发现有以下等式成立，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(x_1,y_1)p(y_2|x_1)&amp;=p(x_1)p(y_1|x_1)p(y_2|x_1)\\
+p(x_1,y_2)p(y_1|x_1)&amp;=p(x_1)p(y_2|x_1)p(y_1|x_1)
+\end{split}
+\end{split}\]</div>
+<p>显然上述所有等式的右边都是相等的，因此，可得，</p>
+<div class="math notranslate nohighlight">
+\[
+p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1),\quad \textrm{i.e.},\quad p(A)p(y_2|x_1)=p(B)p(y_1|x_1)
+\]</div>
+<p>基于上述等式，对于<span class="math notranslate nohighlight">\(x=x_1\)</span>这个平行于<span class="math notranslate nohighlight">\(y\)</span>轴的直线上，如果使用条件分布<span class="math notranslate nohighlight">\(p(y|x_1)\)</span>做为直线上任意点之间的转移概率，那么该转移概率满足细致平稳条件。同理，对于<span class="math notranslate nohighlight">\(y=y_1\)</span>这条直线也成立。因此可以构造平面上任意两点之间的转移概率矩阵<span class="math notranslate nohighlight">\(Q\)</span>,</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>跳转概率</p></th>
+<th class="head text-left"><p>条件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(Q(B|A)=p(y_B|x_1)\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(x_A=x_B=x_1\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><span class="math notranslate nohighlight">\(Q(C|A)=p(x_c|y_1)\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(y_A=y_C=y_1\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><span class="math notranslate nohighlight">\(Q(D|A)=0\)</span></p></td>
+<td class="text-left"><p>其它</p></td>
+</tr>
+</tbody>
+</table>
+<p>对于上述转移矩阵，很容易验证对于平面上任意两点<span class="math notranslate nohighlight">\(X,Y\)</span>，满足细致平稳条件，</p>
+<div class="math notranslate nohighlight">
+\[
+p(X)Q(Y|X)=p(Y)Q(X|Y)
+\]</div>
+<p>  采用上述转移矩阵的MCMC采样算法就是所谓的<strong>Gibbs Sampling算法</strong>。</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\(n\)</span>维Gibbs Sampling采样算法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>1. 随机初使化<span class="math notranslate nohighlight">\(\pmb{x}^{i}=\{x_j:j=1,...,n\)</span>}</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p>2. while(i &lt; 最大迭代次数){<br>  <span class="math notranslate nohighlight">\(x^{(i)}_1=p(x_1|x^{(i)}_2,...,x^{(i)}_n)\)</span><br>   <span class="math notranslate nohighlight">\(x^{(i)}_2=p(x_2|x^{(i+1)}_1,x^{(i)}_3,...,x^{(i)}_n)\)</span>；<br>  …<br>  <span class="math notranslate nohighlight">\(x^{(i)}_n=p(x_n|x^{(i+1)}_1,x^{(i+1)}_2,...,x^{(i+1)}_{n-1})\)</span>；<br>}</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
 </section>
 </section>
 
@@ -504,6 +766,15 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-muller">5.1. Box-Muller变换</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2. 接受-拒绝采样</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.3. 重要性采样</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc">5.4. MCMC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">5.4.1. 马氏链</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#markov-chain-monte-carlo">5.4.2. Markov Chain Monte Carlo</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#metropolis-hasting">5.4.2.1. Metropolis-Hasting采样算法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gibbs">5.4.2.2. Gibbs采样算法</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
