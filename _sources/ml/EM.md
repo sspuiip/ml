@@ -1,25 +1,32 @@
 # EM算法概述
 
-&emsp;&emsp;概率模型一般都含有观测变量、隐变量。如果只有观测变量，则可以直接使用极大似然估计；如果模型含有隐变量时，则需要对极大似然估计法进行改进，这种改进就是EM算法。EM算法也称为含有隐变量概率模型的参数极大化似然估计法。EM算法是一种迭代算法，每次迭代由两步组成：E步，求隐变量的期望；M步，求模型的最大化。因此，这一算法也称为期望极大算法（expectation maximinzation algorithm）。
+> &emsp;&emsp;简言之，EM算法主要用于含隐变量概率模型的参数极大似然(或后验)估计。
+
+&emsp;&emsp;概率模型一般都含有观测变量、隐变量。如果只有观测变量，则可以直接使用极大似然估计；如果模型含有隐变量时，则需要对极大似然估计法进行改进，这种改进就是EM算法。EM算法也称为含有隐变量概率模型的参数极大化似然估计法。**EM算法是一种迭代算法，每次迭代由两步组成：E步，求隐变量的期望；M步，求模型的最大化**。因此，这一算法也称为期望极大算法（expectation maximinzation algorithm）。
 
 ## EM算法
 
-&emsp;&emsp;令$\pmb{x}_i$为数据$i$的可观测变量，$\pmb{z}_i$为隐变量或缺失变量，则可观测数据的最大对数似然为，
+&emsp;&emsp;令$\pmb{y}_i$为数据$i$的可观测变量，$\pmb{z}_i$为隐变量或缺失变量，则可观测数据的最大对数似然为，
 
 $$
-\ell(\pmb{\theta})=\sum_{i=1}^N \log p(\pmb{x}_i|\pmb{\theta})=\sum_{i=1}^N\log\left[ \sum_{\pmb{z}_i}p(\pmb{x}_i,\pmb{z}_i|\pmb{\theta}) \right]
+\ell(\pmb{\theta})=\log P(\pmb{Y}|\pmb{\theta})=\log \sum_{\pmb{Z}}P(\pmb{Y},\pmb{Z}|\pmb{\theta})
+\tag{1}
 $$
 
-很明显，这个问题难于优化，因为$\log$不能被塞进到`sum`求和运算中(包含和的对数)。EM算法绕开这个问题如下，首先定义**完全数据对数似然**（complete data log likelihood）,
+其中，$\pmb{Y}=[\pmb{y}_1,...,\pmb{y}_n]^\top, \pmb{Z}=[\pmb{z}_1,...,\pmb{z}_n]^\top$, $\log P(\pmb{Y}|\pmb{\theta})$称为**不完全数据对数似然**。很明显，这个问题难于优化，因为$\log$不能被塞进到`sum`求和运算中(包含和的对数)。
+
+&emsp;&emsp;EM算法绕开这个问题如下，首先定义**完全数据对数似然**（complete data log likelihood）,
 
 $$
-\ell_c(\pmb{\theta})\triangleq\sum_{i=1}^N\log p(\pmb{x}_i,\pmb{z}_i|\pmb{\theta})
+\ell_c(\pmb{\theta})\triangleq\log P(\pmb{Y},\pmb{Z}|\pmb{\theta})
+\tag{2}
 $$
 
-因为$\pmb{z}_i$未知，上式不能直接计算。可以定义**期望完全数据对数似然**(expected complete data log likelihood)，
+因为$\pmb{z}_i$未知，上式不能直接计算。可以定义**期望的完全数据对数似然**(expected complete data log likelihood)，
 
 $$
-Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}[\ell_c (\pmb{\theta}|\mathcal{D},\pmb{\theta}^{t-1})]
+Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}_{\pmb{z}}[\ell_c (\pmb{\theta}|\mathcal{D},\pmb{\theta}^{t-1})]=\sum_{\pmb{Z}}P(\pmb{Z}|\pmb{Y},\pmb{\theta}^{t-1}) P(\pmb{Y},\pmb{Z}|\pmb{\theta})
+\tag{3}
 $$
 
 其中$t$为当前迭代，$Q$为辅助函数(auxiliary function)，期望是关于旧参数$\pmb{\theta}^{t-1}$和观测数据$\mathcal{D}$的。E步的目标正是计算$Q$函数。M步的目标为优化$Q$函数的参数$\pmb{\theta}$，
@@ -56,10 +63,10 @@ $$
 则有，
 
 $$
-\ell(\pmb{\theta})\ge\ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\triangleq B(\pmb{\theta},\pmb{\theta}^i)
+\ell(\pmb{\theta})\ge\ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\triangleq \underbrace{B(\pmb{\theta},\pmb{\theta}^i)}_{\mathrm{\ell(\pmb{\theta})的下界}}
 $$
 
-显然有$ \ell(\pmb{\theta}^i)=B(\pmb{\theta}^i,\pmb{\theta}^i)$成立。因此，可以使$B(\pmb{\theta},\pmb{\theta}^i)$增大的任何$\pmb{\theta}$都可以使得$\ell(\pmb{\theta})$增大。$B(\pmb{\theta},\pmb{\theta}^i)$也称之为$\ell(\pmb{\theta})$的一个下界。为此，可以极大化$B(\pmb{\theta},\pmb{\theta}^i)$，即
+显然有$ \ell(\pmb{\theta}^i)=B(\pmb{\theta}^i,\pmb{\theta}^i)$成立。因此，可以使$B(\pmb{\theta},\pmb{\theta}^i)$增大的任何$\pmb{\theta}$都可以使得$\ell(\pmb{\theta})$增大。$B(\pmb{\theta},\pmb{\theta}^i)$也称之为$\ell(\pmb{\theta})$的一个**下界**。为此，可以极大化$B(\pmb{\theta},\pmb{\theta}^i)$，即
 
 $$
 \pmb{\theta}^{t+1}=\arg\max\limits_{\pmb{\theta}}B(\pmb{\theta},\pmb{\theta}^i)
@@ -72,7 +79,7 @@ $$
 \pmb{\theta}^{t+1}&=\arg\max\limits_{\pmb{\theta}}B(\pmb{\theta},\pmb{\theta}^i)\\
 &=\arg\max\limits_{\pmb{\theta}}\left( \ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\right)\\
 &=\arg\max\limits_{\pmb{\theta}}\left( \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta}) \right)\\
-&= \arg\max\limits_{\pmb{\theta}}\left( \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i) p(\pmb{Y},\pmb{Z}|\pmb{\theta})  \right)\\
+&= \arg\max\limits_{\pmb{\theta}}\left( \sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i) \log p(\pmb{Y},\pmb{Z}|\pmb{\theta})  \right)\\
 &=\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t})
 \end{split}
 $$
@@ -94,8 +101,8 @@ $$
 $$
 \begin{split}
 p(y|\theta)&=\sum_zp(y,z|\theta)=\sum_zp(y|z,\theta)p(z)\\
-&=p(z=1)p(y|z=1)+p(z=0)p(y|z=0)\\
-&=\pi p^y(1-p)^{1-y}+(1-\pi)q^y(1-q)^{1-y}
+&=p(y|z=1)p(z=1)+p(y|z=0)p(z=0)\\
+&= p^y(1-p)^{1-y}\pi+q^y(1-q)^{1-y}(1-\pi)
 \end{split}
 $$
 
@@ -147,6 +154,18 @@ $$
 \pi^{(i+1)}&=\frac1n\sum_{j=1}^n\mu_j^{(i+1)}\\
 p^{(i+1)}&=\frac{\sum_{j=1}^n\mu_j^{(i+1)}y_j}{\sum_{j=1}^n\mu_j^{(i+1)}}\\
 q^{(i+1)}&=\frac{\sum_{j=1}^n(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^n(1-\mu_j^{(i+1)})}
+\end{split}
+$$
+
+&emsp;&emsp;注：上例中$Q(\pmb{\theta}|\pmb{\theta}^t)$计算如下，
+
+$$
+\begin{split}
+Q(\pmb{\theta}|\pmb{\theta}^t)&= \mathbb{E}_{\pmb{Z}} [\log P(\pmb{Y},\pmb{Z}|\pmb{\theta})]\\
+&=\sum_{i}^N \mathbb{E}_{\pmb{Z}} [ \log P(y_i,z_i|\pmb{\theta}^t)]   \\
+&=\sum_{i}^N \mathbb{E}_{\pmb{Z}} [ \log (\pi p^{y_i}(1-p)^{1-y_i})^{\mathbb{I}(z_i=1)}((1-\pi) q^{y_i}(1-q)^{1-y_i})^{\mathbb{I}(z_i=0)}]   \\
+&=\sum_i P(z_i=1|y_i)\log (\pi p^{y_i}(1-p)^{1-y_i})+P(z_i=0|y_i)\log ((1-\pi) q^{y_i}(1-q)^{1-y_i})\\
+&=\sum_i\mu_j^{(t+1)}\log [\pi p^{y_i}(1-p)^{1-y_i}]+(1-\mu_j^{(t+1)})\log [(1-\pi) q^{y_i}(1-q)^{1-y_i}]
 \end{split}
 $$
 
