@@ -57,18 +57,17 @@ exclude_patterns = []
 # a list of builtin themes.
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' nature haiku bizstyle pyramid
 html_theme = 'sphinx_book_theme'
-# body_max_width = '1000px'
-# body_min_width = '800px'
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-#mathjax_options ={
+# mathjax_options ={
 #    "math_number_all": "True",
 #    "math_eqref_format": "True"
-#}
+# }
 
 
 # -- Extension configuration -------------------------------------------------
@@ -76,3 +75,6 @@ myst_enable_extensions = [
     "amsmath",
     "dollarmath"
 ]
+
+
+ 

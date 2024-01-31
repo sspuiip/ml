@@ -5,3 +5,5 @@ sphinx_rtd_theme
 sphinx-book-theme
 myst-parser
 sphinx-mathjax-offline
+sphinx-autobuild  
+sphinx-markdown-tables
