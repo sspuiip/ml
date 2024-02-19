@@ -101,5 +101,8 @@ myst_enable_extensions = [
     "deflist"
 ]
 
+# -- mermaid
+mermaid_version = '10.8.0'
+
 
  
