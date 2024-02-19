@@ -347,6 +347,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>  根据已观察到的数据（样本集）对未知变量（样本所属类别）进行估计，这是从数据学习知识的基本途径，也是机器学习的主要任务。概率模型将这一任务转换为计算变量的概率分布，即利用已知变量推测未知变量，也称之为<strong>推断</strong>。具体来说，假设所关心的变量集为<span class="math notranslate nohighlight">\(Y\)</span>，可观测变量集为<span class="math notranslate nohighlight">\(O\)</span>，其它变量为<span class="math notranslate nohighlight">\(R\)</span>，推断就是通过联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>计算得到条件分布<span class="math notranslate nohighlight">\(P(Y|O)\)</span>。其中，联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>称为<strong>生成式模型</strong>，条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>称为<strong>判别式模型</strong>。但是，直接使用概率求和规则消去变量<span class="math notranslate nohighlight">\(R\)</span>是不可行的，因为即使所有变量只有2种取值的特殊情况，计算复杂度也高达<span class="math notranslate nohighlight">\(O(2^{|Y|+|R|})\)</span>。</p>
+<p>  概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。</p>
 <div class="mermaid">
             mindmap
     id1[&quot;`**Root** with
