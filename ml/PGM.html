@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. BiClustering &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>4. 概率图模型 &#8212; Machine Learning Fundation 1.0 文档</title>
   
   
   
@@ -41,11 +41,11 @@
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/biClustering';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/PGM';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 核函数基础" href="../kernel/base.html" />
-    <link rel="prev" title="4. 概率图模型" href="PGM.html" />
+    <link rel="next" title="1. BiClustering" href="biClustering.html" />
+    <link rel="prev" title="3. EM算法概述" href="EM.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -147,15 +147,15 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EM.html">3. EM算法概述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PGM.html">4. 概率图模型</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. 概率图模型</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. BiClustering</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="biClustering.html">1. BiClustering</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
 <ul class="nav bd-sidenav">
@@ -241,7 +241,7 @@
       
       
       
-      <li><a href="../_sources/ml/biClustering.md" target="_blank"
+      <li><a href="../_sources/ml/PGM.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -312,9 +312,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -325,19 +323,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>BiClustering</h1>
+    <h1>概率图模型</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -347,13 +337,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="biclustering">
-<h1><span class="section-number">1. </span>BiClustering<a class="headerlink" href="#biclustering" title="Link to this heading">#</a></h1>
-<p>Given a data matrix with rows and columns, BiClustering (block clustering, co-clustering or two-mode clustering) is able to cluster rows and columns simultaneously. A Bicluster is a subset of rows which exhibit similar behavior across a subset of columns, or vice versa.</p>
-<section id="biclustring-via-singlular-value-decomposition">
-<h2><span class="section-number">1.1. </span>Biclustring via singlular value decomposition<a class="headerlink" href="#biclustring-via-singlular-value-decomposition" title="Link to this heading">#</a></h2>
-<p><img alt="RoBic" src="../_images/robic_bicluster.png" /></p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 </section>
 
 
@@ -368,20 +353,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="PGM.html"
+       href="EM.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>概率图模型</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>EM算法概述</p>
       </div>
     </a>
     <a class="right-next"
-       href="../kernel/base.html"
+       href="biClustering.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>BiClustering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -392,20 +377,7 @@ document.write(`
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
+                <div class="bd-sidebar-secondary bd-toc"></div>
               
             
           </div>
