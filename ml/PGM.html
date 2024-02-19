@@ -46,8 +46,23 @@
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script src="https://unpkg.com/mermaid@10.8.0/dist/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true});</script>
+    <script src="https://unpkg.com/d3/dist/d3.min.js"></script>
+    <script>
+                window.addEventListener("load", function () {
+                  var svgs = d3.selectAll(".mermaid#id-2ec3e5b1-7f73-4358-b4bf-1cec29981ebd svg");
+                  svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                      inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                  });
+                });
+                </script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ml/PGM';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
@@ -319,7 +334,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -335,6 +352,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 隐马尔可夫模型</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -347,35 +372,42 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>  根据已观察到的数据（样本集）对未知变量（样本所属类别）进行估计，这是从数据学习知识的基本途径，也是机器学习的主要任务。概率模型将这一任务转换为计算变量的概率分布，即利用已知变量推测未知变量，也称之为<strong>推断</strong>。具体来说，假设所关心的变量集为<span class="math notranslate nohighlight">\(Y\)</span>，可观测变量集为<span class="math notranslate nohighlight">\(O\)</span>，其它变量为<span class="math notranslate nohighlight">\(R\)</span>，推断就是通过联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>计算得到条件分布<span class="math notranslate nohighlight">\(P(Y|O)\)</span>。其中，联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>称为<strong>生成式模型</strong>，条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>称为<strong>判别式模型</strong>。但是，直接使用概率求和规则消去变量<span class="math notranslate nohighlight">\(R\)</span>是不可行的，因为即使所有变量只有2种取值的特殊情况，计算复杂度也高达<span class="math notranslate nohighlight">\(O(2^{|Y|+|R|})\)</span>。</p>
-<p>  概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。</p>
-<div class="mermaid">
-            mindmap
-    id1[&quot;`**Root** with
-a second line
-Unicode works too: 🤓`&quot;]
-      id2[&quot;`The dog in **the** hog... a *very long text* that wraps to a new line`&quot;]
-      id3[Regular labels still works]
-        </div><div class="mermaid">
-            flowchart TB
-    c1--&gt;a2
-    subgraph one
-    a1--&gt;a2
-    end
-    subgraph two
-    b1--&gt;b2
-    end
-    subgraph three
-    c1--&gt;c2
-    end
-        </div><div class="mermaid">
-            timeline
-    title History of Social Media Platform
-    2002 : LinkedIn
-    2004 : Facebook
-         : Google
-    2005 : Youtube
-    2006 : Twitter
-        </div></section>
+<p>  概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。根据边的类型不同，图模型又可以继续细分为<strong>有向无环图</strong>（贝叶斯网，Bayesian network）和<strong>无向无环图</strong>（马尔可夫网，Markov network）两种。</p>
+<section id="id2">
+<h2><span class="section-number">4.1. </span>隐马尔可夫模型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>  隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。</p>
+<figure class="align-center" id="id3">
+<div id="id-2ec3e5b1-7f73-4358-b4bf-1cec29981ebd" class="mermaid">
+            block-beta
+  columns 10
+  x1((&quot;x1&quot;)) space x2((&quot;x2&quot;)) space x3((&quot;x3&quot;)) space x4((&quot;...&quot;)) space x5((&quot;xn&quot;)) space space space space space space space space space space space
+  y1((&quot;y1&quot;)) space y2((&quot;y2&quot;)) space y3((&quot;y3&quot;)) space y4((&quot;...&quot;)) space y5((&quot;yn&quot;))
+  y1 --&gt; y2
+  y2 --&gt; y3
+  y3 --&gt; y4
+  y4 --&gt; y5
+  y1 --&gt; x1
+  y2 --&gt; x2
+  y3 --&gt; x3
+  y4 --&gt; x4
+  y5 --&gt; x5
+        </div>
+        <figcaption>
+<p><span class="caption-text">fig 1. Hidden Markov Model</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>  如上图所示，隐马尔可夫模型中的变量分为两类，第一类为状态变量<span class="math notranslate nohighlight">\(\{y_1,y_2,...,y_n\}\)</span>，<span class="math notranslate nohighlight">\(y_i\)</span>表示第<span class="math notranslate nohighlight">\(i\)</span>时刻的系统状态，一般状态变量是不可观测的，也称为隐变量；第二类为观测变量<span class="math notranslate nohighlight">\(\{x_1,x_2,...,x_n\}\)</span>，<span class="math notranslate nohighlight">\(x_i\)</span>表示为第<span class="math notranslate nohighlight">\(i\)</span>时刻的观测值。图中的箭头代表的是变量间的依赖关系。具体来说有以下两点：</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_t\)</span>只依赖<span class="math notranslate nohighlight">\(y_t\)</span>。<span class="math notranslate nohighlight">\(t\)</span>时刻的观测值只与<span class="math notranslate nohighlight">\(t\)</span>时刻的状态相关，与其它状态无关。</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_t\)</span>只依赖<span class="math notranslate nohighlight">\(y_{t-1}\)</span>。 该性质也就是所谓的<strong>马尔可夫性</strong>。</p></li>
+</ul>
+<p>根据依赖关系，HMM所有变量的联合分布为，</p>
+<div class="math notranslate nohighlight">
+\[
+P(x_1,...,x_n,y_1,...,y_n)=P(y_1)P(x_1|y_1)\prod_{i=2}^n P(x_i|y_i)P(y_{i}|y_{i-1})
+\]</div>
+</section>
+</section>
 
 
                 </article>
@@ -413,7 +445,20 @@ Unicode works too: 🤓`&quot;]
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"></div>
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 隐马尔可夫模型</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
