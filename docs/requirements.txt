@@ -7,3 +7,5 @@ myst-parser
 sphinx-mathjax-offline
 sphinx-autobuild  
 sphinx-markdown-tables
+sphinxcontrib.mermaid
+sphinx_copybutton

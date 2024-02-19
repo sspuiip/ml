@@ -31,7 +31,11 @@ release = '1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'myst_parser','sphinx.ext.mathjax','sphinx-mathjax-offline'
+    'sphinxcontrib.mermaid', 
+    'sphinx_copybutton',
+    'myst_parser',
+    'sphinx.ext.mathjax',
+    'sphinx-mathjax-offline',     
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -48,8 +52,13 @@ language = 'zh_CN'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = ['_build']
 
+source_suffix = {
+    '.rst': 'restructuredtext',
+    '.txt': 'markdown',
+    '.md': 'markdown'
+}
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -57,6 +66,20 @@ exclude_patterns = []
 # a list of builtin themes.
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' nature haiku bizstyle pyramid
 html_theme = 'sphinx_book_theme'
+
+# options for sphinx_rtd_theme
+# html_theme_options = {
+#     'analytics_anonymize_ip': False,
+#     'logo_only': True,
+#     'display_version': True,
+#     'prev_next_buttons_location': 'bottom',
+#     'style_external_links': False,
+#     'collapse_navigation': True,
+#     'sticky_navigation': True,
+#     'navigation_depth': 4,
+#     'includehidden': True,
+#     'titles_only': False,
+# }
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
@@ -73,7 +96,9 @@ html_static_path = ['_static']
 # -- Extension configuration -------------------------------------------------
 myst_enable_extensions = [
     "amsmath",
-    "dollarmath"
+    "dollarmath",
+    "tasklist",
+    "deflist"
 ]
 
 
