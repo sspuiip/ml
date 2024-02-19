@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
@@ -39,8 +40,14 @@
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script src="https://unpkg.com/mermaid@10.2.0/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({startOnLoad:true});</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ml/PGM';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
@@ -339,7 +346,35 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
-</section>
+<p>  根据已观察到的数据（样本集）对未知变量（样本所属类别）进行估计，这是从数据学习知识的基本途径，也是机器学习的主要任务。概率模型将这一任务转换为计算变量的概率分布，即利用已知变量推测未知变量，也称之为<strong>推断</strong>。具体来说，假设所关心的变量集为<span class="math notranslate nohighlight">\(Y\)</span>，可观测变量集为<span class="math notranslate nohighlight">\(O\)</span>，其它变量为<span class="math notranslate nohighlight">\(R\)</span>，推断就是通过联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>计算得到条件分布<span class="math notranslate nohighlight">\(P(Y|O)\)</span>。其中，联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>称为<strong>生成式模型</strong>，条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>称为<strong>判别式模型</strong>。但是，直接使用概率求和规则消去变量<span class="math notranslate nohighlight">\(R\)</span>是不可行的，因为即使所有变量只有2种取值的特殊情况，计算复杂度也高达<span class="math notranslate nohighlight">\(O(2^{|Y|+|R|})\)</span>。</p>
+<div class="mermaid">
+            mindmap
+    id1[&quot;`**Root** with
+a second line
+Unicode works too: 🤓`&quot;]
+      id2[&quot;`The dog in **the** hog... a *very long text* that wraps to a new line`&quot;]
+      id3[Regular labels still works]
+        </div><div class="mermaid">
+            flowchart TB
+    c1--&gt;a2
+    subgraph one
+    a1--&gt;a2
+    end
+    subgraph two
+    b1--&gt;b2
+    end
+    subgraph three
+    c1--&gt;c2
+    end
+        </div><div class="mermaid">
+            timeline
+    title History of Social Media Platform
+    2002 : LinkedIn
+    2004 : Facebook
+         : Google
+    2005 : Youtube
+    2006 : Twitter
+        </div></section>
 
 
                 </article>
