@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Machine Learning Fundation'
-copyright = '2022-2023, SSPUIIP'
+copyright = '2022-2024, SSPUIIP'
 author = 'SSPUIIP'
 
 # The full version, including alpha/beta/rc tags
@@ -64,22 +64,9 @@ source_suffix = {
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' nature haiku bizstyle pyramid
-html_theme = 'sphinx_book_theme'
-
-# options for sphinx_rtd_theme
-# html_theme_options = {
-#     'analytics_anonymize_ip': False,
-#     'logo_only': True,
-#     'display_version': True,
-#     'prev_next_buttons_location': 'bottom',
-#     'style_external_links': False,
-#     'collapse_navigation': True,
-#     'sticky_navigation': True,
-#     'navigation_depth': 4,
-#     'includehidden': True,
-#     'titles_only': False,
-# }
+#  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' 
+#   classic scrolls sphinxdoc nature haiku bizstyle pyramid agogo traditional
+html_theme = 'nature'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
