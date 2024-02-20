@@ -1,48 +1,19 @@
-
 <!DOCTYPE html>
 
-
-<html lang="zh-CN" data-content_root="../" >
-
+<html lang="zh-CN" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>4. 概率图模型 &#8212; Machine Learning Fundation 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
-
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-  
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
-
-    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
@@ -51,7 +22,7 @@
     <script src="https://unpkg.com/d3/dist/d3.min.js"></script>
     <script>
                 window.addEventListener("load", function () {
-                  var svgs = d3.selectAll(".mermaid#id-2ec3e5b1-7f73-4358-b4bf-1cec29981ebd svg");
+                  var svgs = d3.selectAll(".mermaid#id-9b74972a-ea47-4c33-b04d-21d710e95f6c svg");
                   svgs.each(function() {
                     var svg = d3.select(this);
                     svg.html("<g>" + svg.html() + "</g>");
@@ -63,321 +34,42 @@
                   });
                 });
                 </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/PGM';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="1. BiClustering" href="biClustering.html" />
-    <link rel="prev" title="3. EM算法概述" href="EM.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+    <link rel="prev" title="3. EM算法概述" href="EM.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="biClustering.html" title="1. BiClustering"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="EM.html" title="3. EM算法概述"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>概率图模型</a></li> 
+      </ul>
+    </div>  
 
-  
-  
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
-
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-      <div class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-
-<a class="navbar-brand logo" href="../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item">
-
- <script>
- document.write(`
-   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">搜索</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
-<li class="toctree-l1"><a class="reference internal" href="EM.html">3. EM算法概述</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. 概率图模型</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="biClustering.html">1. BiClustering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
-</ul>
-
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-  
-  <div id="rtd-footer-container"></div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/ml/PGM.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
-
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>概率图模型</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 隐马尔可夫模型</a></li>
-</ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  根据已观察到的数据（样本集）对未知变量（样本所属类别）进行估计，这是从数据学习知识的基本途径，也是机器学习的主要任务。概率模型将这一任务转换为计算变量的概率分布，即利用已知变量推测未知变量，也称之为<strong>推断</strong>。具体来说，假设所关心的变量集为<span class="math notranslate nohighlight">\(Y\)</span>，可观测变量集为<span class="math notranslate nohighlight">\(O\)</span>，其它变量为<span class="math notranslate nohighlight">\(R\)</span>，推断就是通过联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>计算得到条件分布<span class="math notranslate nohighlight">\(P(Y|O)\)</span>。其中，联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>称为<strong>生成式模型</strong>，条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>称为<strong>判别式模型</strong>。但是，直接使用概率求和规则消去变量<span class="math notranslate nohighlight">\(R\)</span>是不可行的，因为即使所有变量只有2种取值的特殊情况，计算复杂度也高达<span class="math notranslate nohighlight">\(O(2^{|Y|+|R|})\)</span>。</p>
 <p>  概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。根据边的类型不同，图模型又可以继续细分为<strong>有向无环图</strong>（贝叶斯网，Bayesian network）和<strong>无向无环图</strong>（马尔可夫网，Markov network）两种。</p>
 <section id="id2">
-<h2><span class="section-number">4.1. </span>隐马尔可夫模型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">4.1. </span>隐马尔可夫模型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。</p>
-<figure class="align-center" id="id3">
-<div id="id-2ec3e5b1-7f73-4358-b4bf-1cec29981ebd" class="mermaid">
+<figure class="align-center" id="id4">
+<div id="id-9b74972a-ea47-4c33-b04d-21d710e95f6c" class="mermaid">
             block-beta
   columns 10
   x1((&quot;x1&quot;)) space x2((&quot;x2&quot;)) space x3((&quot;x3&quot;)) space x4((&quot;...&quot;)) space x5((&quot;xn&quot;)) space space space space space space space space space space space
@@ -393,7 +85,7 @@ document.write(`
   y5 --&gt; x5
         </div>
         <figcaption>
-<p><span class="caption-text">fig 1. Hidden Markov Model</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 1. Hidden Markov Model</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  如上图所示，隐马尔可夫模型中的变量分为两类，第一类为状态变量<span class="math notranslate nohighlight">\(\{y_1,y_2,...,y_n\}\)</span>，<span class="math notranslate nohighlight">\(y_i\)</span>表示第<span class="math notranslate nohighlight">\(i\)</span>时刻的系统状态，一般状态变量是不可观测的，也称为隐变量；第二类为观测变量<span class="math notranslate nohighlight">\(\{x_1,x_2,...,x_n\}\)</span>，<span class="math notranslate nohighlight">\(x_i\)</span>表示为第<span class="math notranslate nohighlight">\(i\)</span>时刻的观测值。图中的箭头代表的是变量间的依赖关系。具体来说有以下两点：</p>
@@ -401,112 +93,159 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(x_t\)</span>只依赖<span class="math notranslate nohighlight">\(y_t\)</span>。<span class="math notranslate nohighlight">\(t\)</span>时刻的观测值只与<span class="math notranslate nohighlight">\(t\)</span>时刻的状态相关，与其它状态无关。</p></li>
 <li><p><span class="math notranslate nohighlight">\(y_t\)</span>只依赖<span class="math notranslate nohighlight">\(y_{t-1}\)</span>。 该性质也就是所谓的<strong>马尔可夫性</strong>。</p></li>
 </ul>
-<p>根据依赖关系，HMM所有变量的联合分布为，</p>
+<p>根据依赖关系，HMM所有变量的<strong>联合分布</strong>为，</p>
 <div class="math notranslate nohighlight">
 \[
 P(x_1,...,x_n,y_1,...,y_n)=P(y_1)P(x_1|y_1)\prod_{i=2}^n P(x_i|y_i)P(y_{i}|y_{i-1})
+\tag{1}
+\]</div>
+<p>  除了上述变量间的依赖关系（也就是模型的结构信息），确定一个隐马尔可夫模型还需要三组参数，即<strong>模型参数<span class="math notranslate nohighlight">\(\lambda=[A,B,\pmb{\pi}]\)</span></strong>：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><strong>状态转移概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(A=[a_{ij}]_{N\times N}\)</span><br><span class="math notranslate nohighlight">\(a_{ij}=P(y_{t+1}=s_j | y_t=s_i)\)</span></p></td>
+<td class="text-center"><p>各个状态间的跳转概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则下一时刻状态为<span class="math notranslate nohighlight">\(s_j\)</span>的概率。</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><strong>输出观测概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(B=[b_{ij}]_{N\times M}\)</span><br><span class="math notranslate nohighlight">\(b_{ij}=P(x_t=o_j | y_t=s_i)\)</span></p></td>
+<td class="text-center"><p>模型当前状态得到观测值的概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则观测值为<span class="math notranslate nohighlight">\(o_j\)</span>的概率。</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><strong>初使状态概率</strong>。<br>记为<span class="math notranslate nohighlight">\(\pmb{\pi}=(\pi_1,...,\pi_N)\)</span><br><span class="math notranslate nohighlight">\(\pi_i = P(y_1=s_i)\)</span></p></td>
+<td class="text-center"><p>模型在初始时刻各状态出现的概率。</p></td>
+</tr>
+</tbody>
+</table>
+<p>通过上述三组参数可以确定一个隐马尔可夫模型。</p>
+<p>  现实应用中，隐马尔可夫模型一般主要用来解决以下3种问题：</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>应用问题</p></th>
+<th class="head text-center"><p>场景</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1. 计算观测序列产生概率<span class="math notranslate nohighlight">\(P(\pmb{x}|\lambda)\)</span>，也就是如何评估模型与观测序列之间的匹配程度？</p></td>
+<td class="text-center"><p>根据以往观测序列<span class="math notranslate nohighlight">\((x_1,...,x_{n-1}\)</span>推测当前时刻观测值<span class="math notranslate nohighlight">\(x_n\)</span>的可能性，可以转化为求概率<span class="math notranslate nohighlight">\(P(\pmb{x}|\lambda)\)</span>。</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>2. 给定模型<span class="math notranslate nohighlight">\(\lambda\)</span>和观测序列<span class="math notranslate nohighlight">\(\pmb{x}=(x_1,...,x_n)\)</span>，如何找到与此观测序列匹配的隐状态序列<span class="math notranslate nohighlight">\(\pmb{y}=(y_1,...,y_n)\)</span>，也就是根据观测序列如何推断出隐状态？</p></td>
+<td class="text-center"><p>语音识别任务中，隐藏状态是文字，目标为根据观测信号推断最有可能的状态序列（文字序列）。</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>3. 给定观测序列<span class="math notranslate nohighlight">\(\pmb{x}=(x_1,...,x_n)\)</span>，如何优化参数<span class="math notranslate nohighlight">\(\lambda\)</span>使得序列出现的概率<span class="math notranslate nohighlight">\(P(\pmb{x}| \lambda)\)</span>最大，也就是如何训练模型？</p></td>
+<td class="text-center"><p>根据训练样本得到最优参数。根据条件独立性，隐马尔可夫模型的三个问题都能高效求解。</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2><span class="section-number">4.2. </span>马尔可夫随机场<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>  马尔可夫随机场是一种无向图模型。图中结点表示一个（组）变量，结点之间的边表示变量之间的依赖关系。马尔可夫随机场的联合概率分布函数由一组<strong>势函数</strong>（potential functions），也称之为<strong>因子</strong>(factor)，构成。势函数是定义在变量子集上的非负实函数。</p>
+<p>  马尔可夫随机场的变量子集根据结点特性可以加以区别。若一个结点子集中任意两结点之间都有边连接，则称该子集为一个<strong>团</strong>（clique）；若在一个团中加入另外任何一个结点后，不再形成团，则该团称为<strong>极大团</strong>（maximal clique）。</p>
+<p>  在马尔可夫随机场中，多个变量之间的联合概率分布可能基于团分解为多个势函数（因子）的乘积，每次个势函数只与一个团关联。具体来说，对于<span class="math notranslate nohighlight">\(n\)</span>个变量<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,...,x_n\}\)</span>，所有团构成的集合为<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>，团<span class="math notranslate nohighlight">\(Q\in\mathcal{C}\)</span>相关的变量集合记为<span class="math notranslate nohighlight">\(\pmb{x}_Q\)</span>，则<strong>联合概率</strong>定义为，</p>
+<div class="math notranslate nohighlight">
+\[
+P(\pmb{x})=\frac1Z \prod_{Q\in\mathcal{C}}\psi_Q(\pmb{x}_Q)\tag{2}
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\psi_Q\)</span>为团<span class="math notranslate nohighlight">\(Q\)</span>对应的势函数，<span class="math notranslate nohighlight">\(Z=\sum_{\pmb{x}}\prod_{Q\in\mathcal{C}}\psi_Q(\pmb{x}_Q)\)</span>为常数，也称之为规范化因子。实际应用中精确计算<span class="math notranslate nohighlight">\(Z\)</span>往往很困难，但很多时候并不需要获得<span class="math notranslate nohighlight">\(Z\)</span>的精确值。</p>
+<p>  若变量个数过多，则团的数据会很多，就会对联合概率的计算带来负担。可以发现，只要团<span class="math notranslate nohighlight">\(Q\)</span>不是极大团，则它必然被一个极大团<span class="math notranslate nohighlight">\(Q^*\)</span>包含。因此，可以根据极大团来定义联合概率。假设极大团构成的集合为<span class="math notranslate nohighlight">\(\mathcal{C}^*\)</span>，则有，</p>
+<div class="math notranslate nohighlight">
+\[
+P(\pmb{x})=\frac{1}{Z^*} \prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\tag{3}
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(Z^*=\sum_{\pmb{x}}\prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\)</span>。</p>
+<p>  <strong>例</strong>1。假设有一随机变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,x_2,...,x_6\}\)</span>的马尔可夫随机场如下图所示，</p>
+<figure class="align-center" id="id5">
+<div class="mermaid">
+            flowchart LR
+  x1((x1)) --- x2((x2))
+  x1((x1)) --- x3((x3))
+  x2((x2)) --- x4((x4))
+  x2((x2)) --- x6((x6))
+  x2((x2)) --- x5((x5))
+  x5((x5)) --- x6((x6))
+  x3((x3)) --- x5((x5))
+        </div><figcaption>
+<p><span class="caption-text">Fig 2. 马尔可夫随机场示例</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>则联合概率分布为，</p>
+<div class="math notranslate nohighlight">
+\[
+P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{35}(x_3,x_5)\psi_{256}(x_2x_5x_6)
 \]</div>
 </section>
 </section>
 
 
-                </article>
-              
-
-              
-              
-              
-              
-                <footer class="prev-next-footer">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="EM.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>EM算法概述</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="biClustering.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>BiClustering</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1. 隐马尔可夫模型</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
+            <div class="clearer"></div>
           </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">4. 概率图模型</a><ul>
+<li><a class="reference internal" href="#id2">4.1. 隐马尔可夫模型</a></li>
+<li><a class="reference internal" href="#id3">4.2. 马尔可夫随机场</a></li>
+</ul>
+</li>
+</ul>
 
   </div>
-  
-  <div class="footer-item">
-    
-
-  <p class="copyright">
-    
-      © Copyright 2022-2023, SSPUIIP.
-      <br/>
-    
-  </p>
-
+  <div>
+    <h4>上一主题</h4>
+    <p class="topless"><a href="EM.html"
+                          title="上一章"><span class="section-number">3. </span>EM算法概述</a></p>
   </div>
-  
-  <div class="footer-item">
-    
+  <div>
+    <h4>下一主题</h4>
+    <p class="topless"><a href="biClustering.html"
+                          title="下一章"><span class="section-number">1. </span>BiClustering</a></p>
   </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ml/PGM.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
-
-  <footer class="bd-footer">
-  </footer>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="biClustering.html" title="1. BiClustering"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="EM.html" title="3. EM算法概述"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>概率图模型</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6创建。
+    </div>
   </body>
 </html>
