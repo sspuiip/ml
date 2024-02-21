@@ -22,7 +22,7 @@
     <script src="https://unpkg.com/d3/dist/d3.min.js"></script>
     <script>
                 window.addEventListener("load", function () {
-                  var svgs = d3.selectAll(".mermaid#id-b699e438-d171-4d51-85d2-00a86d91b6c2 svg");
+                  var svgs = d3.selectAll(".mermaid#id-6d192dc3-efb0-42f2-9c58-9dedc0015754 svg");
                   svgs.each(function() {
                     var svg = d3.select(this);
                     svg.html("<g>" + svg.html() + "</g>");
@@ -68,8 +68,8 @@
 <section id="id2">
 <h2><span class="section-number">4.1. </span>隐马尔可夫模型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。</p>
-<figure class="align-center" id="id4">
-<div id="id-b699e438-d171-4d51-85d2-00a86d91b6c2" class="mermaid">
+<figure class="align-center" id="id7">
+<div id="id-6d192dc3-efb0-42f2-9c58-9dedc0015754" class="mermaid">
             block-beta
   columns 10
   x1((&quot;x1&quot;)) space x2((&quot;x2&quot;)) space x3((&quot;x3&quot;)) space x4((&quot;...&quot;)) space x5((&quot;xn&quot;)) space space space space space space space space space space space
@@ -85,7 +85,7 @@
   y5 --&gt; x5
         </div>
         <figcaption>
-<p><span class="caption-text">Fig 1. Hidden Markov Model</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 1. Hidden Markov Model</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  如上图所示，隐马尔可夫模型中的变量分为两类，第一类为状态变量<span class="math notranslate nohighlight">\(\{y_1,y_2,...,y_n\}\)</span>，<span class="math notranslate nohighlight">\(y_i\)</span>表示第<span class="math notranslate nohighlight">\(i\)</span>时刻的系统状态，一般状态变量是不可观测的，也称为隐变量；第二类为观测变量<span class="math notranslate nohighlight">\(\{x_1,x_2,...,x_n\}\)</span>，<span class="math notranslate nohighlight">\(x_i\)</span>表示为第<span class="math notranslate nohighlight">\(i\)</span>时刻的观测值。图中的箭头代表的是变量间的依赖关系。具体来说有以下两点：</p>
@@ -143,6 +143,8 @@ P(x_1,...,x_n,y_1,...,y_n)=P(y_1)P(x_1|y_1)\prod_{i=2}^n P(x_i|y_i)P(y_{i}|y_{i-
 <h2><span class="section-number">4.2. </span>马尔可夫随机场<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  马尔可夫随机场是一种无向图模型。图中结点表示一个（组）变量，结点之间的边表示变量之间的依赖关系。马尔可夫随机场的联合概率分布函数由一组<strong>势函数</strong>（potential functions），也称之为<strong>因子</strong>(factor)，构成。势函数是定义在变量子集上的非负实函数。</p>
 <p>  马尔可夫随机场的变量子集根据结点特性可以加以区别。若一个结点子集中任意两结点之间都有边连接，则称该子集为一个<strong>团</strong>（clique）；若在一个团中加入另外任何一个结点后，不再形成团，则该团称为<strong>极大团</strong>（maximal clique）。</p>
+<section id="id4">
+<h3><span class="section-number">4.2.1. </span>联合概率<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>  在马尔可夫随机场中，多个变量之间的联合概率分布可能基于团分解为多个势函数（因子）的乘积，每次个势函数只与一个团关联。具体来说，对于<span class="math notranslate nohighlight">\(n\)</span>个变量<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,...,x_n\}\)</span>，所有团构成的集合为<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>，团<span class="math notranslate nohighlight">\(Q\in\mathcal{C}\)</span>相关的变量集合记为<span class="math notranslate nohighlight">\(\pmb{x}_Q\)</span>，则<strong>联合概率</strong>定义为，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -155,8 +157,8 @@ P(\pmb{x})=\frac1Z \prod_{Q\in\mathcal{C}}\psi_Q(\pmb{x}_Q)\tag{2}
 P(\pmb{x})=\frac{1}{Z^*} \prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\tag{3}
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(Z^*=\sum_{\pmb{x}}\prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\)</span>。</p>
-<p>  <strong>例</strong>1。假设有一随机变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,x_2,...,x_6\}\)</span>的马尔可夫随机场如下图所示，</p>
-<figure class="align-center" id="id5">
+<p>  <strong>例</strong>1. 假设有一随机变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,x_2,...,x_6\}\)</span>的马尔可夫随机场如下图所示，</p>
+<figure class="align-center" id="id8">
 <div class="mermaid">
             flowchart LR
   x1((x1)) --- x2((x2))
@@ -167,13 +169,76 @@ P(\pmb{x})=\frac{1}{Z^*} \prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\tag{3}
   x5((x5)) --- x6((x6))
   x3((x3)) --- x5((x5))
         </div><figcaption>
-<p><span class="caption-text">Fig 2. 马尔可夫随机场示例</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 2. 马尔可夫随机场示例</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>则联合概率分布为，</p>
 <div class="math notranslate nohighlight">
 \[
 P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{35}(x_3,x_5)\psi_{256}(x_2,x_5,x_6)
+\]</div>
+</section>
+<section id="id5">
+<h3><span class="section-number">4.2.2. </span>条件独立性<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>  借助分离集得到变量的条件独立性。若结点集<span class="math notranslate nohighlight">\(A\)</span>到<span class="math notranslate nohighlight">\(B\)</span>中的结点都必须经过结点集<span class="math notranslate nohighlight">\(C\)</span>中的结点，则称<span class="math notranslate nohighlight">\(C\)</span>为<span class="math notranslate nohighlight">\(A\)</span>,<span class="math notranslate nohighlight">\(B\)</span>的<strong>分离集</strong>（separating set）。</p>
+<p>  <strong>例</strong>2. 图3给出了分离集<span class="math notranslate nohighlight">\(C\)</span>的示例。子集<span class="math notranslate nohighlight">\(B\)</span>和<span class="math notranslate nohighlight">\(A\)</span>的结点相连都要经过子集<span class="math notranslate nohighlight">\(C\)</span>的结点。</p>
+<figure class="align-center" id="id9">
+<div class="mermaid">
+            flowchart TD   
+  x1 -.- x9((&quot;x9&quot;))
+  subgraph A 
+    x3 --- x1
+    x2((&quot;x2&quot;)) --- x1((&quot;x1&quot;))
+    x2 --- x3((&quot;x3&quot;))    
+  end
+  x2 --- x4
+  x3 --- x5
+  subgraph C
+    x4((&quot;x4&quot;)) --- x5((&quot;x5&quot;))
+  end
+  x4 --- x6
+  x5 --- x7
+  subgraph B
+    x6((&quot;x6&quot;)) --- x7((&quot;x7&quot;))
+  end
+  x7 -.- x8((&quot;x8&quot;))
+        </div><figcaption>
+<p><span class="caption-text">Fig 3. 马尔可夫随机场分离集示例</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>全局马尔可夫性: 给定两个变量子集的分离集，则这两个变量子集条件独立</strong></p></li>
+</ul>
+<p>  在例2中，若令<span class="math notranslate nohighlight">\(A,B,C\)</span>对应的变量子集分别为<span class="math notranslate nohighlight">\(\pmb{x}_A,\pmb{x}_B,\pmb{x}_c\)</span>，则有<span class="math notranslate nohighlight">\(\pmb{x}_A\)</span>与<span class="math notranslate nohighlight">\(\pmb{x}_C\)</span>在给定条件<span class="math notranslate nohighlight">\(\pmb{x}_B\)</span>的条件下相互独立，即</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{x}_A \bot\pmb{x}_C |\pmb{x}_B
+\]</div>
+<p>  由全局马尔可夫性可以得到两个有用的结论：</p>
+<ol class="arabic simple">
+<li><p><strong>局部马尔可夫性</strong>. 给定某变量的邻接变量，则该变量条件独立于其它变量，<span class="math notranslate nohighlight">\(\pmb{x}_v \bot \pmb{x}_{V\backslash \{ n(v)\cup v\}}|\pmb{x}_{n(v)}\)</span>。</p></li>
+<li><p><strong>成对马尔可夫性</strong>. 给定其它所有变量，两个非邻接变量条件独立，<span class="math notranslate nohighlight">\(\pmb{x}_u \bot\pmb{x}_v|\pmb{x}_{V\backslash\{u\cup v\}}\)</span>。</p></li>
+</ol>
+</section>
+</section>
+<section id="id6">
+<h2><span class="section-number">4.3. </span>推断与参数学习<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<p>  基于概率图模型定义的联合概率分布，我们可以对感兴趣目标变量的<strong>边缘分布</strong>进行推断；或者给定某些观测变量为条件的<strong>条件分布</strong>进行<em>推断</em>。</p>
+<p>  对于概率图模型，还需要确定具体分布的参数，这也称之为参数学习（估计）问题。一般使用极大似然估计或最大后验估计方法求解。特别地，如果将待学习的参数视为待推测变量，则参数估计和推断问题就非常相似，可以认为是推断问题。因此，如果没有特别要求，只需要观注概率图模型的推断方法。</p>
+<p>  概率图模型的推断方法大致可以分为两类：</p>
+<ol class="arabic simple">
+<li><p>精确推断方法. 精确计算目标变量的边缘分布或条件。一般情况下，此类方法随着极大团规模的增长计算复杂度呈指数增长。</p></li>
+<li><p>近似推断方法. 此类方法期望在较低的时间复杂度获得问题的近似解，实际任务中应用较为广泛。</p></li>
+</ol>
+<p>  具体来说，假设图模型所对应的变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,...,x_n\}\)</span>可以拆分为<span class="math notranslate nohighlight">\(\pmb{x}_E\)</span>和<span class="math notranslate nohighlight">\(\pmb{x}_F\)</span>两部分，推断问题的目标就是计算边缘分布<span class="math notranslate nohighlight">\(P(\pmb{x}_F)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(\pmb{x}_F|\pmb{x}_E)\)</span>。由条件概率可知，</p>
+<div class="math notranslate nohighlight">
+\[
+P(\pmb{x}_F|\pmb{x}_E)=\frac{P(\pmb{x}_F,\pmb{x}_E)}{P(\pmb{x}_E)}=\frac{P(\pmb{x}_F,\pmb{x}_E)}{\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)}
+\]</div>
+<p>上式中，联合分布可以由图模型得到，所以推断问题的关键就是如何计算分母中的边缘分布，也就是</p>
+<div class="math notranslate nohighlight">
+\[
+P(\pmb{x}_E)=\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)
 \]</div>
 </section>
 </section>
@@ -190,7 +255,12 @@ P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{3
     <ul>
 <li><a class="reference internal" href="#">4. 概率图模型</a><ul>
 <li><a class="reference internal" href="#id2">4.1. 隐马尔可夫模型</a></li>
-<li><a class="reference internal" href="#id3">4.2. 马尔可夫随机场</a></li>
+<li><a class="reference internal" href="#id3">4.2. 马尔可夫随机场</a><ul>
+<li><a class="reference internal" href="#id4">4.2.1. 联合概率</a></li>
+<li><a class="reference internal" href="#id5">4.2.2. 条件独立性</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6">4.3. 推断与参数学习</a></li>
 </ul>
 </li>
 </ul>
