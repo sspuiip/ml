@@ -1,55 +1,381 @@
+
 <!DOCTYPE html>
 
-<html lang="zh-CN" data-content_root="../">
+
+<html lang="zh-CN" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>4. 共轭分布 &#8212; Machine Learning Fundation 1.0 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'mathmodel/conjugate_dist';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="5. 随机模拟" href="mcmc.html" />
-    <link rel="prev" title="3. 信息熵" href="entropy.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="mcmc.html" title="5. 随机模拟"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="entropy.html" title="3. 信息熵"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>共轭分布</a></li> 
-      </ul>
-    </div>  
+    <link rel="prev" title="3. 信息熵" href="entropy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">4. 概率图模型</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcmc.html">5. 随机模拟</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/mathmodel/conjugate_dist.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>共轭分布</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">4.1. Gamma分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1.1. Gamma函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.2. Gamma分布</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">4.2. Beta分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4. </span>共轭分布<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">4. </span>共轭分布<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="gamma">
-<h2><span class="section-number">4.1. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">4.1. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">#</a></h2>
 <section id="id2">
-<h3><span class="section-number">4.1.1. </span>Gamma函数<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">4.1.1. </span>Gamma函数<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>  <strong>Gamma函数</strong>是指形如以下的函数，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -63,7 +389,7 @@
 </ul>
 </section>
 <section id="id3">
-<h3><span class="section-number">4.1.2. </span>Gamma分布<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">4.1.2. </span>Gamma分布<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  Gamma函数在统计中出现频率很高，比如常见的三大分布(<span class="math notranslate nohighlight">\(t\)</span>分布，<span class="math notranslate nohighlight">\(\chi^2\)</span>分布，<span class="math notranslate nohighlight">\(F\)</span>分布)、Beta分布、Dirichlet分布等分布的概率密度函数中都有Gamma函数。最直接相关的则是Gamma分布，其概率密度函数为</p>
 <div class="math notranslate nohighlight">
 \[
@@ -92,7 +418,7 @@
 </section>
 </section>
 <section id="beta">
-<h2><span class="section-number">4.2. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">4.2. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">#</a></h2>
 <p>  假设均匀地从<span class="math notranslate nohighlight">\([0,1]\)</span>随机抽取10个数字，那么第8大的数是哪个数，偏离程度小于0.01就算合格。那么该如何猜这个数字呢？如果对随机抽取的10个数字分别用随机变量<span class="math notranslate nohighlight">\(X_1,...,X_{10}\)</span>来表示，排序后可得到顺序统计量<span class="math notranslate nohighlight">\(X_{(1)},...,X_{(10)}\)</span>。一个可行的办法就是求出<span class="math notranslate nohighlight">\(X_{(8)}\)</span>的概率密度，然后使用概率分布的极值点来猜测。</p>
 <p>  一般来说，<span class="math notranslate nohighlight">\(X_{(k)}\)</span>的分布是什么呢？可以先尝试计算<span class="math notranslate nohighlight">\(X_{(k)}\)</span>落在区间<span class="math notranslate nohighlight">\([x,x+\delta x]\)</span>的概率，也就是</p>
 <div class="math notranslate nohighlight">
@@ -147,7 +473,7 @@ f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delt
 \mathrm{Beta}(x|\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\tag{5}
 \]</div>
 <section id="beta-binomial">
-<h3><span class="section-number">4.2.1. </span>Beta-Binomial共轭<a class="headerlink" href="#beta-binomial" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">4.2.1. </span>Beta-Binomial共轭<a class="headerlink" href="#beta-binomial" title="Link to this heading">#</a></h3>
 <p>  如果继续均匀地在区间<span class="math notranslate nohighlight">\([0,1]\)</span>随机抽取5个数，并告之每一个与数字<span class="math notranslate nohighlight">\(X_{(8)}\)</span>的大小，请问<span class="math notranslate nohighlight">\(X_{(8)}\)</span>这个数是多少？由于<span class="math notranslate nohighlight">\(p=X_{(k)}\)</span>这个数在<span class="math notranslate nohighlight">\(X_1,...,X_n,Y_1,...,Y_m\)</span>，<span class="math notranslate nohighlight">\(m+n\)</span>个数中中是第<span class="math notranslate nohighlight">\(k+m_1\)</span>大的，由Beta分布的概率密度函数可知，此时<span class="math notranslate nohighlight">\(p=X_{(k)}\)</span>的概率密度函数是<span class="math notranslate nohighlight">\(\mathrm{Beta}(p|k+m_1,n-k+1+m_2)\)</span>。</p>
 <p>  上述过程可以总结为：</p>
 <ol class="arabic simple">
@@ -168,7 +494,7 @@ f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delt
 <p>  该公式(6)实际上描述的就是Beta-Binomial共轭。<strong>共轭</strong>的意思就是：数据符合二项分布，参数的先验分布都能保持Beta分布的形式。好处是能够在先验分布中赋予参数明确的物理意义，该解释可以延续到后验分布。</p>
 </section>
 <section id="dirichlet-multinomial">
-<h3><span class="section-number">4.2.2. </span>Dirichlet-Multinomial共轭<a class="headerlink" href="#dirichlet-multinomial" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">4.2.2. </span>Dirichlet-Multinomial共轭<a class="headerlink" href="#dirichlet-multinomial" title="Link to this heading">#</a></h3>
 <p>  Beta分布拓展到多维，称为Dirichlet分布，即，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -189,81 +515,112 @@ f(x)&amp;=\lim_{\delta x\rightarrow 0}\frac{P(x\le X_{(k)}\le x+\delta x)}{\delt
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
-        </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="entropy.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>信息熵</p>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">4. 共轭分布</a><ul>
-<li><a class="reference internal" href="#gamma">4.1. Gamma分布</a><ul>
-<li><a class="reference internal" href="#id2">4.1.1. Gamma函数</a></li>
-<li><a class="reference internal" href="#id3">4.1.2. Gamma分布</a></li>
+    </a>
+    <a class="right-next"
+       href="mcmc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">5. </span>随机模拟</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">4.1. Gamma分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.1.1. Gamma函数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1.2. Gamma分布</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#beta">4.2. Beta分布</a><ul>
-<li><a class="reference internal" href="#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
-<li><a class="reference internal" href="#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">4.2. Beta分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
 </ul>
 </li>
 </ul>
-</li>
-</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
 
   </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="entropy.html"
-                          title="上一章"><span class="section-number">3. </span>信息熵</a></p>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022-2024, SSPUIIP.
+      <br/>
+    
+  </p>
+
   </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="mcmc.html"
-                          title="下一章"><span class="section-number">5. </span>随机模拟</a></p>
+  
+  <div class="footer-item">
+    
   </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/mathmodel/conjugate_dist.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+          </footer>
+        
+
+      </main>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="mcmc.html" title="5. 随机模拟"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="entropy.html" title="3. 信息熵"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>共轭分布</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6创建。
-    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
