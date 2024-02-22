@@ -34,6 +34,8 @@ extensions = [
     'sphinxcontrib.mermaid', 
     'sphinx_copybutton',
     'myst_parser',
+    'sphinx_design',
+    'sphinx_togglebutton',
     'sphinx.ext.mathjax',
     'sphinx-mathjax-offline',     
 ]
@@ -83,13 +85,24 @@ html_static_path = ['_static']
 # -- Extension configuration -------------------------------------------------
 myst_enable_extensions = [
     "amsmath",
+    "attrs_inline",
+    "colon_fence",
+    "deflist",
     "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
     "tasklist",
-    "deflist"
 ]
 
 # -- mermaid
 mermaid_version = '10.8.0'
+
 
 
  

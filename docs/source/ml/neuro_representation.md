@@ -20,7 +20,11 @@ $$
 
 其中，$\pmb{W},\pmb{H}$分别为编码层参数和解码层参数，$\sigma$为激活函数。
 
-![AutoEncoder](../img/autoencoder.png)
+:::{figure-md}
+![AutoEncoder](../img/autoencoder.png){width=400px}
+
+自编码器示例
+:::
 
 - **训练自编码器**
 
