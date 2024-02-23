@@ -358,10 +358,10 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.2. 线性算子</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.1. 求值泛函</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
 </ul>
 </li>
@@ -396,12 +396,22 @@ J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
 <ul class="simple">
 <li><p><strong>例1</strong>. 两点间直线距离最短问题.</p></li>
 </ul>
-<p><img alt="两点间直线距离最短" src="../_images/functional1.png" /></p>
+<figure class="align-default" id="id12">
+<a class="reference internal image-reference" href="../_images/functional1.png"><img alt="两点间直线距离最短" src="../_images/functional1.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-text">Fig 1. 两点间直线距离最短</span><a class="headerlink" href="#id12" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>  如上图所示，从坐标原点<span class="math notranslate nohighlight">\((0,0)\)</span>到点<span class="math notranslate nohighlight">\((a,b)\)</span>的连接曲线为<span class="math notranslate nohighlight">\(y=y(x)\)</span>，曲线的弧长微分为<span class="math notranslate nohighlight">\(ds=\sqrt{1+\left( \frac{dy}{dx}\right)^2}dx\)</span>，总弧长为<span class="math notranslate nohighlight">\(s=\int_0^a (1+y'^2)^{1/2}dx\)</span>。可以看出<span class="math notranslate nohighlight">\(s\)</span>为一个标量，而等式右边为<span class="math notranslate nohighlight">\(y'(x)\)</span>的函数，即泛函，可记为<span class="math notranslate nohighlight">\(s(y')\)</span>。最终问题转化为：寻找曲线<span class="math notranslate nohighlight">\(y=y(x)\)</span>，使得泛函<span class="math notranslate nohighlight">\(s(y')\)</span>最小。</p>
 <ul class="simple">
 <li><p><strong>例2</strong>. 最速降线问题</p></li>
 </ul>
-<p><img alt="最速降线问题" src="../_images/functional2.png" /></p>
+<figure class="align-default" id="id13">
+<a class="reference internal image-reference" href="../_images/functional2.png"><img alt="最速降线问题" src="../_images/functional2.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-text">Fig 2. 最速降线问题示例</span><a class="headerlink" href="#id13" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>  如上图所示，有一物体从原点<span class="math notranslate nohighlight">\((0,0)\)</span>沿着曲线到达<span class="math notranslate nohighlight">\(A\)</span>点<span class="math notranslate nohighlight">\((a,b)\)</span>，若忽略摩擦力，那么沿着什么形状的曲线路径下降时间最短？物体从点<span class="math notranslate nohighlight">\((0,0)\)</span>运动到<span class="math notranslate nohighlight">\(P\)</span>点时，失去的势能为<span class="math notranslate nohighlight">\(mgy\)</span>，获得的动能为<span class="math notranslate nohighlight">\(mv^2/2\)</span>，由能量守恒定律可知，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -553,13 +563,13 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 \[\begin{split}
 \boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
 \end{split}\]</div>
-<p><a class="reference external" href="https://zhuanlan.zhihu.com/p/139018146">参考1</a></p>
+<p>可以参考以下文章。<a class="footnote-reference brackets" href="#id11" id="id7" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
 </section>
 </section>
 </section>
 <hr class="docutils" />
-<section id="id7">
-<h2><span class="section-number">2.2. </span>线性算子<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
+<section id="id8">
+<h2><span class="section-number">2.2. </span>线性算子<a class="headerlink" href="#id8" title="Link to this heading">#</a></h2>
 <blockquote>
 <div><p><strong>定义1 (线性算子)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>称之为线性算子，当且仅当以下条件成立：</p>
 <blockquote>
@@ -630,8 +640,8 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <hr class="docutils" />
 <section id="hilbert">
 <h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="Link to this heading">#</a></h2>
-<section id="id8">
-<h3><span class="section-number">2.3.1. </span>求值泛函<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h3><span class="section-number">2.3.1. </span>求值泛函<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
 <p>  令<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为一个从非空集<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>到复数域<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>的函数Hilbert空间。</p>
 <p>  一个特殊的泛函：求值泛函(Dirac evaluation functional).</p>
 <blockquote>
@@ -675,8 +685,8 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 <p>且有<span class="math notranslate nohighlight">\(q_n(1)=1,\forall n\)</span>。也就是说求值泛函在点1是不连续的。</p>
 </section>
 <hr class="docutils" />
-<section id="id9">
-<h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
 <p>  下面从核函数的角度来探讨RKHS。</p>
 <blockquote>
 <div><p><strong>定义3 (Reproducing kernel Hilbert space, RKHS)</strong>. 设<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个定义在非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>上的函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>构成的Hilbert空间，若函数<span class="math notranslate nohighlight">\(\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\)</span>满足：</p>
@@ -758,6 +768,13 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 </div></blockquote>
 <p>  有了Moore-Aronszajn定理，可以只关注于构造对称、正定的函数即可。</p>
 <p><a class="reference external" href="http://songcy.net/posts/story-of-basis-and-kernel-part-2/">参考1</a><a class="reference external" href="https://www.cnblogs.com/zhangcn/p/13289236.html">参考2</a></p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id11" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id7">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://zhuanlan.zhihu.com/p/139018146">浅谈变分原理</a></p>
+</aside>
+</aside>
 </section>
 </section>
 </section>
@@ -817,10 +834,10 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">2.2. 线性算子</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.2. 线性算子</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.3.1. 求值泛函</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
 </ul>
 </li>

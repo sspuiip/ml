@@ -92,13 +92,17 @@ $$
 
 &emsp;&emsp;选择不同的函数空间$\mathcal{F}$，会导致IPM具有不同形式。如
 
+:::{table} 常见积分概率度量
+:width: 750px
+:align: center
+:widths: grid
 | Name    | Formula    | Condition    |
 | :---: | :--- | :--- |
-| **Dudley**    |  $D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]$   |  $\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \\ \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \\ \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  $|
-|**Wasserstein** |$W(P,Q)=\inf_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) $|  $\mathcal{F}=\{ f:\Vert f\Vert_L \le 1 \}$ and $M$ is separable.       |
-| **Maximum Mean Discrepancy** | $\textrm{MMD}(P,Q)=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2$ | $\mathcal{F}=\{f:\Vert f\Vert_\mathcal{H}\le 1 \}$,$\mathcal{H}$为RKHS，$k$为其再生核。|
+| **Dudley**    |  $D_{bl}(P,Q)$$=\sup\limits_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]$   |  $\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \}$ , $\Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L$,  $\Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}$, $\Vert f\Vert_L=\sup\left\{\frac{\vert f(x)-f(y)\vert} {\rho(x,y)} : x\neq y\in M\right\}  $|
+|**Wasserstein** |$W(P,Q)$$=\inf\limits_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) $|  $\mathcal{F}=\{ f:\Vert f\Vert_L \le 1 \}$ and $M$ is separable.       |
+| **Maximum Mean Discrepancy** | $\textrm{MMD}(P,Q)$$=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2$ | $\mathcal{F}=\{f:\Vert f\Vert_\mathcal{H}\le 1 \}$,$\mathcal{H}$为RKHS，$k$为其再生核。|
 
----
+:::
 
 ### MMD积分概率度量
 

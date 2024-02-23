@@ -358,8 +358,15 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.3. 推断与参数学习</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.1. 变量消除法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.2. 信念传播</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.1. 精确推断</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.1.1. 变量消除法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">4.3.1.2. 信念传播</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">4.3.2. 近似推断</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc">4.3.2.1. MCMC采样</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -380,7 +387,7 @@ document.write(`
 <section id="id2">
 <h2><span class="section-number">4.1. </span>隐马尔可夫模型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。</p>
-<figure class="align-center" id="id9">
+<figure class="align-center" id="id13">
 <div class="mermaid">
             block-beta
   columns 10
@@ -396,7 +403,7 @@ document.write(`
   y4 --&gt; x4
   y5 --&gt; x5
         </div><figcaption>
-<p><span class="caption-text">Fig 1. Hidden Markov Model</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 1. Hidden Markov Model</span><a class="headerlink" href="#id13" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>  如上图所示，隐马尔可夫模型中的变量分为两类，第一类为状态变量<span class="math notranslate nohighlight">\(\{y_1,y_2,...,y_n\}\)</span>，<span class="math notranslate nohighlight">\(y_i\)</span>表示第<span class="math notranslate nohighlight">\(i\)</span>时刻的系统状态，一般状态变量是不可观测的，也称为隐变量；第二类为观测变量<span class="math notranslate nohighlight">\(\{x_1,x_2,...,x_n\}\)</span>，<span class="math notranslate nohighlight">\(x_i\)</span>表示为第<span class="math notranslate nohighlight">\(i\)</span>时刻的观测值。图中的箭头代表的是变量间的依赖关系。具体来说有以下两点：</p>
@@ -410,29 +417,28 @@ document.write(`
 P(x_1,...,x_n,y_1,...,y_n)=P(y_1)P(x_1|y_1)\prod_{i=2}^n P(x_i|y_i)P(y_{i}|y_{i-1})
 \]</div>
 <p>  除了上述变量间的依赖关系（也就是模型的结构信息），确定一个隐马尔可夫模型还需要三组参数，即<strong>模型参数<span class="math notranslate nohighlight">\(\lambda=[A,B,\pmb{\pi}]\)</span></strong>：</p>
-<table class="table table-center" id="id10" style="width: 600px">
-<caption><span class="caption-text">隐马尔可夫模型的主要参数</span><a class="headerlink" href="#id10" title="Link to this table">#</a></caption>
+<table class="table table-center" id="id14" style="width: 600px">
+<caption><span class="caption-text">隐马尔可夫模型的主要参数</span><a class="headerlink" href="#id14" title="Link to this table">#</a></caption>
 <thead>
-<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
-<th class="head text-center"><p>描述</p></th>
+<tr class="row-odd"><th class="head text-left"><p>参数</p></th>
+<th class="head text-left"><p>描述</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-center"><p><strong>状态转移概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(A=[a_{ij}]_{N\times N}\)</span><br><span class="math notranslate nohighlight">\(a_{ij}=P(y_{t+1}=s_j | y_t=s_i)\)</span></p></td>
-<td class="text-center"><p>各个状态间的跳转概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则下一时刻状态为<span class="math notranslate nohighlight">\(s_j\)</span>的概率。</p></td>
+<tr class="row-even"><td class="text-left"><p><strong>状态转移概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(A=[a_{ij}]_{N\times N}\)</span><br><span class="math notranslate nohighlight">\(a_{ij}=P(y_{t+1}=s_j | y_t=s_i)\)</span></p></td>
+<td class="text-left"><p>各个状态间的跳转概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则下一时刻状态为<span class="math notranslate nohighlight">\(s_j\)</span>的概率。</p></td>
 </tr>
-<tr class="row-odd"><td class="text-center"><p><strong>输出观测概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(B=[b_{ij}]_{N\times M}\)</span><br><span class="math notranslate nohighlight">\(b_{ij}=P(x_t=o_j | y_t=s_i)\)</span></p></td>
-<td class="text-center"><p>模型当前状态得到观测值的概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则观测值为<span class="math notranslate nohighlight">\(o_j\)</span>的概率。</p></td>
+<tr class="row-odd"><td class="text-left"><p><strong>输出观测概率</strong>。<br>记为矩阵<span class="math notranslate nohighlight">\(B=[b_{ij}]_{N\times M}\)</span><br><span class="math notranslate nohighlight">\(b_{ij}=P(x_t=o_j | y_t=s_i)\)</span></p></td>
+<td class="text-left"><p>模型当前状态得到观测值的概率。<br>在任意时刻<span class="math notranslate nohighlight">\(t\)</span>，若状态为<span class="math notranslate nohighlight">\(s_i\)</span>，则观测值为<span class="math notranslate nohighlight">\(o_j\)</span>的概率。</p></td>
 </tr>
-<tr class="row-even"><td class="text-center"><p><strong>初使状态概率</strong>。<br>记为<span class="math notranslate nohighlight">\(\pmb{\pi}=(\pi_1,...,\pi_N)\)</span><br><span class="math notranslate nohighlight">\(\pi_i = P(y_1=s_i)\)</span></p></td>
-<td class="text-center"><p>模型在初始时刻各状态出现的概率。</p></td>
+<tr class="row-even"><td class="text-left"><p><strong>初使状态概率</strong>。<br>记为<span class="math notranslate nohighlight">\(\pmb{\pi}=(\pi_1,...,\pi_N)\)</span><br><span class="math notranslate nohighlight">\(\pi_i = P(y_1=s_i)\)</span></p></td>
+<td class="text-left"><p>模型在初始时刻各状态出现的概率。</p></td>
 </tr>
 </tbody>
 </table>
-<p>通过上述三组参数可以确定一个隐马尔可夫模型。</p>
-<p>  现实应用中，隐马尔可夫模型一般主要用来解决以下3种问题：</p>
-<table class="table table-center" id="id11" style="width: 600px">
-<caption><span class="caption-text">隐马尔可夫模型的主要解决的问题</span><a class="headerlink" href="#id11" title="Link to this table">#</a></caption>
+<p>通过上述三组参数可以确定一个隐马尔可夫模型。现实应用中，隐马尔可夫模型一般主要用来解决以下3种问题：</p>
+<table class="table table-center" id="id15" style="width: 600px">
+<caption><span class="caption-text">隐马尔可夫模型的主要解决的问题</span><a class="headerlink" href="#id15" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>应用问题</p></th>
 <th class="head text-left"><p>场景</p></th>
@@ -470,8 +476,8 @@ P(\pmb{x})=\frac{1}{Z^*} \prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(Z^*=\sum_{\pmb{x}}\prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)\)</span>。</p>
 <div class="dropdown admonition">
-<p class="admonition-title">  <strong>例</strong>1. 假设有一随机变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,x_2,...,x_6\}\)</span>的马尔可夫随机场如下图所示</p>
-<figure class="align-center" id="id12">
+<p class="admonition-title"><strong>例</strong>1. 假设有一随机变量集<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,x_2,...,x_6\}\)</span>的马尔可夫随机场如下图所示</p>
+<figure class="align-center" id="id16">
 <div class="mermaid">
             flowchart LR
   x1((x1)) --- x2((x2))
@@ -482,7 +488,7 @@ P(\pmb{x})=\frac{1}{Z^*} \prod_{Q\in\mathcal{C}^*}\psi_Q(\pmb{x}_Q)
   x5((x5)) --- x6((x6))
   x3((x3)) --- x5((x5))
         </div><figcaption>
-<p><span class="caption-text">Fig 2. 马尔可夫随机场示例</span><a class="headerlink" href="#id12" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 2. 马尔可夫随机场示例</span><a class="headerlink" href="#id16" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>则联合概率分布为，</p>
@@ -496,8 +502,8 @@ P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{3
 <h3><span class="section-number">4.2.2. </span>条件独立性<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>  借助分离集得到变量的条件独立性。若结点集<span class="math notranslate nohighlight">\(A\)</span>到<span class="math notranslate nohighlight">\(B\)</span>中的结点都必须经过结点集<span class="math notranslate nohighlight">\(C\)</span>中的结点，则称<span class="math notranslate nohighlight">\(C\)</span>为<span class="math notranslate nohighlight">\(A\)</span>,<span class="math notranslate nohighlight">\(B\)</span>的<strong>分离集</strong>（separating set）。</p>
 <div class="dropdown admonition">
-<p class="admonition-title">  <strong>例</strong>2. 图3给出了分离集<span class="math notranslate nohighlight">\(C\)</span>的示例。子集<span class="math notranslate nohighlight">\(B\)</span>和<span class="math notranslate nohighlight">\(A\)</span>的结点相连都要经过子集<span class="math notranslate nohighlight">\(C\)</span>的结点</p>
-<figure class="align-center" id="id13">
+<p class="admonition-title"><strong>例</strong>2. 图3给出了分离集<span class="math notranslate nohighlight">\(C\)</span>的示例。子集<span class="math notranslate nohighlight">\(B\)</span>和<span class="math notranslate nohighlight">\(A\)</span>的结点相连都要经过子集<span class="math notranslate nohighlight">\(C\)</span>的结点</p>
+<figure class="align-center" id="id17">
 <div class="mermaid">
             graph LR   
   x1 -.- x9((&quot;x9&quot;))
@@ -518,7 +524,7 @@ P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{3
   end
   x7 -.- x8((&quot;x8&quot;))
         </div><figcaption>
-<p><span class="caption-text">Fig 3. 马尔可夫随机场分离集示例</span><a class="headerlink" href="#id13" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 3. 马尔可夫随机场分离集示例</span><a class="headerlink" href="#id17" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </div>
@@ -557,11 +563,13 @@ P(\pmb{x}_F|\pmb{x}_E)=\frac{P(\pmb{x}_F,\pmb{x}_E)}{P(\pmb{x}_E)}=\frac{P(\pmb{
 P(\pmb{x}_E)=\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)
 \]</div>
 <section id="id7">
-<h3><span class="section-number">4.3.1. </span>变量消除法<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">4.3.1. </span>精确推断<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
+<section id="id8">
+<h4><span class="section-number">4.3.1.1. </span>变量消除法<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
 <p>  精确推断利用图模型所描述的条件独立性来减少计算目标概率所需的计算量。变量消除法是最直观的精确推断算法也是其它精确推断算法的基础。下面通过一个例子来展示该方法。</p>
 <div class="dropdown admonition">
-<p class="admonition-title">  <strong>例</strong>3. 下图给出了一个有向图模型</p>
-<figure class="align-center" id="id14">
+<p class="admonition-title"><strong>例</strong>3. 下图给出了一个有向图模型</p>
+<figure class="align-center" id="id18">
 <div class="mermaid">
             flowchart LR
   x1((&quot;x1&quot;)) --&gt; x2((&quot;x2&quot;))
@@ -574,7 +582,7 @@ P(\pmb{x}_E)=\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)
   x4 -.m43.-&gt; x3
  
         </div><figcaption>
-<p><span class="caption-text">Fig 4. 贝叶斯网络结构示例</span><a class="headerlink" href="#id14" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 4. 贝叶斯网络结构示例</span><a class="headerlink" href="#id18" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>假设要推断目标是计算边缘分布<span class="math notranslate nohighlight">\(P(x_5)\)</span>，很显然只需要消去变量<span class="math notranslate nohighlight">\(\{x_1,...,x_4\}\)</span>，即</p>
@@ -613,8 +621,8 @@ P(x_5)&amp;=\sum_{x_3}P(x_5|x_3)\sum_{x_4}P(x_4|x_3)\sum_{x_2}P(x_3|x_2)\underbr
 </dd>
 </dl>
 </section>
-<section id="id8">
-<h3><span class="section-number">4.3.2. </span>信念传播<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<section id="id9">
+<h4><span class="section-number">4.3.1.2. </span>信念传播<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
 <p>  信念传播将变量消除法中的求和操作当作一个消息传递过程，可以解决求解多个边缘分布重复计算的问题。变量消除法的求和操作可以视为以下过程，</p>
 <div class="math notranslate nohighlight" id="equation-sum-operator">
 <span class="eqno">(5)<a class="headerlink" href="#equation-sum-operator" title="Link to this equation">#</a></span>\[
@@ -632,7 +640,7 @@ P(x_i)\propto \prod_{k\in n(i)}m_{ki}(x_i)
 <li><p>指定一个根结点，从所有叶结点开始向根结点传递消息，直到根结点收到所有邻接结点的消息；</p></li>
 <li><p>从根结点开始向叶结点传递消息，直到所有叶结点收到消息</p></li>
 </ol>
-<figure class="align-center" id="id15">
+<figure class="align-center" id="id19">
 <div class="mermaid">
             flowchart LR
   x1((&quot;x1&quot;)) -.m12.-&gt; x2((&quot;x2&quot;))
@@ -645,10 +653,43 @@ P(x_i)\propto \prod_{k\in n(i)}m_{ki}(x_i)
   x4 --m43--&gt; x3
  
         </div><figcaption>
-<p><span class="caption-text">Fig 5. 信念传播算法示例，选<span class="math notranslate nohighlight">\(x_1\)</span>为根结点：实线为第1步消息传递；虚线为第2步。</span><a class="headerlink" href="#id15" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 5. 信念传播算法示例，选<span class="math notranslate nohighlight">\(x_1\)</span>为根结点：实线为第1步消息传递；虚线为第2步。</span><a class="headerlink" href="#id19" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>经过上图的两步消息传递后，图的每个结点都有着不同方向的两条消息，基于这些消息和等式<a class="reference internal" href="#equation-edge-dist-sum-prod">(6)</a>即可计算得到所有变量的边缘分布。</p>
+</section>
+</section>
+<section id="id10">
+<h3><span class="section-number">4.3.2. </span>近似推断<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<p>  近似推断主要采用采样（sampling）或变分推断（variational inference）来实现。精确推断方法通常需要很大的计算开销，实际应用中近似推断更为常见。</p>
+<section id="mcmc">
+<h4><span class="section-number">4.3.2.1. </span>MCMC采样<a class="headerlink" href="#mcmc" title="Link to this heading">#</a></h4>
+<p>  通过概率图模型可以得到一些感兴趣变量的概率分布，在很多实际应用中，对分布本身并没有多大兴趣，而是希望通过这些概率分布计算某些期望，并根据这些期望做出决策。例如图4的贝叶斯网，进行推断的目标可能是为了计算变量<span class="math notranslate nohighlight">\(x_5\)</span>的期望。如果直接计算或近似这个期望比推断概率分布更容易，则直接计算将使推断问题求解更高效。对于概率图模型来说，问题的关键就在于如何高效的基于图模型描述的概率分布来获取样本。</p>
+<p>  概率图模型最常用的采样技术是马尔可夫链蒙特卡罗方法（Markov Chain Monte Carlo, MCMC）。假设有随机变量<span class="math notranslate nohighlight">\(x\sim p(x)\)</span>，函数<span class="math notranslate nohighlight">\(f:X\rightarrow \mathbb{R}\)</span>，则<span class="math notranslate nohighlight">\(f(x)\)</span>的期望为，</p>
+<div class="math notranslate nohighlight" id="equation-efx">
+<span class="eqno">(7)<a class="headerlink" href="#equation-efx" title="Link to this equation">#</a></span>\[
+p(f)=\mathbb{E}_p[f(x)]=\int_x f(x)p(x)dx
+\]</div>
+<p>若<span class="math notranslate nohighlight">\(p(x)\)</span>易采样且<span class="math notranslate nohighlight">\(f(x)\)</span>不易积分过于复杂，则可以通过Monte Carlor积分方法近似的计算期望如下，</p>
+<div class="math notranslate nohighlight" id="equation-mc-integrate">
+<span class="eqno">(8)<a class="headerlink" href="#equation-mc-integrate" title="Link to this equation">#</a></span>\[
+\hat{p}(f)\approx \frac1N\sum_{i=1}^N f(x_i), \quad x_i \sim p(x)
+\]</div>
+<p>  但实际应用中，图模型构造的密度函数<span class="math notranslate nohighlight">\(p(\pmb{x})\)</span>过于复杂，从而导致采样独立同分布的样本非常困难。幸运的是，随机过程理论有一个<strong>结论</strong>：</p>
+<blockquote>
+<div><p>马尔可夫链依条件（细致平稳条件）收敛于平稳分布<span class="math notranslate nohighlight">\(q(\pmb{x})\)</span>，收敛后得到的跳转序列<span class="math notranslate nohighlight">\(\{\pmb{x}_n,\pmb{x}_{n+1},...\}\)</span>恰好是<span class="math notranslate nohighlight">\(q(\pmb{x})\)</span>的样本序列。</p>
+<p class="attribution">—非周期马尔可夫链</p>
+</div></blockquote>
+<p>那么一个绝秒的想法是：构造一个马尔可夫链，使得它的平稳分布恰好为<span class="math notranslate nohighlight">\(p(\pmb{x})\)</span>。而这就是MCMC方法的<strong>基本思想</strong>。</p>
+<p>  MCMC方法如何构造马尔可夫链将会产生不同的MCMC算法。一般来说，使用MCMC方法构造一条马尔可夫链产生符合图模型的概率分布的样本集，再利用这些样本对所需要的函数进行估计。常用的MCMC算法有，<strong>Metropolis-Hastings算法</strong>、<strong>Gibbs算法</strong>等<a class="footnote-reference brackets" href="#id12" id="id11" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>。</p>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id12" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://sspuiip.github.io/ml/mathmodel/mcmc.html#mcmc">MCMC采样</a></p>
+</aside>
+</aside>
+</section>
 </section>
 </section>
 </section>
@@ -705,8 +746,15 @@ P(x_i)\propto \prod_{k\in n(i)}m_{ki}(x_i)
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">4.3. 推断与参数学习</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.1. 变量消除法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.2. 信念传播</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">4.3.1. 精确推断</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">4.3.1.1. 变量消除法</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">4.3.1.2. 信念传播</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">4.3.2. 近似推断</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mcmc">4.3.2.1. MCMC采样</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

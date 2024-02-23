@@ -449,7 +449,8 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]\triangleq\textrm{IPM}(P,Q)
 \]</div>
 <p>  选择不同的函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，会导致IPM具有不同形式。如</p>
-<table class="table">
+<table class="table table-center" id="id3" style="width: 750px">
+<caption><span class="caption-text">常见积分概率度量</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>Name</p></th>
 <th class="head text-left"><p>Formula</p></th>
@@ -458,21 +459,20 @@ d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-center"><p><strong>Dudley</strong></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(D_{bl}(P,Q)=\sup_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]\)</span></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \} , \Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L, \\ \Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}, \\ \Vert f\Vert_L=\sup\{\vert f(x)-f(y)\vert /\rho(x,y) : x\neq y\in M\}  \)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(D_{bl}(P,Q)\)</span><span class="math notranslate nohighlight">\(=\sup\limits_{\Vert f\Vert_{bl}\le q}\mathbb{E}_P[f]-\mathbb{E}_Q[f]\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f: \Vert f\Vert_{bl}\le 1 \}\)</span> , <span class="math notranslate nohighlight">\(\Vert f\Vert_{bl}=\Vert f\Vert_{\infty}+\Vert f\Vert_L\)</span>,  <span class="math notranslate nohighlight">\(\Vert f\Vert_{\infty}=\sup\{\vert f(x)\vert:x\in M\}\)</span>, <span class="math notranslate nohighlight">\(\Vert f\Vert_L=\sup\left\{\frac{\vert f(x)-f(y)\vert} {\rho(x,y)} : x\neq y\in M\right\}  \)</span></p></td>
 </tr>
 <tr class="row-odd"><td class="text-center"><p><strong>Wasserstein</strong></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(W(P,Q)=\inf_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) \)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(W(P,Q)\)</span><span class="math notranslate nohighlight">\(=\inf\limits_{\mu\in\mathcal{L}(P,Q)}\int\rho(x,y)d\mu(x,y) \)</span></p></td>
 <td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{ f:\Vert f\Vert_L \le 1 \}\)</span> and <span class="math notranslate nohighlight">\(M\)</span> is separable.</p></td>
 </tr>
 <tr class="row-even"><td class="text-center"><p><strong>Maximum Mean Discrepancy</strong></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(\textrm{MMD}(P,Q)=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2\)</span></p></td>
+<td class="text-left"><p><span class="math notranslate nohighlight">\(\textrm{MMD}(P,Q)\)</span><span class="math notranslate nohighlight">\(=\Vert \mu_P-\mu_Q\Vert_{\mathcal{H}}^2\)</span></p></td>
 <td class="text-left"><p><span class="math notranslate nohighlight">\(\mathcal{F}=\{f:\Vert f\Vert_\mathcal{H}\le 1 \}\)</span>,<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为RKHS，<span class="math notranslate nohighlight">\(k\)</span>为其再生核。</p></td>
 </tr>
 </tbody>
 </table>
 </section>
-<hr class="docutils" />
 <section id="mmd">
 <h3><span class="section-number">3.3.2. </span>MMD积分概率度量<a class="headerlink" href="#mmd" title="Link to this heading">#</a></h3>
 <p>  MMD没有直接定义函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，而是通过核方法在内积空间间接定义了连续函数<span class="math notranslate nohighlight">\(f\)</span>，使得<span class="math notranslate nohighlight">\(f\)</span>可以隐式计算所有阶次的统计量。MMD将<span class="math notranslate nohighlight">\(f\)</span>限制在再生核希尔伯特空间的单位球内<span class="math notranslate nohighlight">\(\Vert f\Vert_{\mathcal{H}}\le 1\)</span>。</p>

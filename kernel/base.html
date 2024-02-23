@@ -377,14 +377,24 @@ document.write(`
 <section id="id3">
 <h3><span class="section-number">1.1.1. </span>示例<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  首先来看一个核函数的例子。假设有XOR数据集<span class="math notranslate nohighlight">\(X = \{(0,0),(1,0),(0,1),(1,1)\}\)</span>，<span class="math notranslate nohighlight">\(y=\{0,1,1,0\}\)</span>，则该XOR异或问题在原输入空间很难分开两类样本，</p>
-<p><img alt="XOR输入空间" src="../_images/inputspace.png" /></p>
+<figure class="align-default" id="id8">
+<a class="reference internal image-reference" href="../_images/inputspace.png"><img alt="XOR输入空间" src="../_images/inputspace.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">Fig 1. XOR问题的输入空间示例</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>  如果我们对原输入空间样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>做如下映射<span class="math notranslate nohighlight">\(\phi :\mathbb{R}^2\rightarrow\mathbb{R}^3\)</span>，</p>
 <div class="math notranslate nohighlight">
 \[
 \phi: \pmb{x}=(x_1,x_2)\rightarrow \phi(\pmb{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)
 \]</div>
 <p>不难发现，原空间不可分的XOR问题在新特征空间变的可分，如下图所示</p>
-<p><img alt="特征空间" src="../_images/featurespace.png" /></p>
+<figure class="align-default" id="id9">
+<a class="reference internal image-reference" href="../_images/featurespace.png"><img alt="特征空间" src="../_images/featurespace.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">Fig 2. 非线性特征空间</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 <p>  因此，原空间难以解决的问题映射至新特征空间后可以得到解决。特征映射成为了关键步骤。那么特征映射<span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>是否必须显式的计算呢？下面，我们来分析一下新特征空间两个任意数据点<span class="math notranslate nohighlight">\(\phi(\pmb{x}),\phi(\pmb{z})\)</span>之间的相似性。采用未正则化的余弦相似性来度量，可知</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -397,36 +407,41 @@ document.write(`
 \end{split}
 \end{split}\]</div>
 <p>  经过上式分析，我们发现特征映射后的向量做内积运算等价于原空间向量内积的平方。换句话说，我们可以不用显式计算映射<span class="math notranslate nohighlight">\(\phi\)</span>，直接计算<span class="math notranslate nohighlight">\(\kappa(\pmb{x},\pmb{z})\)</span>就可以实现特征映射后的效果，这一技巧也称之为核技巧(kernel trick), 函数<span class="math notranslate nohighlight">\(\kappa(\cdot,\cdot)\)</span>也称之为核函数。</p>
-<p><img alt="核函数示例" src="../_images/kernelfun.jpeg" /></p>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/kernelfun.jpeg"><img alt="核函数示例" src="../_images/kernelfun.jpeg" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">Fig 3. 非线性映射函数<span class="math notranslate nohighlight">\(\phi\)</span>示例</span><a class="headerlink" href="#id10" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <hr class="docutils" />
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>什么是核函数<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
-<blockquote>
-<div><p><strong>定义1(内积(inner product))</strong>. 令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
-</div></blockquote>
+<dl class="simple myst">
+<dt><strong>定义1(内积(inner product))</strong>.</dt><dd><p>令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
+</dd>
+</dl>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0\)</span> if and only if <span class="math notranslate nohighlight">\(f=0\)</span></p></li>
 </ol>
 <p>  希尔伯空间是定义了内积的一个空间，并附加了一个技术性条件(A Hilber space is a space on which an inner product is defined, along with an additional technical condition)。</p>
-<blockquote>
-<div><p><strong>定义2(核函数, Kernel)</strong>.  令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
-</div></blockquote>
-<div class="math notranslate nohighlight">
-\[
+<dl class="simple myst">
+<dt><strong>定义2(核函数, Kernel)</strong>.</dt><dd><p>令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+</dd>
+<dd><div class="math notranslate nohighlight" id="equation-eq-kernel-fun">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-kernel-fun" title="Link to this equation">#</a></span>\[
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 \]</div>
-<blockquote>
-<div><p><strong>Lemma(Sums of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-</div></blockquote>
-<blockquote>
-<div><p><strong>Lemma(Mapping between spaces)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-</div></blockquote>
-<blockquote>
-<div><p><strong>Lemma(Products of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
-</div></blockquote>
+</dd>
+<dt><strong>Lemma(Sums of kernels are kernels)</strong>.</dt><dd><p>给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+</dd>
+<dt><strong>Lemma(Mapping between spaces)</strong>.</dt><dd><p>若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
+</dd>
+<dt><strong>Lemma(Products of kernels are kernels)</strong>.</dt><dd><p>给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
+</dd>
+</dl>
 <hr class="docutils" />
 <section id="id5">
 <h4><span class="section-number">1.1.2.1. </span>常用核函数<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
