@@ -18,14 +18,22 @@ $$
 &emsp;&emsp;可以看出泛函是一种定义域为函数集，而值域为实数或复数的映射。
 
 - **例1**. 两点间直线距离最短问题.
+:::{figure-md}
+![两点间直线距离最短](../img/functional1.png){width=300px}
 
-![两点间直线距离最短](../img/functional1.png)
+Fig 1. 两点间直线距离最短
+
+:::
 
 &emsp;&emsp;如上图所示，从坐标原点$(0,0)$到点$(a,b)$的连接曲线为$y=y(x)$，曲线的弧长微分为$ds=\sqrt{1+\left( \frac{dy}{dx}\right)^2}dx$，总弧长为$s=\int_0^a (1+y'^2)^{1/2}dx$。可以看出$s$为一个标量，而等式右边为$y'(x)$的函数，即泛函，可记为$s(y')$。最终问题转化为：寻找曲线$y=y(x)$，使得泛函$s(y')$最小。
 
 - **例2**. 最速降线问题
 
-![最速降线问题](../img/functional2.png)
+:::{figure-md}
+![最速降线问题](../img/functional2.png){width=300px}
+
+Fig 2. 最速降线问题示例
+:::
 
 &emsp;&emsp;如上图所示，有一物体从原点$(0,0)$沿着曲线到达$A$点$(a,b)$，若忽略摩擦力，那么沿着什么形状的曲线路径下降时间最短？物体从点$(0,0)$运动到$P$点时，失去的势能为$mgy$，获得的动能为$mv^2/2$，由能量守恒定律可知，
 
@@ -207,8 +215,9 @@ $$
 \boxed{\left\{\begin{array}{l}x=r(\theta-\sin\theta)\\ y=r(1-\cos\theta)\end{array} \right.}
 $$
 
+可以参考以下文章。[^参考1]
 
-[参考1](https://zhuanlan.zhihu.com/p/139018146)
+[^参考1]: [浅谈变分原理](https://zhuanlan.zhihu.com/p/139018146)
 
 ---
 ## 线性算子
