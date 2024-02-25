@@ -68,7 +68,7 @@ source_suffix = {
 # a list of builtin themes.
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' 
 #   classic scrolls sphinxdoc nature haiku bizstyle pyramid agogo traditional
-html_theme = 'sphinx_book_theme'
+html_theme = 'nature'
 
 
 # Add any paths that contain custom static files (such as style sheets) here,
