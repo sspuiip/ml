@@ -329,6 +329,135 @@ $$(mc-integrate)
 
 &emsp;&emsp;MCMC方法如何构造马尔可夫链将会产生不同的MCMC算法。一般来说，使用MCMC方法构造一条马尔可夫链产生符合图模型的概率分布的样本集，再利用这些样本对所需要的函数进行估计。常用的MCMC算法有，**Metropolis-Hastings算法**、**Gibbs算法**等[^mcmc]。
 
+
+#### 变分推断
+
+&emsp;&emsp;变分推断使用已知简单分布来逼近需要推断的复杂分布，通过限制近似分布得到局部最优确定解。
+
+
+##### 盘式记法
+
+```{mermaid}
+---
+caption: Fig 4. 普通变量关系图 
+align: center
+---
+%%{init: { "theme": "default" } }%%
+graph TD   
+  z(("z")) --> x1(("x1"))
+  z --> x2(("x2"))
+  z --> x3(("..."))
+  z --> x4(("xn"))
+  subgraph 观测变量
+  x1
+  x2
+  x3
+  x4
+  end
+
+
+```
+
+&emsp;&emsp;概率图模型的盘式记法将相互独立、由相同机制产生的多个变量放在一个方框内，并在方框内标注重复出现的次数$N$。在很多学习任务中，对属性变量使用盘式记法将使得图表示非常简洁。例如：
+
+
+
+
+```{mermaid}
+---
+caption: Fig 5. 盘式记法 
+align: center
+---
+graph LR   
+  z(("z")) --> x1(("x"))
+  
+  subgraph  N
+  x1
+  
+  end
+
+
+```
+上图观测变量的联合分布概率密度函数是,
+
+$$
+p(\pmb{x}|\Theta)=\prod_{i=1}^N\sum_{\pmb{z}}p(x_i,\pmb{z}|\Theta),\quad \ln p(\pmb{x}|\Theta)=\sum_{i=1}^N\ln\left\{\sum_{\pmb{z}}p(x_i,\pmb{z}|\Theta)\right\}
+$$
+
+其中，$\pmb{x}=\{x_1,...,x_n\}$，$\Theta$是$\pmb{x},\pmb{z}$服从的分布的参数。
+
+&emsp;&emsp;一般来说，推断和学习的任务主要是由观察到的变量$\pmb{x}$来估计隐变量$\pmb{z}$和分布参数$\Theta$，即求解$p(\pmb{z}|\pmb{x},\Theta)$和$\Theta$。概率模型的参数估计通常通过最大化对数似然函数求解，对于具有隐变量的概率模型可以使用EM算法求解。
+
+- 在E步，根据$t$时刻的参数$\Theta^t$对$p(\pmb{x}|\Theta^t)$进行推断，并计算联合似然函数$p(\pmb{x},\pmb{z}|\Theta)$; 
+- 在M步，最优化$Q$函数的参数$\Theta$。
+
+$$
+\begin{split}
+Q^{t+1}&=\arg\max\limits_{\Theta}Q(\Theta;\Theta^t)\\
+&=\arg\max\limits_{\Theta}\sum_{\pmb{z}}p(\pmb{z}|\pmb{x},\Theta^t)\ln p(\pmb{x},\pmb{z}|\Theta)\\
+&=\arg\max\limits_{\Theta} \mathbb{E}_\pmb{z}[\ln p(\pmb{x},\pmb{z}|\Theta)]
+\end{split}
+$$(Q-function)
+
+&emsp;&emsp;$Q$函数实际上是完全数据对数似然$\ln p(\pmb{x},\pmb{z}|\Theta)$在分布$p(\pmb{z}|\pmb{x},\Theta^t)$下的期望。当分布与变量$\pmb{z}$的后验分布相等时，$Q$函数近似等于完全数据对数似然。最终，EM算法可以获得稳定优化的参数$\Theta$，隐变量$\pmb{z}$的分布也可能通过该参数得到。
+
+&emsp;&emsp;事实上$p(\pmb{z}|\pmb{x},\Theta^t)$是隐变量$\pmb{z}$的一个近似分布，如果将这个近似分布用$q(\pmb{z})$表示，则可以得出以下结论，
+
+$$
+\ln p(\pmb{x})=\mathcal{L}(q)-\mathrm{KL}(q||p)
+$$(low-bound)
+
+其中，
+
+$$
+\mathcal{L}(q)=\int q(\pmb{z})\ln \frac{p(\pmb{x},\pmb{z})}{q(\pmb{z})}d\pmb{z},\quad \mathrm{KL}(q||p)=\int q(\pmb{z})\ln\frac{p(\pmb{z}|\pmb{x})}{q(\pmb{z})}
+$$
+
+注意:
+
+$$
+\int q(\pmb{z})\ln p(\pmb{x})=\ln p(\pmb{x})
+$$
+
+只有KL散度为0时，$\mathcal{L}(q)$才接近对数似然。因为KL散度非负，因此$\mathcal{L}(q)$也称为对数似然的一个下界。
+
+##### 均值场方法
+
+&emsp;&emsp;现实中，E步对$p(\pmb{x}|\Theta^t)$的推断很可能难以实现，此时可借助变分推断。通常假设$\pmb{z}$服从分布，
+
+$$
+q(\pmb{z})=\prod_{i=1}^M q_i(\pmb{z}_i)
+$$(q-factor)
+
+可以将多变量$\pmb{z}$拆解为一系列相互独立的多变量$\pmb{z}_i$，简写$q_i(\pmb{z}_i)$为$q_i$代入可得,
+
+$$
+\begin{split}
+\mathcal{L}(q)&=\int_{\pmb{z}}\prod_i q_i\left\{\ln p(\pmb{x},\pmb{z})-\sum_i\ln q_i \right\}d\pmb{z}\\
+&=\int_{\pmb{z}_{-j}}\int_{\pmb{z}_j} q_j\prod_{i\neq j}q_i\left\{\ln p(\pmb{x},\pmb{z})-\sum_i\ln q_i \right\}d\pmb{z}\\
+&=\int_{\pmb{z}_j} q_j\int_{\pmb{z}_{-j}}\prod_{i\neq j}q_i\left\{\ln p(\pmb{x},\pmb{z})-\sum_i\ln q_i \right\}d\pmb{z}\\
+&=\int_{\pmb{z}_j} q_j \underbrace{\int_{\pmb{z}_{-j}}\prod_{i\neq j}q_i\left\{\ln p(\pmb{x},\pmb{z})\right\}}_{\ln\tilde{p}(\pmb{x},\pmb{z})\triangleq\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]}d\pmb{z} - \int_{\pmb{z}_j} q_j\int_{\pmb{z}_{-j}}\prod_{i\neq j}q_i\left\{\sum_i\ln q_i\right\}d\pmb{z}\\
+&=\int q_j \mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]d\pmb{z}_j-\int q_j \ln q_j d\pmb{z}_j+\mathrm{const}
+\end{split}
+$$(mean-field)
+
+&emsp;&emsp;我们关心的是分布$q_j$，因此可以固定$q_{i\neq j}$再对$\mathcal{L}$最大化。可以发现等式{eq}`mean-field`等价于$-\mathrm{KL}(q_j||\tilde{p}(\pmb{x},\pmb{z}))$，即当$q_j=\tilde{p}(\pmb{x},\pmb{z})$时$\mathcal{L}$最大。因此可知变量子集$\pmb{z}_j$服从的最优分布$q_j^*$应满足，
+
+$$
+\ln q_j^*(\pmb{z}_j)=\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]+\mathrm{const}
+$$
+
+即，
+
+$$
+q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int \exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]) d\pmb{z}_j}
+$$(optimize-solution)
+
+&emsp;&emsp;最终，在满足条件{eq}`q-factor`下，变量子集$\pmb{z}_j$最接近的真实分布由{eq}`optimize-solution`得到。
+
+&emsp;&emsp;通过恰当的分割独立变量子集$\pmb{z}_j$并选择$q_j$服从的分布，$\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]$往往有闭式解，这使得基于{eq}`optimize-solution`能高效对隐变量$\pmb{z}$进行推断。事实上，对变量$\pmb{z}_j$分布$q_j^*$进行估计时整合了$\pmb{z}_j$之外的其他$\pmb{z}_{i\neq j}$的信息，这是通过联合似然函数$\ln p(\pmb{x},\pmb{z})$在$\pmb{z}_j$之外的隐变量分布上求期望得到的，因此也被称为**平均场(mean field)**方法。
+
+
 [^mcmc]: [MCMC采样](https://sspuiip.github.io/ml/mathmodel/mcmc.html#mcmc)
 
 

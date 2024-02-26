@@ -1,17 +1,45 @@
+
 <!DOCTYPE html>
 
-<html lang="zh-CN" data-content_root="../">
+
+<html lang="zh-CN" data-content_root="../" >
+
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>1. 矩阵性能指标 &#8212; Machine Learning Fundation 1.0 文档</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=601dbdee" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -20,44 +48,352 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'matrix/base';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="2. 矩阵运算" href="matrixoper.html" />
-    <link rel="prev" title="3. 优化问题求解(2)" href="../optimization/convex_neq_solve.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="matrixoper.html" title="2. 矩阵运算"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="../optimization/convex_neq_solve.html" title="3. 优化问题求解(2)"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>矩阵性能指标</a></li> 
-      </ul>
-    </div>  
+    <link rel="prev" title="3. 优化问题求解(2)" href="../optimization/convex_neq_solve.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="zh-CN"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">搜索</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">4. 概率图模型</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/matrix/base.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="下载源文件"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="列印成 PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="全屏模式"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>矩阵性能指标</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
             
+            <div>
+                <h2> 目录 </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 二次型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 常用性质</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.2. 行列式</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2.1. 定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2.2. 余子式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.2.3. 性质一</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2.4. 性质二</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.3. 矩阵内积</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.4. 矩阵范数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.4.1. 向量范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.4.2. 矩阵范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4.3. 诱导范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.4.4. 元素形式范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#schatten">1.4.5. Schatten范数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.4.5.1. 核范数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.4.5.2. Schatten范数</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.5. 迹</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.1. 性质一</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.5.2. 性质二</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>矩阵性能指标<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">1. </span>矩阵性能指标<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>一个<span class="math notranslate nohighlight">\(m\times n\)</span>的矩阵可以看成是一种具有<span class="math notranslate nohighlight">\(mn\)</span>个元素的多变量。如果需要使用一个标量来概括多变量，可以使用矩阵的性能指标来表示。矩阵的性能指标一般有：二次型、行列式、特征值、迹和秩等。</p>
 <section id="id2">
-<h2><span class="section-number">1.1. </span>二次型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.1. </span>二次型<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>任意方阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的<strong>二次型</strong>为<span class="math notranslate nohighlight">\(\pmb{x}^\top \pmb{A}\pmb{x}\)</span>，其中<span class="math notranslate nohighlight">\(\pmb{x}\)</span>为任意非零向量。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -74,7 +410,7 @@
 \forall \pmb{x}\neq 0,\quad \pmb{x}^\top \pmb{A}\pmb{x}&gt;0
 \]</div>
 <p>成立。根据二次型的计算结果，可以进一步区分以下矩阵类型。</p>
-<table class="docutils align-default">
+<table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>矩阵类型</p></th>
 <th class="head text-center"><p>标记</p></th>
@@ -105,7 +441,7 @@
 </tbody>
 </table>
 <section id="id3">
-<h3><span class="section-number">1.1.1. </span>常用性质<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.1.1. </span>常用性质<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  若记<span class="math notranslate nohighlight">\(\pmb{X}=(\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_n)\)</span>,其中<span class="math notranslate nohighlight">\(\pmb{x}_i \in \mathbb{R}^d\)</span>，则有，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -119,9 +455,9 @@
 </section>
 </section>
 <section id="id4">
-<h2><span class="section-number">1.2. </span>行列式<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.2. </span>行列式<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <section id="id5">
-<h3><span class="section-number">1.2.1. </span>定义<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.2.1. </span>定义<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>一个<span class="math notranslate nohighlight">\(n\times n\)</span>的方阵的<strong>行列式</strong>记为<span class="math notranslate nohighlight">\(\det(\pmb{A})\)</span>或<span class="math notranslate nohighlight">\(|\pmb{A}|\)</span>，其定义为，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -130,7 +466,7 @@
 <p>行列式不为0的矩阵称为<strong>非奇异矩阵</strong>。</p>
 </section>
 <section id="id6">
-<h3><span class="section-number">1.2.2. </span>余子式<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.2.2. </span>余子式<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
 <p>去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余行列式记为<span class="math notranslate nohighlight">\(A_{ij}\)</span>，称为矩阵元素<span class="math notranslate nohighlight">\(a_{ij}\)</span>的<strong>余子式</strong>。若去掉矩阵第<span class="math notranslate nohighlight">\(i\)</span>行<span class="math notranslate nohighlight">\(j\)</span>列后得到的剩余<strong>子矩阵</strong>记为<span class="math notranslate nohighlight">\(\pmb{A}_{ij}\)</span>，则有，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -147,7 +483,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 <p>因此，行列式可以递推计算：<span class="math notranslate nohighlight">\(n\)</span>阶行列式由<span class="math notranslate nohighlight">\(n-1\)</span>阶行列式计算，由此递推直到<span class="math notranslate nohighlight">\(n=1\)</span>。</p>
 </section>
 <section id="id7">
-<h3><span class="section-number">1.2.3. </span>性质一<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.2.3. </span>性质一<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p>行列式的两行（列）交换位置，则行列式的值不变，但符号改变。</p></li>
 <li><p>若矩阵的行（列）向量线性相关，则行列式为0。</p></li>
@@ -170,7 +506,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 </ol>
 </section>
 <section id="id8">
-<h3><span class="section-number">1.2.4. </span>性质二<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.2.4. </span>性质二<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
 <ol class="arabic">
 <li><p>Cauchy-Schwartz不等式，若<span class="math notranslate nohighlight">\(\pmb{A,B}\)</span>都是<span class="math notranslate nohighlight">\(m\times n\)</span>矩阵，则</p>
 <div class="math notranslate nohighlight">
@@ -203,7 +539,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 </section>
 </section>
 <section id="id9">
-<h2><span class="section-number">1.3. </span>矩阵内积<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.3. </span>矩阵内积<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <p>矩阵内积是指：</p>
 <div class="math notranslate nohighlight">
 \[
@@ -211,9 +547,9 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 \]</div>
 </section>
 <section id="id10">
-<h2><span class="section-number">1.4. </span>矩阵范数<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.4. </span>矩阵范数<a class="headerlink" href="#id10" title="Link to this heading">#</a></h2>
 <section id="id11">
-<h3><span class="section-number">1.4.1. </span>向量范数<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.4.1. </span>向量范数<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(L_0\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_0\triangleq\)</span>非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。</p></li>
 <li><p><span class="math notranslate nohighlight">\(L_1\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_1\triangleq\sum_i^n |x_i|=|x_1|+|x_2|+\dots+|x_n|\)</span>。</p></li>
@@ -223,7 +559,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 </ol>
 </section>
 <section id="id12">
-<h3><span class="section-number">1.4.2. </span>矩阵范数<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.4.2. </span>矩阵范数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <p>矩阵范数是矩阵的实值函数，且满足以下条件（与向量空间范数的定义类似），</p>
 <ol class="arabic simple">
 <li><p>非负性： <span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert\ge 0\)</span>，<span class="math notranslate nohighlight">\(\lVert \pmb{A}\rVert= 0\)</span>当且仅当<span class="math notranslate nohighlight">\(\pmb{A}=0\)</span>。</p></li>
@@ -234,7 +570,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 <p>常见矩阵范数主要有三类：诱导范数、元素形式范数和Schatten范数。</p>
 </section>
 <section id="id13">
-<h3><span class="section-number">1.4.3. </span>诱导范数<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.4.3. </span>诱导范数<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <p>假设有矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>，则有以下诱导范数定义。其实是一个向量范数的变形。</p>
 <ol class="arabic simple">
 <li><p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的诱导范数为，</p></li>
@@ -280,7 +616,7 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 </ol>
 </section>
 <section id="id14">
-<h3><span class="section-number">1.4.4. </span>元素形式范数<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.4.4. </span>元素形式范数<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <p>元素形式范数就是将<span class="math notranslate nohighlight">\(m\times n\)</span>矩阵按列堆栈成<span class="math notranslate nohighlight">\(mn\times 1\)</span>维的向量，然后再使用向量形式的范数定义。</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(p\)</span>-矩阵范数</p></li>
@@ -300,10 +636,10 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
   \]</div>
 </section>
 <section id="schatten">
-<h3><span class="section-number">1.4.5. </span>Schatten范数<a class="headerlink" href="#schatten" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.4.5. </span>Schatten范数<a class="headerlink" href="#schatten" title="Link to this heading">#</a></h3>
 <p>Schatten范数定义在矩阵的奇异值之上，可用于解决各类低秩问题：压缩感知、低秩矩阵与张量恢复等。</p>
 <section id="id15">
-<h4><span class="section-number">1.4.5.1. </span>核范数<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">1.4.5.1. </span>核范数<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
 <p>核范数(nuclear norm)是Schatten范数的特例。典型应用场景：核范数最小化等价秩最小化。由于核范数最小化问题是一个<strong>凸优化</strong>问题，所以这种等价可直接降低求解各类<strong>低秩问题</strong>的难度。</p>
 <p><strong>定义1</strong> (核范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n)\)</span>，且矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的核范数为，</p>
 <div class="math notranslate nohighlight">
@@ -338,7 +674,7 @@ d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
 <p>注意：<span class="math notranslate nohighlight">\(d\pmb{X}=\pmb{U}(d\pmb{\Sigma})\pmb{V}^\top\)</span>可得到，<span class="math notranslate nohighlight">\(d\pmb{\pmb{\Sigma}}=\pmb{U}^\top (d\pmb{X})\pmb{V}\)</span>。</p>
 </section>
 <section id="id16">
-<h4><span class="section-number">1.4.5.2. </span>Schatten范数<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">1.4.5.2. </span>Schatten范数<a class="headerlink" href="#id16" title="Link to this heading">#</a></h4>
 <p>相比于核范数，Schatten范数多出了一个参数<span class="math notranslate nohighlight">\(p\)</span>。在众多低秩问题中，核范数最小化扮演着非常重要的角色，Schatten 范数在形式上比核范数更为灵活，也同样能应用于诸多<a class="reference external" href="https://zhuanlan.zhihu.com/p/104402273">低秩问题</a>。可参考NeurIPS文章《Factor Group-Sparse Regularization for Efficient Low-Rank Matrix Recovery》<a class="reference external" href="https://proceedings.neurips.cc/paper/2019/file/0fc170ecbb8ff1afb2c6de48ea5343e7-Paper.pdf">[pdf]</a><a class="reference external" href="https://github.com/udellgroup/Codes-of-FGSR-for-effecient-low-rank-matrix-recovery">[code]</a>。</p>
 <p><strong>定义2</strong> (Schatten范数). 给定任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}\in \mathbb{R}^{m\times n}\)</span>, 以及<span class="math notranslate nohighlight">\(r=\min(m,n), p&gt;0\)</span>，且矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的奇异值为<span class="math notranslate nohighlight">\(\sigma_1\ge\sigma_2\ge\cdots\ge\sigma_r\)</span>，则矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的Schatten范数为，</p>
 <div class="math notranslate nohighlight">
@@ -349,14 +685,14 @@ d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
 </section>
 </section>
 <section id="id17">
-<h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.5. </span>迹<a class="headerlink" href="#id17" title="Link to this heading">#</a></h2>
 <p>矩阵的迹是指<span class="math notranslate nohighlight">\(n\times n\)</span>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的所有对角元素之和，记为<span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A})\)</span>，即</p>
 <div class="math notranslate nohighlight">
 \[
 \textrm{tr}(\pmb{A})=a_{11}+a_{22}+\dots+a_{nn}=\sum_i^n a_{ii}
 \]</div>
 <section id="id18">
-<h3><span class="section-number">1.5.1. </span>性质一<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.5.1. </span>性质一<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\textrm{tr}(c\pmb{A}\pm d\pmb{B})=\textrm{tr}(\pmb{A})\pm \textrm{tr}(\pmb{B})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A}^\top)=\textrm{tr}(\pmb{A})^\top\)</span></p></li>
@@ -368,7 +704,7 @@ d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
 </ul>
 </section>
 <section id="id19">
-<h3><span class="section-number">1.5.2. </span>性质二<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">1.5.2. </span>性质二<a class="headerlink" href="#id19" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\textrm{tr}(\pmb{A}^2)\le \textrm{tr}(\pmb{A}^\top\pmb{A})\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\textrm{tr}((\pmb{A}+\pmb{B})(\pmb{A}+\pmb{B})^\top)\le 2[\textrm{tr}(\pmb{A}\pmb{A}^\top)+\textrm{tr}(\pmb{B}\pmb{B}^\top)]\)</span></p></li>
@@ -379,100 +715,131 @@ d\lVert \pmb{X} \rVert_*&amp;=d\mathrm{tr}(\pmb{\Sigma})\\
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
-        </div>
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../optimization/convex_neq_solve.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">上一页</p>
+        <p class="prev-next-title"><span class="section-number">3. </span>优化问题求解(2)</p>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">1. 矩阵性能指标</a><ul>
-<li><a class="reference internal" href="#id2">1.1. 二次型</a><ul>
-<li><a class="reference internal" href="#id3">1.1.1. 常用性质</a></li>
+    </a>
+    <a class="right-next"
+       href="matrixoper.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>矩阵运算</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 二次型</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 常用性质</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id4">1.2. 行列式</a><ul>
-<li><a class="reference internal" href="#id5">1.2.1. 定义</a></li>
-<li><a class="reference internal" href="#id6">1.2.2. 余子式</a></li>
-<li><a class="reference internal" href="#id7">1.2.3. 性质一</a></li>
-<li><a class="reference internal" href="#id8">1.2.4. 性质二</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.2. 行列式</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">1.2.1. 定义</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">1.2.2. 余子式</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.2.3. 性质一</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.2.4. 性质二</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id9">1.3. 矩阵内积</a></li>
-<li><a class="reference internal" href="#id10">1.4. 矩阵范数</a><ul>
-<li><a class="reference internal" href="#id11">1.4.1. 向量范数</a></li>
-<li><a class="reference internal" href="#id12">1.4.2. 矩阵范数</a></li>
-<li><a class="reference internal" href="#id13">1.4.3. 诱导范数</a></li>
-<li><a class="reference internal" href="#id14">1.4.4. 元素形式范数</a></li>
-<li><a class="reference internal" href="#schatten">1.4.5. Schatten范数</a><ul>
-<li><a class="reference internal" href="#id15">1.4.5.1. 核范数</a></li>
-<li><a class="reference internal" href="#id16">1.4.5.2. Schatten范数</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#id17">1.5. 迹</a><ul>
-<li><a class="reference internal" href="#id18">1.5.1. 性质一</a></li>
-<li><a class="reference internal" href="#id19">1.5.2. 性质二</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.3. 矩阵内积</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.4. 矩阵范数</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.4.1. 向量范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.4.2. 矩阵范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.4.3. 诱导范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.4.4. 元素形式范数</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#schatten">1.4.5. Schatten范数</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.4.5.1. 核范数</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.4.5.2. Schatten范数</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.5. 迹</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id18">1.5.1. 性质一</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id19">1.5.2. 性质二</a></li>
 </ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+作者： SSPUIIP
+</p>
 
   </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="../optimization/convex_neq_solve.html"
-                          title="上一章"><span class="section-number">3. </span>优化问题求解(2)</a></p>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022-2024, SSPUIIP.
+      <br/>
+    
+  </p>
+
   </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="matrixoper.html"
-                          title="下一章"><span class="section-number">2. </span>矩阵运算</a></p>
+  
+  <div class="footer-item">
+    
   </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/matrix/base.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
 </div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+          </footer>
+        
+
+      </main>
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="matrixoper.html" title="2. 矩阵运算"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="../optimization/convex_neq_solve.html" title="3. 优化问题求解(2)"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>矩阵性能指标</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6创建。
-    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
   </body>
 </html>
