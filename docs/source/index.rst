@@ -7,7 +7,7 @@
 ============
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 监督学习
    :numbered:
 
@@ -15,16 +15,17 @@
    ml/neuro_representation.md
    ml/EM.md
    ml/PGM.md
+   ml/bayes.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 无监督学习
    :numbered:
 
    ml/biClustering.md
    
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 核方法
    :numbered:
 
@@ -36,7 +37,7 @@
 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 最优化
    :numbered:
 
@@ -45,7 +46,7 @@
    optimization/convex_neq_solve.md
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 矩阵分析
    :numbered:
 
@@ -58,7 +59,7 @@
    matrix/decomposition.md
    
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: 数学建模
    :numbered:
 
