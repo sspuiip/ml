@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. BiClustering &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>5. 贝叶斯分类 &#8212; Machine Learning Fundation 1.0 文档</title>
   
   
   
@@ -53,11 +53,13 @@
     <script src="../_static/design-tabs.js?v=36754332"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/biClustering';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/bayes';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 核函数基础" href="../kernel/base.html" />
-    <link rel="prev" title="5. 贝叶斯分类" href="bayes.html" />
+    <link rel="next" title="1. BiClustering" href="biClustering.html" />
+    <link rel="prev" title="4. 概率图模型" href="PGM.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -159,16 +161,16 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
 <li class="toctree-l1"><a class="reference internal" href="EM.html">3. EM算法概述</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PGM.html">4. 概率图模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bayes.html">5. 贝叶斯分类</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. 贝叶斯分类</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">1. BiClustering</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="biClustering.html">1. BiClustering</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
 <ul class="nav bd-sidenav">
@@ -254,7 +256,7 @@
       
       
       
-      <li><a href="../_sources/ml/biClustering.md" target="_blank"
+      <li><a href="../_sources/ml/bayes.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -338,7 +340,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>BiClustering</h1>
+    <h1>贝叶斯分类</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -348,7 +350,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. 贝叶斯决策</a></li>
 </ul>
             </nav>
         </div>
@@ -360,12 +362,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="biclustering">
-<h1><span class="section-number">1. </span>BiClustering<a class="headerlink" href="#biclustering" title="Link to this heading">#</a></h1>
-<p>Given a data matrix with rows and columns, BiClustering (block clustering, co-clustering or two-mode clustering) is able to cluster rows and columns simultaneously. A Bicluster is a subset of rows which exhibit similar behavior across a subset of columns, or vice versa.</p>
-<section id="biclustring-via-singlular-value-decomposition">
-<h2><span class="section-number">1.1. </span>Biclustring via singlular value decomposition<a class="headerlink" href="#biclustring-via-singlular-value-decomposition" title="Link to this heading">#</a></h2>
-<p><img alt="RoBic" src="../_images/robic_bicluster.png" /></p>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">5. </span>贝叶斯分类<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<section id="id2">
+<h2><span class="section-number">5.1. </span>贝叶斯决策<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>贝叶斯决策论（Bayesian decision theory）是概率框架下决策的基本方法</strong>。</p></li>
+</ul>
+<p>  假设有类型标记<span class="math notranslate nohighlight">\(\mathcal{Y}=\{c_1,...,c_n\}\)</span>，在决策过程中类别<span class="math notranslate nohighlight">\(c_j\)</span>的样本划分为类别<span class="math notranslate nohighlight">\(c_i\)</span>所产生的损失记为<span class="math notranslate nohighlight">\(\lambda_{ij}\)</span>，则将样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>分类为<span class="math notranslate nohighlight">\(c_i\)</span>产生的损失期望(expected loss)，也称为条件风险，</p>
+<div class="math notranslate nohighlight" id="equation-expected-loss">
+<span class="eqno">(1)<a class="headerlink" href="#equation-expected-loss" title="Link to this equation">#</a></span>\[
+R(c_i|\pmb{x})=\sum_{j}^N \lambda_{ij}\cdot P(c_j|\pmb{x})
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(P(c_j|\pmb{x})\)</span>为类别标记<span class="math notranslate nohighlight">\(c_j\)</span>的后验概率。分类的任务是寻找一个最优分类映射<span class="math notranslate nohighlight">\(h:\mathcal{x}\rightarrow \mathcal{Y}\)</span>，从而最小化总体风险，</p>
+<div class="math notranslate nohighlight" id="equation-total-risk">
+<span class="eqno">(2)<a class="headerlink" href="#equation-total-risk" title="Link to this equation">#</a></span>\[
+R(h)=\mathbb{E}_{\pmb{x}}\{R[h(\pmb{x})|\pmb{x}]\}
+\]</div>
+<p>如果<span class="math notranslate nohighlight">\(h\)</span>对每个样本都能最小化条件风险<a class="reference internal" href="#equation-expected-loss">(1)</a><span class="math notranslate nohighlight">\(R[h(\pmb{x}|\pmb{x}]\)</span>，则总体风险<a class="reference internal" href="#equation-total-risk">(2)</a>也能最小化。因此就有了贝叶斯判定准则：</p>
+<blockquote>
+<div><p>为了最小化总体风险，对每个样本都选择能使条件风险<a class="reference internal" href="#equation-expected-loss">(1)</a>最小的类别标记。</p>
+<p class="attribution">—Bayes decision rule</p>
+</div></blockquote>
+<p>也就是，</p>
+<div class="math notranslate nohighlight" id="equation-optimal-function">
+<span class="eqno">(3)<a class="headerlink" href="#equation-optimal-function" title="Link to this equation">#</a></span>\[
+h^*(\pmb{x})=\arg\min\limits_{c\in\mathcal{Y}} R(c|\pmb{x})
+\]</div>
+<p>此时，<span class="math notranslate nohighlight">\(h^*\)</span>称为贝叶斯最优分类器，对应的总体风险<span class="math notranslate nohighlight">\(R(h^*)\)</span>称为贝叶斯风险。</p>
 </section>
 </section>
 
@@ -381,20 +405,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="bayes.html"
+       href="PGM.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>贝叶斯分类</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>概率图模型</p>
       </div>
     </a>
     <a class="right-next"
-       href="../kernel/base.html"
+       href="biClustering.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>BiClustering</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -414,7 +438,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#biclustring-via-singlular-value-decomposition">1.1. Biclustring via singlular value decomposition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. 贝叶斯决策</a></li>
 </ul>
   </nav></div>
 
