@@ -2,7 +2,8 @@
 
 ## 贝叶斯决策
 
-- 贝叶斯决策论（Bayesian decision theory）是概率框架下决策的基本方法。
+{attribution="Bayesian decision theory"}
+> 贝叶斯决策论是概率框架下决策的基本方法。
 
 &emsp;&emsp;假设有类型标记$\mathcal{Y}=\{c_1,...,c_n\}$，在决策过程中类别$c_j$的样本划分为类别$c_i$所产生的**损失**记为$\lambda_{ij}$，则将样本$\pmb{x}$分类为$c_i$产生的损失期望(expected loss)，也称为**条件风险**，
 
