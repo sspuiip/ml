@@ -38,8 +38,9 @@ extensions = [
     'sphinx_togglebutton',
     'sphinx.ext.mathjax',
     'sphinx-mathjax-offline',  
-    "jupyter_sphinx",   
 ]
+#    "jupyter_sphinx",   
+#]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

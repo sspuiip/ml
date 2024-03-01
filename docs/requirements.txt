@@ -12,4 +12,3 @@ sphinx_copybutton
 sphinx_design
 sphinx_togglebutton
 linkify-it-py
-jupyter-sphinx
