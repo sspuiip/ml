@@ -4,7 +4,69 @@
 
 &emsp;&emsp;概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。根据边的类型不同，图模型又可以继续细分为**有向无环图**（贝叶斯网，Bayesian network）和**无向无环图**（马尔可夫网，Markov network）两种。
 
-## 隐马尔可夫模型
+## 贝叶斯网
+
+&emsp;&emsp;有向图模型的关键属性是结点有序。按照父结点在子结点之前的顺序排序也称为拓扑序列。给定这个序列，则可以定义**有序马尔可夫属性**，即结点只依赖它的直接父结点，不依赖其所有的其它前序结点。
+
+$$
+x_s \bot \pmb{x}_{\mathrm{pre}(s)\backslash \mathrm{pa}(s)} | x_{\mathrm{pa}(s)}
+$$(makov-pre)
+
+### 联合分布
+
+&emsp;&emsp;有向图模型是基于假设条件独立的一种用于表示联合分布的方法。根据有序马尔可夫属性，我们可以从有向图模型得到图所表示的联合概率，
+
+$$
+p(\pmb{x}_{1:V}|G)=\prod_{t=1}^V p(x_t|\mathrm{pa}(t))
+$$(bayesian-joint-dist)
+
+:::{admonition} **例**0. 下图给出了一个有向图模型
+:class: tip
+
+```{mermaid}
+---
+caption: Fig 0. A Bayesian Net
+align: center
+---
+flowchart TD
+  x1(("1")) --> x2(("2"))
+  x1-->x3(("3"))
+  x2-->x4(("4"))
+  x3-->x4
+  x3-->x5(("5"))
+```
+
+&emsp;&emsp;根据链规则(chain-rule)可知，
+
+$$
+\begin{split}
+p(\pmb{x}_{1:5})&=p(x_1)p(x_2|x_1)p(x_3|x_1,x_2)p(x_4|x_3,x_2,x_1)p(x_5|x_4,x_3,x_2,x_1)\\
+&=p(x_1)p(x_2|x_1)\underbrace{p(x_3|x_1)p(x_4|x_2,x_3)p(x_5|x_3)}_{\mathrm{有序马尔可夫属性}}\\
+&=p(\pmb{x}_{1:5}|G)
+\end{split}
+$$
+
+该有向图模型的联合分布可根据公式{eq}`bayesian-joint-dist`直接可得，
+
+$$
+p(\pmb{x}_{1:5}|G)=\prod_{t=1}^5 p(x_t | \mathrm{pa}(t))
+$$
+
+:::
+
+### 有向图的条件独立性
+
+无向路径的d-分离
+: 无向路径P被结点集E所d-分离，当且仅当以下条件中至少一条成立:
+1. P包含一个链，$s\rightarrow m\rightarrow t$或$s\leftarrow m\leftarrow t$，其中$m\in E$。
+2. P包含一个叉，$s\swarrow m\searrow t$其中$m\in E$。
+3. P包含一个冲突结构或V-结构，$s\searrow m\swarrow t$，其中$m\notin E$且$m$的任意子孙也不属于$E$。
+
+结点集的d-分离
+: 给定观察集$E$，结点集A与结点集B是d-分离的，当且仅当集合A的任意结点a出发到达集合B的任意结点b的无向路径是被集合E所d-分离的。
+
+
+### 隐马尔可夫模型
 
 &emsp;&emsp;隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。
 
