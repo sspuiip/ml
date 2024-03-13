@@ -21,7 +21,7 @@ p(\pmb{x}_{1:V}|G)=\prod_{t=1}^V p(x_t|\mathrm{pa}(t))
 $$(bayesian-joint-dist)
 
 :::{admonition} **例**0. 下图给出了一个有向图模型
-:class: tip
+:class: dropdown
 
 ```{mermaid}
 ---
@@ -55,15 +55,126 @@ $$
 :::
 
 ### 有向图的条件独立性
+#### $d$-分离
+无向路径$P$的$d$-分离
+: 无向路径$P$被结点集$E$所$d$-分离，当且仅当以下条件中至少一条成立:
+1. $P$包含一个链，$s\rightarrow m\rightarrow t$或$s\leftarrow m\leftarrow t$，其中$m\in E$。
+2. $P$包含一个叉，$s\swarrow m\searrow t$其中$m\in E$。
+3. $P$包含一个冲突结构或V-结构，$s\searrow m\swarrow t$，其中$m\notin E$且$m$的任意子孙也不属于$E$。
 
-无向路径的d-分离
-: 无向路径P被结点集E所d-分离，当且仅当以下条件中至少一条成立:
-1. P包含一个链，$s\rightarrow m\rightarrow t$或$s\leftarrow m\leftarrow t$，其中$m\in E$。
-2. P包含一个叉，$s\swarrow m\searrow t$其中$m\in E$。
-3. P包含一个冲突结构或V-结构，$s\searrow m\swarrow t$，其中$m\notin E$且$m$的任意子孙也不属于$E$。
+结点集的$d$-分离
+: 给定观察集$E$，结点集$A$与结点集$B$是$d$-分离的，当且仅当集合$A$的任意结点$a$出发到达集合$B$的任意结点$b$的无向路径是被集合$E$所$d$-分离的。
 
-结点集的d-分离
-: 给定观察集$E$，结点集A与结点集B是d-分离的，当且仅当集合A的任意结点a出发到达集合B的任意结点b的无向路径是被集合E所d-分离的。
+贝叶斯球算法
+: 是一个简单的用于处理给定结点集$E$判定结点集$A$与结点集$B$是否$d$-分离问题的方法。基本思想为将$E$集合中的结点全部画上阴影表示为观测集，然后在集合$A$的每一个结点放置球，让它们按一定的规则弹跳，然后观察是否有球到达集合$B$的任意结点。如果有球到达，则不独立，反之则独立。
+
+&emsp;&emsp;弹跳规则如下：
+
+:::{figure-md}
+![AutoEncoder](../img/ball-bounce-rule.png){width=300px}
+
+贝叶斯球弹跳规则
+:::
+
+&emsp;&emsp;需要注意的是，一个变量取值的确定与否会对变量间的独立性发生影响。例如，$v$结构的变量$Y$未观测到，则$X,Z$独立；若$Y$已观测，则$X,Z$不独立。可以验证，
+
+$$
+p(X,Z)=\sum_Y p(X,Y,Z)=\sum_Y p(Y|X,Z)p(X)p(Z)=p(X)p(Z)
+$$
+
+&emsp;&emsp;由$d$-分离得到的有向图条件独立属性也称之为**有向全局Markov属性**。
+
+#### DAG的其它Markov属性
+
+除了全局Markov属性，从$d$-分离标准，还可以得到如下结论：
+
+$$
+t\bot\{\mathrm{nd}(t)\backslash\mathrm{pa}(t)\}|\mathrm{pa}(t)
+$$(dag-local-markov)
+
+其中，$\mathrm{nd}(t)$表示除$t$的子孙外的所有结点，即$\mathrm{nd}(t)=\mathcal{V}\backslash\{t\cup \mathrm{desc}(t)\}$。该属性称为**有向局部Markov属性**。
+
+&emsp;&emsp;此外，前文所提及的**有序Markov属性**{eq}`makov-pre`。
+
+&emsp;&emsp;**注意**：以上三种属性是等价的。
+
+#### 道德图
+
+道德图
+: 使用有向分离技术，将有向图转为无向图，即为道德图。该过程也称为道德化。道德化后可以快速找到条件独立性。
+
+&emsp;&emsp;道德化步骤：
+1. 找出有向图的所有v型结构，在v型结构的两个父结点上加上一条边；
+2. 将有向边改为无向边
+
+道德图判定条件独立性
+: 假设道德图中有变量$\{x,y\}$和变量集合$\pmb{z}=\{z_i\}$，若$x,y$能在图上被$\pmb{z}$分开，即道德图中将变量集合$\{\pmb{z}\}$去除后，$x,y$分别属于两个连通分支，则称$x,y$被$\pmb{z}$有向分离，即$x\bot y|\pmb{z}$。
+
+#### Markov毯
+
+Markov毯
+: 是指让结点$t$与其它结点条件独立的**结点集**，记为$\mathrm{mb}(t)$。
+
+&emsp;&emsp;该结点集包含结点$t$的子结点集$\mathrm{ch}(t)$、父结点集$\mathrm{pa}(t)$以及协父结点集$\mathrm{copa}(t)$，即
+
+$$
+\mathrm{mb}(t)=\mathrm{ch}(t)\cup \mathrm{pa}(t)\cup\mathrm{copa}(t)
+$$(markov-blanket)
+
+
+
+&emsp;&emsp;注意：协父母也会出现在Markov毯中。当我们在推导
+
+$$
+p(x_t|\pmb{x}_{-t})=\frac{p(x_t,\pmb{x}_{-t})}{p(\pmb{x}_{-t})}
+$$
+
+时，所有不包含$x_t$的项都会消去（同时出现在分子分母），所以条件分布的乘积只会留下含$x_t$的分布，因此可以得到下式，
+
+$$
+p(x_t|\pmb{x}_{-t})\propto \underbrace{p\left(x_t|\pmb{x}_{\mathrm{pa}(t)}\right)\cdot\prod_{s\in\mathrm{ch}(t)}p\left(x_s|\pmb{x}_{\mathrm{pa}(t)}\right)}_{t的全条件(full\ conditon)}
+$$(full-condition)
+
+该式也称为结点$t$的**全条件（full condition）**。
+
+
+:::{admonition} **例**. 下图给出了一个有向图模型
+:class: dropdown
+
+```{mermaid}
+---
+caption: Fig . 一个贝叶斯网示例
+align: center
+---
+flowchart LR
+  x1(("1")) --> x2(("2"))
+  x1-->x3(("3"))
+  x2-->x4(("4"))
+  x2-->x5(("5"))
+  x3-->x5
+  x5-->x6(("6"))
+  x3-->x6
+  x4-->x7(("7"))
+  x5-->x7
+  x6-->x7
+```
+
+从上图中，根据Markov毯的定义可以得知，
+
+$$
+\begin{split}
+\mathrm{mb}(3)&=\{ 5,6\}\cup \{1 \}\cup \{2\}=\{1,2,5,6\}\\
+\mathrm{mb}(5)&=\{ 6,7\}\cup \{2,3 \}\cup \{4\}=\{2,3,4,6,7\}
+\end{split}
+$$
+
+以及结点5的全条件，
+
+$$
+p(x_5|\pmb{x}_{-5})\propto p(x_5|x_2,x_3)p(x_6|x_3,x_5)p(x_7|x_4,x_5,x_6)
+$$
+
+:::
 
 
 ### 隐马尔可夫模型
