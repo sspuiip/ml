@@ -241,7 +241,7 @@ $$(hmm-joint)
 
 ## 马尔可夫随机场
 
-&emsp;&emsp;马尔可夫随机场是一种无向图模型。图中结点表示一个（组）变量，结点之间的边表示变量之间的依赖关系。马尔可夫随机场的联合概率分布函数由一组**势函数**（potential functions），也称之为**因子**(factor)，构成。势函数是定义在变量子集上的非负实函数。
+&emsp;&emsp;马尔可夫随机场是一种**无向图模型**。图中结点表示一个（组）变量，结点之间的边表示变量之间的依赖关系。马尔可夫随机场的联合概率分布函数由一组**势函数**（potential functions），也称之为**因子**(factor)，构成。势函数是定义在变量子集上的非负实函数。
 
 &emsp;&emsp;马尔可夫随机场的变量子集根据结点特性可以加以区别。若一个结点子集中任意两结点之间都有边连接，则称该子集为一个**团**（clique）；若在一个团中加入另外任何一个结点后，不再形成团，则该团称为**极大团**（maximal clique）。
 
@@ -344,7 +344,9 @@ $$
 
 &emsp;&emsp;基于概率图模型定义的联合概率分布，我们可以对感兴趣目标变量的**边缘分布进行推断**；或者给定某些观测变量为条件的**条件分布进行推断**。
 
-&emsp;&emsp;对于概率图模型，还需要确定具体分布的参数，这也称之为参数学习（估计）问题。一般使用极大似然估计或最大后验估计方法求解。特别地，如果将待学习的参数视为待推测变量，则参数估计和推断问题就非常相似，可以认为是推断问题。因此，如果没有特别要求，只需要观注概率图模型的推断方法。
+&emsp;&emsp;对于概率图模型，还需要确定具体分布的参数，这也称之为参数学习（估计）问题。一般使用极大似然估计或最大后验估计方法求解。特别地，如果将待学习的参数视为待推测变量，则参数估计和推断问题就非常相似，可以认为是推断问题。
+
+
 
 &emsp;&emsp;概率图模型的推断方法大致可以分为两类：
 
@@ -352,17 +354,31 @@ $$
 
 2. 近似推断方法. 此类方法期望在较低的时间复杂度获得问题的近似解，实际任务中应用较为广泛。
 
-&emsp;&emsp;具体来说，假设图模型所对应的变量集$\pmb{x}=\{x_1,...,x_n\}$可以拆分为$\pmb{x}_E$和$\pmb{x}_F$两部分，推断问题的目标就是计算边缘分布$P(\pmb{x}_F)$或条件分布$P(\pmb{x}_F|\pmb{x}_E)$。由条件概率可知，
+&emsp;&emsp;具体来说，假设图模型所对应的变量集$\pmb{x}=\{x_1,...,x_n\}$可以拆分为$\pmb{x}_E$和$\pmb{x}_Q$两部分，推断问题的目标就是计算边缘分布$p(\pmb{x}_Q)$或条件分布$p(\pmb{x}_Q|\pmb{x}_E)$。由条件概率可知，
 
 $$
-P(\pmb{x}_F|\pmb{x}_E)=\frac{P(\pmb{x}_F,\pmb{x}_E)}{P(\pmb{x}_E)}=\frac{P(\pmb{x}_F,\pmb{x}_E)}{\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)}
-$$
+p(\pmb{x}_Q|\pmb{x}_E)=\frac{p(\pmb{x}_Q,\pmb{x}_E)}{p(\pmb{x}_E)}=\frac{p(\pmb{x}_Q,\pmb{x}_E)}{\sum_{\pmb{x}_F}p(\pmb{x}_Q,\pmb{x}_E)}
+$$(infer-poster)
 
 上式中，联合分布可以由图模型得到，所以推断问题的关键就是如何计算分母中的边缘分布，也就是
 
 $$
-P(\pmb{x}_E)=\sum_{\pmb{x}_F}P(\pmb{x}_F,\pmb{x}_E)
+p(\pmb{x}_E)=\sum_{\pmb{x}_Q}p(\pmb{x}_Q,\pmb{x}_E)
 $$(edge-distribution)
+
+{attribution="概率图模型推断与学习"}
+> **推断问题**假设模型参数$\pmb{\theta}$已知的前提下，计算变量后验$p(\pmb{x}_Q|\pmb{x}_E)${eq}`infer-poster`，而**学习问题**则是指计算模型参数$\pmb{\theta}$的最大后验估计。
+
+
+&emsp;&emsp;模型参数的最大后验估计即为，
+
+$$
+\hat{\pmb{\theta}}=\arg\max\limits_{\pmb{\theta}}\sum_{i=1}^N\log p(\pmb{x}_{i,v}|\pmb{\theta})+\log p(\pmb{\theta})
+$$(learning-parameter)
+
+其中，$\pmb{x}_{i,v}$为数据样本$\pmb{x}_i$的观测部分。注意若选择$p(\pmb{\theta})=1$，则最大后验估计变成最大似然估计。
+
+
 ### 精确推断
 
 #### 变量消除法
@@ -628,7 +644,7 @@ $$(optimize-solution)
 
 &emsp;&emsp;最终，在满足条件{eq}`q-factor`下，变量子集$\pmb{z}_j$最接近的真实分布由{eq}`optimize-solution`得到。
 
-&emsp;&emsp;通过恰当的分割独立变量子集$\pmb{z}_j$并选择$q_j$服从的分布，$\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]$往往有闭式解，这使得基于{eq}`optimize-solution`能高效对隐变量$\pmb{z}$进行推断。事实上，对变量$\pmb{z}_j$分布$q_j^*$进行估计时整合了$\pmb{z}_j$之外的其他$\pmb{z}_{i\neq j}$的信息，这是通过联合似然函数$\ln p(\pmb{x},\pmb{z})$在$\pmb{z}_j$之外的隐变量分布上求期望得到的，因此也被称为**平均场(mean field)**方法。
+&emsp;&emsp;通过恰当的分割独立变量子集$\pmb{z}_j$并选择$q_j$服从的分布，$\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]$往往有闭式解，这使得基于{eq}`optimize-solution`能高效对隐变量$\pmb{z}$进行推断。事实上，对变量$\pmb{z}_j$分布$q_j^*$进行估计时整合了$\pmb{z}_j$之外的其他$\pmb{z}_{i\neq j}$的信息，这是通过联合似然函数$\ln p(\pmb{x},\pmb{z})$在$\pmb{z}_j$之外的隐变量分布上求期望得到的，因此也被称为**均值场(mean field)方法**。
 
 
 [^mcmc]: [MCMC采样](https://sspuiip.github.io/ml/mathmodel/mcmc.html#mcmc)
