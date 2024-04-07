@@ -8,6 +8,13 @@
 
 .. toctree::
    :maxdepth: 3
+   :caption: 基础知识
+   :numbered:
+
+   base/prob_dist.md
+
+.. toctree::
+   :maxdepth: 3
    :caption: 监督学习
    :numbered:
 
