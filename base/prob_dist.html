@@ -809,8 +809,8 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 <dt>概率密度函数pdf</dt><dd><p>定义为，</p>
 </dd>
 </dl>
-<div class="math notranslate nohighlight" id="equation-norm-pdf">
-<span class="eqno">(25)<a class="headerlink" href="#equation-norm-pdf" title="Link to this equation">#</a></span>\[
+<div class="math notranslate nohighlight" id="equation-norm-pdf-1">
+<span class="eqno">(25)<a class="headerlink" href="#equation-norm-pdf-1" title="Link to this equation">#</a></span>\[
 \mathcal{N}(z|\mu,\sigma^2)\triangleq \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(z-\mu)^2}{2\sigma^2}}
 \]</div>
 <dl class="simple myst">
@@ -956,7 +956,17 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
        &amp;=\pmb{\mu}_1-\pmb{\Lambda}_{11}^{-1}\pmb{\Lambda}_{12}(\pmb{y}_2-\pmb{\mu}_2)
     \end{split}
 \end{split}\]</div>
-<p>注：<span class="math notranslate nohighlight">\(\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}\)</span>。</p>
+<p>以及，</p>
+<div class="math notranslate nohighlight" id="equation-equ-post-norm2">
+<span class="eqno">(36)<a class="headerlink" href="#equation-equ-post-norm2" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+       p(\pmb{y}_2|\pmb{y}_1)&amp;=\mathcal{N}(\pmb{y}_2|\pmb{\mu}_{2|1},\pmb{\Sigma}_{2|1})\\
+       \pmb{\Sigma}_{2|1}&amp;=\pmb{\Sigma}_{22}-\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}\pmb{\Sigma}_{12}=\pmb{\Lambda}_{22}^{-1}\\
+       \pmb{\mu}_{2|1}&amp;=\pmb{\Sigma}_{2|1}(\pmb{\Lambda}_{22}\pmb{\mu}_2-\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)) \\ &amp;=\pmb{\mu}_2+\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}(\pmb{y}_1-\pmb{\mu}_1)\\
+       &amp;=\pmb{\mu}_2-\pmb{\Lambda}_{22}^{-1}\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)
+    \end{split}
+\end{split}\]</div>
+<p>注：<span class="math notranslate nohighlight">\(\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}\)</span>。证明过程主要是利用分块矩阵展开后凑平方项，略。</p>
 <div style="background-color: #F8F8F8  ">
 <dl class="simple myst">
 <dt>相关知识点：Schur complements</dt><dd><p>Schur complements有一些非常有用的结论，在计算中有重要作用，如计算上节中的协方差矩阵的逆。</p>
@@ -972,7 +982,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>假设<span class="math notranslate nohighlight">\(\pmb{A},\pmb{D}\)</span>是可逆的，则我们可以得到<span class="math notranslate nohighlight">\(\pmb{M}^{-1}\)</span>，</p>
 <div class="math notranslate nohighlight" id="equation-inverse-m">
-<span class="eqno">(36)<a class="headerlink" href="#equation-inverse-m" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(37)<a class="headerlink" href="#equation-inverse-m" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
   \pmb{M}^{-1}&amp;=\begin{bmatrix}
             [\pmb{M}/\pmb{D}]^{-1} &amp; -[\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1} \\
@@ -986,7 +996,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>其中，</p>
 <div class="math notranslate nohighlight" id="equation-ma-schur-comp">
-<span class="eqno">(37)<a class="headerlink" href="#equation-ma-schur-comp" title="Link to this equation">#</a></span>\[
+<span class="eqno">(38)<a class="headerlink" href="#equation-ma-schur-comp" title="Link to this equation">#</a></span>\[
 [\pmb{M/A}]\triangleq \pmb{D}-\pmb{CA}^{-1}\pmb{B}
 \]</div>
 <p>为矩阵<span class="math notranslate nohighlight">\(\pmb{M}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{A}\)</span>和<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的Schur补,</p>
