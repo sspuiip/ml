@@ -383,7 +383,7 @@ $$(erf-def)
 
 $$
 \mathcal{N}(z|\mu,\sigma^2)\triangleq \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(z-\mu)^2}{2\sigma^2}}
-$$(norm-pdf)
+$$(norm-pdf-1)
 
 高斯分布性质
 : $\mathbb{E}[z]=\int_{-\infty}^{+\infty}y\mathcal{N}(z|\mu,\sigma^2)dz=\mu$.
@@ -533,7 +533,18 @@ $$
     \end{split}
 $$(equ_post_norm)
 
-注：$\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}$。
+以及，
+
+$$
+\begin{split}
+       p(\pmb{y}_2|\pmb{y}_1)&=\mathcal{N}(\pmb{y}_2|\pmb{\mu}_{2|1},\pmb{\Sigma}_{2|1})\\
+       \pmb{\Sigma}_{2|1}&=\pmb{\Sigma}_{22}-\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}\pmb{\Sigma}_{12}=\pmb{\Lambda}_{22}^{-1}\\
+       \pmb{\mu}_{2|1}&=\pmb{\Sigma}_{2|1}(\pmb{\Lambda}_{22}\pmb{\mu}_2-\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)) \\ &=\pmb{\mu}_2+\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}(\pmb{y}_1-\pmb{\mu}_1)\\
+       &=\pmb{\mu}_2-\pmb{\Lambda}_{22}^{-1}\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)
+    \end{split}
+$$(equ_post_norm2)
+
+注：$\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}$。证明过程主要是利用分块矩阵展开后凑平方项，略。
 
 <div style="background-color: #F8F8F8  ">
 
