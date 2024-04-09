@@ -434,8 +434,9 @@ $$(gauss-lin-regression-hete)
 
 #### 多维高斯分布
 
-定义
-: 多维高斯分布的概率密度函数: $\pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma)}$，定义为
+&emsp;&emsp;**(一) 定义**
+
+&emsp;&emsp;多维高斯分布的概率密度函数: $\pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma)}$，定义为
 
 $$
 \mathcal{N}(\pmb{y}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{y}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{y}-\pmb{\mu})\right\}
@@ -443,8 +444,9 @@ $$(equ_mult_gauss)
 
 &emsp;&emsp;特例：二维高斯分布
 
-二维高斯分布pdf
-: 当$D=2$时，
+&emsp;&emsp;**(二) 二维高斯分布pdf**
+
+&emsp;&emsp;当$D=2$时，
 
 $$
 \pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma}),\pmb{\mu}\in \mathbb{R}^2,\pmb{y}\in \mathbb{R}^2
@@ -469,8 +471,9 @@ $$
 $$
 
 
-相关距离：Mahalanobis 距离
-: 定义为，
+&emsp;&emsp;**(三) Mahalanobis 距离**
+
+&emsp;&emsp;定义为，
 
 $$
 \Delta(\pmb{x},\pmb{\mu})\triangleq (\pmb{x}-\pmb{\mu})^{\top}\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu});\quad\pmb{\Lambda}\triangleq \pmb{\Sigma}^{-1}
@@ -486,8 +489,9 @@ $$
 \end{split}
 $$
 
-多维高斯联合分布
-: 假设$\pmb{y}=(\pmb{y}_1,\pmb{y}_2)\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})$，其中均值$\pmb{\mu}$与协方差矩阵$\pmb{\Sigma}$分别为，
+&emsp;&emsp;**(四) 多维高斯联合分布**
+
+&emsp;&emsp;假设$\pmb{y}=(\pmb{y}_1,\pmb{y}_2)\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})$，其中均值$\pmb{\mu}$与协方差矩阵$\pmb{\Sigma}$分别为，
 
 $$
 \pmb{\mu}=\begin{pmatrix}
@@ -513,7 +517,7 @@ $$(pricision-matrix)
 
 其中，$\pmb{\Sigma/\Sigma}_{22},\pmb{\Sigma/\Sigma}_{11}$分别是矩阵$\pmb{\Sigma}$关于$\pmb{\Sigma}_{22},\pmb{\Sigma}_{11}$的Schur补(Schur complements)。则，我们可以得出以下结论。
 
-&emsp;&emsp;（一）**边缘分布**
+&emsp;&emsp;**（1）边缘分布**
 
 $$
 \begin{split}
@@ -522,7 +526,7 @@ $$
 \end{split}
 $$(multi-norm-dist-edge)
 
-&emsp;&emsp;（二）**后验分布**
+&emsp;&emsp;**（2）后验分布**
 
 $$
 \begin{split}
@@ -546,6 +550,9 @@ $$(equ_post_norm2)
 
 注：$\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}$。证明过程主要是利用分块矩阵展开后凑平方项，略。
 
+:::{admonition} **基础知识**
+:class: dropdown
+
 <div style="background-color: #F8F8F8  ">
 
 相关知识点：Schur complements
@@ -553,46 +560,104 @@ $$(equ_post_norm2)
 
 考虑一个分块矩阵，
 
-$$
-\pmb{M}=\begin{pmatrix}
-    \pmb{A} & \pmb{B} \\
-    \pmb{C} & \pmb{D}
-  \end{pmatrix}
-$$
 
-假设$\pmb{A},\pmb{D}$是可逆的，则我们可以得到$\pmb{M}^{-1}$，
+
+有用结论
+: 要去掉上(下)三角，只要乘(左乘、右乘皆可)上一个单位阵(其对应的上、下三角元取值非空，与原矩阵乘积后为0)。
+
+&emsp;&emsp;例如：
 
 $$
 \begin{split}
-  \pmb{M}^{-1}&=\begin{bmatrix}
-            [\pmb{M}/\pmb{D}]^{-1} & -[\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1} \\
-            -\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1} & \pmb{D}^{-1}+\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1}\pmb{BD}^{-1}
-          \end{bmatrix} \\
-  &=\begin{bmatrix}
-     \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} & \pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1} \\
-      -[\pmb{M/A}]^{-1}\pmb{CA}^{-1} & [\pmb{M/A}]^{-1}
-    \end{bmatrix}
+\begin{pmatrix} \pmb{I}&\pmb{0}\\  -\pmb{CA}^{-1}&\pmb{I}\end{pmatrix} \underbrace{\begin{pmatrix} A&B\\ C&D \end{pmatrix}}_{去掉下三角C} &= \begin{pmatrix}A & B\\ 0&D-CA^{-1}B \end{pmatrix} \\
+\underbrace{\begin{pmatrix}A & B\\ 0&D-CA^{-1}B \end{pmatrix}}_{去掉上三角B} \begin{pmatrix}\pmb{I} & -\pmb{A}^{-1}\pmb{B}\\ 0&\pmb{I} \end{pmatrix} &= \begin{pmatrix}A & 0\\ 0&D-CA^{-1}B \end{pmatrix}
+\end{split}
+$$
+
+以及，
+
+$$
+\begin{split}
+\begin{pmatrix} \pmb{I}&-\pmb{BD}^{-1}\\  \pmb{0}&\pmb{I}\end{pmatrix} \underbrace{\begin{pmatrix} A&B\\ C&D \end{pmatrix}}_{去掉上三角B} &= \begin{pmatrix}A-BD^{-1}C & 0\\ C&D \end{pmatrix} \\
+\underbrace{\begin{pmatrix}A-BD^{-1}C & 0\\ C&D \end{pmatrix}}_{去掉下三角C} \begin{pmatrix}\pmb{I} & \pmb{0}\\ -\pmb{D}^{-1}\pmb{C}&\pmb{I} \end{pmatrix} &= \begin{pmatrix}A-BD^{-1}C & 0\\ 0&D \end{pmatrix}
+\end{split}
+$$
+</div>
+:::
+
+
+#### 线性高斯系统
+
+&emsp;&emsp;假设$\pmb{z}\in \mathbb{R}^L$为未知向量，$\pmb{y}\in \mathbb{R}^D$，且它们之间的关系如下，
+
+$$
+\begin{split}
+     p(\pmb{z}) &=\mathcal{N}(\pmb{z}|\pmb{\mu}_z,\pmb{\Sigma}_z) \\
+       p(\pmb{y}|\pmb{z})&=\mathcal{N}(\pmb{y}|\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y) \nonumber
   \end{split}
-$$(inverse-M)
+$$(lin-gauss)
+
+则上式称为线性高斯系统。相应的联合分布$p(\pmb{z},\pmb{y})=p(\pmb{y}|\pmb{x})p(\pmb{x})$是一个$L+D$维的高斯分布，其均值与协方差为，
+
+$$
+\begin{split}
+   \pmb{\mu} &=\begin{pmatrix}
+                \pmb{\mu}_z \\
+                \pmb{W\mu}_z+\pmb{b}
+              \end{pmatrix} \\
+     \pmb{\Sigma} &=\begin{pmatrix}
+                     \pmb{\Sigma}_z & \pmb{\Sigma}_z \pmb{W}^{\top} \\
+                    \pmb{W}\pmb{\Sigma}_z & \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^{\top}
+                   \end{pmatrix}
+\end{split}
+$$(equ_lin_gauss)
+
+
+&emsp;&emsp;**（一）高斯配方法**
+
+&emsp;&emsp;根据指数族分布，高斯分布$\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})$，
+
+$$
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
+$$
+
+可以写成经典型(Canonical form)，即
+
+$$
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
+$$
+
 
 其中，
 
 $$
-[\pmb{M/A}]\triangleq \pmb{D}-\pmb{CA}^{-1}\pmb{B}
-$$(ma-schur-comp)
-为矩阵$\pmb{M}$关于$\pmb{A}$和$\pmb{D}$的Schur补,
+\begin{split}
+\pmb{\eta}&=\pmb{\Sigma}^{-1}\pmb{\mu}\\
+\pmb{\zeta}&=-\frac{1}{2}\left(d\log 2\pi -\log|\pmb{\Lambda}|+\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}\right)\nonumber
+\end{split}
+$$
 
- $$
- [\pmb{M/D}]\triangleq \pmb{A}-\pmb{BD}^{-1}\pmb{C}
- $$
- 为矩阵$\pmb{M}$关于$\pmb{D}$的Schur补。此外，还有以下等式成立，
+将$\pmb{\zeta}$中的最后一项展开，我们可以发现，$\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}=\pmb{\mu}^\top \pmb{\Lambda}\pmb{\mu}$。
+
+&emsp;&emsp;通过配方，可以得到$p(\pmb{z},\pmb{y})$如下，
 
 $$
 \begin{split}
-     [\pmb{M/D}]^{-1} &= \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} \\
-       [\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1}&=\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\\
- |\pmb{M/D}|&=|\pmb{M/A}||\pmb{D}^{-1}||\pmb{A}|
-  \end{split}
-$$
+   p(\pmb{z},\pmb{y})&=p(\pmb{z})p(\pmb{y}|\pmb{z}) \\
+     &=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
+     &=\exp \left( -\frac{1}{2}\pmb{z}^\top \pmb{\Sigma}_z^{-1}\pmb{z}+\pmb{\mu}^{\top}\pmb{\Sigma}_z^{-1}\pmb{z} +C_1\right) \\
+     &\times\exp\left( -\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y}+(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1} \pmb{y}-\frac{1}{2}(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1}(\pmb{Wz}+\pmb{b})+C_2\right)\\
+     &=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top [\pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{b}]-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
+     &=\exp\left(-\frac{1}{2}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}^\top\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} & -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}& \pmb{\Sigma}_y^{-1}                                               \end{pmatrix}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}+ \begin{pmatrix}
+       \pmb{\eta}_z\\
+       \pmb{\eta}_y
+     \end{pmatrix}^\top \begin{pmatrix}
+       \pmb{z}\\
+       \pmb{y}
+     \end{pmatrix} +C_4\right)
+\end{split}
+$$(equ_pzy)
 
-</div>
+其中，最后一行的$\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}$，$\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}$。
+
+

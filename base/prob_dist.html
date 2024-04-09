@@ -369,6 +369,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categoricalmultinomial">1.1.3.2. Categorical分布与Multinomial分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.3.3. 一维高斯分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.3.4. 多维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.3.5. 线性高斯系统</a></li>
 </ul>
 </li>
 </ul>
@@ -498,8 +499,8 @@ Pr(a&lt;X\leq b)=\int_a^b p(x)dx=P(B)-P(A)
 p(x,y)\triangleq p(X=x,Y=y)
 \]</div>
 <p>如下表所示：</p>
-<table class="table table-center" id="id12" style="width: 300px">
-<caption><span class="caption-text">联合分布</span><a class="headerlink" href="#id12" title="Link to this table">#</a></caption>
+<table class="table table-center" id="id13" style="width: 300px">
+<caption><span class="caption-text">联合分布</span><a class="headerlink" href="#id13" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
 <th class="head text-center"><p><span class="math notranslate nohighlight">\(Y=0\)</span></p></th>
@@ -531,8 +532,8 @@ p(X=x)=\sum_{y}p(X=x,Y=y)
 p(x)=\int_y p(x,y)
 \]</div>
 <p>如下表所示，</p>
-<table class="table table-center" id="id13" style="width: 600px">
-<caption><span class="caption-text">边缘分布</span><a class="headerlink" href="#id13" title="Link to this table">#</a></caption>
+<table class="table table-center" id="id14" style="width: 600px">
+<caption><span class="caption-text">边缘分布</span><a class="headerlink" href="#id14" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
 <th class="head text-center"><p><span class="math notranslate nohighlight">\(Y=0\)</span></p></th>
@@ -862,19 +863,15 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 </section>
 <section id="id11">
 <h4><span class="section-number">1.1.3.4. </span>多维高斯分布<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
-<dl class="simple myst">
-<dt>定义</dt><dd><p>多维高斯分布的概率密度函数: <span class="math notranslate nohighlight">\(\pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma)}\)</span>，定义为</p>
-</dd>
-</dl>
+<p>  <strong>(一) 定义</strong></p>
+<p>  多维高斯分布的概率密度函数: <span class="math notranslate nohighlight">\(\pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma)}\)</span>，定义为</p>
 <div class="math notranslate nohighlight" id="equation-equ-mult-gauss">
 <span class="eqno">(31)<a class="headerlink" href="#equation-equ-mult-gauss" title="Link to this equation">#</a></span>\[
 \mathcal{N}(\pmb{y}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{y}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{y}-\pmb{\mu})\right\}
 \]</div>
 <p>  特例：二维高斯分布</p>
-<dl class="simple myst">
-<dt>二维高斯分布pdf</dt><dd><p>当<span class="math notranslate nohighlight">\(D=2\)</span>时，</p>
-</dd>
-</dl>
+<p>  <strong>(二) 二维高斯分布pdf</strong></p>
+<p>  当<span class="math notranslate nohighlight">\(D=2\)</span>时，</p>
 <div class="math notranslate nohighlight">
 \[
 \pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma}),\pmb{\mu}\in \mathbb{R}^2,\pmb{y}\in \mathbb{R}^2
@@ -895,10 +892,8 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \[
  p(y_1,y_2)=\frac{1}{2\pi \sigma_1\sigma_2\sqrt{1-\rho^2}}\times\exp\left\{-\frac{1}{2(1-\rho^2)} \times\left[ \frac{(y_1-\mu_1)^2}{\sigma_1^2}+\frac{(y_2-\mu_2)^2}{\sigma_2^2}-2\rho\times\frac{y_1-\mu_1}{\sigma_1}\times\frac{y_2-\mu_2}{\sigma_2}\right] \right\}
 \]</div>
-<dl class="simple myst">
-<dt>相关距离：Mahalanobis 距离</dt><dd><p>定义为，</p>
-</dd>
-</dl>
+<p>  <strong>(三) Mahalanobis 距离</strong></p>
+<p>  定义为，</p>
 <div class="math notranslate nohighlight">
 \[
 \Delta(\pmb{x},\pmb{\mu})\triangleq (\pmb{x}-\pmb{\mu})^{\top}\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu});\quad\pmb{\Lambda}\triangleq \pmb{\Sigma}^{-1}
@@ -912,10 +907,8 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
      &amp;=\sum_{d=1}^{D}\frac{z_d^2}{\lambda_d}
 \end{split}
 \end{split}\]</div>
-<dl class="simple myst">
-<dt>多维高斯联合分布</dt><dd><p>假设<span class="math notranslate nohighlight">\(\pmb{y}=(\pmb{y}_1,\pmb{y}_2)\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中均值<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>与协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>分别为，</p>
-</dd>
-</dl>
+<p>  <strong>(四) 多维高斯联合分布</strong></p>
+<p>  假设<span class="math notranslate nohighlight">\(\pmb{y}=(\pmb{y}_1,\pmb{y}_2)\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中均值<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>与协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>分别为，</p>
 <div class="math notranslate nohighlight" id="equation-multi-norm-dist">
 <span class="eqno">(32)<a class="headerlink" href="#equation-multi-norm-dist" title="Link to this equation">#</a></span>\[\begin{split}
 \pmb{\mu}=\begin{pmatrix}
@@ -938,7 +931,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}
 \end{split}\]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{\Sigma/\Sigma}_{22},\pmb{\Sigma/\Sigma}_{11}\)</span>分别是矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{\Sigma}_{22},\pmb{\Sigma}_{11}\)</span>的Schur补(Schur complements)。则，我们可以得出以下结论。</p>
-<p>  （一）<strong>边缘分布</strong></p>
+<p>  <strong>（1）边缘分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-multi-norm-dist-edge">
 <span class="eqno">(34)<a class="headerlink" href="#equation-multi-norm-dist-edge" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
@@ -946,7 +939,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
   p(\pmb{y}_2)&amp;\sim\mathcal{N}(\pmb{y}_2|\pmb{\mu}_2,\pmb{\Sigma}_{22})
 \end{split}
 \end{split}\]</div>
-<p>  （二）<strong>后验分布</strong></p>
+<p>  <strong>（2）后验分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-equ-post-norm">
 <span class="eqno">(35)<a class="headerlink" href="#equation-equ-post-norm" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
@@ -967,53 +960,100 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
     \end{split}
 \end{split}\]</div>
 <p>注：<span class="math notranslate nohighlight">\(\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}\)</span>。证明过程主要是利用分块矩阵展开后凑平方项，略。</p>
+<div class="dropdown admonition">
+<p class="admonition-title"><strong>基础知识</strong></p>
 <div style="background-color: #F8F8F8  ">
 <dl class="simple myst">
 <dt>相关知识点：Schur complements</dt><dd><p>Schur complements有一些非常有用的结论，在计算中有重要作用，如计算上节中的协方差矩阵的逆。</p>
 </dd>
 </dl>
 <p>考虑一个分块矩阵，</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-\pmb{M}=\begin{pmatrix}
-    \pmb{A} &amp; \pmb{B} \\
-    \pmb{C} &amp; \pmb{D}
-  \end{pmatrix}
-\end{split}\]</div>
-<p>假设<span class="math notranslate nohighlight">\(\pmb{A},\pmb{D}\)</span>是可逆的，则我们可以得到<span class="math notranslate nohighlight">\(\pmb{M}^{-1}\)</span>，</p>
-<div class="math notranslate nohighlight" id="equation-inverse-m">
-<span class="eqno">(37)<a class="headerlink" href="#equation-inverse-m" title="Link to this equation">#</a></span>\[\begin{split}
-\begin{split}
-  \pmb{M}^{-1}&amp;=\begin{bmatrix}
-            [\pmb{M}/\pmb{D}]^{-1} &amp; -[\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1} \\
-            -\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1} &amp; \pmb{D}^{-1}+\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1}\pmb{BD}^{-1}
-          \end{bmatrix} \\
-  &amp;=\begin{bmatrix}
-     \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} &amp; \pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1} \\
-      -[\pmb{M/A}]^{-1}\pmb{CA}^{-1} &amp; [\pmb{M/A}]^{-1}
-    \end{bmatrix}
-  \end{split}
-\end{split}\]</div>
-<p>其中，</p>
-<div class="math notranslate nohighlight" id="equation-ma-schur-comp">
-<span class="eqno">(38)<a class="headerlink" href="#equation-ma-schur-comp" title="Link to this equation">#</a></span>\[
-[\pmb{M/A}]\triangleq \pmb{D}-\pmb{CA}^{-1}\pmb{B}
-\]</div>
-<p>为矩阵<span class="math notranslate nohighlight">\(\pmb{M}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{A}\)</span>和<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的Schur补,</p>
-<div class="math notranslate nohighlight">
-\[
- [\pmb{M/D}]\triangleq \pmb{A}-\pmb{BD}^{-1}\pmb{C}
- \]</div>
-<p>为矩阵<span class="math notranslate nohighlight">\(\pmb{M}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的Schur补。此外，还有以下等式成立，</p>
+<dl class="simple myst">
+<dt>有用结论</dt><dd><p>要去掉上(下)三角，只要乘(左乘、右乘皆可)上一个单位阵(其对应的上、下三角元取值非空，与原矩阵乘积后为0)。</p>
+</dd>
+</dl>
+<p>  例如：</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
-     [\pmb{M/D}]^{-1} &amp;= \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} \\
-       [\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1}&amp;=\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\\
- |\pmb{M/D}|&amp;=|\pmb{M/A}||\pmb{D}^{-1}||\pmb{A}|
-  \end{split}
+\begin{pmatrix} \pmb{I}&amp;\pmb{0}\\  -\pmb{CA}^{-1}&amp;\pmb{I}\end{pmatrix} \underbrace{\begin{pmatrix} A&amp;B\\ C&amp;D \end{pmatrix}}_{去掉下三角C} &amp;= \begin{pmatrix}A &amp; B\\ 0&amp;D-CA^{-1}B \end{pmatrix} \\
+\underbrace{\begin{pmatrix}A &amp; B\\ 0&amp;D-CA^{-1}B \end{pmatrix}}_{去掉上三角B} \begin{pmatrix}\pmb{I} &amp; -\pmb{A}^{-1}\pmb{B}\\ 0&amp;\pmb{I} \end{pmatrix} &amp;= \begin{pmatrix}A &amp; 0\\ 0&amp;D-CA^{-1}B \end{pmatrix}
+\end{split}
+\end{split}\]</div>
+<p>以及，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\begin{pmatrix} \pmb{I}&amp;-\pmb{BD}^{-1}\\  \pmb{0}&amp;\pmb{I}\end{pmatrix} \underbrace{\begin{pmatrix} A&amp;B\\ C&amp;D \end{pmatrix}}_{去掉上三角B} &amp;= \begin{pmatrix}A-BD^{-1}C &amp; 0\\ C&amp;D \end{pmatrix} \\
+\underbrace{\begin{pmatrix}A-BD^{-1}C &amp; 0\\ C&amp;D \end{pmatrix}}_{去掉下三角C} \begin{pmatrix}\pmb{I} &amp; \pmb{0}\\ -\pmb{D}^{-1}\pmb{C}&amp;\pmb{I} \end{pmatrix} &amp;= \begin{pmatrix}A-BD^{-1}C &amp; 0\\ 0&amp;D \end{pmatrix}
+\end{split}
 \end{split}\]</div>
 </div>
+</div>
+</section>
+<section id="id12">
+<h4><span class="section-number">1.1.3.5. </span>线性高斯系统<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p>  假设<span class="math notranslate nohighlight">\(\pmb{z}\in \mathbb{R}^L\)</span>为未知向量，<span class="math notranslate nohighlight">\(\pmb{y}\in \mathbb{R}^D\)</span>，且它们之间的关系如下，</p>
+<div class="math notranslate nohighlight" id="equation-lin-gauss">
+<span class="eqno">(37)<a class="headerlink" href="#equation-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+     p(\pmb{z}) &amp;=\mathcal{N}(\pmb{z}|\pmb{\mu}_z,\pmb{\Sigma}_z) \\
+       p(\pmb{y}|\pmb{z})&amp;=\mathcal{N}(\pmb{y}|\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y) \nonumber
+  \end{split}
+\end{split}\]</div>
+<p>则上式称为线性高斯系统。相应的联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})=p(\pmb{y}|\pmb{x})p(\pmb{x})\)</span>是一个<span class="math notranslate nohighlight">\(L+D\)</span>维的高斯分布，其均值与协方差为，</p>
+<div class="math notranslate nohighlight" id="equation-equ-lin-gauss">
+<span class="eqno">(38)<a class="headerlink" href="#equation-equ-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+   \pmb{\mu} &amp;=\begin{pmatrix}
+                \pmb{\mu}_z \\
+                \pmb{W\mu}_z+\pmb{b}
+              \end{pmatrix} \\
+     \pmb{\Sigma} &amp;=\begin{pmatrix}
+                     \pmb{\Sigma}_z &amp; \pmb{\Sigma}_z \pmb{W}^{\top} \\
+                    \pmb{W}\pmb{\Sigma}_z &amp; \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^{\top}
+                   \end{pmatrix}
+\end{split}
+\end{split}\]</div>
+<p>  <strong>（一）高斯配方法</strong></p>
+<p>  根据指数族分布，高斯分布<span class="math notranslate nohighlight">\(\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\)</span>，</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
+\]</div>
+<p>可以写成经典型(Canonical form)，即</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
+\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{\eta}&amp;=\pmb{\Sigma}^{-1}\pmb{\mu}\\
+\pmb{\zeta}&amp;=-\frac{1}{2}\left(d\log 2\pi -\log|\pmb{\Lambda}|+\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}\right)\nonumber
+\end{split}
+\end{split}\]</div>
+<p>将<span class="math notranslate nohighlight">\(\pmb{\zeta}\)</span>中的最后一项展开，我们可以发现，<span class="math notranslate nohighlight">\(\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}=\pmb{\mu}^\top \pmb{\Lambda}\pmb{\mu}\)</span>。</p>
+<p>  通过配方，可以得到<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>如下，</p>
+<div class="math notranslate nohighlight" id="equation-equ-pzy">
+<span class="eqno">(39)<a class="headerlink" href="#equation-equ-pzy" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+   p(\pmb{z},\pmb{y})&amp;=p(\pmb{z})p(\pmb{y}|\pmb{z}) \\
+     &amp;=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
+     &amp;=\exp \left( -\frac{1}{2}\pmb{z}^\top \pmb{\Sigma}_z^{-1}\pmb{z}+\pmb{\mu}^{\top}\pmb{\Sigma}_z^{-1}\pmb{z} +C_1\right) \\
+     &amp;\times\exp\left( -\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y}+(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1} \pmb{y}-\frac{1}{2}(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1}(\pmb{Wz}+\pmb{b})+C_2\right)\\
+     &amp;=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top [\pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{b}]-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
+     &amp;=\exp\left(-\frac{1}{2}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}^\top\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} &amp; -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}&amp; \pmb{\Sigma}_y^{-1}                                               \end{pmatrix}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}+ \begin{pmatrix}
+       \pmb{\eta}_z\\
+       \pmb{\eta}_y
+     \end{pmatrix}^\top \begin{pmatrix}
+       \pmb{z}\\
+       \pmb{y}
+     \end{pmatrix} +C_4\right)
+\end{split}
+\end{split}\]</div>
+<p>其中，最后一行的<span class="math notranslate nohighlight">\(\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}\)</span>，<span class="math notranslate nohighlight">\(\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}\)</span>。</p>
 </section>
 </section>
 </section>
@@ -1079,6 +1119,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categoricalmultinomial">1.1.3.2. Categorical分布与Multinomial分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.3.3. 一维高斯分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.3.4. 多维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.3.5. 线性高斯系统</a></li>
 </ul>
 </li>
 </ul>
