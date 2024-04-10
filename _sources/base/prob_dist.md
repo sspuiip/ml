@@ -520,32 +520,38 @@ $$(pricision-matrix)
 &emsp;&emsp;**（1）边缘分布**
 
 $$
+\boxed{
 \begin{split}
   p(\pmb{y}_1)&\sim\mathcal{N}(\pmb{y}_1|\pmb{\mu}_1,\pmb{\Sigma}_{11})\\
   p(\pmb{y}_2)&\sim\mathcal{N}(\pmb{y}_2|\pmb{\mu}_2,\pmb{\Sigma}_{22})
 \end{split}
+}
 $$(multi-norm-dist-edge)
 
 &emsp;&emsp;**（2）后验分布**
 
 $$
+\boxed{
 \begin{split}
        p(\pmb{y}_1|\pmb{y}_2)&=\mathcal{N}(\pmb{y}_1|\pmb{\mu}_{1|2},\pmb{\Sigma}_{1|2})\\
        \pmb{\Sigma}_{1|2}&=\pmb{\Sigma}_{11}-\pmb{\Sigma}_{12}\pmb{\Sigma}_{22}^{-1}\pmb{\Sigma}_{21}=\pmb{\Lambda}_{11}^{-1}\\
        \pmb{\mu}_{1|2}&=\pmb{\Sigma}_{1|2}(\pmb{\Lambda}_{11}\pmb{\mu}_1-\pmb{\Lambda}_{12}(\pmb{y}_2-\pmb{\mu}_2)) \\ &=\pmb{\mu}_1+\pmb{\Sigma}_{12}\pmb{\Sigma}_{22}^{-1}(\pmb{y}_2-\pmb{\mu}_2)\\
        &=\pmb{\mu}_1-\pmb{\Lambda}_{11}^{-1}\pmb{\Lambda}_{12}(\pmb{y}_2-\pmb{\mu}_2)
     \end{split}
+}
 $$(equ_post_norm)
 
 以及，
 
 $$
+\boxed{
 \begin{split}
        p(\pmb{y}_2|\pmb{y}_1)&=\mathcal{N}(\pmb{y}_2|\pmb{\mu}_{2|1},\pmb{\Sigma}_{2|1})\\
        \pmb{\Sigma}_{2|1}&=\pmb{\Sigma}_{22}-\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}\pmb{\Sigma}_{12}=\pmb{\Lambda}_{22}^{-1}\\
        \pmb{\mu}_{2|1}&=\pmb{\Sigma}_{2|1}(\pmb{\Lambda}_{22}\pmb{\mu}_2-\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)) \\ &=\pmb{\mu}_2+\pmb{\Sigma}_{21}\pmb{\Sigma}_{11}^{-1}(\pmb{y}_1-\pmb{\mu}_1)\\
        &=\pmb{\mu}_2-\pmb{\Lambda}_{22}^{-1}\pmb{\Lambda}_{21}(\pmb{y}_1-\pmb{\mu}_1)
     \end{split}
+}
 $$(equ_post_norm2)
 
 注：$\pmb{\Sigma}_{1|2}\triangleq \text{the schur compliment of }\pmb{\Sigma}_{22}$。证明过程主要是利用分块矩阵展开后凑平方项，略。
@@ -619,13 +625,13 @@ $$(equ_lin_gauss)
 
 $$
 \mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
-$$
+$$(multi-gauss-dist-normal)
 
 可以写成经典型(Canonical form)，即
 
 $$
 \mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
-$$
+$$(canonical-form-gauss)
 
 
 其中，
@@ -647,7 +653,7 @@ $$
      &=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
      &=\exp \left( -\frac{1}{2}\pmb{z}^\top \pmb{\Sigma}_z^{-1}\pmb{z}+\pmb{\mu}^{\top}\pmb{\Sigma}_z^{-1}\pmb{z} +C_1\right) \\
      &\times\exp\left( -\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y}+(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1} \pmb{y}-\frac{1}{2}(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1}(\pmb{Wz}+\pmb{b})+C_2\right)\\
-     &=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top [\pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{b}]-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
+     &=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top \pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
      &=\exp\left(-\frac{1}{2}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}^\top\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} & -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}& \pmb{\Sigma}_y^{-1}                                               \end{pmatrix}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}+ \begin{pmatrix}
        \pmb{\eta}_z\\
        \pmb{\eta}_y
@@ -658,6 +664,57 @@ $$
 \end{split}
 $$(equ_pzy)
 
-其中，最后一行的$\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}$，$\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}$。
+其中，最后一行的$\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}$，$\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}$。由式{eq}`equ_pzy`可知联合分布$p(\pmb{z},\pmb{y})$的精度矩阵$\pmb{\Lambda}$为，
+
+$$
+\pmb{\Sigma^{-1}}=\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} & -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}& \pmb{\Sigma}_y^{-1}\end{pmatrix}\triangleq \begin{pmatrix}\pmb{\Lambda}_{zz}&\pmb{\Lambda}_{zy}\\ \pmb{\Lambda}_{yz}&\pmb{\Lambda}_{yy} \end{pmatrix}=\pmb{\Lambda}
+$$(joint-precision-matrix)
+
+根据{eq}`pricision-matrix`可知，
+
+$$
+\pmb{\Sigma}=\begin{pmatrix} \pmb{\Sigma}_z & \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z& \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
+$$(joint-variance-matrix)
+
+
+&emsp;&emsp;**（二）分布计算**
+
+&emsp;&emsp;由配方可知，**联合分布**为，
+
+$$
+\boxed{
+\begin{split}
+p(\pmb{z},\pmb{y})&=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
+\pmb{\mu}&=\begin{pmatrix}\pmb{\mu}_z \\ \pmb{W}\pmb{\mu}_z+\pmb{b} \end{pmatrix}\\
+\pmb{\Sigma}&=\begin{pmatrix} \pmb{\Sigma}_z & \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z& \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
+\end{split}
+}
+$$(joint-gaussian-distribution)
+
+&emsp;&emsp;由配方可知，**边缘分布**为，
+
+$$
+\boxed{
+  \begin{split}
+  \pmb{y}&\sim \mathcal{N}(\pmb{W\mu}_z+\pmb{b},\pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top)\\
+  \pmb{z}&\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
+  \end{split}
+}
+$$(joint-edge-dist)
+
+&emsp;&emsp;由配方可知，**后验分布**为，
+
+$$
+\boxed{
+  \begin{split}
+   p(\pmb{z}|\pmb{y})&=\mathcal{N}(\pmb{y}_{z|y},\pmb{\Sigma}_{z|y})\\
+   \pmb{\Sigma}_{z|y}&=(\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W})^{-1}=\pmb{\Lambda}_{zz}^{-1}\\
+   \pmb{\mu}_{z|y}&=\pmb{\Sigma}_{z|y}(\pmb{\Lambda}_{zz}\pmb{\mu}_z-\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b})))\\
+   &=\pmb{\mu}_z-\pmb{\Lambda}_{zz}^{-1}\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
+   &=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
+  \end{split}
+}
+$$
+
 
 
