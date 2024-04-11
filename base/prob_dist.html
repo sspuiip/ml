@@ -364,12 +364,23 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.2.1. 分布的矩</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.1.3. 常见分布</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.1.3.1. 伯努利分布与二项分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categoricalmultinomial">1.1.3.2. Categorical分布与Multinomial分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.3.3. 一维高斯分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.3.4. 多维高斯分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.3.5. 线性高斯系统</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.1.3. 变量替换</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.1.4. 常见分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.4.1. 伯努利分布与二项分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cat">1.1.4.2. Cat分布与多项分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.4.3. 泊松分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.4.4. 经验分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.1.4.5. 一维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.1.4.6. 多维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.1.4.7. 线性高斯系统</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.8. Student分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.9. Laplace分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.10. Gamma分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.11. Beta分布</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.1.5. 指数族分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.1.5.1. 例子</a></li>
 </ul>
 </li>
 </ul>
@@ -431,9 +442,7 @@ document.write(`
 </dd>
 </dl>
 <p>  随机变量的取值空间称为样本空间。一个事件是样本空间中样本点的一个集合。例如，假设<span class="math notranslate nohighlight">\(X\)</span>表示抛一个色子显示的点数，则样本空间<span class="math notranslate nohighlight">\(\mathcal{X}=\{1,2,3,4,5,6\}\)</span>。某一事件<span class="math notranslate nohighlight">\(A\)</span>表示奇数点，可表示为<span class="math notranslate nohighlight">\(X\in\{1,2,3\}\)</span>；某一事件<span class="math notranslate nohighlight">\(B\)</span>表示点数介于1至3，可记为<span class="math notranslate nohighlight">\(1\leq X\leq 3\)</span>。随机变量根据样本空间的不同，分为离散型和连续型两种。</p>
-<ol class="arabic simple">
-<li><p><strong>离散型随机变量</strong></p></li>
-</ol>
+<p>  (一) <strong>离散型随机变量</strong></p>
 <dl class="simple myst">
 <dt>离散型随机变量</dt><dd><p>如果样本空间<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>是有限集或无限可数集，则称<span class="math notranslate nohighlight">\(X\)</span>为离散型随机变量。用<span class="math notranslate nohighlight">\(P(X=x)\)</span>表示事件<span class="math notranslate nohighlight">\(\{X\)</span>取值<span class="math notranslate nohighlight">\(x\}\)</span>的概率。</p>
 </dd>
@@ -447,9 +456,7 @@ document.write(`
                                             \sum_x p(x)=1.
                                           \end{array}\right.
 \end{split}\]</div>
-<ol class="arabic simple" start="2">
-<li><p><strong>连续型随机变量</strong></p></li>
-</ol>
+<p>  (二) <strong>连续型随机变量</strong></p>
 <dl class="simple myst">
 <dt>连续型随机变量</dt><dd><p>如果随机变量<span class="math notranslate nohighlight">\(X\in \mathbb{R}\)</span>是一个实值(real-valued)的数，则称为连续型随机变量。</p>
 </dd>
@@ -489,7 +496,7 @@ Pr(a&lt;X\leq b)=\int_a^b p(x)dx=P(B)-P(A)
 </section>
 <section id="id5">
 <h4><span class="section-number">1.1.1.2. </span>多个随机变量<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
-<p>多个随机变量的之间会有什么样的联系和特点呢？</p>
+<p>  多个随机变量的之间会有什么样的联系和特点呢？</p>
 <dl class="simple myst">
 <dt>联合分布</dt><dd><p>假设有<span class="math notranslate nohighlight">\(N\)</span>（不失一般性假设<span class="math notranslate nohighlight">\(N=2\)</span>）个随机变量<span class="math notranslate nohighlight">\(X,Y\)</span>，对于随机变量的任何可能值<span class="math notranslate nohighlight">\(x\in\mathcal{X},y\in\mathcal{Y}\)</span>,它们的联合分布定义为，</p>
 </dd>
@@ -499,8 +506,8 @@ Pr(a&lt;X\leq b)=\int_a^b p(x)dx=P(B)-P(A)
 p(x,y)\triangleq p(X=x,Y=y)
 \]</div>
 <p>如下表所示：</p>
-<table class="table table-center" id="id13" style="width: 300px">
-<caption><span class="caption-text">联合分布</span><a class="headerlink" href="#id13" title="Link to this table">#</a></caption>
+<table class="table table-center" id="id18" style="width: 300px">
+<caption><span class="caption-text">联合分布</span><a class="headerlink" href="#id18" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
 <th class="head text-center"><p><span class="math notranslate nohighlight">\(Y=0\)</span></p></th>
@@ -532,8 +539,8 @@ p(X=x)=\sum_{y}p(X=x,Y=y)
 p(x)=\int_y p(x,y)
 \]</div>
 <p>如下表所示，</p>
-<table class="table table-center" id="id14" style="width: 600px">
-<caption><span class="caption-text">边缘分布</span><a class="headerlink" href="#id14" title="Link to this table">#</a></caption>
+<table class="table table-center" id="id19" style="width: 600px">
+<caption><span class="caption-text">边缘分布</span><a class="headerlink" href="#id19" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
 <th class="head text-center"><p><span class="math notranslate nohighlight">\(Y=0\)</span></p></th>
@@ -658,12 +665,51 @@ p(y|x)=\frac{p(x,y)}{p(x)}
 </section>
 </section>
 <section id="id8">
-<h3><span class="section-number">1.1.3. </span>常见分布<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">1.1.3. </span>变量替换<a class="headerlink" href="#id8" title="Link to this heading">#</a></h3>
+<p>  (一) <strong>离散型</strong></p>
+<p>  使用分布函数法可实现。略</p>
+<div class="math notranslate nohighlight" id="equation-disc-var-transfrom">
+<span class="eqno">(13)<a class="headerlink" href="#equation-disc-var-transfrom" title="Link to this equation">#</a></span>\[
+P_y(y)=\sum_{x:f(x)=y}P_x(x)
+\]</div>
+<p>  (二) <strong>连续型</strong></p>
+<p>  连续型<span class="math notranslate nohighlight">\(y=h(x), x=h^{-1}(y)\)</span>也可以使用分布函数法，此外，还可以使用以下变换公式。</p>
+<ul class="simple">
+<li><p>1维</p></li>
+</ul>
+<div class="math notranslate nohighlight" id="equation-1-d-trans">
+<span class="eqno">(14)<a class="headerlink" href="#equation-1-d-trans" title="Link to this equation">#</a></span>\[
+p_y(y)=p_x(h^{-1}(y))\cdot\left|\frac{dx}{dy}\right|
+\]</div>
+<ul class="simple">
+<li><p>多维</p></li>
+</ul>
+<div class="math notranslate nohighlight" id="equation-n-d-trans">
+<span class="eqno">(15)<a class="headerlink" href="#equation-n-d-trans" title="Link to this equation">#</a></span>\[\begin{split}
+ p_y(\pmb{y})=p_x(h^{-1}(\pmb{y}))\cdot\left|\begin{array}{ccc}
+                                           \frac{\partial \pmb{x}_1}{\partial \pmb{y}_1} &amp;\dots &amp;\frac{\partial \pmb{x}_1}{\partial \pmb{y}_n}\\
+                                           \frac{\partial \pmb{x}_2}{\partial \pmb{y}_1} &amp;\dots &amp;\frac{\partial \pmb{x}_2}{\partial \pmb{y}_n}\\
+                                           \vdots&amp;\ddots&amp;\vdots\\
+                                           \frac{\partial \pmb{x}_m}{\partial \pmb{y}_1} &amp;\dots &amp;\frac{\partial \pmb{x}_m}{\partial \pmb{y}_n}\\
+                                         \end{array} \right|
+\end{split}\]</div>
+<p>  例如：已知gamma分布，求<span class="math notranslate nohighlight">\(y=1/x\)</span>的分布，即逆gamma分布。</p>
+<div class="math notranslate nohighlight" id="equation-inverse-gamma-dist">
+<span class="eqno">(16)<a class="headerlink" href="#equation-inverse-gamma-dist" title="Link to this equation">#</a></span>\[\begin{split}
+ \begin{split}
+         p_y(y)&amp;=\text{Ga}\left({y}^{-1}|a,b\right)\cdot|\frac{dx}{dy}|\\
+         &amp;=\frac{b^a}{\Gamma(a)}\left(\frac{1}{y}\right)^{a-1}e^{-b/y}\cdot y^{-2}\\
+         &amp;=\frac{b^a}{\Gamma(a)}y^{-(a+1)}e^{-b/y}\nonumber
+      \end{split}
+\end{split}\]</div>
+</section>
 <section id="id9">
-<h4><span class="section-number">1.1.3.1. </span>伯努利分布与二项分布<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
+<h3><span class="section-number">1.1.4. </span>常见分布<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
+<section id="id10">
+<h4><span class="section-number">1.1.4.1. </span>伯努利分布与二项分布<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <p>  (一) <strong>伯努利分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-ber-dist">
-<span class="eqno">(13)<a class="headerlink" href="#equation-ber-dist" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(17)<a class="headerlink" href="#equation-ber-dist" title="Link to this equation">#</a></span>\[\begin{split}
 Y\sim \text{Ber}(y|\theta)=\left\{\begin{array}{ll}
                              \theta, &amp; Y=1, \\
                              1-\theta, &amp; Y=0.
@@ -671,7 +717,7 @@ Y\sim \text{Ber}(y|\theta)=\left\{\begin{array}{ll}
 \end{split}\]</div>
 <p>  (二) <strong>二项分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-bin-dist">
-<span class="eqno">(14)<a class="headerlink" href="#equation-bin-dist" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(18)<a class="headerlink" href="#equation-bin-dist" title="Link to this equation">#</a></span>\[\begin{split}
 Y\sim\text{Bin}(y|N,\theta)\triangleq\begin{pmatrix}
                                        N \\
                                        y
@@ -693,7 +739,7 @@ p(y|\pmb{x},\pmb{\theta})=\text{Ber}\{y|\sigma[f(\pmb{x},\pmb{\theta})]\}=\under
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-logistic-fun">
-<span class="eqno">(15)<a class="headerlink" href="#equation-logistic-fun" title="Link to this equation">#</a></span>\[
+<span class="eqno">(19)<a class="headerlink" href="#equation-logistic-fun" title="Link to this equation">#</a></span>\[
 \sigma(x)=\frac{1}{1+e^{-x}}
 \]</div>
 <dl class="simple myst">
@@ -717,12 +763,12 @@ p(y|\pmb{x},\pmb{\theta})=\text{Ber}\{y|\sigma[f(\pmb{x},\pmb{\theta})]\}=\under
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-logistic-regression">
-<span class="eqno">(16)<a class="headerlink" href="#equation-logistic-regression" title="Link to this equation">#</a></span>\[
+<span class="eqno">(20)<a class="headerlink" href="#equation-logistic-regression" title="Link to this equation">#</a></span>\[
 p(y=1|\pmb{x},\pmb{w})=\sigma(\pmb{w}^\top\pmb{x}+b)=\frac{1}{1+e^{-(\pmb{w}^\top\pmb{x}+b)}}
 \]</div>
 </section>
-<section id="categoricalmultinomial">
-<h4><span class="section-number">1.1.3.2. </span>Categorical分布与Multinomial分布<a class="headerlink" href="#categoricalmultinomial" title="Link to this heading">#</a></h4>
+<section id="cat">
+<h4><span class="section-number">1.1.4.2. </span>Cat分布与多项分布<a class="headerlink" href="#cat" title="Link to this heading">#</a></h4>
 <p>  (一) <strong>Categorical分布</strong></p>
 <p>  伯努力分布是抛一次硬币事件的描述，当事件不止2个结果时，可以使用Categorical分布来描述该过程。例如：抛一次色子的点数分布（6个结果）。</p>
 <dl class="simple myst">
@@ -730,12 +776,12 @@ p(y=1|\pmb{x},\pmb{w})=\sigma(\pmb{w}^\top\pmb{x}+b)=\frac{1}{1+e^{-(\pmb{w}^\to
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-cat-dist">
-<span class="eqno">(17)<a class="headerlink" href="#equation-cat-dist" title="Link to this equation">#</a></span>\[
+<span class="eqno">(21)<a class="headerlink" href="#equation-cat-dist" title="Link to this equation">#</a></span>\[
 \text{Cat}(y|\pmb{\theta})\triangleq \prod_c \theta_c^{\mathbb{I}(y=c)}
 \]</div>
 <p>经过one-hot编码后，可以写为，</p>
 <div class="math notranslate nohighlight" id="equation-cat-dist-onehot">
-<span class="eqno">(18)<a class="headerlink" href="#equation-cat-dist-onehot" title="Link to this equation">#</a></span>\[
+<span class="eqno">(22)<a class="headerlink" href="#equation-cat-dist-onehot" title="Link to this equation">#</a></span>\[
 \text{Cat}(\pmb{y}|\pmb{\theta)}\triangleq \prod_c \pmb{\theta}_c^{{y}_c}
 \]</div>
 <p>  (二) <strong>Multinomial分布</strong></p>
@@ -745,7 +791,7 @@ p(y=1|\pmb{x},\pmb{w})=\sigma(\pmb{w}^\top\pmb{x}+b)=\frac{1}{1+e^{-(\pmb{w}^\to
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-multi-dist">
-<span class="eqno">(19)<a class="headerlink" href="#equation-multi-dist" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(23)<a class="headerlink" href="#equation-multi-dist" title="Link to this equation">#</a></span>\[\begin{split}
 \text{Mu}(\pmb{S}|N,\pmb{\theta})\triangleq \begin{pmatrix}
                                             N \\
                                             S_1,S_2,...,S_C
@@ -762,7 +808,7 @@ p(\pmb{y}|\pmb{x,\theta})=\text{Cat}(\pmb{y}|f(\pmb{x,\theta}))
 \]</div>
 <p>其中<span class="math notranslate nohighlight">\(0\leq f_c(\pmb{x,\theta})\leq 1, \sum_c f_c(\pmb{x,\theta})=1\)</span>。为避免<span class="math notranslate nohighlight">\(f\)</span>直接预测概率向量，可以将<span class="math notranslate nohighlight">\(f\)</span>的输出映射至Softmax函数，也称为Multinomial logit，即</p>
 <div class="math notranslate nohighlight" id="equation-softmax-def">
-<span class="eqno">(20)<a class="headerlink" href="#equation-softmax-def" title="Link to this equation">#</a></span>\[
+<span class="eqno">(24)<a class="headerlink" href="#equation-softmax-def" title="Link to this equation">#</a></span>\[
 \mathcal{S}(\pmb{a})\triangleq \begin{bmatrix}
                                 \frac{e^{a_1}}{\sum_{c}^{C}e^{a_{c}}}, &amp; \cdots, &amp; \frac{e^{a_c}}{\sum_{c}^{C}e^{a_{c}}}
                               \end{bmatrix}
@@ -778,7 +824,7 @@ p(y|\pmb{x,\Theta})=\text{Cat}(y|\mathcal{S}(\pmb{\Theta} \pmb{x}+b))
 \]</div>
 <p>称为multinomial logistic regression。相应地，</p>
 <div class="math notranslate nohighlight" id="equation-multi-logistic-reg">
-<span class="eqno">(21)<a class="headerlink" href="#equation-multi-logistic-reg" title="Link to this equation">#</a></span>\[
+<span class="eqno">(25)<a class="headerlink" href="#equation-multi-logistic-reg" title="Link to this equation">#</a></span>\[
 p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{\Theta x}+\pmb{b})_{c'}}}
 \]</div>
 <dl class="simple myst">
@@ -786,24 +832,48 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-log-sum-exp">
-<span class="eqno">(22)<a class="headerlink" href="#equation-log-sum-exp" title="Link to this equation">#</a></span>\[
+<span class="eqno">(26)<a class="headerlink" href="#equation-log-sum-exp" title="Link to this equation">#</a></span>\[
 \log\sum_c^C e^{a_c}=m+\log\sum_c^C e^{(a_c-m)}
 \]</div>
 </section>
-<section id="id10">
-<h4><span class="section-number">1.1.3.3. </span>一维高斯分布<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
+<section id="id11">
+<h4><span class="section-number">1.1.4.3. </span>泊松分布<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<p>  当随机变量取值为<span class="math notranslate nohighlight">\(X\in\{0,1,2,3,...\}\)</span>，则称<span class="math notranslate nohighlight">\(X\)</span>服从参数为<span class="math notranslate nohighlight">\(\lambda\)</span>的泊松分布，其概率质量函数pmf为，</p>
+<div class="math notranslate nohighlight" id="equation-poi-dist-pmf">
+<span class="eqno">(27)<a class="headerlink" href="#equation-poi-dist-pmf" title="Link to this equation">#</a></span>\[
+\text{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}
+\]</div>
+</section>
+<section id="id12">
+<h4><span class="section-number">1.1.4.4. </span>经验分布<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<p>  假设从某分布<span class="math notranslate nohighlight">\(p(x)\)</span>得到<span class="math notranslate nohighlight">\(N\)</span>个样本<span class="math notranslate nohighlight">\(\mathcal{D}=\{x^{(1)},x^{(2)},...,x^{(n)}\}\)</span>，我们可以使用delta函数集合来近似pdf,</p>
+<div class="math notranslate nohighlight" id="equation-emp-dist">
+<span class="eqno">(28)<a class="headerlink" href="#equation-emp-dist" title="Link to this equation">#</a></span>\[
+\hat{P}_N(x)=\frac{1}{N}\sum_{n=1}^N\delta_{x^{(i)}}(x)
+\]</div>
+<p>上式<a class="reference internal" href="#equation-emp-dist">(28)</a>称为<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>的经验分布。例如：<span class="math notranslate nohighlight">\(N\)</span>个数据的经验分布，其CDF为</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \hat{P}_N(x)=\frac{1}{N}\sum_{n=1}^N\mathbb{I}(x^{(i)}\leq x)=\frac{1}{N}\sum_{n=1}^Nu_{x^{(i)}}(x);\quad u_y(x)=\left\{\begin{array}{ll}
+                                                                 1,&amp;y\leq x \\
+                                                                 0,&amp;y&gt;x
+                                                               \end{array} \right.
+  \end{split}\]</div>
+</section>
+<section id="id13">
+<h4><span class="section-number">1.1.4.5. </span>一维高斯分布<a class="headerlink" href="#id13" title="Link to this heading">#</a></h4>
 <dl class="simple myst">
 <dt>累积分布函数cdf</dt><dd><p>定义为，</p>
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-norm-pdf">
-<span class="eqno">(23)<a class="headerlink" href="#equation-norm-pdf" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(29)<a class="headerlink" href="#equation-norm-pdf" title="Link to this equation">#</a></span>\[\begin{split}
  \Phi(y|\mu,\sigma^2)&amp;=\int_{-\infty}^{y}\mathcal{N}(z|\mu,\sigma^2)dz\\
    &amp;=\frac{1}{2}(1+\text{erf}(z/\sqrt{2}))
 \end{split}\]</div>
 <p>其中，<span class="math notranslate nohighlight">\(z=(y-\mu)/\sigma\)</span>，<span class="math notranslate nohighlight">\(\sigma^2\)</span>为方差，<span class="math notranslate nohighlight">\(\sigma^{-2}\)</span>为精度；以及erf函数，</p>
 <div class="math notranslate nohighlight" id="equation-erf-def">
-<span class="eqno">(24)<a class="headerlink" href="#equation-erf-def" title="Link to this equation">#</a></span>\[
+<span class="eqno">(30)<a class="headerlink" href="#equation-erf-def" title="Link to this equation">#</a></span>\[
  \text{erf}(u)\triangleq \frac{2}{\sqrt{\pi}}\int_0^u e^{-t^2}dt
 \]</div>
 <dl class="simple myst">
@@ -811,7 +881,7 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-norm-pdf-1">
-<span class="eqno">(25)<a class="headerlink" href="#equation-norm-pdf-1" title="Link to this equation">#</a></span>\[
+<span class="eqno">(31)<a class="headerlink" href="#equation-norm-pdf-1" title="Link to this equation">#</a></span>\[
 \mathcal{N}(z|\mu,\sigma^2)\triangleq \frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(z-\mu)^2}{2\sigma^2}}
 \]</div>
 <dl class="simple myst">
@@ -830,7 +900,7 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-dirac-delta-fun">
-<span class="eqno">(26)<a class="headerlink" href="#equation-dirac-delta-fun" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(32)<a class="headerlink" href="#equation-dirac-delta-fun" title="Link to this equation">#</a></span>\[\begin{split}
 \delta(x)=\left\{\begin{array}{ll}
                   +\infty, &amp; \text{if }x=0, \\
                   0,&amp;\text{if }x\neq 0,
@@ -838,7 +908,7 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 \end{split}\]</div>
 <p>具有平移特性，即，</p>
 <div class="math notranslate nohighlight" id="equation-dirac-delta-prop">
-<span class="eqno">(27)<a class="headerlink" href="#equation-dirac-delta-prop" title="Link to this equation">#</a></span>\[
+<span class="eqno">(33)<a class="headerlink" href="#equation-dirac-delta-prop" title="Link to this equation">#</a></span>\[
 \int_{-\infty}^{\infty}f(x)\delta(x-\mu)dx=f(\mu)
 \]</div>
 <dl class="simple myst">
@@ -846,27 +916,27 @@ p({y}=c|\pmb{x,\Theta})=\frac{e^{(\pmb{\Theta x}+\pmb{b})_c}}{\sum_{c'}e^{(\pmb{
 </dd>
 </dl>
 <div class="math notranslate nohighlight" id="equation-gauss-regression">
-<span class="eqno">(28)<a class="headerlink" href="#equation-gauss-regression" title="Link to this equation">#</a></span>\[
+<span class="eqno">(34)<a class="headerlink" href="#equation-gauss-regression" title="Link to this equation">#</a></span>\[
 p(y|\pmb{x,\theta})=\mathcal{N}(y|f_\mu(\pmb{x;\theta}),f_\sigma(\pmb{x};\pmb{\sigma})^2)
 \]</div>
 <p>  线性回归同方差模型：</p>
 <div class="math notranslate nohighlight" id="equation-gauss-lin-regression">
-<span class="eqno">(29)<a class="headerlink" href="#equation-gauss-lin-regression" title="Link to this equation">#</a></span>\[
+<span class="eqno">(35)<a class="headerlink" href="#equation-gauss-lin-regression" title="Link to this equation">#</a></span>\[
 p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}^\top\pmb{x}+b,\sigma^2)
 \]</div>
 <p>  线性回归异方差模型：</p>
 <div class="math notranslate nohighlight" id="equation-gauss-lin-regression-hete">
-<span class="eqno">(30)<a class="headerlink" href="#equation-gauss-lin-regression-hete" title="Link to this equation">#</a></span>\[
+<span class="eqno">(36)<a class="headerlink" href="#equation-gauss-lin-regression-hete" title="Link to this equation">#</a></span>\[
 p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sigma^\top \pmb{x}))
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\sigma_+(a)=\log(1+e^a)\)</span>为softplus函数：<span class="math notranslate nohighlight">\(\mathbb{R}\rightarrow\mathbb{R}_+\)</span>。</p>
 </section>
-<section id="id11">
-<h4><span class="section-number">1.1.3.4. </span>多维高斯分布<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
+<section id="id14">
+<h4><span class="section-number">1.1.4.6. </span>多维高斯分布<a class="headerlink" href="#id14" title="Link to this heading">#</a></h4>
 <p>  <strong>(一) 定义</strong></p>
 <p>  多维高斯分布的概率密度函数: <span class="math notranslate nohighlight">\(\pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma)}\)</span>，定义为</p>
 <div class="math notranslate nohighlight" id="equation-equ-mult-gauss">
-<span class="eqno">(31)<a class="headerlink" href="#equation-equ-mult-gauss" title="Link to this equation">#</a></span>\[
+<span class="eqno">(37)<a class="headerlink" href="#equation-equ-mult-gauss" title="Link to this equation">#</a></span>\[
 \mathcal{N}(\pmb{y}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{y}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{y}-\pmb{\mu})\right\}
 \]</div>
 <p>  特例：二维高斯分布</p>
@@ -910,7 +980,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <p>  <strong>(四) 多维高斯联合分布</strong></p>
 <p>  假设<span class="math notranslate nohighlight">\(\pmb{y}=(\pmb{y}_1,\pmb{y}_2)\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中均值<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>与协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>分别为，</p>
 <div class="math notranslate nohighlight" id="equation-multi-norm-dist">
-<span class="eqno">(32)<a class="headerlink" href="#equation-multi-norm-dist" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(38)<a class="headerlink" href="#equation-multi-norm-dist" title="Link to this equation">#</a></span>\[\begin{split}
 \pmb{\mu}=\begin{pmatrix}
            \pmb{\mu}_1 \\
            \pmb{\mu}_2
@@ -921,7 +991,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>以及精度矩阵，</p>
 <div class="math notranslate nohighlight" id="equation-pricision-matrix">
-<span class="eqno">(33)<a class="headerlink" href="#equation-pricision-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(39)<a class="headerlink" href="#equation-pricision-matrix" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
    \pmb{\Lambda}\triangleq\pmb{\Sigma}^{-1}=\begin{pmatrix} \pmb{\Lambda}_{11} &amp; \pmb{\Lambda}_{12} \\ \pmb{\Lambda}_{21} &amp; \pmb{\Lambda}_{22}\end{pmatrix}&amp;=\begin{pmatrix}(\pmb{\Sigma/\Sigma}_{22})^{-1} &amp; -(\pmb{\Sigma/\Sigma}_{22})^{-1}\pmb{\Sigma}_{12}\pmb{\Sigma}_{22}^{-1} \\ -\pmb{\Sigma}_{22}^{-1}\pmb{\Sigma}_{21}(\pmb{\Sigma/\Sigma}_{22})^{-1} &amp; \pmb{\Sigma}_{22}^{-1}+\pmb{\Sigma}_{22}^{-1}\pmb{\Sigma}_{21}(\pmb{\Sigma/\Sigma}_{22})^{-1}\pmb{\Sigma}_{12}\pmb{\Sigma}_{22}^{-1}\end{pmatrix}\\
     &amp;=\begin{pmatrix}
@@ -933,7 +1003,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{\Sigma/\Sigma}_{22},\pmb{\Sigma/\Sigma}_{11}\)</span>分别是矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{\Sigma}_{22},\pmb{\Sigma}_{11}\)</span>的Schur补(Schur complements)。则，我们可以得出以下结论。</p>
 <p>  <strong>（1）边缘分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-multi-norm-dist-edge">
-<span class="eqno">(34)<a class="headerlink" href="#equation-multi-norm-dist-edge" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(40)<a class="headerlink" href="#equation-multi-norm-dist-edge" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
 \begin{split}
   p(\pmb{y}_1)&amp;\sim\mathcal{N}(\pmb{y}_1|\pmb{\mu}_1,\pmb{\Sigma}_{11})\\
@@ -943,7 +1013,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>  <strong>（2）后验分布</strong></p>
 <div class="math notranslate nohighlight" id="equation-equ-post-norm">
-<span class="eqno">(35)<a class="headerlink" href="#equation-equ-post-norm" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(41)<a class="headerlink" href="#equation-equ-post-norm" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
 \begin{split}
        p(\pmb{y}_1|\pmb{y}_2)&amp;=\mathcal{N}(\pmb{y}_1|\pmb{\mu}_{1|2},\pmb{\Sigma}_{1|2})\\
@@ -955,7 +1025,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>以及，</p>
 <div class="math notranslate nohighlight" id="equation-equ-post-norm2">
-<span class="eqno">(36)<a class="headerlink" href="#equation-equ-post-norm2" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(42)<a class="headerlink" href="#equation-equ-post-norm2" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
 \begin{split}
        p(\pmb{y}_2|\pmb{y}_1)&amp;=\mathcal{N}(\pmb{y}_2|\pmb{\mu}_{2|1},\pmb{\Sigma}_{2|1})\\
@@ -974,6 +1044,47 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 </dd>
 </dl>
 <p>考虑一个分块矩阵，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{M}=\begin{pmatrix}
+    \pmb{A} &amp; \pmb{B} \\
+    \pmb{C} &amp; \pmb{D}
+  \end{pmatrix}
+\end{split}\]</div>
+<p>假设<span class="math notranslate nohighlight">\(\pmb{A},\pmb{D}\)</span>是可逆的，则我们可以得到<span class="math notranslate nohighlight">\(\pmb{M}^{-1}\)</span>，</p>
+<div class="math notranslate nohighlight" id="equation-inverse-square-matrix">
+<span class="eqno">(43)<a class="headerlink" href="#equation-inverse-square-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+  \pmb{M}^{-1}&amp;=\begin{bmatrix}
+            [\pmb{M}/\pmb{D}]^{-1} &amp; -[\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1} \\
+            -\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1} &amp; \pmb{D}^{-1}+\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1}\pmb{BD}^{-1}
+          \end{bmatrix} \\
+  &amp;=\begin{bmatrix}
+     \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} &amp; -\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1} \\
+      -[\pmb{M/A}]^{-1}\pmb{CA}^{-1} &amp; [\pmb{M/A}]^{-1}
+    \end{bmatrix}
+  \end{split}
+\end{split}\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[
+[\pmb{M/A}]\triangleq \pmb{D}-\pmb{CA}^{-1}\pmb{B}
+\]</div>
+<p>为矩阵<span class="math notranslate nohighlight">\(\pmb{M}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{A}\)</span>和<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的Schur补,</p>
+<div class="math notranslate nohighlight">
+\[
+ [\pmb{M/D}]\triangleq \pmb{A}-\pmb{BD}^{-1}\pmb{C}
+ \]</div>
+<p>为矩阵<span class="math notranslate nohighlight">\(\pmb{M}\)</span>关于<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的Schur补。</p>
+<p>此外，还有以下等式成立，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+     [\pmb{M/D}]^{-1} &amp;= \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} \\
+       [\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1}&amp;=\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\\
+ |\pmb{M/D}|&amp;=|\pmb{M/A}||\pmb{D}^{-1}||\pmb{A}|
+  \end{split}
+\end{split}\]</div>
 <dl class="simple myst">
 <dt>有用结论</dt><dd><p>要去掉上(下)三角，只要乘(左乘、右乘皆可)上一个单位阵(其对应的上、下三角元取值非空，与原矩阵乘积后为0)。</p>
 </dd>
@@ -997,11 +1108,11 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 </div>
 </div>
 </section>
-<section id="id12">
-<h4><span class="section-number">1.1.3.5. </span>线性高斯系统<a class="headerlink" href="#id12" title="Link to this heading">#</a></h4>
+<section id="id15">
+<h4><span class="section-number">1.1.4.7. </span>线性高斯系统<a class="headerlink" href="#id15" title="Link to this heading">#</a></h4>
 <p>  假设<span class="math notranslate nohighlight">\(\pmb{z}\in \mathbb{R}^L\)</span>为未知向量，<span class="math notranslate nohighlight">\(\pmb{y}\in \mathbb{R}^D\)</span>，且它们之间的关系如下，</p>
 <div class="math notranslate nohighlight" id="equation-lin-gauss">
-<span class="eqno">(37)<a class="headerlink" href="#equation-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(44)<a class="headerlink" href="#equation-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
      p(\pmb{z}) &amp;=\mathcal{N}(\pmb{z}|\pmb{\mu}_z,\pmb{\Sigma}_z) \\
        p(\pmb{y}|\pmb{z})&amp;=\mathcal{N}(\pmb{y}|\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y) \nonumber
@@ -1009,7 +1120,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 \end{split}\]</div>
 <p>则上式称为线性高斯系统。相应的联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})=p(\pmb{y}|\pmb{x})p(\pmb{x})\)</span>是一个<span class="math notranslate nohighlight">\(L+D\)</span>维的高斯分布，其均值与协方差为，</p>
 <div class="math notranslate nohighlight" id="equation-equ-lin-gauss">
-<span class="eqno">(38)<a class="headerlink" href="#equation-equ-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(45)<a class="headerlink" href="#equation-equ-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
    \pmb{\mu} &amp;=\begin{pmatrix}
                 \pmb{\mu}_z \\
@@ -1024,12 +1135,12 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <p>  <strong>（一）高斯配方法</strong></p>
 <p>  根据指数族分布，高斯分布<span class="math notranslate nohighlight">\(\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\)</span>，</p>
 <div class="math notranslate nohighlight" id="equation-multi-gauss-dist-normal">
-<span class="eqno">(39)<a class="headerlink" href="#equation-multi-gauss-dist-normal" title="Link to this equation">#</a></span>\[
+<span class="eqno">(46)<a class="headerlink" href="#equation-multi-gauss-dist-normal" title="Link to this equation">#</a></span>\[
 \mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
 \]</div>
 <p>可以写成经典型(Canonical form)，即</p>
 <div class="math notranslate nohighlight" id="equation-canonical-form-gauss">
-<span class="eqno">(40)<a class="headerlink" href="#equation-canonical-form-gauss" title="Link to this equation">#</a></span>\[
+<span class="eqno">(47)<a class="headerlink" href="#equation-canonical-form-gauss" title="Link to this equation">#</a></span>\[
 \mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
 \]</div>
 <p>其中，</p>
@@ -1043,7 +1154,7 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <p>将<span class="math notranslate nohighlight">\(\pmb{\zeta}\)</span>中的最后一项展开，我们可以发现，<span class="math notranslate nohighlight">\(\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}=\pmb{\mu}^\top \pmb{\Lambda}\pmb{\mu}\)</span>。</p>
 <p>  通过配方，可以得到<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>如下，</p>
 <div class="math notranslate nohighlight" id="equation-equ-pzy">
-<span class="eqno">(41)<a class="headerlink" href="#equation-equ-pzy" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(48)<a class="headerlink" href="#equation-equ-pzy" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
    p(\pmb{z},\pmb{y})&amp;=p(\pmb{z})p(\pmb{y}|\pmb{z}) \\
      &amp;=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
@@ -1059,20 +1170,20 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
      \end{pmatrix} +C_4\right)
 \end{split}
 \end{split}\]</div>
-<p>其中，最后一行的<span class="math notranslate nohighlight">\(\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}\)</span>，<span class="math notranslate nohighlight">\(\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}\)</span>。由式<a class="reference internal" href="#equation-equ-pzy">(41)</a>可知联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>的精度矩阵<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>为，</p>
+<p>其中，最后一行的<span class="math notranslate nohighlight">\(\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}\)</span>，<span class="math notranslate nohighlight">\(\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}\)</span>。由式<a class="reference internal" href="#equation-equ-pzy">(48)</a>可知联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>的精度矩阵<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>为，</p>
 <div class="math notranslate nohighlight" id="equation-joint-precision-matrix">
-<span class="eqno">(42)<a class="headerlink" href="#equation-joint-precision-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(49)<a class="headerlink" href="#equation-joint-precision-matrix" title="Link to this equation">#</a></span>\[\begin{split}
 \pmb{\Sigma^{-1}}=\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} &amp; -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}&amp; \pmb{\Sigma}_y^{-1}\end{pmatrix}\triangleq \begin{pmatrix}\pmb{\Lambda}_{zz}&amp;\pmb{\Lambda}_{zy}\\ \pmb{\Lambda}_{yz}&amp;\pmb{\Lambda}_{yy} \end{pmatrix}=\pmb{\Lambda}
 \end{split}\]</div>
-<p>根据<a class="reference internal" href="#equation-pricision-matrix">(33)</a>可知，</p>
+<p>根据<a class="reference internal" href="#equation-pricision-matrix">(39)</a>可知，</p>
 <div class="math notranslate nohighlight" id="equation-joint-variance-matrix">
-<span class="eqno">(43)<a class="headerlink" href="#equation-joint-variance-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(50)<a class="headerlink" href="#equation-joint-variance-matrix" title="Link to this equation">#</a></span>\[\begin{split}
 \pmb{\Sigma}=\begin{pmatrix} \pmb{\Sigma}_z &amp; \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z&amp; \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
 \end{split}\]</div>
 <p>  <strong>（二）分布计算</strong></p>
 <p>  由配方可知，<strong>联合分布</strong>为，</p>
 <div class="math notranslate nohighlight" id="equation-joint-gaussian-distribution">
-<span class="eqno">(44)<a class="headerlink" href="#equation-joint-gaussian-distribution" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(51)<a class="headerlink" href="#equation-joint-gaussian-distribution" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
 \begin{split}
 p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
@@ -1083,7 +1194,7 @@ p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
 \end{split}\]</div>
 <p>  由配方可知，<strong>边缘分布</strong>为，</p>
 <div class="math notranslate nohighlight" id="equation-joint-edge-dist">
-<span class="eqno">(45)<a class="headerlink" href="#equation-joint-edge-dist" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(52)<a class="headerlink" href="#equation-joint-edge-dist" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
   \begin{split}
   \pmb{y}&amp;\sim \mathcal{N}(\pmb{W\mu}_z+\pmb{b},\pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top)\\
@@ -1092,8 +1203,8 @@ p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
 }
 \end{split}\]</div>
 <p>  由配方可知，<strong>后验分布</strong>为，</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<div class="math notranslate nohighlight" id="equation-posterior-gaussian-dist">
+<span class="eqno">(53)<a class="headerlink" href="#equation-posterior-gaussian-dist" title="Link to this equation">#</a></span>\[\begin{split}
 \boxed{
   \begin{split}
    p(\pmb{z}|\pmb{y})&amp;=\mathcal{N}(\pmb{y}_{z|y},\pmb{\Sigma}_{z|y})\\
@@ -1103,6 +1214,293 @@ p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
    &amp;=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
   \end{split}
 }
+\end{split}\]</div>
+<p>  <strong>（三）例子</strong></p>
+<ul class="simple">
+<li><p><strong>标量后验</strong></p></li>
+</ul>
+<p>  假设有<span class="math notranslate nohighlight">\(N\)</span>个关于潜在变量<span class="math notranslate nohighlight">\(z\)</span>的带噪测度<span class="math notranslate nohighlight">\(y_i(i=1,...,N)\)</span>，并假设带噪测度具有固定的精度<span class="math notranslate nohighlight">\(\lambda_y=\frac{1}{\sigma^2}\)</span>，所以有如下似然，</p>
+<div class="math notranslate nohighlight">
+\[
+p(y_i|z)=\mathcal{N}(z,\lambda_y^{-1})
+\]</div>
+<p>可以给未知变量<span class="math notranslate nohighlight">\(z\)</span>一个高斯先验，</p>
+<div class="math notranslate nohighlight">
+\[
+p(z)=\mathcal{N}(\mu_0,\lambda_0^{-1})
+\]</div>
+<p>则，我们对未知变量<span class="math notranslate nohighlight">\(z\)</span>可以通过计算后验<span class="math notranslate nohighlight">\(p(z|y_1,...,y_N,\sigma^2)\)</span>得到它的一个估计。</p>
+<p>  假设<span class="math notranslate nohighlight">\(\pmb{y}=(y_1,...,y_N)\)</span>，<span class="math notranslate nohighlight">\(\pmb{W}=\pmb{1}_N,\pmb{\Sigma}_y^{-1}=\text{diag}(\lambda_y\pmb{I})\)</span>，则有如下形式的分布，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+z&amp;\sim \mathcal{N}(\mu_0,\lambda_0^{-1})\\
+\pmb{y}|z&amp;\sim \mathcal{N}(\pmb{1}_N \mu_0, \text{diag}(\lambda_y^{-1}\pmb{I}))
+\end{split}
+\end{split}\]</div>
+<p>联合分布为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(z,\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
+\pmb{\mu}&amp;=\begin{pmatrix}\mu_0 \\ \pmb{1}_Nz \end{pmatrix}\\
+\pmb{\Sigma}&amp;=\begin{pmatrix} \lambda_0^{-1}&amp;\lambda_0^{-1}\pmb{1}_N^\top \\ \pmb{1}_N\lambda_0^{-1}&amp;\Sigma_y+\pmb{1}_N \lambda_0^{-1}\pmb{1}_N^\top \end{pmatrix}\\
+\pmb{\Lambda}&amp;=\pmb{\Sigma}^{-1}=\begin{pmatrix} \lambda_0+N\lambda_y&amp;-\pmb{1}_N^\top \Sigma_y^{-1} \\ -\Sigma_y^{-1}\pmb{1}_N&amp;\Sigma_y^{-1} \end{pmatrix}\\
+\end{split}
+\end{split}\]</div>
+<p>后验分布为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(z|\pmb{y})&amp;=\mathcal{N}(\pmb{\mu}_{z|\pmb{y}},\pmb{\Sigma}_{z|\pmb{y}})\\
+\pmb{\Sigma}_{z|\pmb{y}}&amp;=\pmb{\Lambda}_{zz}^{-1}=(\lambda_0+N\lambda_y)^{-1} \\
+\pmb{\mu}_{z|\pmb{y}}&amp;=\pmb{\Sigma}_{z|\pmb{y}}(\pmb{\Lambda}_{zz}\mu_z-\pmb{\Lambda}_{z\pmb{y}}(\pmb{y}-\pmb{\mu}_y))\\
+&amp;=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{\mu}_y) }{\lambda_0+N\lambda_y}\\
+&amp;=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{1}_N \mu_0) }{\lambda_0+N\lambda_y}\\
+&amp;=\frac{\lambda_0\mu_0 + N\lambda_y \bar{y} }{\lambda_0+N\lambda_y}
+\end{split}
+\end{split}\]</div>
+<ul class="simple">
+<li><p><strong>向量后验</strong></p></li>
+</ul>
+<p>  未知变量给一个先验分布，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{z}\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
+\]</div>
+<p>假设有<span class="math notranslate nohighlight">\(N\)</span>个关于<span class="math notranslate nohighlight">\(\pmb{z}\)</span>的测量值<span class="math notranslate nohighlight">\(\pmb{y}_i,i=1,2,...,N\)</span>，则似然函数为，</p>
+<div class="math notranslate nohighlight">
+\[
+p(\mathcal{D}|\pmb{z})=\prod_{i=1}^{N}\mathcal{N}(\pmb{y}_i|\pmb{z},\pmb{\Sigma}_y)=\mathcal{N}(\pmb{y}|\bar{\pmb{y}},\frac{1}{N}\pmb{\Sigma}_y)
+\]</div>
+<p>  注意：我们可以将<span class="math notranslate nohighlight">\(N\)</span>个观测值用它们的平均值<span class="math notranslate nohighlight">\(\bar{\pmb{y}}\)</span>以及它们的方差的<span class="math notranslate nohighlight">\(1/N\)</span>来代替。设置<span class="math notranslate nohighlight">\(\pmb{W}=\pmb{I},\pmb{b}=\pmb{0}\)</span>，根据贝叶斯规则有，</p>
+<div class="math notranslate nohighlight">
+\[
+p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}})
+\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{\Sigma}}^{-1}=\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
+\]</div>
+</section>
+<section id="student">
+<h4><span class="section-number">1.1.4.8. </span>Student分布<a class="headerlink" href="#student" title="Link to this heading">#</a></h4>
+<p>  高斯分布对异常值非常敏感，更加鲁棒的分布是Student分布，</p>
+<div class="math notranslate nohighlight" id="equation-equ-student-dist">
+<span class="eqno">(54)<a class="headerlink" href="#equation-equ-student-dist" title="Link to this equation">#</a></span>\[
+\mathcal{T}(y|\mu,\sigma^2,\nu)\propto\left[1+\frac{1}{\nu}\left( \frac{y-\mu}{\sigma}\right)^2 \right]^{-\frac{\nu+1}{2}}
+\]</div>
+<table class="table table-center" id="id20" style="width: 300px">
+<caption><span class="caption-text">Student分布参数</span><a class="headerlink" href="#id20" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td class="text-center"><p>均值</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\sigma\)</span></p></td>
+<td class="text-center"><p>scale</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\nu\)</span></p></td>
+<td class="text-center"><p>degree of freedom</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{\nu\sigma^2}{(\nu-2)}\)</span></p></td>
+<td class="text-center"><p>方差</p></td>
+</tr>
+</tbody>
+</table>
+<p>  当<span class="math notranslate nohighlight">\(\nu=1\)</span>时，t分布退化为Cauchy(或Lorentz)分布</p>
+<div class="math notranslate nohighlight" id="equation-equ-cauchy-dist">
+<span class="eqno">(55)<a class="headerlink" href="#equation-equ-cauchy-dist" title="Link to this equation">#</a></span>\[
+\mathcal{C}(x|\mu,\gamma)=\frac{1}{\gamma^\pi}\left[1+ \left( \frac{x-\mu}{\sigma}\right)^2 \right]^{-1}
+\]</div>
+<p>  当<span class="math notranslate nohighlight">\(\nu=1,\mu=0\)</span>时，</p>
+<div class="math notranslate nohighlight" id="equation-equ-cauchy-plus">
+<span class="eqno">(56)<a class="headerlink" href="#equation-equ-cauchy-plus" title="Link to this equation">#</a></span>\[
+ \mathcal{C}(x|\gamma)=\frac{2}{\gamma\pi}\left[1+ \left( \frac{x}{\sigma}\right)^2 \right]^{-1}
+\]</div>
+</section>
+<section id="laplace">
+<h4><span class="section-number">1.1.4.9. </span>Laplace分布<a class="headerlink" href="#laplace" title="Link to this heading">#</a></h4>
+<p>  该分布的pdf为，</p>
+<div class="math notranslate nohighlight" id="equation-laplace-dist">
+<span class="eqno">(57)<a class="headerlink" href="#equation-laplace-dist" title="Link to this equation">#</a></span>\[
+\text{Lap}(y|\mu,b)=\frac{1}{2b}\exp\left(-\frac{|y-\mu|}{b} \right)
+\]</div>
+<table class="table table-center" id="id21" style="width: 300px">
+<caption><span class="caption-text">Laplace分布参数</span><a class="headerlink" href="#id21" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td class="text-center"><p>均值</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\mu\)</span></p></td>
+<td class="text-center"><p>mode</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(2b^2\)</span></p></td>
+<td class="text-center"><p>var</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gamma">
+<h4><span class="section-number">1.1.4.10. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">#</a></h4>
+<p>  该分布的pdf为，</p>
+<div class="math notranslate nohighlight" id="equation-gamma-dist">
+<span class="eqno">(58)<a class="headerlink" href="#equation-gamma-dist" title="Link to this equation">#</a></span>\[
+\text{Ga}(x|a,b)\triangleq \frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx}
+\]</div>
+<table class="table table-center" id="id22" style="width: 300px">
+<caption><span class="caption-text">Gamma分布参数</span><a class="headerlink" href="#id22" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{a}{b}\)</span></p></td>
+<td class="text-center"><p>均值</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{a-1}{b}\)</span></p></td>
+<td class="text-center"><p>mode</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{a}{b^2}\)</span></p></td>
+<td class="text-center"><p>var</p></td>
+</tr>
+</tbody>
+</table>
+<p>  - <span class="math notranslate nohighlight">\(a=k+1,b=1\)</span>时为泊松分布，</p>
+<div class="math notranslate nohighlight" id="equation-poisson-dist-equ-gamma">
+<span class="eqno">(59)<a class="headerlink" href="#equation-poisson-dist-equ-gamma" title="Link to this equation">#</a></span>\[
+\text{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}\Leftrightarrow\frac{x^k e^{-x}}{\Gamma(k+1)}=\text{Ga}(x|a=k+1,b=1)
+\]</div>
+<p>  - a=1时为指数分布，</p>
+<div class="math notranslate nohighlight" id="equation-exp-dist">
+<span class="eqno">(60)<a class="headerlink" href="#equation-exp-dist" title="Link to this equation">#</a></span>\[
+\text{Expon}(x|\lambda)\triangleq \text{Ga}(x|1,\lambda)=\lambda e^{-\lambda x}
+\]</div>
+<p>  - chi-squared分布（卡方分布）,</p>
+<div class="math notranslate nohighlight" id="equation-chi-square-dist">
+<span class="eqno">(61)<a class="headerlink" href="#equation-chi-square-dist" title="Link to this equation">#</a></span>\[
+\chi_\nu^2(x)\triangleq \text{Ga}(x|\frac{\nu}{2},\frac{1}{2})
+\]</div>
+<p>  当<span class="math notranslate nohighlight">\(x_i\sim \mathcal{N}(0,1)\)</span>时，<span class="math notranslate nohighlight">\(\sum_i^\nu x_i^2 \sim \chi_\nu^2(x)\)</span>。</p>
+</section>
+<section id="beta">
+<h4><span class="section-number">1.1.4.11. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">#</a></h4>
+<p>  该分布的pdf为，</p>
+<div class="math notranslate nohighlight" id="equation-equ-beta-dist">
+<span class="eqno">(62)<a class="headerlink" href="#equation-equ-beta-dist" title="Link to this equation">#</a></span>\[
+ \text{Beta}(x|a,b)=\frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}
+\]</div>
+<table class="table table-center" id="id23" style="width: 300px">
+<caption><span class="caption-text">Beta分布参数</span><a class="headerlink" href="#id23" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{a}{a+b}\)</span></p></td>
+<td class="text-center"><p>均值</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{a-1}{a+b-2}\)</span></p></td>
+<td class="text-center"><p>mode</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\frac{ab}{(a+b)^2(a+b+1)}\)</span></p></td>
+<td class="text-center"><p>var</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id16">
+<h3><span class="section-number">1.1.5. </span>指数族分布<a class="headerlink" href="#id16" title="Link to this heading">#</a></h3>
+<p>  指数族包含了许多的概率分布，在统计与机器学习中具有非常重要的作用。考虑一族由参数<span class="math notranslate nohighlight">\(\pmb{\theta}\in \mathbb{R}^K\)</span>刻画的概率分布。指数族分布是指分布<span class="math notranslate nohighlight">\(p(\pmb{y}|\pmb{\theta})\)</span>，它的概率密度可以写成如下形式，</p>
+<div class="math notranslate nohighlight" id="equation-expon-family-dist">
+<span class="eqno">(63)<a class="headerlink" href="#equation-expon-family-dist" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+  p(\pmb{y}|\pmb{\theta})&amp;=\frac{1}{Z(\pmb{\theta})}h(\pmb{y})\exp[\pmb{\theta}^\top \pmb{t}(\pmb{y})]\\&amp;=h(\pmb{y})\exp[\pmb{\theta}^\top \pmb{t}(\pmb{y})-A(\pmb{\theta})]
+\end{split}
+\end{split}\]</div>
+<p>其中的参数如下：</p>
+<table class="table table-center" id="id24" style="width: 500px">
+<caption><span class="caption-text">指数族分布参数</span><a class="headerlink" href="#id24" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>参数</p></th>
+<th class="head text-center"><p>解释</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(h(\pmb{y})\)</span></p></td>
+<td class="text-center"><p>缩放常量，一般取值为1</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{t}(\pmb{y})\)</span></p></td>
+<td class="text-center"><p>充分统计量。(sufficient statistics)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(\pmb{\theta}\)</span></p></td>
+<td class="text-center"><p>自然参数或规范参数(canonical parameter)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(Z(\pmb{\theta})\)</span></p></td>
+<td class="text-center"><p>正则化常量，也称为配分函数(partition function)</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(A(\pmb{\theta})\)</span></p></td>
+<td class="text-center"><p>log配分函数 ,<span class="math notranslate nohighlight">\(A(\pmb{\theta})=\log Z(\pmb{\theta})\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>若<span class="math notranslate nohighlight">\(\pmb{\theta}=f(\pmb{\phi})\)</span>，则，</p>
+<div class="math notranslate nohighlight" id="equation-expon-family-dist-especil">
+<span class="eqno">(64)<a class="headerlink" href="#equation-expon-family-dist-especil" title="Link to this equation">#</a></span>\[
+p(\pmb{y}|\pmb{\phi})=h(\pmb{y})\exp[f(\pmb{\phi})^\top \pmb{t}(\pmb{y})-A(f(\pmb{\phi}))]
+\]</div>
+<ul class="simple">
+<li><p>如果<span class="math notranslate nohighlight">\(f\)</span>为非线性映射，则称之为曲线指数族(curved exponential family)。</p></li>
+<li><p>如果<span class="math notranslate nohighlight">\(\pmb{\theta}=f(\pmb{\phi})=\pmb{\phi}\)</span>，则称之为规范型(canonical form)。</p></li>
+<li><p>如果<span class="math notranslate nohighlight">\(\pmb{t}(\pmb{y})=\pmb{y}\)</span>,则称之为自然指数族(natural exponential family)。</p></li>
+</ul>
+<section id="id17">
+<h4><span class="section-number">1.1.5.1. </span>例子<a class="headerlink" href="#id17" title="Link to this heading">#</a></h4>
+<p>  (一) <strong>伯努利分布</strong></p>
+<p>  伯努利分布可以改写以如下形式，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split} \text{Ber}(y|\mu)&amp;=\mu^y(1-\mu)^{1-y}\\
+  &amp;=\exp[y\log(\mu)+(1-y)\log(1-\mu)]\\
+  &amp;=\exp[\pmb{t}(y)^\top \pmb{\theta}]
+ \end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{t}(y)=[\mathbb{I}(y=1),\mathbb{I}(y=0)], \pmb{\theta}=[\log(\mu),\log(1-\mu)]\)</span>。这是一种过于完整的表示形式，因为特征之间存在依赖，如：</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{1}^\top\pmb{t}(y)=\mathbb{I}(y=1)+\mathbb{I}(y=0)=1
+\]</div>
+<p>如果这个表示形式是过于完整的，<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>将不会是唯一。这可以使用最小化表示来解决，即，</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Ber}(y|\mu)=\exp\left[y\log\left(\frac{\mu}{1-\mu}\right)+\log(1-\mu)\right]
+\]</div>
+<p>可以将这些表示成指数族形式，即，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+   \theta&amp;=\log\left(\frac{\mu}{1-\mu}\right)\\
+   \pmb{t}(y)&amp;=y \nonumber \\
+   A(\theta)&amp;=-\log(1-\mu)=\log(1+e^\theta)\\
+   h(y)&amp;=1\\
+\end{split}
 \end{split}\]</div>
 </section>
 </section>
@@ -1164,12 +1562,23 @@ p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1.1.2.1. 分布的矩</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.1.3. 常见分布</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.1.3.1. 伯努利分布与二项分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#categoricalmultinomial">1.1.3.2. Categorical分布与Multinomial分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.3.3. 一维高斯分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.3.4. 多维高斯分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.3.5. 线性高斯系统</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">1.1.3. 变量替换</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">1.1.4. 常见分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">1.1.4.1. 伯努利分布与二项分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cat">1.1.4.2. Cat分布与多项分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">1.1.4.3. 泊松分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">1.1.4.4. 经验分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id13">1.1.4.5. 一维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.1.4.6. 多维高斯分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.1.4.7. 线性高斯系统</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.8. Student分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.9. Laplace分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.10. Gamma分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.11. Beta分布</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id16">1.1.5. 指数族分布</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id17">1.1.5.1. 例子</a></li>
 </ul>
 </li>
 </ul>

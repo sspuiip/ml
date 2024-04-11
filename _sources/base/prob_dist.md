@@ -45,7 +45,7 @@ $$(borel-sigma-field)
 
 &emsp;&emsp;随机变量的取值空间称为样本空间。一个事件是样本空间中样本点的一个集合。例如，假设$X$表示抛一个色子显示的点数，则样本空间$\mathcal{X}=\{1,2,3,4,5,6\}$。某一事件$A$表示奇数点，可表示为$X\in\{1,2,3\}$；某一事件$B$表示点数介于1至3，可记为$1\leq X\leq 3$。随机变量根据样本空间的不同，分为离散型和连续型两种。
 
-1. **离散型随机变量**
+&emsp;&emsp;(一) **离散型随机变量**
 
 离散型随机变量
 : 如果样本空间$\mathcal{X}$是有限集或无限可数集，则称$X$为离散型随机变量。用$P(X=x)$表示事件$\{X$取值$x\}$的概率。
@@ -63,7 +63,7 @@ $$(discrete-pmf)
 
 
 
-2. **连续型随机变量**
+&emsp;&emsp;(二) **连续型随机变量**
 
 连续型随机变量
 : 如果随机变量$X\in \mathbb{R}$是一个实值(real-valued)的数，则称为连续型随机变量。
@@ -105,7 +105,7 @@ $$
 
 #### 多个随机变量
 
-多个随机变量的之间会有什么样的联系和特点呢？
+&emsp;&emsp;多个随机变量的之间会有什么样的联系和特点呢？
 
 联合分布
 : 假设有$N$（不失一般性假设$N=2$）个随机变量$X,Y$，对于随机变量的任何可能值$x\in\mathcal{X},y\in\mathcal{Y}$,它们的联合分布定义为，
@@ -233,6 +233,48 @@ $$(equ-dist-var)
   \end{split}
 ```
 
+### 变量替换
+
+&emsp;&emsp;(一) **离散型**
+
+&emsp;&emsp;使用分布函数法可实现。略
+
+$$
+P_y(y)=\sum_{x:f(x)=y}P_x(x)
+$$(disc-var-transfrom)
+
+&emsp;&emsp;(二) **连续型**
+
+&emsp;&emsp;连续型$y=h(x), x=h^{-1}(y)$也可以使用分布函数法，此外，还可以使用以下变换公式。
+
+- 1维
+
+$$
+p_y(y)=p_x(h^{-1}(y))\cdot\left|\frac{dx}{dy}\right|
+$$(1-d-trans)
+
+- 多维
+
+$$
+ p_y(\pmb{y})=p_x(h^{-1}(\pmb{y}))\cdot\left|\begin{array}{ccc}
+                                           \frac{\partial \pmb{x}_1}{\partial \pmb{y}_1} &\dots &\frac{\partial \pmb{x}_1}{\partial \pmb{y}_n}\\
+                                           \frac{\partial \pmb{x}_2}{\partial \pmb{y}_1} &\dots &\frac{\partial \pmb{x}_2}{\partial \pmb{y}_n}\\
+                                           \vdots&\ddots&\vdots\\
+                                           \frac{\partial \pmb{x}_m}{\partial \pmb{y}_1} &\dots &\frac{\partial \pmb{x}_m}{\partial \pmb{y}_n}\\
+                                         \end{array} \right|
+$$(n-d-trans)
+
+&emsp;&emsp;例如：已知gamma分布，求$y=1/x$的分布，即逆gamma分布。
+
+$$
+ \begin{split}
+         p_y(y)&=\text{Ga}\left({y}^{-1}|a,b\right)\cdot|\frac{dx}{dy}|\\
+         &=\frac{b^a}{\Gamma(a)}\left(\frac{1}{y}\right)^{a-1}e^{-b/y}\cdot y^{-2}\\
+         &=\frac{b^a}{\Gamma(a)}y^{-(a+1)}e^{-b/y}\nonumber
+      \end{split}
+$$(inverse-gamma-dist)
+
+
 ### 常见分布
 
 #### 伯努利分布与二项分布
@@ -290,7 +332,7 @@ p(y=1|\pmb{x},\pmb{w})=\sigma(\pmb{w}^\top\pmb{x}+b)=\frac{1}{1+e^{-(\pmb{w}^\to
 $$(logistic-regression)
 
 
-#### Categorical分布与Multinomial分布 
+#### Cat分布与多项分布 
 
 &emsp;&emsp;(一) **Categorical分布**
 
@@ -361,6 +403,32 @@ log-sum-exp 技巧
 $$
 \log\sum_c^C e^{a_c}=m+\log\sum_c^C e^{(a_c-m)}
 $$(log-sum-exp)
+
+#### 泊松分布
+
+&emsp;&emsp;当随机变量取值为$X\in\{0,1,2,3,...\}$，则称$X$服从参数为$\lambda$的泊松分布，其概率质量函数pmf为，
+
+$$
+\text{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}
+$$(poi-dist-pmf)
+
+#### 经验分布
+
+&emsp;&emsp;假设从某分布$p(x)$得到$N$个样本$\mathcal{D}=\{x^{(1)},x^{(2)},...,x^{(n)}\}$，我们可以使用delta函数集合来近似pdf,
+
+$$
+\hat{P}_N(x)=\frac{1}{N}\sum_{n=1}^N\delta_{x^{(i)}}(x)
+$$(emp-dist)
+
+上式{eq}`emp-dist`称为$\mathcal{D}$的经验分布。例如：$N$个数据的经验分布，其CDF为
+
+$$
+  \hat{P}_N(x)=\frac{1}{N}\sum_{n=1}^N\mathbb{I}(x^{(i)}\leq x)=\frac{1}{N}\sum_{n=1}^Nu_{x^{(i)}}(x);\quad u_y(x)=\left\{\begin{array}{ll}
+                                                                 1,&y\leq x \\
+                                                                 0,&y>x
+                                                               \end{array} \right.
+  $$
+
 
 #### 一维高斯分布
 
@@ -566,7 +634,51 @@ $$(equ_post_norm2)
 
 考虑一个分块矩阵，
 
+$$
+\pmb{M}=\begin{pmatrix}
+    \pmb{A} & \pmb{B} \\
+    \pmb{C} & \pmb{D}
+  \end{pmatrix}
+$$
 
+假设$\pmb{A},\pmb{D}$是可逆的，则我们可以得到$\pmb{M}^{-1}$，
+
+$$
+\begin{split}
+  \pmb{M}^{-1}&=\begin{bmatrix}
+            [\pmb{M}/\pmb{D}]^{-1} & -[\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1} \\
+            -\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1} & \pmb{D}^{-1}+\pmb{D}^{-1}\pmb{C}[\pmb{M/D}]^{-1}\pmb{BD}^{-1}
+          \end{bmatrix} \\
+  &=\begin{bmatrix}
+     \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} & -\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1} \\
+      -[\pmb{M/A}]^{-1}\pmb{CA}^{-1} & [\pmb{M/A}]^{-1}
+    \end{bmatrix}
+  \end{split}
+$$(inverse-square-matrix)
+
+其中，
+
+$$
+[\pmb{M/A}]\triangleq \pmb{D}-\pmb{CA}^{-1}\pmb{B}
+$$
+
+为矩阵$\pmb{M}$关于$\pmb{A}$和$\pmb{D}$的Schur补,
+
+ $$
+ [\pmb{M/D}]\triangleq \pmb{A}-\pmb{BD}^{-1}\pmb{C}
+ $$
+
+ 为矩阵$\pmb{M}$关于$\pmb{D}$的Schur补。
+
+ 此外，还有以下等式成立，
+
+$$
+\begin{split}
+     [\pmb{M/D}]^{-1} &= \pmb{A}^{-1}+\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\pmb{CA}^{-1} \\
+       [\pmb{M}/\pmb{D}]^{-1}\pmb{BD}^{-1}&=\pmb{A}^{-1}\pmb{B}[\pmb{M/A}]^{-1}\\
+ |\pmb{M/D}|&=|\pmb{M/A}||\pmb{D}^{-1}||\pmb{A}|
+  \end{split}
+$$
 
 有用结论
 : 要去掉上(下)三角，只要乘(左乘、右乘皆可)上一个单位阵(其对应的上、下三角元取值非空，与原矩阵乘积后为0)。
@@ -714,7 +826,273 @@ $$
    &=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
   \end{split}
 }
+$$(posterior-gaussian-dist)
+
+
+&emsp;&emsp;**（三）例子**
+
+- **标量后验**
+
+&emsp;&emsp;假设有$N$个关于潜在变量$z$的带噪测度$y_i(i=1,...,N)$，并假设带噪测度具有固定的精度$\lambda_y=\frac{1}{\sigma^2}$，所以有如下似然，
+
+$$
+p(y_i|z)=\mathcal{N}(z,\lambda_y^{-1})
+$$
+
+可以给未知变量$z$一个高斯先验，
+
+$$
+p(z)=\mathcal{N}(\mu_0,\lambda_0^{-1})
+$$
+
+则，我们对未知变量$z$可以通过计算后验$p(z|y_1,...,y_N,\sigma^2)$得到它的一个估计。
+
+&emsp;&emsp;假设$\pmb{y}=(y_1,...,y_N)$，$\pmb{W}=\pmb{1}_N,\pmb{\Sigma}_y^{-1}=\text{diag}(\lambda_y\pmb{I})$，则有如下形式的分布，
+
+$$
+\begin{split}
+z&\sim \mathcal{N}(\mu_0,\lambda_0^{-1})\\
+\pmb{y}|z&\sim \mathcal{N}(\pmb{1}_N \mu_0, \text{diag}(\lambda_y^{-1}\pmb{I}))
+\end{split}
+$$
+
+联合分布为，
+
+$$
+\begin{split}
+p(z,\pmb{y})&=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
+\pmb{\mu}&=\begin{pmatrix}\mu_0 \\ \pmb{1}_Nz \end{pmatrix}\\
+\pmb{\Sigma}&=\begin{pmatrix} \lambda_0^{-1}&\lambda_0^{-1}\pmb{1}_N^\top \\ \pmb{1}_N\lambda_0^{-1}&\Sigma_y+\pmb{1}_N \lambda_0^{-1}\pmb{1}_N^\top \end{pmatrix}\\
+\pmb{\Lambda}&=\pmb{\Sigma}^{-1}=\begin{pmatrix} \lambda_0+N\lambda_y&-\pmb{1}_N^\top \Sigma_y^{-1} \\ -\Sigma_y^{-1}\pmb{1}_N&\Sigma_y^{-1} \end{pmatrix}\\
+\end{split}
+$$
+
+后验分布为，
+
+$$
+\begin{split}
+p(z|\pmb{y})&=\mathcal{N}(\pmb{\mu}_{z|\pmb{y}},\pmb{\Sigma}_{z|\pmb{y}})\\
+\pmb{\Sigma}_{z|\pmb{y}}&=\pmb{\Lambda}_{zz}^{-1}=(\lambda_0+N\lambda_y)^{-1} \\
+\pmb{\mu}_{z|\pmb{y}}&=\pmb{\Sigma}_{z|\pmb{y}}(\pmb{\Lambda}_{zz}\mu_z-\pmb{\Lambda}_{z\pmb{y}}(\pmb{y}-\pmb{\mu}_y))\\
+&=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{\mu}_y) }{\lambda_0+N\lambda_y}\\
+&=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{1}_N \mu_0) }{\lambda_0+N\lambda_y}\\
+&=\frac{\lambda_0\mu_0 + N\lambda_y \bar{y} }{\lambda_0+N\lambda_y}
+\end{split}
 $$
 
 
+- **向量后验**
+
+&emsp;&emsp;未知变量给一个先验分布，
+
+$$
+\pmb{z}\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
+$$
+
+假设有$N$个关于$\pmb{z}$的测量值$\pmb{y}_i,i=1,2,...,N$，则似然函数为，
+
+$$
+p(\mathcal{D}|\pmb{z})=\prod_{i=1}^{N}\mathcal{N}(\pmb{y}_i|\pmb{z},\pmb{\Sigma}_y)=\mathcal{N}(\pmb{y}|\bar{\pmb{y}},\frac{1}{N}\pmb{\Sigma}_y)
+$$
+
+&emsp;&emsp;注意：我们可以将$N$个观测值用它们的平均值$\bar{\pmb{y}}$以及它们的方差的$1/N$来代替。设置$\pmb{W}=\pmb{I},\pmb{b}=\pmb{0}$，根据贝叶斯规则有，
+
+$$
+p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}})
+$$
+
+其中，
+
+$$
+\hat{\pmb{\Sigma}}^{-1}=\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1}
+$$
+
+$$
+\hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
+$$
+
+
+
+#### Student分布
+
+&emsp;&emsp;高斯分布对异常值非常敏感，更加鲁棒的分布是Student分布，
+
+$$
+\mathcal{T}(y|\mu,\sigma^2,\nu)\propto\left[1+\frac{1}{\nu}\left( \frac{y-\mu}{\sigma}\right)^2 \right]^{-\frac{\nu+1}{2}}
+$$(equ_student_dist)
+
+:::{table} Student分布参数
+:width: 300px
+:align: center
+:widths: 45,45
+| 参数 | 解释 |
+|:--: |:--: | 
+|  $\mu$ | 均值 |
+|  $\sigma$ | scale |
+|$\nu$ | degree of freedom |
+|  $\frac{\nu\sigma^2}{(\nu-2)}$ | 方差 |
+:::
+
+&emsp;&emsp;当$\nu=1$时，t分布退化为Cauchy(或Lorentz)分布
+
+$$
+\mathcal{C}(x|\mu,\gamma)=\frac{1}{\gamma^\pi}\left[1+ \left( \frac{x-\mu}{\sigma}\right)^2 \right]^{-1}
+$$(equ_cauchy_dist)
+
+&emsp;&emsp;当$\nu=1,\mu=0$时，
+
+$$
+ \mathcal{C}(x|\gamma)=\frac{2}{\gamma\pi}\left[1+ \left( \frac{x}{\sigma}\right)^2 \right]^{-1}
+$$(equ_cauchy_plus)
+
+#### Laplace分布
+
+&emsp;&emsp;该分布的pdf为，
+
+$$
+\text{Lap}(y|\mu,b)=\frac{1}{2b}\exp\left(-\frac{|y-\mu|}{b} \right)
+$$(laplace-dist)
+
+:::{table} Laplace分布参数
+:width: 300px
+:align: center
+:widths: 45,45
+| 参数 | 解释 |
+|:--: |:--: | 
+|  $\mu$ | 均值 |
+|  $\mu$ | mode |
+|$2b^2$ |var |
+:::
+
+#### Gamma分布
+
+&emsp;&emsp;该分布的pdf为，
+
+$$
+\text{Ga}(x|a,b)\triangleq \frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx}
+$$(gamma-dist)
+
+:::{table} Gamma分布参数
+:width: 300px
+:align: center
+:widths: 45,45
+| 参数 | 解释 |
+|:--: |:--: | 
+|   $\frac{a}{b}$ | 均值 |
+|  $\frac{a-1}{b}$ | mode |
+|$\frac{a}{b^2}$ |var |
+:::
+
+&emsp;&emsp;- $a=k+1,b=1$时为泊松分布，
+
+$$
+\text{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}\Leftrightarrow\frac{x^k e^{-x}}{\Gamma(k+1)}=\text{Ga}(x|a=k+1,b=1)
+$$(poisson-dist-equ-gamma)
+
+&emsp;&emsp;- a=1时为指数分布，
+
+$$
+\text{Expon}(x|\lambda)\triangleq \text{Ga}(x|1,\lambda)=\lambda e^{-\lambda x}
+$$(exp-dist)
+
+&emsp;&emsp;- chi-squared分布（卡方分布）,
+
+$$
+\chi_\nu^2(x)\triangleq \text{Ga}(x|\frac{\nu}{2},\frac{1}{2})
+$$(chi-square-dist)
+
+&emsp;&emsp;当$x_i\sim \mathcal{N}(0,1)$时，$\sum_i^\nu x_i^2 \sim \chi_\nu^2(x)$。
+
+#### Beta分布
+
+&emsp;&emsp;该分布的pdf为，
+
+$$
+ \text{Beta}(x|a,b)=\frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}
+$$(equ-beta-dist)
+
+:::{table} Beta分布参数
+:width: 300px
+:align: center
+:widths: 45,45
+| 参数 | 解释 |
+|:--: |:--: | 
+|  $\frac{a}{a+b}$ | 均值 |
+|  $\frac{a-1}{a+b-2}$ | mode |
+| $\frac{ab}{(a+b)^2(a+b+1)}$ |var |
+:::
+
+
+### 指数族分布
+
+&emsp;&emsp;指数族包含了许多的概率分布，在统计与机器学习中具有非常重要的作用。考虑一族由参数$\pmb{\theta}\in \mathbb{R}^K$刻画的概率分布。指数族分布是指分布$p(\pmb{y}|\pmb{\theta})$，它的概率密度可以写成如下形式，
+
+$$
+\begin{split}
+  p(\pmb{y}|\pmb{\theta})&=\frac{1}{Z(\pmb{\theta})}h(\pmb{y})\exp[\pmb{\theta}^\top \pmb{t}(\pmb{y})]\\&=h(\pmb{y})\exp[\pmb{\theta}^\top \pmb{t}(\pmb{y})-A(\pmb{\theta})]
+\end{split}
+$$(expon-family-dist)
+
+其中的参数如下：
+
+:::{table} 指数族分布参数
+:width: 500px
+:align: center
+:widths: 33,66
+| 参数 | 解释 |
+|:--: |:--: | 
+|  $h(\pmb{y})$ | 缩放常量，一般取值为1 |
+|  $\pmb{t}(\pmb{y})$ | 充分统计量。(sufficient statistics) |
+| $\pmb{\theta}$ |自然参数或规范参数(canonical parameter) |
+|$Z(\pmb{\theta})$|正则化常量，也称为配分函数(partition function) |
+| $A(\pmb{\theta})$|log配分函数 ,$A(\pmb{\theta})=\log Z(\pmb{\theta})$|
+:::
+
+若$\pmb{\theta}=f(\pmb{\phi})$，则，
+
+$$
+p(\pmb{y}|\pmb{\phi})=h(\pmb{y})\exp[f(\pmb{\phi})^\top \pmb{t}(\pmb{y})-A(f(\pmb{\phi}))]
+$$(expon-family-dist-especil)
+
+- 如果$f$为非线性映射，则称之为曲线指数族(curved exponential family)。
+
+- 如果$\pmb{\theta}=f(\pmb{\phi})=\pmb{\phi}$，则称之为规范型(canonical form)。
+
+- 如果$\pmb{t}(\pmb{y})=\pmb{y}$,则称之为自然指数族(natural exponential family)。
+
+#### 例子
+
+&emsp;&emsp;(一) **伯努利分布**
+
+&emsp;&emsp;伯努利分布可以改写以如下形式，
+
+$$
+\begin{split} \text{Ber}(y|\mu)&=\mu^y(1-\mu)^{1-y}\\
+  &=\exp[y\log(\mu)+(1-y)\log(1-\mu)]\\
+  &=\exp[\pmb{t}(y)^\top \pmb{\theta}]
+ \end{split}
+$$
+
+其中，$\pmb{t}(y)=[\mathbb{I}(y=1),\mathbb{I}(y=0)], \pmb{\theta}=[\log(\mu),\log(1-\mu)]$。这是一种过于完整的表示形式，因为特征之间存在依赖，如：
+
+$$
+\pmb{1}^\top\pmb{t}(y)=\mathbb{I}(y=1)+\mathbb{I}(y=0)=1
+$$
+
+如果这个表示形式是过于完整的，$\pmb{\theta}$将不会是唯一。这可以使用最小化表示来解决，即，
+
+$$
+\text{Ber}(y|\mu)=\exp\left[y\log\left(\frac{\mu}{1-\mu}\right)+\log(1-\mu)\right]
+$$
+
+可以将这些表示成指数族形式，即，
+
+$$
+\begin{split}
+   \theta&=\log\left(\frac{\mu}{1-\mu}\right)\\
+   \pmb{t}(y)&=y \nonumber \\
+   A(\theta)&=-\log(1-\mu)=\log(1+e^\theta)\\
+   h(y)&=1\\
+\end{split}
+$$
 
