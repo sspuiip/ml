@@ -446,8 +446,38 @@ p(\mathcal{D})&amp;=\prod_{i=1}^N \mathcal{N}(\pmb{x}_i|\pmb{\mu},\pmb{\Sigma})\
 <span class="eqno">(6)<a class="headerlink" href="#equation-gda-def" title="Link to this equation">#</a></span>\[
 p(\pmb{x}|y=c,\pmb{\theta})\triangleq\mathcal{N}(\pmb{x}|\pmb{\mu}_c,\pmb{\Sigma}_c)
 \]</div>
-<p>该式称为高斯判别分析(gaussian discriminat analysis, GDA)。如果<span class="math notranslate nohighlight">\(\pmb{\Sigma}_c\)</span>为对角阵，则GDA等价于Naive Bayes。
-GDA是一种生成式方法，该方法假设数据在给定标签下服从多元高斯分布，而标签则服从伯努利分布(或Cat分布)。具体来说，样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的条件概率<span class="math notranslate nohighlight">\(p(\pmb{x}|y=c,\pmb{\theta})\)</span>服从多元高斯分布，即<span class="math notranslate nohighlight">\(\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>为均值，<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>为协方差矩阵。先验分布<span class="math notranslate nohighlight">\(p(y)\)</span>则服从伯努利分布(或Cat分布)。通过样本来确定高斯分布和伯努利分布(或Cat分布)的模型参数，即最大似然估计，然后通过最大后验概率来进行分类。</p>
+<p>该式称为<strong>高斯判别分析</strong>(gaussian discriminate analysis, GDA)。如果<span class="math notranslate nohighlight">\(\pmb{\Sigma}_c\)</span>为对角阵，则GDA等价于Naive Bayes。GDA是一种生成式方法，该方法假设数据在给定标签下服从多元高斯分布，而标签则服从伯努利分布(或Cat分布)。具体来说，样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的条件概率<span class="math notranslate nohighlight">\(p(\pmb{x}|y=c,\pmb{\theta})\)</span>服从多元高斯分布，即<span class="math notranslate nohighlight">\(\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>为均值，<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>为协方差矩阵。先验分布<span class="math notranslate nohighlight">\(p(y)\)</span>则服从伯努利分布(或Cat分布)。通过样本来确定高斯分布和伯努利分布(或Cat分布)的模型参数，即最大似然估计，然后通过最大后验概率来进行分类。对于任意给定的样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>，可使用下式规则决策类别，</p>
+<div class="math notranslate nohighlight" id="equation-gda-decision-rule">
+<span class="eqno">(7)<a class="headerlink" href="#equation-gda-decision-rule" title="Link to this equation">#</a></span>\[
+\hat{y}(\pmb{x})=\arg\max\limits_{c}\quad\left[\log p(y=c|\pmb{\pi})+\log p(\pmb{x}|\pmb{\theta}_c) \right]
+ \]</div>
+<p>当计算<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的类<span class="math notranslate nohighlight">\(c\)</span>条件概率时，使用的是<span class="math notranslate nohighlight">\(\pmb{x}\)</span>与<span class="math notranslate nohighlight">\(\pmb{\mu}_c\)</span>的马氏距离。该过程也可以认为是近邻中心分类。对于上式<a class="reference internal" href="#equation-gda-decision-rule">(7)</a>使用均匀先验，则分类规则可以简化为，</p>
+<div class="math notranslate nohighlight" id="equation-gda-decision-rule-without-prior">
+<span class="eqno">(8)<a class="headerlink" href="#equation-gda-decision-rule-without-prior" title="Link to this equation">#</a></span>\[
+\hat{y}(\pmb{x})=\arg\max\limits_{c} \quad(\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c)
+\]</div>
+<p>  - <strong>二次判别分析</strong></p>
+<p>  由贝叶斯公式可知类别后验为<span class="math notranslate nohighlight">\(p(y=c|\pmb{x})=\frac{p(\pmb{x}|y=c)p(y=c)}{\sum_{c'}p(\pmb{x}|y=c')p(y=c')}\)</span>，如果把类条件概率密度定义为高斯密度，则有，</p>
+<div class="math notranslate nohighlight" id="equation-quadratic-da">
+<span class="eqno">(9)<a class="headerlink" href="#equation-quadratic-da" title="Link to this equation">#</a></span>\[
+p(y=c|\pmb{x})=\frac{ \pi_c\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_c|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c) \right\} }{   \sum_{c'}\pi_{c'}\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_{c'}|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_{c'})^\top\pmb{\Sigma}_{c'}^{-1}(\pmb{x}-\pmb{\mu}_{c'}) \right\} }
+\]</div>
+<p>上式<a class="reference internal" href="#equation-quadratic-da">(9)</a>也称为<strong>二次判别分析</strong>(quadratic disciminate analysis, QDA)。</p>
+<p>  - <strong>线性判别分析</strong></p>
+<p>  对于二次判别分析QDA，考虑一个特殊情况<span class="math notranslate nohighlight">\(\pmb{\Sigma}_c=\pmb{\Sigma}\)</span>，即所有类条件概率的方差相等，则QDA可简化为，</p>
+<div class="math notranslate nohighlight" id="equation-linear-discrimante-analysis">
+<span class="eqno">(10)<a class="headerlink" href="#equation-linear-discrimante-analysis" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(y=c|\pmb{x},\pmb{\theta})&amp;\propto \pi_c\exp\left\{ (\pmb{x}-\pmb{\mu})^\top \pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}\\
+&amp;=\exp\left\{\pmb{\mu}_c\pmb{\Sigma}^{-1}\pmb{x}-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c \right\} \cdot\underbrace{\exp\left\{ -\frac12\pmb{x}^\top\pmb{\Sigma}^{-1}\pmb{x} \right\}}_{与c无关，同时出现在分子分母会抵消}
+\end{split}
+\end{split}\]</div>
+<p>记<span class="math notranslate nohighlight">\(\pmb{\beta}_c=\pmb{\Sigma}^{-1}\pmb{\mu}_c, \gamma_c=-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c\)</span>，则上式可改写为，</p>
+<div class="math notranslate nohighlight" id="equation-lda-def">
+<span class="eqno">(11)<a class="headerlink" href="#equation-lda-def" title="Link to this equation">#</a></span>\[
+p(y=c|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_c^\top\pmb{x}+\gamma_c}}{\sum_{c'}e^{\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}}}=\underbrace{\mathcal{S}(\eta)_c}_{S为Softmax函数}
+\]</div>
+<p>  该式<a class="reference internal" href="#equation-lda-def">(11)</a>有一个有趣的属性，如果对分子取对数，则会得到一个关于<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的线性函数，任意两类<span class="math notranslate nohighlight">\(c\)</span>与<span class="math notranslate nohighlight">\(c'\)</span>的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，分类</p>
 </section>
 </section>
 

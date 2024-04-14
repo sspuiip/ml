@@ -99,6 +99,43 @@ $$
 p(\pmb{x}|y=c,\pmb{\theta})\triangleq\mathcal{N}(\pmb{x}|\pmb{\mu}_c,\pmb{\Sigma}_c)
 $$(GDA-def)
 
-该式称为高斯判别分析(gaussian discriminat analysis, GDA)。如果$\pmb{\Sigma}_c$为对角阵，则GDA等价于Naive Bayes。
- GDA是一种生成式方法，该方法假设数据在给定标签下服从多元高斯分布，而标签则服从伯努利分布(或Cat分布)。具体来说，样本$\pmb{x}$的条件概率$p(\pmb{x}|y=c,\pmb{\theta})$服从多元高斯分布，即$\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})$，其中$\pmb{\mu}$为均值，$\pmb{\Sigma}$为协方差矩阵。先验分布$p(y)$则服从伯努利分布(或Cat分布)。通过样本来确定高斯分布和伯努利分布(或Cat分布)的模型参数，即最大似然估计，然后通过最大后验概率来进行分类。
+该式称为**高斯判别分析**(gaussian discriminate analysis, GDA)。如果$\pmb{\Sigma}_c$为对角阵，则GDA等价于Naive Bayes。GDA是一种生成式方法，该方法假设数据在给定标签下服从多元高斯分布，而标签则服从伯努利分布(或Cat分布)。具体来说，样本$\pmb{x}$的条件概率$p(\pmb{x}|y=c,\pmb{\theta})$服从多元高斯分布，即$\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})$，其中$\pmb{\mu}$为均值，$\pmb{\Sigma}$为协方差矩阵。先验分布$p(y)$则服从伯努利分布(或Cat分布)。通过样本来确定高斯分布和伯努利分布(或Cat分布)的模型参数，即最大似然估计，然后通过最大后验概率来进行分类。对于任意给定的样本$\pmb{x}$，可使用下式规则决策类别，
 
+ $$
+\hat{y}(\pmb{x})=\arg\max\limits_{c}\quad\left[\log p(y=c|\pmb{\pi})+\log p(\pmb{x}|\pmb{\theta}_c) \right]
+ $$(gda-decision-rule)
+
+当计算$\pmb{x}$的类$c$条件概率时，使用的是$\pmb{x}$与$\pmb{\mu}_c$的马氏距离。该过程也可以认为是近邻中心分类。对于上式{eq}`gda-decision-rule`使用均匀先验，则分类规则可以简化为，
+
+$$
+\hat{y}(\pmb{x})=\arg\max\limits_{c} \quad(\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c)
+$$(gda-decision-rule-without-prior)
+
+&emsp;&emsp;- **二次判别分析**
+
+&emsp;&emsp;由贝叶斯公式可知类别后验为$p(y=c|\pmb{x})=\frac{p(\pmb{x}|y=c)p(y=c)}{\sum_{c'}p(\pmb{x}|y=c')p(y=c')}$，如果把类条件概率密度定义为高斯密度，则有，
+
+$$
+p(y=c|\pmb{x})=\frac{ \pi_c\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_c|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c) \right\} }{   \sum_{c'}\pi_{c'}\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_{c'}|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_{c'})^\top\pmb{\Sigma}_{c'}^{-1}(\pmb{x}-\pmb{\mu}_{c'}) \right\} }
+$$(quadratic-da)
+
+上式{eq}`quadratic-da`也称为**二次判别分析**(quadratic disciminate analysis, QDA)。
+
+&emsp;&emsp;- **线性判别分析**
+
+&emsp;&emsp;对于二次判别分析QDA，考虑一个特殊情况$\pmb{\Sigma}_c=\pmb{\Sigma}$，即所有类条件概率的方差相等，则QDA可简化为，
+
+$$
+\begin{split}
+p(y=c|\pmb{x},\pmb{\theta})&\propto \pi_c\exp\left\{ (\pmb{x}-\pmb{\mu})^\top \pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}\\
+&=\exp\left\{\pmb{\mu}_c\pmb{\Sigma}^{-1}\pmb{x}-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c \right\} \cdot\underbrace{\exp\left\{ -\frac12\pmb{x}^\top\pmb{\Sigma}^{-1}\pmb{x} \right\}}_{与c无关，同时出现在分子分母会抵消}
+\end{split}
+$$(linear-discrimante-analysis)
+
+记$\pmb{\beta}_c=\pmb{\Sigma}^{-1}\pmb{\mu}_c, \gamma_c=-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c$，则上式可改写为，
+
+$$
+p(y=c|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_c^\top\pmb{x}+\gamma_c}}{\sum_{c'}e^{\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}}}=\underbrace{\mathcal{S}(\eta)_c}_{S为Softmax函数}
+$$(lda-def)
+
+&emsp;&emsp;该式{eq}`lda-def`有一个有趣的属性，如果对分子取对数，则会得到一个关于$\pmb{x}$的线性函数，任意两类$c$与$c'$的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，分类
