@@ -477,7 +477,22 @@ p(y=c|\pmb{x},\pmb{\theta})&amp;\propto \pi_c\exp\left\{ (\pmb{x}-\pmb{\mu})^\to
 <span class="eqno">(11)<a class="headerlink" href="#equation-lda-def" title="Link to this equation">#</a></span>\[
 p(y=c|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_c^\top\pmb{x}+\gamma_c}}{\sum_{c'}e^{\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}}}=\underbrace{\mathcal{S}(\eta)_c}_{S为Softmax函数}
 \]</div>
-<p>  该式<a class="reference internal" href="#equation-lda-def">(11)</a>有一个有趣的属性，如果对分子取对数，则会得到一个关于<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的线性函数，任意两类<span class="math notranslate nohighlight">\(c\)</span>与<span class="math notranslate nohighlight">\(c'\)</span>的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，分类</p>
+<p>  该式<a class="reference internal" href="#equation-lda-def">(11)</a>有一个有趣的属性，如果对分子取对数，则会得到一个关于<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的线性函数，任意两类<span class="math notranslate nohighlight">\(c\)</span>与<span class="math notranslate nohighlight">\(c'\)</span>的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，<strong>分类界线</strong>可由下式给出，</p>
+<div class="math notranslate nohighlight" id="equation-lda-border">
+<span class="eqno">(12)<a class="headerlink" href="#equation-lda-border" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(y=c|\pmb{x},\pmb{\theta})&amp;=p(y=c'|\pmb{x},\pmb{\theta})\\
+\pmb{\beta}_c^\top\pmb{x}+\gamma_c&amp;=\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}\\
+\pmb{x}^\top (\pmb{\beta}_c-\pmb{\beta}_{c'})&amp;=\gamma_{c'}-\gamma_c
+\end{split}
+\end{split}\]</div>
+<p>  - <strong>线性判别分析-两个类别情况</strong></p>
+<p>  当只有两个类别的情形，</p>
+<div class="math notranslate nohighlight">
+\[
+p(y=1|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}}{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}+e^{\pmb{\beta}_0^\top\pmb{x}+\gamma_0}}=\frac{1}{1+e^{-(\pmb{\beta}_1^\top\pmb{x}+\gamma_1-\pmb{\beta}_0^\top\pmb{x}-\gamma_0)}}
+\]</div>
+<p>此时，<span class="math notranslate nohighlight">\(\gamma_1-\gamma_0=-\frac{1}{2}(\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0)+\log(\pi_1/\pi_0)\)</span>。</p>
 </section>
 </section>
 
