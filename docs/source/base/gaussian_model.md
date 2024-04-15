@@ -157,6 +157,44 @@ $$
 p(y=1|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}}{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}+e^{\pmb{\beta}_0^\top\pmb{x}+\gamma_0}}=\frac{1}{1+e^{-(\pmb{\beta}_1^\top\pmb{x}+\gamma_1-\pmb{\beta}_0^\top\pmb{x}-\gamma_0)}}
 $$
 
-此时，$\gamma_1-\gamma_0=-\frac{1}{2}(\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0)+\log(\pi_1/\pi_0)$。
+此时，$\gamma_1-\gamma_0=-\frac{1}{2}(\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1+\pmb{\mu}_0)+\log(\pi_1/\pi_0)$。若定义
+
+$$
+\begin{split}
+\pmb{w}&\triangleq \pmb{\beta}_1-\pmb{\beta}_0=\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0)\\
+\pmb{x}_0&=\frac12(\pmb{\mu}_1+\pmb{\mu}_0)-(\pmb{\mu}_1-\pmb{\mu}_0)\frac{\log(\pi_1/\pi_2)}{ (\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0) }
+\end{split}
+$$
+
+则有，
+
+$$
+\pmb{w}^\top\pmb{x}_0=-(\gamma_1-\gamma_0)
+$$
+
+因此，
+
+$$
+p(y=1|\pmb{x},\pmb{\theta})=\text{sigm}(\pmb{w}^\top(\pmb{x}-\pmb{x_0}))
+$$(lda-2-class)
+
+&emsp;&emsp;最终决策规则为，移动$\pmb{x}$至$\pmb{x}_0$点，投影到直线$\pmb{w}$，观察结果为正或负，为正则判别为类1，否则判别为类0。
+
+&emsp;&emsp;- **判别模型的参数估计**
+
+&emsp;&emsp;已知判别模型的参数，我们可以根据模型来进行类别判定。然而，当参数未知时，我们要对这些模型参数先进行估计。最简单的方法是最大似然估计(MLE)。已有数据$\mathcal{D}$其对数似然函数为，
+
+$$
+p(\mathcal{D}|\pmb{\theta})=\left[\sum_{i=1}^N\sum_{c=1}^C \mathbb{I}(y_i=c)\log\pi_c \right]+\sum_{c=1}^C\left[\sum_{i:y_i=c}\log \mathcal{N}(\pmb{x}_i|\pmb{\mu}_c,\pmb{\Sigma}_c) \right]
+$$(data-log-likelihood)
+
+可以看到，似然函数可以划分为先验$\pmb{\pi}$的项和$C$个$\pmb{\mu}_c,\pmb{\Sigma}_c$的项，因此参数可以分别单独估计。对于类别先验可以使用$\pmb{\hat{\pi}}=\frac{N_c}{N}$估计，与naive Bayes一致。对于类条件密度参数，可以根据类别标签将数据集拆分成$C$个子数据集，然后分别估计该子集的类别参数，
+
+$$
+\pmb{\hat{\mu}}_c=\frac{1}{N_c}\sum_{i:y_i=c}\pmb{x}_i,\quad\pmb{\hat{\Sigma}}_c=\frac{1}{N_c}\sum_{i:y_i=c}(\pmb{x}_i-\pmb{\hat{\mu}}_c)(\pmb{x}_i-\pmb{\hat{\mu}}_c)^\top
+$$(lda-para-esitmator)
+
+
+
 
 
