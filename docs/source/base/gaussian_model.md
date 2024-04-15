@@ -138,4 +138,25 @@ $$
 p(y=c|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_c^\top\pmb{x}+\gamma_c}}{\sum_{c'}e^{\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}}}=\underbrace{\mathcal{S}(\eta)_c}_{S为Softmax函数}
 $$(lda-def)
 
-&emsp;&emsp;该式{eq}`lda-def`有一个有趣的属性，如果对分子取对数，则会得到一个关于$\pmb{x}$的线性函数，任意两类$c$与$c'$的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，分类
+&emsp;&emsp;该式{eq}`lda-def`有一个有趣的属性，如果对分子取对数，则会得到一个关于$\pmb{x}$的线性函数，任意两类$c$与$c'$的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，**分类界线**可由下式给出，
+
+$$
+\begin{split}
+p(y=c|\pmb{x},\pmb{\theta})&=p(y=c'|\pmb{x},\pmb{\theta})\\
+\pmb{\beta}_c^\top\pmb{x}+\gamma_c&=\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}\\
+\pmb{x}^\top (\pmb{\beta}_c-\pmb{\beta}_{c'})&=\gamma_{c'}-\gamma_c
+\end{split}
+$$(lda-border)
+
+
+&emsp;&emsp;- **线性判别分析-两个类别情况**
+
+&emsp;&emsp;当只有两个类别的情形，
+
+$$
+p(y=1|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}}{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}+e^{\pmb{\beta}_0^\top\pmb{x}+\gamma_0}}=\frac{1}{1+e^{-(\pmb{\beta}_1^\top\pmb{x}+\gamma_1-\pmb{\beta}_0^\top\pmb{x}-\gamma_0)}}
+$$
+
+此时，$\gamma_1-\gamma_0=-\frac{1}{2}(\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0)+\log(\pi_1/\pi_0)$。
+
+
