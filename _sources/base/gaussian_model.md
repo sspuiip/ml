@@ -403,4 +403,89 @@ $$
 \hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
 $$
 
+## 高斯分布的参数推理
 
+&emsp;&emsp;上面的内容都是高斯随机变量的分布推理，前提是参数$\pmb{\mu},\pmb{\Sigma}$已知。现在考虑如何推理这些参数本身。假设获取的数据具有形式，
+
+$$
+\pmb{x}_i\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})
+$$
+
+且数据为全可观测没有缺失值。
+
+&emsp;&emsp;**（一）$\pmb{\mu}$的后验**
+
+&emsp;&emsp;数据的似然函数可以表示为，
+
+$$
+p(\mathcal{D}|\pmb{\mu})=\prod_{i=1}^N \mathcal{N}(\pmb{x}_i|\pmb{\mu},\pmb{\Sigma})=\mathcal{N}(\pmb{\bar{x}}|\pmb{\mu},\frac1N\pmb{\Sigma})
+$$(data-likelihood)
+
+若给定一个关于$\pmb{\mu}$的先验$p(\pmb{\mu})=\mathcal{N}(\pmb{\mu}|\pmb{\mu}_0,\pmb{\Sigma}_0)$，则可以推理出关于$\pmb{\mu}$的后验如下，
+
+$$
+\begin{split}
+p(\pmb{\mu}|\mathcal{D},\pmb{\Sigma})&=\mathcal{N}(\pmb{\mu}_N,\pmb{\Sigma}_N)\\
+\pmb{\Sigma}_N^{-1}&=\pmb{\Sigma}_0^{-1}+N\pmb{\Sigma}^{-1}\\
+\pmb{\mu}_N&=\pmb{\Sigma}_N(\pmb{\Sigma}_0^{-1}\pmb{\mu}_0+\pmb{\Sigma}^{-1}(N\pmb{\bar{x}}))
+\end{split}
+$$(mu-posterior)
+
+上式{eq}`mu-posterior`用到了线性高斯系统的条件分布计算公式。
+
+&emsp;&emsp;**（二）$\pmb{\Sigma}$的后验**
+
+&emsp;&emsp;似然函数为,
+
+$$
+p(\mathcal{D}|\pmb{\mu},\pmb{\Sigma})\propto |\pmb{\Sigma}|^{-N/2}\exp\left(-\frac12\text{tr}(\pmb{S}_\mu\pmb{\Sigma}^{-1}) \right)
+$$(sigma-likielihood)
+
+若给$\pmb{\Sigma}$一个先验分布,
+
+$$
+p(\pmb{\Sigma})=\text{IW}(\pmb{\Sigma}|\pmb{S}_0,\gamma_0)\propto |\pmb{\Sigma}|^{-(\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}_0\pmb{\Sigma}^{-1}) \right)
+$$(sigma-prior)
+
+则有$\pmb{\Sigma}$的后验如下，
+
+$$
+\begin{split}
+p(\pmb{\Sigma}|\mathcal{D},\pmb{\mu})&\propto p(\pmb{\Sigma})\times p(\mathcal{D}|\pmb{\mu},\pmb{\Sigma})\\
+&=|\pmb{\Sigma}|^{-N/2}\exp\left(-\frac12\text{tr}(\pmb{S}_\mu\pmb{\Sigma}^{-1}) \right)\times |\Sigma|^{-(\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}_0\pmb{\Sigma}^{-1}) \right)\\
+&=|\pmb{\Sigma}|^{-(N+\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}((\pmb{S}_0+\pmb{S}_\mu)\pmb{\Sigma}^{-1}) \right)\\
+&=\text{IW}(\pmb{\Sigma}|\pmb{S}_N,\gamma_N)\\
+\gamma_N&=\gamma_0+N\\
+\pmb{S}_N&=\pmb{S}_0+\pmb{S}_\mu
+\end{split}
+$$(sigma-posterior)
+
+&emsp;&emsp;**（三）$\pmb{\mu},\pmb{\Sigma}$的后验**
+
+$$
+\begin{split}
+p(\pmb{\mu,\Sigma}|\mathcal{D})&\propto p(\mathcal{D}|\pmb{\mu,\Sigma})\times p(\pmb{\Sigma})p(\pmb{\mu}|\pmb{\Sigma})\\
+&=(2\pi)^{-ND/2}|\pmb{\Sigma}|^{-N/2}\exp\left(-\frac{N}{2}(\pmb{\mu}-\pmb{\bar{x}})^\top \pmb{\Sigma}^{-1}(\pmb{\mu}-\pmb{\bar{x}}) \right)\exp\left(-\frac{N}{2}\text{tr}(\pmb{\Sigma}^{-1}\pmb{S}_{\bar{x}}) \right)\\
+&\times \underbrace{\text{IW}(\pmb{\Sigma}|\pmb{S}_0,\nu_0)\cdot \mathcal{N}(\pmb{\mu}|\pmb{m}_0,\frac{1}{\kappa_0}\pmb{\Sigma})}_{\text{NIW}(\pmb{\mu,\Sigma}|\pmb{\mu}_0,\kappa_0,\nu_0,\pmb{S}_0)}\\
+&=\text{NIW}(\pmb{\mu,\Sigma}|\pmb{\mu}_N,\kappa_N,\nu_N,\pmb{S}_N)\\
+\kappa_N&=\kappa_0+N\\
+\nu_N&=\nu_0+N\\
+\pmb{\mu}_N&=\frac{\kappa_0\pmb{m}_0+N\pmb{\bar{x}}}{\kappa_N}=\frac{\kappa_0}{\kappa_0+N}\pmb{m}_0+\frac{N}{\kappa_0+N}\pmb{\bar{x}}\\
+\pmb{S}_N&=\pmb{S}_0+\pmb{S}_{\bar{x}}+\frac{\kappa_0 N}{\kappa_0+N}(\pmb{\bar{x}}-\pmb{m}_0)(\pmb{\bar{x}}-\pmb{m}_0)^\top\\
+&=\pmb{S}_0+\pmb{S}+\kappa_0\pmb{m}_0\pmb{m}_0^\top-\kappa_N\pmb{m}_N\pmb{m}_N^\top. \quad \pmb{S}\triangleq \sum_{i=1}^N\pmb{x}_i\pmb{x}_i^\top
+\end{split}
+$$(mu-sigma-posterior)
+
+&emsp;&emsp;**（四）后验的边缘分布**
+
+&emsp;&emsp;显然，
+
+$$
+p(\pmb{\Sigma}|\mathcal{D})=\int p(\pmb{\mu,\Sigma}|\mathcal{D})d\pmb{\mu}=\text{IW}(\pmb{S}_N,\nu_N)
+$$(posterior-sigma-margin)
+
+以及均值的边缘分布，
+
+$$
+p(\pmb{\mu}|\mathcal{D})=\int p(\pmb{\mu,\Sigma}|\mathcal{D})d\pmb{\Sigma}=\mathcal{T}(\pmb{\mu}|\pmb{m}_N,\frac{\pmb{S}_N}{\kappa_N(\nu_N-D+1)},\nu_N-D+1)
+$$(posterior-mean-margin)

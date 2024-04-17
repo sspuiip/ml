@@ -379,10 +379,11 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.1.4.6. 多维高斯分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wishart">1.1.4.7. Wishart分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-wishart">1.1.4.8. Inverse-Wishart分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.9. Student分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.10. Laplace分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.11. Gamma分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.12. Beta分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#niw">1.1.4.9. NIW分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.10. Student分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.11. Laplace分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.12. Gamma分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.13. Beta分布</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.1.5. 指数族分布</a><ul class="nav section-nav flex-column">
@@ -1248,14 +1249,14 @@ p(y|\pmb{x;\theta})=\mathcal{N}(\pmb{w}_\mu^\top \pmb{x}+b,\sigma_+(\pmb{w}_\sig
 <div class="math-wrapper docutils container" id="equation-wishart-pdf">
 <div class="math notranslate nohighlight" id="equation-wishart-pdf">
 <span class="eqno">(44)<a class="headerlink" href="#equation-wishart-pdf" title="Link to this equation">#</a></span>\[
-\text{Wi}(\pmb{\Lambda}|\pmb{S},\gamma)=\frac{1}{Z_{Wi}}|\pmb{\Lambda}|^{(\gamma-D-1)/2}\exp\left( -\frac12 \text{tr}(\pmb{\Lambda S}^{-1}) \right)
+\text{Wi}(\pmb{\Sigma}|\pmb{S},\gamma)=\frac{1}{Z_{Wi}}|\pmb{\Sigma}|^{(\gamma-D-1)/2}\exp\left( -\frac12 \text{tr}(\pmb{\Sigma S}^{-1}) \right)
 \]</div>
 </div>
 <p>其中，<span class="math notranslate nohighlight">\(Z_{Wi}\)</span>是规一化因子(只存在于<span class="math notranslate nohighlight">\(\gamma &gt; D-1\)</span>的情况)，</p>
 <div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
-Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma(x+(1-i)/2)
+Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma(x+(1-i)/2)
 \]</div>
 </div>
 <p>  <strong>Wishart分布与高斯分布之间有密切联系</strong>。如果<span class="math notranslate nohighlight">\(\pmb{x}_i \sim \mathcal{N}(\pmb{0},\pmb{\Sigma})\)</span>，则散布矩阵<span class="math notranslate nohighlight">\(\pmb{S}=\sum_i^N\pmb{x}_i\pmb{x}_i^\top\)</span>服从Wishart分布<span class="math notranslate nohighlight">\(\pmb{S}\sim \text{Wi}(\pmb{\Sigma},N)\)</span>。一般来说，<span class="math notranslate nohighlight">\(\text{Wi}(\pmb{S},\gamma)\)</span>的均值和众数分别为，</p>
@@ -1265,27 +1266,43 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\p
 \text{mean}=\gamma\pmb{S},\quad \text{mode}=(\gamma-D-1)\pmb{S}
 \]</div>
 </div>
-<p>  <strong>当<span class="math notranslate nohighlight">\(D=1\)</span>时，Wishart分布退化为Gamma分布</strong>，即<span class="math notranslate nohighlight">\(\text{Wi}(\lambda|s^{-1},\gamma)=\text{Ga}(\lambda|\frac{\gamma}{2},\frac{s}{2})\)</span>。</p>
+<p>  <strong>当<span class="math notranslate nohighlight">\(D=1\)</span>时，Wishart分布退化为Gamma分布</strong>，即<span class="math notranslate nohighlight">\(\text{Wi}(\lambda|s^{-1},\gamma)=\text{Ga}(\lambda|\frac{\gamma}{2},\frac{1}{2s})\)</span>。</p>
 </section>
 <section id="inverse-wishart">
 <h4><span class="section-number">1.1.4.8. </span>Inverse-Wishart分布<a class="headerlink" href="#inverse-wishart" title="Link to this heading">#</a></h4>
-<p>  从前面的知识可知，如果<span class="math notranslate nohighlight">\(\lambda\sim\text{Ga}(a,b)\)</span>，则有<span class="math notranslate nohighlight">\(1/\lambda\sim\text{IG}(a,b)\)</span>。类似的，如果<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}\sim\text{Wi}(\pmb{S},\gamma)\)</span>，则有<span class="math notranslate nohighlight">\(\pmb{\Sigma}\sim\text{IW}(\pmb{S}^{-1},\gamma+D+1)\)</span>，其中<span class="math notranslate nohighlight">\(\text{IW}\)</span>为Inverse-Wishart分布，是逆Gamma分布的推广。</p>
+<p>  从前面的知识可知，如果<span class="math notranslate nohighlight">\(\lambda\sim\text{Ga}(a,b)\)</span>，则有<span class="math notranslate nohighlight">\(1/\lambda\sim\text{IG}(a,b)\)</span>。类似的，如果<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}\sim\text{Wi}(\pmb{S}^{-1},\gamma)\)</span>，则有<span class="math notranslate nohighlight">\(\pmb{\Sigma}\sim\text{IW}(\pmb{S},\gamma+D+1)\)</span>，其中<span class="math notranslate nohighlight">\(\text{IW}\)</span>为Inverse-Wishart分布，是逆Gamma分布的推广。</p>
 <div class="math-wrapper docutils container" id="equation-inverse-gamma-pdf">
 <div class="math notranslate nohighlight" id="equation-inverse-gamma-pdf">
 <span class="eqno">(46)<a class="headerlink" href="#equation-inverse-gamma-pdf" title="Link to this equation">#</a></span>\[
-\text{IW}(\pmb{\Sigma}|\pmb{S},\gamma)|\pmb{\Sigma}|^{-(\gamma+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}^{-1}\pmb{\Sigma}^{-1}) \right)
+\text{IW}(\pmb{\Sigma}|\pmb{S},\gamma)=|\pmb{\Sigma}|^{-(\gamma+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}\pmb{\Sigma}^{-1}) \right)
 \]</div>
 </div>
 <p>该分布的均值和众数分别为，</p>
 <div class="math-wrapper docutils container" id="equation-inverse-gamma-mean-mode">
 <div class="math notranslate nohighlight" id="equation-inverse-gamma-mean-mode">
 <span class="eqno">(47)<a class="headerlink" href="#equation-inverse-gamma-mean-mode" title="Link to this equation">#</a></span>\[
-\text{mean}=\frac{\pmb{S}^{-1}}{\gamma-D-1},\quad\text{mode}=\frac{\pmb{S}^{-1}}{\gamma+D+1}
+\text{mean}=\frac{\pmb{S}}{\gamma-D-1},\quad\text{mode}=\frac{\pmb{S}}{\gamma+D+1}
 \]</div>
+</div>
+<p>如果<span class="math notranslate nohighlight">\(D=1\)</span>，退化为IG，即<span class="math notranslate nohighlight">\(\text{IW}(\sigma^2|s^{-1},\gamma)=\text{IG}(\gamma/2,s/2)\)</span>。</p>
+<p>如果<span class="math notranslate nohighlight">\(s=1\)</span>，退化为inverse chi-squared分布。</p>
+</section>
+<section id="niw">
+<h4><span class="section-number">1.1.4.9. </span>NIW分布<a class="headerlink" href="#niw" title="Link to this heading">#</a></h4>
+<p>  Normal-inverse-Wishart, NIW分布的定义如下，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\text{NIW}(\pmb{\mu,\Sigma}|\pmb{m},\kappa,\nu,\pmb{S})&amp;\triangleq \mathcal{N}(\pmb{\mu}|\pmb{m},\frac{1}{\kappa}\pmb{\Sigma})\times\text{IW}(\pmb{\Sigma}|\pmb{S},\nu)\\
+&amp;=\frac{1}{Z_{NIW}}|\pmb{\Sigma}|^{-1/2}\exp\left(-\frac{\kappa}{2}(\pmb{\mu}-\pmb{m})^\top \pmb{\Sigma}^{-1}(\pmb{\mu}-\pmb{m}) \right)\\
+&amp;\times |\pmb{\Sigma}|^{-(\nu+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{\Sigma}^{-1}\pmb{S}) \right)\\
+\end{split}
+\end{split}\]</div>
 </div>
 </section>
 <section id="student">
-<h4><span class="section-number">1.1.4.9. </span>Student分布<a class="headerlink" href="#student" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">1.1.4.10. </span>Student分布<a class="headerlink" href="#student" title="Link to this heading">#</a></h4>
 <p>  高斯分布对异常值非常敏感，更加鲁棒的分布是Student分布，</p>
 <div class="math-wrapper docutils container" id="equation-equ-student-dist">
 <div class="math notranslate nohighlight" id="equation-equ-student-dist">
@@ -1333,7 +1350,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\p
 </div>
 </section>
 <section id="laplace">
-<h4><span class="section-number">1.1.4.10. </span>Laplace分布<a class="headerlink" href="#laplace" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">1.1.4.11. </span>Laplace分布<a class="headerlink" href="#laplace" title="Link to this heading">#</a></h4>
 <p>  该分布的pdf为，</p>
 <div class="math-wrapper docutils container" id="equation-laplace-dist">
 <div class="math notranslate nohighlight" id="equation-laplace-dist">
@@ -1364,7 +1381,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\p
 </div>
 </section>
 <section id="gamma">
-<h4><span class="section-number">1.1.4.11. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">1.1.4.12. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">#</a></h4>
 <p>  该分布的pdf为，</p>
 <div class="math-wrapper docutils container" id="equation-gamma-dist">
 <div class="math notranslate nohighlight" id="equation-gamma-dist">
@@ -1417,7 +1434,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\p
 <p>  当<span class="math notranslate nohighlight">\(x_i\sim \mathcal{N}(0,1)\)</span>时，<span class="math notranslate nohighlight">\(\sum_i^\nu x_i^2 \sim \chi_\nu^2(x)\)</span>。</p>
 </section>
 <section id="beta">
-<h4><span class="section-number">1.1.4.12. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">1.1.4.13. </span>Beta分布<a class="headerlink" href="#beta" title="Link to this heading">#</a></h4>
 <p>  该分布的pdf为，</p>
 <div class="math-wrapper docutils container" id="equation-equ-beta-dist">
 <div class="math notranslate nohighlight" id="equation-equ-beta-dist">
@@ -1610,10 +1627,11 @@ p(\pmb{y}|\pmb{\phi})=h(\pmb{y})\exp[f(\pmb{\phi})^\top \pmb{t}(\pmb{y})-A(f(\pm
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id14">1.1.4.6. 多维高斯分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#wishart">1.1.4.7. Wishart分布</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#inverse-wishart">1.1.4.8. Inverse-Wishart分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.9. Student分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.10. Laplace分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.11. Gamma分布</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.12. Beta分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#niw">1.1.4.9. NIW分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#student">1.1.4.10. Student分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace">1.1.4.11. Laplace分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gamma">1.1.4.12. Gamma分布</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#beta">1.1.4.13. Beta分布</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id15">1.1.5. 指数族分布</a><ul class="nav section-nav flex-column">

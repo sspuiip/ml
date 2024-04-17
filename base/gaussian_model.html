@@ -361,6 +361,7 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 高斯分布</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 线性高斯系统</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 高斯分布的参数推理</a></li>
 </ul>
             </nav>
         </div>
@@ -796,6 +797,98 @@ p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}
 \]</div>
 </div>
 </section>
+<section id="id4">
+<h2><span class="section-number">2.3. </span>高斯分布的参数推理<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<p>  上面的内容都是高斯随机变量的分布推理，前提是参数<span class="math notranslate nohighlight">\(\pmb{\mu},\pmb{\Sigma}\)</span>已知。现在考虑如何推理这些参数本身。假设获取的数据具有形式，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\pmb{x}_i\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})
+\]</div>
+</div>
+<p>且数据为全可观测没有缺失值。</p>
+<p>  <strong>（一）<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>的后验</strong></p>
+<p>  数据的似然函数可以表示为，</p>
+<div class="math-wrapper docutils container" id="equation-data-likelihood">
+<div class="math notranslate nohighlight" id="equation-data-likelihood">
+<span class="eqno">(26)<a class="headerlink" href="#equation-data-likelihood" title="Link to this equation">#</a></span>\[
+p(\mathcal{D}|\pmb{\mu})=\prod_{i=1}^N \mathcal{N}(\pmb{x}_i|\pmb{\mu},\pmb{\Sigma})=\mathcal{N}(\pmb{\bar{x}}|\pmb{\mu},\frac1N\pmb{\Sigma})
+\]</div>
+</div>
+<p>若给定一个关于<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>的先验<span class="math notranslate nohighlight">\(p(\pmb{\mu})=\mathcal{N}(\pmb{\mu}|\pmb{\mu}_0,\pmb{\Sigma}_0)\)</span>，则可以推理出关于<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>的后验如下，</p>
+<div class="math-wrapper docutils container" id="equation-mu-posterior">
+<div class="math notranslate nohighlight" id="equation-mu-posterior">
+<span class="eqno">(27)<a class="headerlink" href="#equation-mu-posterior" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(\pmb{\mu}|\mathcal{D},\pmb{\Sigma})&amp;=\mathcal{N}(\pmb{\mu}_N,\pmb{\Sigma}_N)\\
+\pmb{\Sigma}_N^{-1}&amp;=\pmb{\Sigma}_0^{-1}+N\pmb{\Sigma}^{-1}\\
+\pmb{\mu}_N&amp;=\pmb{\Sigma}_N(\pmb{\Sigma}_0^{-1}\pmb{\mu}_0+\pmb{\Sigma}^{-1}(N\pmb{\bar{x}}))
+\end{split}
+\end{split}\]</div>
+</div>
+<p>上式<a class="reference internal" href="#equation-mu-posterior">(27)</a>用到了线性高斯系统的条件分布计算公式。</p>
+<p>  <strong>（二）<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>的后验</strong></p>
+<p>  似然函数为,</p>
+<div class="math-wrapper docutils container" id="equation-sigma-likielihood">
+<div class="math notranslate nohighlight" id="equation-sigma-likielihood">
+<span class="eqno">(28)<a class="headerlink" href="#equation-sigma-likielihood" title="Link to this equation">#</a></span>\[
+p(\mathcal{D}|\pmb{\mu},\pmb{\Sigma})\propto |\pmb{\Sigma}|^{-N/2}\exp\left(-\frac12\text{tr}(\pmb{S}_\mu\pmb{\Sigma}^{-1}) \right)
+\]</div>
+</div>
+<p>若给<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>一个先验分布,</p>
+<div class="math-wrapper docutils container" id="equation-sigma-prior">
+<div class="math notranslate nohighlight" id="equation-sigma-prior">
+<span class="eqno">(29)<a class="headerlink" href="#equation-sigma-prior" title="Link to this equation">#</a></span>\[
+p(\pmb{\Sigma})=\text{IW}(\pmb{\Sigma}|\pmb{S}_0,\gamma_0)\propto |\pmb{\Sigma}|^{-(\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}_0\pmb{\Sigma}^{-1}) \right)
+\]</div>
+</div>
+<p>则有<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>的后验如下，</p>
+<div class="math-wrapper docutils container" id="equation-sigma-posterior">
+<div class="math notranslate nohighlight" id="equation-sigma-posterior">
+<span class="eqno">(30)<a class="headerlink" href="#equation-sigma-posterior" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(\pmb{\Sigma}|\mathcal{D},\pmb{\mu})&amp;\propto p(\pmb{\Sigma})\times p(\mathcal{D}|\pmb{\mu},\pmb{\Sigma})\\
+&amp;=|\pmb{\Sigma}|^{-N/2}\exp\left(-\frac12\text{tr}(\pmb{S}_\mu\pmb{\Sigma}^{-1}) \right)\times |\Sigma|^{-(\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}_0\pmb{\Sigma}^{-1}) \right)\\
+&amp;=|\pmb{\Sigma}|^{-(N+\gamma_0+D+1)/2}\exp\left(-\frac12\text{tr}((\pmb{S}_0+\pmb{S}_\mu)\pmb{\Sigma}^{-1}) \right)\\
+&amp;=\text{IW}(\pmb{\Sigma}|\pmb{S}_N,\gamma_N)\\
+\gamma_N&amp;=\gamma_0+N\\
+\pmb{S}_N&amp;=\pmb{S}_0+\pmb{S}_\mu
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  <strong>（三）<span class="math notranslate nohighlight">\(\pmb{\mu},\pmb{\Sigma}\)</span>的后验</strong></p>
+<div class="math-wrapper docutils container" id="equation-mu-sigma-posterior">
+<div class="math notranslate nohighlight" id="equation-mu-sigma-posterior">
+<span class="eqno">(31)<a class="headerlink" href="#equation-mu-sigma-posterior" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(\pmb{\mu,\Sigma}|\mathcal{D})&amp;\propto p(\mathcal{D}|\pmb{\mu,\Sigma})\times p(\pmb{\Sigma})p(\pmb{\mu}|\pmb{\Sigma})\\
+&amp;=(2\pi)^{-ND/2}|\pmb{\Sigma}|^{-N/2}\exp\left(-\frac{N}{2}(\pmb{\mu}-\pmb{\bar{x}})^\top \pmb{\Sigma}^{-1}(\pmb{\mu}-\pmb{\bar{x}}) \right)\exp\left(-\frac{N}{2}\text{tr}(\pmb{\Sigma}^{-1}\pmb{S}_{\bar{x}}) \right)\\
+&amp;\times \underbrace{\text{IW}(\pmb{\Sigma}|\pmb{S}_0,\nu_0)\cdot \mathcal{N}(\pmb{\mu}|\pmb{m}_0,\frac{1}{\kappa_0}\pmb{\Sigma})}_{\text{NIW}(\pmb{\mu,\Sigma}|\pmb{\mu}_0,\kappa_0,\nu_0,\pmb{S}_0)}\\
+&amp;=\text{NIW}(\pmb{\mu,\Sigma}|\pmb{\mu}_N,\kappa_N,\nu_N,\pmb{S}_N)\\
+\kappa_N&amp;=\kappa_0+N\\
+\nu_N&amp;=\nu_0+N\\
+\pmb{\mu}_N&amp;=\frac{\kappa_0\pmb{m}_0+N\pmb{\bar{x}}}{\kappa_N}=\frac{\kappa_0}{\kappa_0+N}\pmb{m}_0+\frac{N}{\kappa_0+N}\pmb{\bar{x}}\\
+\pmb{S}_N&amp;=\pmb{S}_0+\pmb{S}_{\bar{x}}+\frac{\kappa_0 N}{\kappa_0+N}(\pmb{\bar{x}}-\pmb{m}_0)(\pmb{\bar{x}}-\pmb{m}_0)^\top\\
+&amp;=\pmb{S}_0+\pmb{S}+\kappa_0\pmb{m}_0\pmb{m}_0^\top-\kappa_N\pmb{m}_N\pmb{m}_N^\top. \quad \pmb{S}\triangleq \sum_{i=1}^N\pmb{x}_i\pmb{x}_i^\top
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  <strong>（四）后验的边缘分布</strong></p>
+<p>  显然，</p>
+<div class="math-wrapper docutils container" id="equation-posterior-sigma-margin">
+<div class="math notranslate nohighlight" id="equation-posterior-sigma-margin">
+<span class="eqno">(32)<a class="headerlink" href="#equation-posterior-sigma-margin" title="Link to this equation">#</a></span>\[
+p(\pmb{\Sigma}|\mathcal{D})=\int p(\pmb{\mu,\Sigma}|\mathcal{D})d\pmb{\mu}=\text{IW}(\pmb{S}_N,\nu_N)
+\]</div>
+</div>
+<p>以及均值的边缘分布，</p>
+<div class="math-wrapper docutils container" id="equation-posterior-mean-margin">
+<div class="math notranslate nohighlight" id="equation-posterior-mean-margin">
+<span class="eqno">(33)<a class="headerlink" href="#equation-posterior-mean-margin" title="Link to this equation">#</a></span>\[
+p(\pmb{\mu}|\mathcal{D})=\int p(\pmb{\mu,\Sigma}|\mathcal{D})d\pmb{\Sigma}=\mathcal{T}(\pmb{\mu}|\pmb{m}_N,\frac{\pmb{S}_N}{\kappa_N(\nu_N-D+1)},\nu_N-D+1)
+\]</div>
+</div>
+</section>
 </section>
 
 
@@ -847,6 +940,7 @@ p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 高斯分布</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 线性高斯系统</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.3. 高斯分布的参数推理</a></li>
 </ul>
   </nav></div>
 

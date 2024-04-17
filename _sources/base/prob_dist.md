@@ -709,13 +709,13 @@ $$
 &emsp;&emsp;Wishart分布是一种适用于正定矩阵的Gamma分布推广。经常用于协方差矩阵$\pmb{\Sigma}$或它的逆矩阵$\pmb{\Sigma}^{-1}$的不确定性建模。其pdf为，
 
 $$
-\text{Wi}(\pmb{\Lambda}|\pmb{S},\gamma)=\frac{1}{Z_{Wi}}|\pmb{\Lambda}|^{(\gamma-D-1)/2}\exp\left( -\frac12 \text{tr}(\pmb{\Lambda S}^{-1}) \right)
+\text{Wi}(\pmb{\Sigma}|\pmb{S},\gamma)=\frac{1}{Z_{Wi}}|\pmb{\Sigma}|^{(\gamma-D-1)/2}\exp\left( -\frac12 \text{tr}(\pmb{\Sigma S}^{-1}) \right)
 $$(wishart-pdf)
 
 其中，$Z_{Wi}$是规一化因子(只存在于$\gamma > D-1$的情况)，
 
 $$
-Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma(x+(1-i)/2)
+Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma(x+(1-i)/2)
 $$
 
 &emsp;&emsp;**Wishart分布与高斯分布之间有密切联系**。如果$\pmb{x}_i \sim \mathcal{N}(\pmb{0},\pmb{\Sigma})$，则散布矩阵$\pmb{S}=\sum_i^N\pmb{x}_i\pmb{x}_i^\top$服从Wishart分布$\pmb{S}\sim \text{Wi}(\pmb{\Sigma},N)$。一般来说，$\text{Wi}(\pmb{S},\gamma)$的均值和众数分别为，
@@ -724,21 +724,37 @@ $$
 \text{mean}=\gamma\pmb{S},\quad \text{mode}=(\gamma-D-1)\pmb{S}
 $$(wishart-mean)
 
-&emsp;&emsp;**当$D=1$时，Wishart分布退化为Gamma分布**，即$\text{Wi}(\lambda|s^{-1},\gamma)=\text{Ga}(\lambda|\frac{\gamma}{2},\frac{s}{2})$。
+&emsp;&emsp;**当$D=1$时，Wishart分布退化为Gamma分布**，即$\text{Wi}(\lambda|s^{-1},\gamma)=\text{Ga}(\lambda|\frac{\gamma}{2},\frac{1}{2s})$。
 
 #### Inverse-Wishart分布
 
-&emsp;&emsp;从前面的知识可知，如果$\lambda\sim\text{Ga}(a,b)$，则有$1/\lambda\sim\text{IG}(a,b)$。类似的，如果$\pmb{\Sigma}^{-1}\sim\text{Wi}(\pmb{S},\gamma)$，则有$\pmb{\Sigma}\sim\text{IW}(\pmb{S}^{-1},\gamma+D+1)$，其中$\text{IW}$为Inverse-Wishart分布，是逆Gamma分布的推广。
+&emsp;&emsp;从前面的知识可知，如果$\lambda\sim\text{Ga}(a,b)$，则有$1/\lambda\sim\text{IG}(a,b)$。类似的，如果$\pmb{\Sigma}^{-1}\sim\text{Wi}(\pmb{S}^{-1},\gamma)$，则有$\pmb{\Sigma}\sim\text{IW}(\pmb{S},\gamma+D+1)$，其中$\text{IW}$为Inverse-Wishart分布，是逆Gamma分布的推广。
 
 $$
-\text{IW}(\pmb{\Sigma}|\pmb{S},\gamma)|\pmb{\Sigma}|^{-(\gamma+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}^{-1}\pmb{\Sigma}^{-1}) \right)
+\text{IW}(\pmb{\Sigma}|\pmb{S},\gamma)=|\pmb{\Sigma}|^{-(\gamma+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}\pmb{\Sigma}^{-1}) \right)
 $$(inverse-gamma-pdf)
 
 该分布的均值和众数分别为，
 
 $$
-\text{mean}=\frac{\pmb{S}^{-1}}{\gamma-D-1},\quad\text{mode}=\frac{\pmb{S}^{-1}}{\gamma+D+1}
+\text{mean}=\frac{\pmb{S}}{\gamma-D-1},\quad\text{mode}=\frac{\pmb{S}}{\gamma+D+1}
 $$(inverse-gamma-mean-mode)
+
+如果$D=1$，退化为IG，即$\text{IW}(\sigma^2|s^{-1},\gamma)=\text{IG}(\gamma/2,s/2)$。
+
+如果$s=1$，退化为inverse chi-squared分布。
+
+#### NIW分布
+
+&emsp;&emsp;Normal-inverse-Wishart, NIW分布的定义如下，
+
+$$
+\begin{split}
+\text{NIW}(\pmb{\mu,\Sigma}|\pmb{m},\kappa,\nu,\pmb{S})&\triangleq \mathcal{N}(\pmb{\mu}|\pmb{m},\frac{1}{\kappa}\pmb{\Sigma})\times\text{IW}(\pmb{\Sigma}|\pmb{S},\nu)\\
+&=\frac{1}{Z_{NIW}}|\pmb{\Sigma}|^{-1/2}\exp\left(-\frac{\kappa}{2}(\pmb{\mu}-\pmb{m})^\top \pmb{\Sigma}^{-1}(\pmb{\mu}-\pmb{m}) \right)\\
+&\times |\pmb{\Sigma}|^{-(\nu+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{\Sigma}^{-1}\pmb{S}) \right)\\
+\end{split}
+$$
 
 #### Student分布
 
