@@ -520,16 +520,16 @@ $$
 \pmb{y}\sim \mathcal{N}(\pmb{\mu},\pmb{\Sigma}),\pmb{\mu}\in \mathbb{R}^2,\pmb{y}\in \mathbb{R}^2
 $$
 
-其中，
+以二维为例，
 
 $$
-\pmb{\Sigma}=\begin{pmatrix}
+\pmb{\mu}=\begin{pmatrix}\mu_1\\ \mu_2\end{pmatrix},\quad\pmb{\Sigma}=\begin{pmatrix}
               \sigma_1^2 & \sigma_{12}^2 \\
               \sigma_{21}^2 & \sigma_2^2
             \end{pmatrix}=\begin{pmatrix}
                             \sigma_1^2 & \rho \sigma_1\sigma_2 \\
                             \rho \sigma_1\sigma_2 & \sigma_2^2
-                          \end{pmatrix},\qquad \rho\triangleq corr(X,Y)=\frac{Cov(X,Y)}{\sqrt{\mathbb{V}(X)\mathbb{V}(Y)}}=\frac{\sigma_{12}^2}{\sigma_1\sigma_2}
+                          \end{pmatrix},\quad \rho\triangleq \text{cor}(X,Y)=\frac{Cov(X,Y)}{\sqrt{\mathbb{V}(X)\mathbb{V}(Y)}}=\frac{\sigma_{12}^2}{\sigma_1\sigma_2}
 $$
 
 展开2维高斯分布，可得，
@@ -704,214 +704,41 @@ $$
 :::
 
 
-#### 线性高斯系统
+#### Wishart分布
 
-&emsp;&emsp;假设$\pmb{z}\in \mathbb{R}^L$为未知向量，$\pmb{y}\in \mathbb{R}^D$，且它们之间的关系如下，
-
-$$
-\begin{split}
-     p(\pmb{z}) &=\mathcal{N}(\pmb{z}|\pmb{\mu}_z,\pmb{\Sigma}_z) \\
-       p(\pmb{y}|\pmb{z})&=\mathcal{N}(\pmb{y}|\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y) \nonumber
-  \end{split}
-$$(lin-gauss)
-
-则上式称为线性高斯系统。相应的联合分布$p(\pmb{z},\pmb{y})=p(\pmb{y}|\pmb{x})p(\pmb{x})$是一个$L+D$维的高斯分布，其均值与协方差为，
+&emsp;&emsp;Wishart分布是一种适用于正定矩阵的Gamma分布推广。经常用于协方差矩阵$\pmb{\Sigma}$或它的逆矩阵$\pmb{\Sigma}^{-1}$的不确定性建模。其pdf为，
 
 $$
-\begin{split}
-   \pmb{\mu} &=\begin{pmatrix}
-                \pmb{\mu}_z \\
-                \pmb{W\mu}_z+\pmb{b}
-              \end{pmatrix} \\
-     \pmb{\Sigma} &=\begin{pmatrix}
-                     \pmb{\Sigma}_z & \pmb{\Sigma}_z \pmb{W}^{\top} \\
-                    \pmb{W}\pmb{\Sigma}_z & \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^{\top}
-                   \end{pmatrix}
-\end{split}
-$$(equ_lin_gauss)
+\text{Wi}(\pmb{\Lambda}|\pmb{S},\gamma)=\frac{1}{Z_{Wi}}|\pmb{\Lambda}|^{(\gamma-D-1)/2}\exp\left( -\frac12 \text{tr}(\pmb{\Lambda S}^{-1}) \right)
+$$(wishart-pdf)
 
-
-&emsp;&emsp;**（一）高斯配方法**
-
-&emsp;&emsp;根据指数族分布，高斯分布$\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})$，
+其中，$Z_{Wi}$是规一化因子(只存在于$\gamma > D-1$的情况)，
 
 $$
-\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
-$$(multi-gauss-dist-normal)
-
-可以写成经典型(Canonical form)，即
-
-$$
-\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
-$$(canonical-form-gauss)
-
-
-其中，
-
-$$
-\begin{split}
-\pmb{\eta}&=\pmb{\Sigma}^{-1}\pmb{\mu}\\
-\pmb{\zeta}&=-\frac{1}{2}\left(d\log 2\pi -\log|\pmb{\Lambda}|+\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}\right)\nonumber
-\end{split}
+Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{\gamma/2},\quad \Gamma_D(x)=\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma(x+(1-i)/2)
 $$
 
-将$\pmb{\zeta}$中的最后一项展开，我们可以发现，$\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}=\pmb{\mu}^\top \pmb{\Lambda}\pmb{\mu}$。
-
-&emsp;&emsp;通过配方，可以得到$p(\pmb{z},\pmb{y})$如下，
+&emsp;&emsp;**Wishart分布与高斯分布之间有密切联系**。如果$\pmb{x}_i \sim \mathcal{N}(\pmb{0},\pmb{\Sigma})$，则散布矩阵$\pmb{S}=\sum_i^N\pmb{x}_i\pmb{x}_i^\top$服从Wishart分布$\pmb{S}\sim \text{Wi}(\pmb{\Sigma},N)$。一般来说，$\text{Wi}(\pmb{S},\gamma)$的均值和众数分别为，
 
 $$
-\begin{split}
-   p(\pmb{z},\pmb{y})&=p(\pmb{z})p(\pmb{y}|\pmb{z}) \\
-     &=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
-     &=\exp \left( -\frac{1}{2}\pmb{z}^\top \pmb{\Sigma}_z^{-1}\pmb{z}+\pmb{\mu}^{\top}\pmb{\Sigma}_z^{-1}\pmb{z} +C_1\right) \\
-     &\times\exp\left( -\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y}+(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1} \pmb{y}-\frac{1}{2}(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1}(\pmb{Wz}+\pmb{b})+C_2\right)\\
-     &=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top \pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
-     &=\exp\left(-\frac{1}{2}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}^\top\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} & -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}& \pmb{\Sigma}_y^{-1}                                               \end{pmatrix}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}+ \begin{pmatrix}
-       \pmb{\eta}_z\\
-       \pmb{\eta}_y
-     \end{pmatrix}^\top \begin{pmatrix}
-       \pmb{z}\\
-       \pmb{y}
-     \end{pmatrix} +C_4\right)
-\end{split}
-$$(equ_pzy)
+\text{mean}=\gamma\pmb{S},\quad \text{mode}=(\gamma-D-1)\pmb{S}
+$$(wishart-mean)
 
-其中，最后一行的$\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}$，$\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}$。由式{eq}`equ_pzy`可知联合分布$p(\pmb{z},\pmb{y})$的精度矩阵$\pmb{\Lambda}$为，
+&emsp;&emsp;**当$D=1$时，Wishart分布退化为Gamma分布**，即$\text{Wi}(\lambda|s^{-1},\gamma)=\text{Ga}(\lambda|\frac{\gamma}{2},\frac{s}{2})$。
+
+#### Inverse-Wishart分布
+
+&emsp;&emsp;从前面的知识可知，如果$\lambda\sim\text{Ga}(a,b)$，则有$1/\lambda\sim\text{IG}(a,b)$。类似的，如果$\pmb{\Sigma}^{-1}\sim\text{Wi}(\pmb{S},\gamma)$，则有$\pmb{\Sigma}\sim\text{IW}(\pmb{S}^{-1},\gamma+D+1)$，其中$\text{IW}$为Inverse-Wishart分布，是逆Gamma分布的推广。
 
 $$
-\pmb{\Sigma^{-1}}=\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} & -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}& \pmb{\Sigma}_y^{-1}\end{pmatrix}\triangleq \begin{pmatrix}\pmb{\Lambda}_{zz}&\pmb{\Lambda}_{zy}\\ \pmb{\Lambda}_{yz}&\pmb{\Lambda}_{yy} \end{pmatrix}=\pmb{\Lambda}
-$$(joint-precision-matrix)
+\text{IW}(\pmb{\Sigma}|\pmb{S},\gamma)|\pmb{\Sigma}|^{-(\gamma+D+1)/2}\exp\left(-\frac12\text{tr}(\pmb{S}^{-1}\pmb{\Sigma}^{-1}) \right)
+$$(inverse-gamma-pdf)
 
-根据{eq}`pricision-matrix`可知，
-
-$$
-\pmb{\Sigma}=\begin{pmatrix} \pmb{\Sigma}_z & \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z& \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
-$$(joint-variance-matrix)
-
-
-&emsp;&emsp;**（二）分布计算**
-
-&emsp;&emsp;由配方可知，**联合分布**为，
+该分布的均值和众数分别为，
 
 $$
-\boxed{
-\begin{split}
-p(\pmb{z},\pmb{y})&=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
-\pmb{\mu}&=\begin{pmatrix}\pmb{\mu}_z \\ \pmb{W}\pmb{\mu}_z+\pmb{b} \end{pmatrix}\\
-\pmb{\Sigma}&=\begin{pmatrix} \pmb{\Sigma}_z & \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z& \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
-\end{split}
-}
-$$(joint-gaussian-distribution)
-
-&emsp;&emsp;由配方可知，**边缘分布**为，
-
-$$
-\boxed{
-  \begin{split}
-  \pmb{y}&\sim \mathcal{N}(\pmb{W\mu}_z+\pmb{b},\pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top)\\
-  \pmb{z}&\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
-  \end{split}
-}
-$$(joint-edge-dist)
-
-&emsp;&emsp;由配方可知，**后验分布**为，
-
-$$
-\boxed{
-  \begin{split}
-   p(\pmb{z}|\pmb{y})&=\mathcal{N}(\pmb{y}_{z|y},\pmb{\Sigma}_{z|y})\\
-   \pmb{\Sigma}_{z|y}&=(\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W})^{-1}=\pmb{\Lambda}_{zz}^{-1}\\
-   \pmb{\mu}_{z|y}&=\pmb{\Sigma}_{z|y}(\pmb{\Lambda}_{zz}\pmb{\mu}_z-\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b})))\\
-   &=\pmb{\mu}_z-\pmb{\Lambda}_{zz}^{-1}\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
-   &=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
-  \end{split}
-}
-$$(posterior-gaussian-dist)
-
-
-&emsp;&emsp;**（三）例子**
-
-- **标量后验**
-
-&emsp;&emsp;假设有$N$个关于潜在变量$z$的带噪测度$y_i(i=1,...,N)$，并假设带噪测度具有固定的精度$\lambda_y=\frac{1}{\sigma^2}$，所以有如下似然，
-
-$$
-p(y_i|z)=\mathcal{N}(z,\lambda_y^{-1})
-$$
-
-可以给未知变量$z$一个高斯先验，
-
-$$
-p(z)=\mathcal{N}(\mu_0,\lambda_0^{-1})
-$$
-
-则，我们对未知变量$z$可以通过计算后验$p(z|y_1,...,y_N,\sigma^2)$得到它的一个估计。
-
-&emsp;&emsp;假设$\pmb{y}=(y_1,...,y_N)$，$\pmb{W}=\pmb{1}_N,\pmb{\Sigma}_y^{-1}=\text{diag}(\lambda_y\pmb{I})$，则有如下形式的分布，
-
-$$
-\begin{split}
-z&\sim \mathcal{N}(\mu_0,\lambda_0^{-1})\\
-\pmb{y}|z&\sim \mathcal{N}(\pmb{1}_N \mu_0, \text{diag}(\lambda_y^{-1}\pmb{I}))
-\end{split}
-$$
-
-联合分布为，
-
-$$
-\begin{split}
-p(z,\pmb{y})&=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
-\pmb{\mu}&=\begin{pmatrix}\mu_0 \\ \pmb{1}_Nz \end{pmatrix}\\
-\pmb{\Sigma}&=\begin{pmatrix} \lambda_0^{-1}&\lambda_0^{-1}\pmb{1}_N^\top \\ \pmb{1}_N\lambda_0^{-1}&\Sigma_y+\pmb{1}_N \lambda_0^{-1}\pmb{1}_N^\top \end{pmatrix}\\
-\pmb{\Lambda}&=\pmb{\Sigma}^{-1}=\begin{pmatrix} \lambda_0+N\lambda_y&-\pmb{1}_N^\top \Sigma_y^{-1} \\ -\Sigma_y^{-1}\pmb{1}_N&\Sigma_y^{-1} \end{pmatrix}\\
-\end{split}
-$$
-
-后验分布为，
-
-$$
-\begin{split}
-p(z|\pmb{y})&=\mathcal{N}(\pmb{\mu}_{z|\pmb{y}},\pmb{\Sigma}_{z|\pmb{y}})\\
-\pmb{\Sigma}_{z|\pmb{y}}&=\pmb{\Lambda}_{zz}^{-1}=(\lambda_0+N\lambda_y)^{-1} \\
-\pmb{\mu}_{z|\pmb{y}}&=\pmb{\Sigma}_{z|\pmb{y}}(\pmb{\Lambda}_{zz}\mu_z-\pmb{\Lambda}_{z\pmb{y}}(\pmb{y}-\pmb{\mu}_y))\\
-&=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{\mu}_y) }{\lambda_0+N\lambda_y}\\
-&=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{1}_N \mu_0) }{\lambda_0+N\lambda_y}\\
-&=\frac{\lambda_0\mu_0 + N\lambda_y \bar{y} }{\lambda_0+N\lambda_y}
-\end{split}
-$$
-
-
-- **向量后验**
-
-&emsp;&emsp;未知变量给一个先验分布，
-
-$$
-\pmb{z}\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
-$$
-
-假设有$N$个关于$\pmb{z}$的测量值$\pmb{y}_i,i=1,2,...,N$，则似然函数为，
-
-$$
-p(\mathcal{D}|\pmb{z})=\prod_{i=1}^{N}\mathcal{N}(\pmb{y}_i|\pmb{z},\pmb{\Sigma}_y)=\mathcal{N}(\pmb{y}|\bar{\pmb{y}},\frac{1}{N}\pmb{\Sigma}_y)
-$$
-
-&emsp;&emsp;注意：我们可以将$N$个观测值用它们的平均值$\bar{\pmb{y}}$以及它们的方差的$1/N$来代替。设置$\pmb{W}=\pmb{I},\pmb{b}=\pmb{0}$，根据贝叶斯规则有，
-
-$$
-p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}})
-$$
-
-其中，
-
-$$
-\hat{\pmb{\Sigma}}^{-1}=\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1}
-$$
-
-$$
-\hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
-$$
-
-
+\text{mean}=\frac{\pmb{S}^{-1}}{\gamma-D-1},\quad\text{mode}=\frac{\pmb{S}^{-1}}{\gamma+D+1}
+$$(inverse-gamma-mean-mode)
 
 #### Student分布
 
