@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -382,6 +386,7 @@ document.write(`
 <p>  随机模拟方法的<strong>主要思想</strong>是通过概率模型（已知）随机生成样本，利用这些生成的样本完成近似计算的方法，也称为蒙特卡罗方法(Monte Carlo Simulation)。</p>
 <p>  一个常见的示例是用随机模拟的方法近拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。</p>
 <p>  <strong>例</strong>1. 随机模拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。我们知道单位圆的面积<span class="math notranslate nohighlight">\(S=\pi r^2\)</span>，如果我们将<span class="math notranslate nohighlight">\(1/4\)</span>的单位圆置于边长为<span class="math notranslate nohighlight">\(1\)</span>的正方形中，并在此正方形内均匀地随机的生成一个样本集<span class="math notranslate nohighlight">\(\{(x,y)|x,y\sim\mathrm{Uniform}(0,1)\}\)</span>，则<span class="math notranslate nohighlight">\(\pi\)</span>可近似的计算如下：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -389,6 +394,7 @@ document.write(`
 \pi&amp;\approx\frac{4*\#\{(x,y)|x^2+y^2 \le 1\}}{\#\{(x,y)\}}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(\#\{\}\)</span>为集合计数函数。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
@@ -407,11 +413,14 @@ document.write(`
 </div>
 <p>  从上例可以看出，通过<span class="math notranslate nohighlight">\((x,y)\)</span>各自在均匀分布<span class="math notranslate nohighlight">\([0,1]\)</span>生成样本，通过随机生成的样本计数达到计算<span class="math notranslate nohighlight">\(\pi\)</span>值的目标。一般来说，均匀分布的样本是相对容易生成。通过线性同余发生器可以生成伪随机数，这些伪随机数序列的各种统计指标和均匀分布是理论计算结果非常接近，可以用于真实的随机数使用。</p>
 <p>  <strong>例</strong>2. 计算以下积分，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 I=\int_a^b f(x)dx
 \]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(f(x)\)</span>形式复杂，不容易直接积分。对于难积分的函数<span class="math notranslate nohighlight">\(f(x)\)</span>，常用的方法是利用容易采样的分布生成随机样本，并利用这些样本达到计算积分的目的。<strong>Monte Carlo积分</strong>是一种常见的采样积分方法。通过对上式引入易采样分布<span class="math notranslate nohighlight">\(q(x)\)</span>，则原式可以写成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -419,6 +428,7 @@ I&amp;=\int_a^b f(x)dx\\
 &amp;=\int_a^b \frac{f(x)}{q(x)}q(x)dx
 \end{split}
 \end{split}\]</div>
+</div>
 <p>这样可以通过<span class="math notranslate nohighlight">\(q(x)\)</span>抽取<span class="math notranslate nohighlight">\(n\)</span>个样本，计算<span class="math notranslate nohighlight">\(\frac{f(x)}{q(x)}\)</span>的均值即为原积分<span class="math notranslate nohighlight">\(I\)</span>的值。以下代码模拟计算<span class="math notranslate nohighlight">\(\int_1^3 3x^2dx=26\)</span>，取<span class="math notranslate nohighlight">\(q(x)\)</span>为均匀分布<span class="math notranslate nohighlight">\(\mathrm{Uniform}[1,3]\)</span>。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
@@ -443,6 +453,7 @@ I&amp;=\int_a^b f(x)dx\\
 </pre></div>
 </div>
 <p>  <strong>例</strong>3. 计算期望<span class="math notranslate nohighlight">\(\mathbb{E}[f(x)]\)</span>,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -450,6 +461,7 @@ I&amp;=\int_a^b f(x)dx\\
 &amp;\approx \frac{1}{N}\sum_{i=1}^N f(x^{(i)}),\quad x^{(i)}\sim p(x)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>同理，上式仍然可以使用抽样的方法近似计算。Monte Carlo方法只需要从<span class="math notranslate nohighlight">\(p(x)\)</span>中采样<span class="math notranslate nohighlight">\(x'\)</span>，然后对这些样本计算<span class="math notranslate nohighlight">\(f(x')\)</span>并取均值即可得到期望的近似值。</p>
 <p>  随机采样的方法有很多种，比如：逆分布函数法、Box-Muller变换、Monte Carlo、接受-拒绝采样、重要性采样、Markov链等。常见的概率分布，都可以基于均匀分布生成样本.</p>
 <section id="box-muller">
@@ -457,6 +469,7 @@ I&amp;=\int_a^b f(x)dx\\
 <blockquote>
 <div><p><strong>定理</strong>. 如果随机变量<span class="math notranslate nohighlight">\(U_1,U_2\sim \mathrm{Uniform[0,1]}\)</span>且相互独立，则有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -464,6 +477,7 @@ Z_0 &amp;=\sqrt{-2\ln U_1}\cos (2\pi U_2)\\
 Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(Z_0,Z_1\)</span>相互独立且服从标准正态分布。</p>
 </div></blockquote>
@@ -532,6 +546,7 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <section id="id3">
 <h2><span class="section-number">5.3. </span>重要性采样<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  重要性采样(Importance sampling)和接受-拒绝采样相似，也是借助易采样分布<span class="math notranslate nohighlight">\(q(x)\)</span>来间接采样<span class="math notranslate nohighlight">\(p(x)\)</span>的样本。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -540,6 +555,7 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 &amp;\approx \frac{1}{N}\sum_{i=1}^N \underbrace{\frac{p(x^{(i)})}{q(x^{(i)})}}_{\mathrm{importance\ weight}}f(x^{(i)}),\quad x^{(i)}\sim q(x)
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <section id="mcmc">
 <h2><span class="section-number">5.4. </span>MCMC<a class="headerlink" href="#mcmc" title="Link to this heading">#</a></h2>
@@ -547,15 +563,19 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <section id="id4">
 <h3><span class="section-number">5.4.1. </span>马氏链<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>  简单地说，马氏链就是一个下一状态只与当前状态有关的随机过程，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
 \]</div>
+</div>
 <p>  <strong>例1</strong>. 社会学家经常把人按其经济状态分为3类：上层、中层、下层。决定一个人的收入阶层最重要的因素就是其父母的收入阶层。如果父母的收入属于下层类别，那么他的孩子属于下层收入的概率是0.65，属于中层的概率是0.28，属于上层收入的概率是0.07。事实上，从父代到子代，收入阶层的变化转移概率大致如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{P}=\begin{bmatrix}0.65&amp;0.28&amp;0.07\\ 0.15&amp;0.67&amp;0.18\\ 0.12&amp;0.36&amp;0.52 \end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>假设当前这一代人处在下、中、上层的比例是概率分布向量<span class="math notranslate nohighlight">\(\pi_0=[\pi_0(1),\pi_0(2),\pi_0(3)]\)</span>，那么子代处于三层的比例分布为<span class="math notranslate nohighlight">\(\pi_1=\pi_0\pmb{P}\)</span>，后代的比例分布则是<span class="math notranslate nohighlight">\(\pi_n=\pi_{n-1}\pmb{P}=...=\pi_0\pmb{P}^n\)</span>。若有初始概率<span class="math notranslate nohighlight">\(\pi_0=[0.21,0.68,0.11]\)</span>，则可以计算前<span class="math notranslate nohighlight">\(n\)</span>代人的比例分布最终稳定在<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>，且这一稳定分布与初始概率无关。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -591,10 +611,12 @@ P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
 </pre></div>
 </div>
 <p>  收敛行为主要由概率转移矩阵<span class="math notranslate nohighlight">\(P\)</span>决定，可以计算一下<span class="math notranslate nohighlight">\(P^n\)</span></p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\\end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>当<span class="math notranslate nohighlight">\(n\)</span>足够大时，<span class="math notranslate nohighlight">\(P^n\)</span>矩阵的每一行都是稳定地收敛到<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>这个分布。那么满足什么样的马氏链才能具有这一特征呢？</p>
 <blockquote>
 <div><p><strong>定理（马氏链收敛）</strong>. 如果一个非周期马氏链具有转移概率矩阵<span class="math notranslate nohighlight">\(P\)</span>，且它的任意两个状态是连通，那么<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n\)</span>存在且与<span class="math notranslate nohighlight">\(i\)</span>无关，记<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n=\pi(j)\)</span>，则有</p>
@@ -602,10 +624,12 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <li></li>
 </ol>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \lim_{n\rightarrow \infty}P_{ij}^n=\begin{bmatrix}\pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \end{bmatrix}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><ol class="arabic simple" start="2">
 <li><p><span class="math notranslate nohighlight">\(\pi(j)=\sum_{i=1}^\infty \pi(i)P_{ij}\)</span>；</p></li>
@@ -621,11 +645,13 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <blockquote>
 <div><p><strong>定理（细致平稳条件）</strong>. 如果非周期马氏链的转移矩阵<span class="math notranslate nohighlight">\(P\)</span>和分布<span class="math notranslate nohighlight">\(\pi(x)\)</span>满足，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pi(i)P_{ij}=\pi(j)P_{ji},\quad \forall i,j
 \tag{1}
 \]</div>
+</div>
 <blockquote>
 <div><p>则<span class="math notranslate nohighlight">\(\pi(x)\)</span>是马氏链的平稳分布，该式也称为细致平稳条件(detailed balance condition)。</p>
 </div></blockquote>
@@ -633,21 +659,28 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <section id="metropolis-hasting">
 <h4><span class="section-number">5.4.2.1. </span>Metropolis-Hasting采样算法<a class="headerlink" href="#metropolis-hasting" title="Link to this heading">#</a></h4>
 <p>  假设我们已经有了转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>，用<span class="math notranslate nohighlight">\(q(j|i)\)</span>表示从状态<span class="math notranslate nohighlight">\(i\)</span>转移到状态<span class="math notranslate nohighlight">\(j\)</span>的概率，通常情况下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\neq p(j)q(i|j)
 \]</div>
+</div>
 <p>不满足细致平稳条件，所以<span class="math notranslate nohighlight">\(p(x)\)</span>不是这个马氏链的平稳分布。那么，能否改造一下使得条件满足呢？引入接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>，使得下式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\alpha(j|i)= p(j)q(i|j)\alpha(i|j)
 \]</div>
+</div>
 <p>显然，令<span class="math notranslate nohighlight">\(\alpha(j|i)=p(j)q(i|j), \alpha(i|j)=p(i)q(j|i)\)</span>，等式成立，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)\underbrace{q(j|i)\alpha(j|i)}_{q'(j|i)}=p(j)\underbrace{q(i|j)\alpha(i|j)}_{q'(i|j)}
 \]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的物理意义：状态<span class="math notranslate nohighlight">\(i\)</span>跳转到状态<span class="math notranslate nohighlight">\(j\)</span>时，以<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的概率接受这个跳转。最终把原转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>的一个马氏链改造成了具有转移矩阵<span class="math notranslate nohighlight">\(Q'\)</span>的马氏链，而<span class="math notranslate nohighlight">\(Q'\)</span>恰好满足细致平稳条件，因此马氏链<span class="math notranslate nohighlight">\(Q'\)</span>的平稳分布就是<span class="math notranslate nohighlight">\(p(x)\)</span>。把上述过程整理一下，就可以得到从<span class="math notranslate nohighlight">\(p(x)\)</span>分布采样的MCMC算法。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>MCMC采样算法</p></th>
@@ -660,22 +693,30 @@ p(i)\underbrace{q(j|i)\alpha(j|i)}_{q'(j|i)}=p(j)\underbrace{q(i|j)\alpha(i|j)}_
 </tr>
 </tbody>
 </table>
+</div>
 <p>  上述算法中，接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>可能会偏小会导致马氏链拒绝大量的跳转，也就是到达收敛状态速度会太慢。假设<span class="math notranslate nohighlight">\(\alpha(j|i)=0.1, \alpha(i|j)=0.2\)</span>时满足细致平稳条件，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\times 0.1 = p(j)q(i|j)\times 0.2
 \]</div>
+</div>
 <p>上式左右两边同时扩大5倍，可以改写成</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\times 0.5 = p(j)q(i|j)\times 1
 \]</div>
+</div>
 <p>可以看出，接受率提高了5倍，而细致平稳条件仍满足。这使得我们可以对接受率同比例放大，使得两个数中最大的一个先达到1，这样我们就提高了采样中的跳转接受率。所以可以考虑接受率，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \alpha(j|i)\triangleq\frac{\alpha(j|i)*K}{\alpha(i|j)*K}=\min\left\{ \frac{p(j)q(i|j)}{p(i)q(j|i)},1\right\}\tag{2}
 \]</div>
+</div>
 <p>  经过接受率放大后的MCMC算法就是所谓的<strong>Metropolis-Hasting算法</strong>。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>Metropolis-Hasting采样算法</p></th>
@@ -688,10 +729,12 @@ p(i)q(j|i)\times 0.5 = p(j)q(i|j)\times 1
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="gibbs">
 <h4><span class="section-number">5.4.2.2. </span>Gibbs采样算法<a class="headerlink" href="#gibbs" title="Link to this heading">#</a></h4>
 <p>  对于上述接受率，一般都存在<span class="math notranslate nohighlight">\(\alpha&lt;1\)</span>的情况，能否找到一个转移矩阵，使得接受率<span class="math notranslate nohighlight">\(\alpha=1\)</span>成立呢？假设有一个二维概率分布<span class="math notranslate nohighlight">\(p(x,y)\)</span>，考查<span class="math notranslate nohighlight">\(x\)</span>坐标相同的两个点<span class="math notranslate nohighlight">\(A(x_1,y_1),B(x_1,y_2)\)</span>，我们发现有以下等式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -699,12 +742,16 @@ p(x_1,y_1)p(y_2|x_1)&amp;=p(x_1)p(y_1|x_1)p(y_2|x_1)\\
 p(x_1,y_2)p(y_1|x_1)&amp;=p(x_1)p(y_2|x_1)p(y_1|x_1)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>显然上述所有等式的右边都是相等的，因此，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1),\quad \textrm{i.e.},\quad p(A)p(y_2|x_1)=p(B)p(y_1|x_1)
 \]</div>
+</div>
 <p>基于上述等式，对于<span class="math notranslate nohighlight">\(x=x_1\)</span>这个平行于<span class="math notranslate nohighlight">\(y\)</span>轴的直线上，如果使用条件分布<span class="math notranslate nohighlight">\(p(y|x_1)\)</span>做为直线上任意点之间的转移概率，那么该转移概率满足细致平稳条件。同理，对于<span class="math notranslate nohighlight">\(y=y_1\)</span>这条直线也成立。因此可以构造平面上任意两点之间的转移概率矩阵<span class="math notranslate nohighlight">\(Q\)</span>,</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>跳转概率</p></th>
@@ -723,12 +770,16 @@ p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1),\quad \textrm{i.e.},\quad p(A)p(y_2|x_
 </tr>
 </tbody>
 </table>
+</div>
 <p>对于上述转移矩阵，很容易验证对于平面上任意两点<span class="math notranslate nohighlight">\(X,Y\)</span>，满足细致平稳条件，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(X)Q(Y|X)=p(Y)Q(X|Y)
 \]</div>
+</div>
 <p>  采用上述转移矩阵的MCMC采样算法就是所谓的<strong>Gibbs Sampling算法</strong>。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\(n\)</span>维Gibbs Sampling采样算法</p></th>
@@ -741,6 +792,7 @@ p(X)Q(Y|X)=p(Y)Q(X|Y)
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 </section>
@@ -777,10 +829,12 @@ p(X)Q(Y|X)=p(Y)Q(X|Y)
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#box-muller">5.1. Box-Muller变换</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.2. 接受-拒绝采样</a></li>

@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -413,10 +417,12 @@ document.write(`
 <section id="id2">
 <h2><span class="section-number">1.1. </span>主成分分析<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量转换为一组线性不相关的变量。对于训练数据，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{n\times m}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个基<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)=\pmb{W}_{n\times d}\)</span>，使得<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{W}^\top\pmb{X}\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}=\pmb{WZ}\)</span>与<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>使得投影后的数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
 <p>  如何找到这个超平面呢？可行的一个办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是PCA这主要思想。</p>
 <p>  对于空间的所有样本点，如何用一个超平面来恰当的表示？有两种办法，即</p>
@@ -429,6 +435,7 @@ document.write(`
 <h3><span class="section-number">1.1.1. </span>最近重构性<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  假设数据样本已<font color="red">中心化</font>所有样本减去均值即为中心化；(中心化之后再除以样本标准差即为标准化)，变换后的新坐标系为<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)\)</span>，若丢弃部分坐标，将维度降至<span class="math notranslate nohighlight">\(d'&lt;d\)</span>，则样本在低维坐标系中的投影为<span class="math notranslate nohighlight">\(\pmb{z}_i=(z_{i1},z_{i2},...,z_{id'})\)</span> ，其中<span class="math notranslate nohighlight">\(z_{ij}=\langle \pmb{x}_i,\pmb{w}_j\rangle\)</span>是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在低维坐标系的第<span class="math notranslate nohighlight">\(j\)</span>维的坐标。若用<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>来重构<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>，则会有<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i=\sum_{j=1}^{d'}z_{ij}\pmb{w}_j=\pmb{W}\pmb{z}_i\)</span>。</p>
 <p>  对于整个数据集，原样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与投影重构<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>之间距离为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -438,7 +445,9 @@ document.write(`
 &amp;\propto-\text{tr}\left(\pmb{W}^\top\left(\sum_{i=1}^m \pmb{x}_i\pmb{x}_i^\top  \right)\pmb{W} \right)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>PCA的优化目标则变成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -446,17 +455,21 @@ document.write(`
 \textrm{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times m}, \qquad
 \pmb{W}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{w}_1&amp;\pmb{w}_2&amp;\dots&amp;x_{d'}\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times d'}
 \end{split}\]</div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>最大可分性<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>  样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在新空间的超平面投影为<span class="math notranslate nohighlight">\(\pmb{W}^\top\pmb{x}_i\)</span>，若要投影尽可能分开，则应使投影后的样本方差最大化，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -464,12 +477,14 @@ document.write(`
 \text{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可以看出，该问题与第一种情况是等价的。</p>
 </section>
 <hr class="docutils" />
 <section id="id5">
 <h3><span class="section-number">1.1.3. </span>优化问题的求解<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
 <p>  使用拉格朗日乘子法，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -477,16 +492,21 @@ document.write(`
 &amp;=\sum_{i=1}\pmb{w}_i^\top\pmb{XX}^\top\pmb{w}_i + \sum_{i=1}\lambda_i(\pmb{w}_i^\top\pmb{w}_i-1)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则有，<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}\)</span>,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=\pmb{XX}^\top\pmb{w}_i-\lambda_i\pmb{w}_i
 \]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=0\)</span>，则有</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{X}\pmb{X}^\top\pmb{w}_i=\lambda_i\pmb{w}_i
 \]</div>
+</div>
 <p>于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量构成<font color="red">投影矩阵<span class="math notranslate nohighlight">\(W^*=(w_1,w_2,...,w_{d'})\)</span></font>。该矩阵即为主成分分析的解。</p>
 </section>
 <hr class="docutils" />
@@ -557,27 +577,35 @@ document.write(`
 <section id="svd">
 <h3><span class="section-number">1.1.5. </span>算法2–SVD分解<a class="headerlink" href="#svd" title="Link to this heading">#</a></h3>
 <p>  PCA除了对于协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>进行特征值分解计算得到投影特征向量之外，还可以通过SVD矩阵分解技术得到投影向量。SVD矩阵分解如下式所示，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
 \]</div>
+</div>
 <p>这里的<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>是正常的数据集矩阵。即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat{\pmb{X}}=\begin{pmatrix}-&amp;\pmb{x}_1 &amp;-\\ -&amp;\pmb{x}_1 &amp;-\\ 
 \vdots&amp;\vdots &amp;\vdots\\ -&amp;\pmb{x}_m &amp;-\\ \end{pmatrix}
 \end{split}\]</div>
+</div>
 <p>  PCA中的<span class="math notranslate nohighlight">\(\pmb{X}=\hat{\pmb{X}}^\top\)</span>，因此有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
 \]</div>
+</div>
 <p>  最终，<span class="math notranslate nohighlight">\(\pmb{V}\)</span>的最大前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量所组成的矩阵即为变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})\)</span>。而<span class="math notranslate nohighlight">\(\pmb{V}\)</span>可以通过SVD分解获得。</p>
 <p>  投影后的新数据(<span class="math notranslate nohighlight">\(d'&lt;n\)</span>)，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Z}=\pmb{X}^\top\pmb{W}^*=\pmb{U\Sigma V}^\top\pmb{W}^*\approx\pmb{U\Sigma}
 \]</div>
+</div>
 <ul class="simple">
 <li><p>示例</p></li>
 </ul>
@@ -646,26 +674,35 @@ document.write(`
 <p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
 <p>  首先考查<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>特征向量之间的关系。
 对实对称矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>进行特征值分解<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}\)</span>，等式两边同时乘上<span class="math notranslate nohighlight">\(\pmb{X}\)</span>，则可以得到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\pmb{XX}^\top)(\pmb{XU})=(\pmb{XU})\pmb{\Lambda}
 \]</div>
+</div>
 <p>从上式可以得到<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量为<span class="math notranslate nohighlight">\(\pmb{V}\triangleq\pmb{XU}\)</span>，特征值对角矩阵为<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>。注意到特征向量的模长，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
 \]</div>
+</div>
 <p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
 <p>  现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(\pmb{U\Lambda}\)</span>分别为<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}\)</span>的特征向量矩阵以及对应的特征值。</p>
 <p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
 \]</div>
+</div>
 <p>  最后要注意的是<span class="math notranslate nohighlight">\(\pmb{K}\)</span>在特征值分解之前，需要中心化。中心化可通过以下步骤计算得到。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -673,6 +710,7 @@ document.write(`
 &amp;=\pmb{K}-\pmb{KO}-\pmb{{OK}}+\pmb{OKO}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{O}=\frac1N \pmb{1}\pmb{1}^\top, \pmb{1}=[1,1,...,1]_{1\times N}^\top\)</span>。</p>
 <ul class="simple">
 <li><p>示例</p></li>
@@ -732,6 +770,7 @@ document.write(`
 <li><p>MDS的求解</p></li>
 </ul>
 <p>  令<span class="math notranslate nohighlight">\(\pmb{B}=\pmb{Z}^\top \pmb{Z}\in\mathbb{R}^{m\times m}\)</span>为降维后的样本内积矩阵，<span class="math notranslate nohighlight">\(b_{ij}=\pmb{z}_i^\top\pmb{z}_j\)</span>,则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -739,7 +778,9 @@ dist_{ij}^2&amp;=\parallel z_i \parallel^2+\parallel z_j\parallel^2-2z_i^Tz_j\\
 &amp;=b_{ii}+b_{jj}-2b_{ij}\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>假设<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>已中心化，即<span class="math notranslate nohighlight">\(\sum_{i=1}^m\pmb{z}_i=0\)</span>，显然<span class="math notranslate nohighlight">\(\sum_{i=1}^mb_{ij}=\sum_{j=1}^mb_{ij}=0\)</span>，由此可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -748,7 +789,9 @@ dist_{ij}^2&amp;=\parallel z_i \parallel^2+\parallel z_j\parallel^2-2z_i^Tz_j\\
 \sum_{i=1}^m\sum_{j=1}^mdist_{ij}^2&amp;=2m\cdot\text{tr}(B)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -757,30 +800,39 @@ dist_{\cdot j}^2&amp;=\frac{1}{m}\sum_{i=1}^mdist_{ij}^2\\
 dist_{\cdot\cdot}^2&amp;=\frac{1}{m^2}\sum_{i=1}\sum_{j=1}^mdist_{ij}^2\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>最终可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdot}^2)
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(dist_{ij}=D_{ij}\)</span>。由此，可以根据降维前的距离矩阵<span class="math notranslate nohighlight">\(\pmb{D}\)</span>求得降维后距离不变的矩阵<span class="math notranslate nohighlight">\(\pmb{B}\)</span>。令<span class="math notranslate nohighlight">\(\pmb{C}_n=\pmb{I}_n-\frac1n\pmb{11}^\top\)</span>为中心化矩阵(Centering matrix)，则，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{B}=-\frac12\pmb{C}_n\pmb{D}\pmb{C}_n
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{X}\pmb{C}_n\)</span>相当于对<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的所有行向量减去行向量均值；<span class="math notranslate nohighlight">\(\pmb{C}_n\pmb{X}\)</span>相当于对<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的所有列向量减去列向量均值；</p>
 <ul class="simple">
 <li><p>获得降维后的样本投影矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span></p></li>
 </ul>
 <p>  对矩阵<span class="math notranslate nohighlight">\(\pmb{B}\)</span>（实对称矩阵）做特征值分解，<span class="math notranslate nohighlight">\(\pmb{B}=\pmb{V\Lambda V}^\top\)</span>。假设有<span class="math notranslate nohighlight">\(d_*\)</span>个非零特征值构成对角矩阵<span class="math notranslate nohighlight">\(\pmb{\Lambda}_*=\textrm{diag}(\lambda_1,\lambda_2,...,\lambda_{d_*})\)</span>,以及所对应的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_*\)</span>，则<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>可以表示为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{m\times d_*}
 \]</div>
+</div>
 <p>  现实应用中，可以选择<span class="math notranslate nohighlight">\(d'&lt;d\)</span>个最大特征值构成的对角阵<span class="math notranslate nohighlight">\(\hat{\pmb{\Lambda}}\)</span>及特征向量矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{V}}\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
 \]</div>
+</div>
 <hr class="docutils" />
 <section id="id9">
 <h3><span class="section-number">1.2.1. </span>算法<a class="headerlink" href="#id9" title="Link to this heading">#</a></h3>
@@ -835,10 +887,12 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <li><p>确定每个样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的<span class="math notranslate nohighlight">\(k\)</span>近邻;</p></li>
 <li><p>使用最短路径算法(例如：Dijkstra)计算<span class="math notranslate nohighlight">\(k\)</span>近邻图的任意样本间距离<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>;</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
  dist(\pmb{x}_i,\pmb{x}_j)=\left\{\begin{array}{ll} dist(\pmb{x}_i,\pmb{x}_j), &amp; \pmb{x}_j\textrm{ is a nearest neighbor of }\pmb{x}_i\\ \infty, &amp; \textrm{otherwise.}\end{array}\right.
 \end{split}\]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p>以<span class="math notranslate nohighlight">\(dist(\pmb{x}_i,\pmb{x}_j)\)</span>为输入，使用MDS计算低维坐标；</p></li>
 </ol>
@@ -909,10 +963,12 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <section id="id13">
 <h3><span class="section-number">1.4.1. </span>LLE基本思想<a class="headerlink" href="#id13" title="Link to this heading">#</a></h3>
 <p>  Isomap试图<strong>保持</strong>局部近邻样本之间的<strong>距离</strong>。LLE则试图<strong>保持</strong>局部邻域内样本之间的<strong>线性关系</strong>。假设样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的坐标可由邻居样本<span class="math notranslate nohighlight">\(\pmb{x}_j,\pmb{x}_k,\pmb{x}_l\)</span>的坐标通过线性组合重构出来，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{x}_i=w_{ij}\pmb{x}_j+w_{ik}\pmb{x}_k+w_{il}\pmb{x}_l
 \]</div>
+</div>
 <p>则LLE希望此关系在低维空间依旧能得以保持。</p>
 </section>
 <hr class="docutils" />
@@ -920,6 +976,7 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 <h3><span class="section-number">1.4.2. </span>LLE求解<a class="headerlink" href="#id14" title="Link to this heading">#</a></h3>
 <p>  <strong>Step 1</strong>. 寻找样本<span class="math notranslate nohighlight">\(\forall \pmb{x}_i\in \mathcal{X}\)</span>的<span class="math notranslate nohighlight">\(k\)</span>个近邻。</p>
 <p>  <strong>Step 2</strong>. 求解重构系数矩阵<span class="math notranslate nohighlight">\(\pmb{W}\)</span>。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -927,7 +984,9 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 \text{s.t.}\quad &amp;\sum_{j\in \mathcal{N}_i} w_{ij}=1
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\varepsilon_i=\left\lVert \pmb{x}_i-\sum_{j\in \mathcal{N}_i} w_{ij}\pmb{x}_j \right\rVert^2\)</span>，则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -937,27 +996,37 @@ b_{ij}=-\frac{1}{2}(dist_{ij}^2-dist_{i\cdot}^2-dist_{\cdot j}^2+dist_{\cdot\cdo
 &amp;=\left\lVert \sum_{j\in \mathcal{N}_i} w_{ij}(\pmb{x}_i-\pmb{x}_j) \right\rVert^2
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(C_{jk}=(\pmb{x}_i-\pmb{x}_j)^T(\pmb{x}_i-\pmb{x}_k)\)</span>，则<span class="math notranslate nohighlight">\(w_{ij}\)</span>有闭式解，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} C_{ls}^{-1} }
 \]</div>
+</div>
 <p>  <strong>Step 3</strong>. 恢复低维空间坐标。LLE在低维空间保持<span class="math notranslate nohighlight">\(\pmb{W}\)</span>不变，于是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>对应的低维空间坐标<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>可以通过下式求解获得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min\limits_{\pmb{Z}}\quad \sum_{i=1}^m \left\lVert \pmb{z}_i-\sum_{j\in \mathcal{N}_i}w_{ij}\pmb{z}_j\right\rVert^2
 \]</div>
+</div>
 <p>  上述两优化问题目标同形，唯一区别在于前一个问题要确定<span class="math notranslate nohighlight">\(\pmb{W}\)</span>，而后一个需要确定<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>所对应的低维坐标<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \varepsilon(\pmb{Z})&amp;=\sum_{i=1}^n \left\Vert \pmb{z}_i-\sum_j w_{ij}\pmb{z}_j \right\Vert^2\\
 \end{split}\]</div>
+</div>
 <p>令,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{W}=\begin{bmatrix}-&amp;\pmb{w}_1&amp;-\\-&amp;\pmb{w}_2&amp;-\\ &amp;\vdots &amp;\\ -&amp;\pmb{w}_n&amp;- \end{bmatrix} \quad \pmb{Z}=\begin{bmatrix}|&amp;|&amp;\cdots &amp;|\\\pmb{z}_1&amp;\pmb{z}_2&amp;\cdots&amp;\pmb{z}_n\\ |&amp;|&amp;\cdots &amp;|\\ \end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -966,7 +1035,9 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 &amp;=\textrm{tr}(\pmb{Z}\pmb{M}\pmb{Z}^\top)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{M}=(\pmb{I}-\pmb{W})^\top(\pmb{I}-\pmb{W})\)</span>。则问题可重写为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -974,6 +1045,7 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \text{s.t.}\quad &amp;\pmb{ZZ}^\top=\pmb{I}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>该问题可以通过特征值分解求得<span class="math notranslate nohighlight">\(\pmb{M}\)</span>的最大<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量组成的矩阵即为<span class="math notranslate nohighlight">\(\pmb{Z}^\top\)</span>。</p>
 </section>
 </section>
@@ -986,11 +1058,14 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 <li><p><strong>连续型</strong></p></li>
 </ul>
 <p>  <strong>[定义]</strong>- 假设函数<span class="math notranslate nohighlight">\(f\)</span>连续二阶可微，则拉普拉斯算子(<span class="math notranslate nohighlight">\(\Delta f\)</span>)由下式给出，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta f\triangleq\sum_{i=1}^n\frac{\partial^2f}{\partial x_i^2}=\nabla\cdot\nabla f=\textrm{div}(\textrm{grad}f)
 \]</div>
+</div>
 <p>其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -998,21 +1073,25 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \textrm{div}(\textrm{grad}f)&amp;=\nabla\cdot\nabla f=\frac{\partial^2 f}{\partial x_1^2}+\frac{\partial^2 f}{\partial x_2^2}+...+\frac{\partial^2 f}{\partial x_n^2}
 \end{split}
 \end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>离散型</strong></p></li>
 </ul>
 <p>  在离散情况下，我们仍然希望拉普拉斯算子将输入的函数映射为其它函数。只不过，这种情况下，函数将被定义在离散的域上（如图<span class="math notranslate nohighlight">\(G\)</span>的有限顶点集<span class="math notranslate nohighlight">\(V\)</span>）。因此，我们可以将离散拉普拉斯算子<span class="math notranslate nohighlight">\((\Delta)\phi(v)\)</span>作用在函数 <span class="math notranslate nohighlight">\(\phi :V\rightarrow R\)</span>。而<span class="math notranslate nohighlight">\(\phi\)</span>是一个定义在图的顶点集上的一个函数。我们也使用有限差分作为导数的离散类比，因此，我们不是使用导数来比较连续域的局部区域，而是使用有限差分来比较离散图的局部邻域。</p>
 <p>  对于一个定义在图<span class="math notranslate nohighlight">\(G\)</span>的顶点集的函数<span class="math notranslate nohighlight">\(\phi :V\rightarrow R\)</span>，离散拉普拉斯算子定义为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\Delta\phi)(v_i)=\sum_{v_j\in \mathcal{N}(v_i)}W_{ij}[\phi(v_j)-\phi(v_i)]
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(W_{ij}\)</span>为连接<span class="math notranslate nohighlight">\(v_i\)</span>和<span class="math notranslate nohighlight">\(v_j\)</span>的边<span class="math notranslate nohighlight">\(e_{ij}\)</span>的权值。</p>
 <p>  与连续版本一样，当<span class="math notranslate nohighlight">\(\phi(v_i)\)</span>的值比其周围的邻居大时(极大值)，离散拉普拉斯值较小；当<span class="math notranslate nohighlight">\(\phi(v_i)\)</span>的值比其周围的邻居小时（极小值），离散拉普拉斯值较大。</p>
 <ol class="arabic simple">
 <li><p><strong>例：图像Laplacian算子</strong></p></li>
 </ol>
 <p>  图像是一种离散型的数据，图像上的Laplacian算子可以大致进行如下运算。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1022,22 +1101,28 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 &amp;=f(x+1,y)+f(x-1,y)-2f(x,y)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>同理，<span class="math notranslate nohighlight">\(\frac{\partial^2 f(x,y)}{\partial y^2}=f(x,y+1)+f(x,y-1)-2f(x,y)\)</span>。因此有Laplacian值，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta f(x,y)=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y)
 \]</div>
+</div>
 <p>  可以得出<strong>结论</strong>：Laplacian算子近似等于所有方向（自由度）差分累积（增益）。</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>例：图拉普拉斯算子</strong></p></li>
 </ol>
 <p>  图数据上的Laplacian算子又该如何应用呢？图由<span class="math notranslate nohighlight">\(N\)</span>个结点及其连接边权值<span class="math notranslate nohighlight">\(W\)</span>所构成。和图像Laplacian算子类似，图Laplacian算子可以近似等于所有方向(<span class="math notranslate nohighlight">\(\mathcal{N}_i\)</span>个邻接结点)的差分累积。</p>
 <p>  对于任意结点<span class="math notranslate nohighlight">\(i\)</span>，可以通过映射<span class="math notranslate nohighlight">\(f: V\rightarrow R\)</span>得到值<span class="math notranslate nohighlight">\(f_i\)</span>。显然结点<span class="math notranslate nohighlight">\(i\)</span>的Laplacian就等于其所有邻接点的差分累积，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\Delta f)_i = \sum_{j\in\mathcal{N}_i}W_{ij}(f_j-f_i)
 \]</div>
+</div>
 <p>因为<span class="math notranslate nohighlight">\(j\notin\mathcal{N}_i,W_{ij}=0\)</span>，上式可继续简化，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1046,7 +1131,9 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 &amp;=[(W-D)f]_i
 \end{split}
 \end{split}\]</div>
+</div>
 <p>若<span class="math notranslate nohighlight">\(F: \mathbb{R}^d \rightarrow \mathbb{R}^p\)</span>,则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1056,25 +1143,31 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 &amp;=2\textrm{tr}\left(\pmb{Y}^\top\pmb{L}\pmb{Y} \right)
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="id17">
 <h3><span class="section-number">1.5.2. </span>拉普拉斯矩阵<a class="headerlink" href="#id17" title="Link to this heading">#</a></h3>
 <p>  离散Laplacian算子表示为一个矩阵时，映射函数<span class="math notranslate nohighlight">\(\phi\)</span>可以写为列向量，<span class="math notranslate nohighlight">\(\Delta \phi\)</span>则表示为Laplacian矩阵<span class="math notranslate nohighlight">\(\pmb{L}\)</span>与列向量的乘积，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta\phi=\pmb{L}\times \phi
 \]</div>
+</div>
 <p>Laplacian矩阵<span class="math notranslate nohighlight">\(\pmb{L}=\pmb{D}-\pmb{W}\)</span>。其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{D}_{ii}=\sum_j \pmb{W}_{ij}
 \]</div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="id18">
 <h3><span class="section-number">1.5.3. </span>拉普拉斯变换<a class="headerlink" href="#id18" title="Link to this heading">#</a></h3>
 <p>  如果数据样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与<span class="math notranslate nohighlight">\(\pmb{x}_j\)</span>很相似，则在拉普拉斯变换后的子空间与原空间一样，尽可能的接近。即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1082,13 +1175,17 @@ w_{ij}=\frac{\sum_{k\in\mathcal{N}_i} C_{jk}^{-1} }{ \sum_{l,s\in\mathcal{N}_i} 
 \textrm{s.t.}\quad &amp;\pmb{Y}^\top\pmb{DY}=\pmb{I}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{L}\)</span>为拉普拉斯矩阵，<span class="math notranslate nohighlight">\(\phi:\pmb{x}\rightarrow\pmb{y},\pmb{x}\in\mathbb{R}^d, \pmb{y}\in\mathbb{R}^p\)</span>。</p>
 <p>  使用Lagrangian乘子法，可得，Lagrangian函数</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\pmb{Y}^\top\pmb{DY}-\pmb{I})]
 \]</div>
+</div>
 <p>对其求偏导数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1096,11 +1193,14 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 &amp;=2\pmb{LY}+2\pmb{DY\Lambda}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\frac{\partial f}{\partial \pmb{Y}}=0\)</span>，可得<span class="math notranslate nohighlight">\(\pmb{LY}=-\pmb{DY\Lambda}\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Ly}=\lambda\pmb{Dy}
 \]</div>
+</div>
 <p>  因此，只需选择<span class="math notranslate nohighlight">\(p\)</span>个最小的特征值所对应的特征向量即可得到最优解<span class="math notranslate nohighlight">\(\hat{\pmb{Y}}\)</span>。</p>
 </section>
 </section>
@@ -1111,40 +1211,53 @@ f(\pmb{Y})=\textrm{tr}(\pmb{Y}^\top\pmb{L}\pmb{Y})+ \textrm{tr}[\pmb{\Lambda}(\p
 <h3><span class="section-number">1.6.1. </span>SNE<a class="headerlink" href="#sne" title="Link to this heading">#</a></h3>
 <p>  随机近邻嵌入(Stochastic Neighbor Embedding,SNE)的主要思想是：若两数据在高维空间相似(距离很近)，那么通过某种降维映射至2-3维空间时，它们应该离的很近。</p>
 <p>  使用条件概率<span class="math notranslate nohighlight">\(p_{j|i}\)</span>来评价数据点<span class="math notranslate nohighlight">\(\pmb{x}_i,\pmb{x}_j\)</span>的相似性。高维空间的距离可以通过<strong>高斯分布</strong>进行近似计算，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \textrm{P}\{\textrm{高维空间}\pmb{x}_j是\pmb{x}_i的邻居\}\triangleq p_{j|i}=\frac{\exp(-\Vert\pmb{x}_i-\pmb{x}_j\Vert^2/(2\sigma_i^2))}{\sum_{k\neq i}\exp(-\Vert\pmb{x}_i-\pmb{x}_k\Vert^2/(2\sigma_i^2))}
 \]</div>
+</div>
 <p>可以不用关心与自身的相似性，故可令<span class="math notranslate nohighlight">\(p_{i|i}=0\)</span>。假设经过低维映射<span class="math notranslate nohighlight">\(\phi\)</span>后<span class="math notranslate nohighlight">\(\pmb{x}_i\rightarrow \pmb{y}_i, \pmb{x}_j \rightarrow \pmb{y}_j\)</span>，则在该低维空间两点之间的相似性，即<span class="math notranslate nohighlight">\(\pmb{y}_j\)</span>是<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>邻居的条件概率<span class="math notranslate nohighlight">\(q_{j|i}\)</span>可以通过以下分布计算，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 q_{j|i}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2)}{\sum_{k\neq i}\exp(-\Vert \pmb{y}_i-\pmb{y}_k \Vert^2)}
 \]</div>
+</div>
 <p>为简化计算，令<span class="math notranslate nohighlight">\(\sigma_i=2^{-1/2}\)</span>，同样有<span class="math notranslate nohighlight">\(q_{i|i}=0\)</span>。</p>
 <p>  为确保<span class="math notranslate nohighlight">\(p_{j|i}\)</span>与<span class="math notranslate nohighlight">\(q_{j|i}\)</span>尽可能一致，可以通过KL散度来评估两个条件分布的差异性。因此，目标函数就变成了尽可能的降低<span class="math notranslate nohighlight">\(p_{j|i},q_{j|i}\)</span>的散度，即使用<span class="math notranslate nohighlight">\(q_{j|i}\)</span>替代<span class="math notranslate nohighlight">\(p_{j|i}\)</span>的信息损失，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}=\sum_i\sum_j p_{j|i}\log\frac{p_{j|i}}{q_{j|i}}
 \]</div>
+</div>
 <p>  梯度法求解上述问题，对<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>求偏导，可得梯度</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})
 \]</div>
+</div>
 <div style="background-color: #F8F8F8  ">
 <p>  提示：使用链式法则求解。令<span class="math notranslate nohighlight">\(p_{ij}=p_{i|j}\)</span>, <span class="math notranslate nohighlight">\(q_{ij}=q_{i|j}\)</span>,以及，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\pmb{y}_j \Vert^2, \quad d_{ij}=\Vert \pmb{y}_i-\pmb{y}_j \Vert
 \]</div>
+</div>
 <p>由链式法则可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \begin{split}
 \frac{\partial \mathcal{L}}{\partial \pmb{y}_n} &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{kl}\frac{\partial q_{ij}}{w_{kl}}\sum_{mn}\frac{\partial w_{kl}}{\partial f_{mn}}\sum_{pq}\frac{\partial f_{mn}}{\partial d_{pq}}\frac{\partial d_{pq}}{\partial \pmb{y}_n}
 \end{split}
 \]</div>
+</div>
 <p>显然，只有当<span class="math notranslate nohighlight">\(pq=mn=kl\)</span>时，偏导数才不为0，因此，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1153,7 +1266,9 @@ w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\p
 &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\sum_{l}\frac{\partial q_{ij}}{w_{il}} \frac{\partial w_{il}}{\partial f_{il}}\frac{\partial f_{il}}{\partial d_{il}}\frac{\partial d_{il}}{\partial \pmb{y}_n}\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>由于<span class="math notranslate nohighlight">\(w_{il}\)</span>涉及<span class="math notranslate nohighlight">\(\pmb{y}_n\)</span>分两种情况：<span class="math notranslate nohighlight">\(i=n\)</span>或<span class="math notranslate nohighlight">\(l=n\)</span>,因此，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1162,7 +1277,9 @@ w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\p
 &amp;=\sum_{ij}\frac{\partial \mathcal{L}}{\partial q_{ij}}\frac{\partial q_{ij}}{w_{in}} \frac{\partial w_{in}}{\partial f_{in}}\frac{\partial f_{in}}{\partial d_{in}}\frac{\partial d_{in}}{\partial \pmb{y}_n} +  \sum_{j}\frac{\partial \mathcal{L}}{\partial q_{nj}}\sum_{l}\frac{\partial q_{nj}}{w_{nl}} \frac{\partial w_{nl}}{\partial f_{nl}}\frac{\partial f_{nl}}{\partial d_{nl}}\frac{\partial d_{nl}}{\partial \pmb{y}_n}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>整理：<span class="math notranslate nohighlight">\(n\rightarrow i\)</span>，左式：<span class="math notranslate nohighlight">\(i\rightarrow j, j\rightarrow k\)</span>, 右式： <span class="math notranslate nohighlight">\(j\rightarrow k, l\rightarrow j\)</span>, 以及<span class="math notranslate nohighlight">\(f_{ij}=f{ji}, d_{ij}=d_{ji}\)</span>，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1172,12 +1289,16 @@ w_{ij}=\exp(-\Vert \pmb{y}_i-\pmb{y}_j \Vert^2),\quad f_{ij}= \Vert \pmb{y}_i-\p
 &amp;=\sum_j\left(   \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{jk}}\frac{\partial q_{jk}}{w_{ji}} \frac{\partial w_{ji}}{\partial f_{ji}} }_{t_{ji}}   +  \underbrace{\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_{ik}}{w_{ij}} \frac{\partial w_{ij}}{\partial f_{ij}}}_{t_{ij}}  \right)\frac{\partial f_{ij}}{\partial d_{ij}}\frac{\partial d_{ij}}{\partial \pmb{y}_i}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  注意到，<span class="math notranslate nohighlight">\(q_{ij}=\frac{w_{ij}}{\sum_l w_{il}}\triangleq \frac{w_{ij}}{S_i}\)</span>，则</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial q_{ij}}{\partial w_{ij}}=\frac{1}{S_i}-\frac{q_{ij}}{S_i},\quad \frac{\partial q_{ik}}{\partial w_{ij}}=-\frac{q_{ik}}{S_i}
 \]</div>
+</div>
 <p>代入<span class="math notranslate nohighlight">\(t_{ij}\)</span>，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1190,11 +1311,14 @@ t_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 &amp;=p_{ij}-q_{ij}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>同理可求得<span class="math notranslate nohighlight">\(t_{ji}\)</span>，最后整理可得梯度为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\frac{\partial \mathcal{L}}{\partial \pmb{y}_i}=2\sum_j (\pmb{y}_i-\pmb{y}_j)(p_{j|i}-q_{j|i}+p_{i|j}-q_{i|j})}
 \]</div>
+</div>
 </div>
 <ul class="simple">
 <li><p>存在的问题</p></li>
@@ -1209,20 +1333,26 @@ t_{ij}&amp;=\sum_k \frac{\partial \mathcal{L}}{\partial q_{ik}}\frac{\partial q_
 <section id="id20">
 <h3><span class="section-number">1.6.2. </span>对称SNE<a class="headerlink" href="#id20" title="Link to this heading">#</a></h3>
 <p>  针对SNE的不对称问题，可以在低维和高维空间构造联合分布，使之任意<span class="math notranslate nohighlight">\(i,j\)</span>都有<span class="math notranslate nohighlight">\(p_{ij}=p_{ji}, q_{ij}=q_{ji}\)</span>。在低维空间构造，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 q_{ij}=\frac{\exp(-\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)}{\sum_{k\neq l} \exp(-\Vert \pmb{y}_k-\pmb{y}_l\Vert^2}
 \]</div>
+</div>
 <p>但在高维空间，按<span class="math notranslate nohighlight">\(q_{ij}\)</span>的形式构造<span class="math notranslate nohighlight">\(p_{ij}\)</span>则会存在问题。如果有一个离群点存在，则会造成离群点<span class="math notranslate nohighlight">\(i\)</span>与其余点<span class="math notranslate nohighlight">\(j\)</span>的<span class="math notranslate nohighlight">\(p_{ij}\)</span>都比较小。这就意味着，无论离群点映射在低维空间的任何位置，惩罚值都不会太大。所以需要采用其它方法。以下是一种简单直观的方法，既满足对称性又符合离群点的惩罚值不会过小。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p_{ij}=\frac{p_{j|i}+p_{i|j}}{2n}\quad (n\textrm{为数据总量})
 \]</div>
+</div>
 <p>此时，目标函数和梯度变为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}=\sum_i\sum_j p_{ij}\log\frac{p_{ij}}{q_{ij}},\quad\frac{\partial \mathcal{L}}{\partial\pmb{y}_i}=4\sum_j (p_{ij}-q_{ij})(\pmb{y}_i-\pmb{y}_j)
 \]</div>
+</div>
 <p>  虽然梯度计算简化了也解决了不对称问题，但效果只是略优于SNE,拥挤问题仍未解决。</p>
 </section>
 <hr class="docutils" />
@@ -1238,15 +1368,19 @@ p_{ij}=\frac{p_{j|i}+p_{i|j}}{2n}\quad (n\textrm{为数据总量})
 </div>
 <p>从图中可以看出，高维空间较近的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更近。高维空间较远的点，为满足<span class="math notranslate nohighlight">\(p_{ij}=q_{ij}\)</span>，在低维空间相同的<span class="math notranslate nohighlight">\(q_{ij}\)</span>，距离比高维空间更远。换句话说，映射至低维空间后，高维空间较远的点，在低维空间距离更远；高维空间较近的点，低维空间距离更近。</p>
 <p>  引入<span class="math notranslate nohighlight">\(t\)</span>分布。在高维空间使用高斯分布，在低维空间使用<span class="math notranslate nohighlight">\(t\)</span>分布。可以使得高维空间较近的点在低维空间距离更近，高维空间较远的点在低维空间距离更远。这就达到了同一类簇内的点聚合的更紧密，不同类簇之间的点更加疏远的目标。在低维空间定义自由度为1的<span class="math notranslate nohighlight">\(t\)</span>分布重新定义<span class="math notranslate nohighlight">\(q_{ij}\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 q_{ij}=\frac{(1+\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)^{-1}}{\sum_{k\neq l}(1+\Vert \pmb{y}_k-\pmb{y}_l\Vert^2)^{-1}}
 \]</div>
+</div>
 <p>仍然使用KL散度来衡量高维空间正态分布与低维空间<span class="math notranslate nohighlight">\(t\)</span>分布之间的差异程度，此时，梯度变为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \mathcal{L}}{\pmb{y}_i}=4\sum_{j}(p_{ij}-q_{ij})(1+\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)^{-1}
 \]</div>
+</div>
 <p>  仍然使用随机梯度下降法训练，即可得到<span class="math notranslate nohighlight">\(\hat{\pmb{Y}}\)</span>。这就是t-SNE算法。原文参考(<a class="reference external" href="https://papers.nips.cc/paper/2002/file/6150ccc6069bea6b5716254057a194ef-Paper.pdf">Stochastic Neighbor Embedding</a>,<a class="reference external" href="https://www.jmlr.org/papers/volume9/vandermaaten08a/vandermaaten08a.pdf">Visualizing Data using t-SNE</a>).</p>
 </section>
 </section>
@@ -1292,10 +1426,12 @@ q_{ij}=\frac{(1+\Vert \pmb{y}_i-\pmb{y}_j\Vert^2)^{-1}}{\sum_{k\neq l}(1+\Vert \
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 主成分分析</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 最近重构性</a></li>

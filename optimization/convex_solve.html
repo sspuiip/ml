@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -385,90 +389,119 @@ document.write(`
 <section id="id2">
 <h2><span class="section-number">2.1. </span>下降法<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  基本思想：利用优化序列</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\mu_k\Delta\mathbf{x}_k,\quad k=1,2,\cdots\tag{1}
 \]</div>
+</div>
 <p>寻找最优点<span class="math notranslate nohighlight">\(\mathbf{x}_{opt}\)</span>。<span class="math notranslate nohighlight">\(\mu_k\)</span>为第<span class="math notranslate nohighlight">\(k\)</span>次迭代的步长，<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_k\)</span>为搜索方向其值为一个向量<span class="math notranslate nohighlight">\(\Delta\mathbf{x}\in\mathbb{R}^n\)</span>。最小化算法要求迭代过程中目标函数是下降的，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)
 \]</div>
+</div>
 <p>所以该方法称为<font color='red'><strong>下降法</strong></font>。</p>
 <section id="id3">
 <h3><span class="section-number">2.1.1. </span>最速下降法<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  由Taylor公式可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})- f(\mathbf{x}_k)\approx\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k\tag{2}
 \]</div>
+</div>
 <p>显然，当<span class="math notranslate nohighlight">\(0\le\theta\le \pi/2\)</span>, 令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta\mathbf{x}_k=-\nabla f(\mathbf{x}_k)\cos\theta\tag{3}
 \]</div>
+</div>
 <p>必然有，<span class="math notranslate nohighlight">\(f(\mathbf{x}_{k+1})&lt;f(\mathbf{x}_k)\)</span>成立。</p>
 <ul class="simple">
 <li><p>取<span class="math notranslate nohighlight">\(\theta=0\)</span>，则<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_k=-\nabla f(\mathbf{x}_k)\)</span>，即搜索方向为负梯度方向，步长为<span class="math notranslate nohighlight">\(\lVert \nabla f(\mathbf{x}_k)\rVert_2^2\)</span>，故下降方向具有最大的下降步伐。与之对应的下降法称为<font color='red'><strong>最速下降法</strong></font>。</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\mu_k\nabla f(\mathbf{x}_k)\tag{4}
 \]</div>
+</div>
 </section>
 <section id="newton">
 <h3><span class="section-number">2.1.2. </span>Newton法<a class="headerlink" href="#newton" title="Link to this heading">#</a></h3>
 <p>  Taylor公式展开至二阶有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x}_{k+1})\approx f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k+\frac12(\Delta\mathbf{x}_k)^\top\nabla^2f(\mathbf{x}_k)(\Delta\mathbf{x}_k)\tag{5}
 \]</div>
+</div>
 <p>显然最优化下降方向应该是让二阶展开式最得最小值的方向，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min\limits_{\Delta\mathbf{x}_k}\left[f(\mathbf{x}_k)+\nabla f(\mathbf{x}_k)^\top\Delta\mathbf{x}_k+\frac12(\Delta\mathbf{x}_k)^\top\nabla^2f(\mathbf{x}_k)(\Delta\mathbf{x}_k)\right]\tag{6}
 \]</div>
+</div>
 <p>对二阶展开式求导，可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial f(\mathbf{x}_k+\Delta\mathbf{x}_k)}{\partial \Delta\mathbf{x}_k}=\nabla f(\mathbf{x}_k)+\nabla^2f(\mathbf{x}_k)\Delta\mathbf{x}_k=0\tag{7}
 \]</div>
+</div>
 <p>则有最优搜索方向，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Delta\mathbf{x}_k=-\nabla^2f(\mathbf{x}_k)\nabla f(\mathbf{x}_k)\tag{8}
 \]</div>
+</div>
 <p>该下降方向也称之为Newton步或Newton下降方向，记为<span class="math notranslate nohighlight">\(\Delta\mathbf{x}_{nt}\)</span>，相应的方法称为<font color='red'><strong>Newton法</strong></font>。</p>
 </section>
 </section>
 <section id="id4">
 <h2><span class="section-number">2.2. </span>梯度投影法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
 <p>  梯度下降法中变元是无约束的。若有约束<span class="math notranslate nohighlight">\(\mathbf{x}\in\mathcal{C}\)</span>，则梯度下降法中的更新公式应用投影代替，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathcal{P}_\mathcal{C}(\mathbf{x}_k-\mu_k\nabla f(\mathbf{x}_k))\tag{9}
 \]</div>
+</div>
 <p>这一算法称为梯度投影法，也称为投影梯度法。投影算子<span class="math notranslate nohighlight">\(\mathcal{P}_\mathcal{C}(\mathbf{y})\)</span>定义为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{y})=\arg\min\limits_{\mathbf{x}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{y}\rVert_2^2\tag{10}
 \]</div>
+</div>
 <p>  <strong>例</strong>. 到超平面<span class="math notranslate nohighlight">\(\mathcal{C}=\{\mathbf{x}|\mathbf{a}^\top\mathbf{x}=b\}\)</span>的投影，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{x})=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\lVert\mathbf{a}\rVert_2^2}\mathbf{a}
 \]</div>
+</div>
 <p>  求解过程：投影问题为如下优化问题，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{P}_\mathcal{C}(\mathbf{x})=\arg\min\limits_{\mathbf{z}\in\mathcal{C}}\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2 \quad s.t.\quad \mathbf{a}^\top\mathbf{x}-b=0
 \]</div>
+</div>
 <p>则Lagrangian函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \mathbf{a}^\top\mathbf{z}-b)
 \]</div>
+</div>
 <p>对Lagrangian函数求偏导并令其等于0，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -476,16 +509,21 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \frac{\partial L}{\partial \lambda}&amp;=\mathbf{a}^\top\mathbf{z}-b=0\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>解上述方程组，将<span class="math notranslate nohighlight">\(\mathbf{z}=\mathbf{x}-\lambda \mathbf{a}\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{a}^\top\mathbf{z}-b=0\)</span>，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \lambda = \frac{\mathbf{a}^\top\mathbf{x}-b}{\mathbf{a}^\top\mathbf{a}}
 \]</div>
+</div>
 <p>再将<span class="math notranslate nohighlight">\(\lambda\)</span>代入<span class="math notranslate nohighlight">\(\mathbf{z}-\mathbf{x}+\lambda \mathbf{a}=0\)</span>，可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{z}=\mathbf{x}+\frac{b-\mathbf{a}^\top\mathbf{x}}{\mathbf{a}^\top\mathbf{a}}\mathbf{a}
 \]</div>
+</div>
 </section>
 <section id="id5">
 <h2><span class="section-number">2.3. </span>共轭梯度下降法<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
@@ -494,41 +532,52 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <p>  为了加速最速下降法的收敛速度和避免Newton法的Hessian逆矩阵计算，提出了共轭梯度下降法。</p>
 <p><img alt="alt Conjugate Gradient Descent" src="../_images/conj_desc.png" /></p>
 <p>  与前面两种下降方法类似，共轭梯度下降也是通过迭代来寻找最优点，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_{k+1}=\mathbf{x}_k+\alpha_k\mathbf{d}_k\tag{11}
 \]</div>
+</div>
 <p>  <strong>不同之处</strong>在于，每次迭代的下降方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>与其它任何一次方向向量<span class="math notranslate nohighlight">\(\mathbf{d}_j,j\neq i\)</span>都是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的；此外，<span class="math notranslate nohighlight">\(\alpha_i\)</span>是<span class="math notranslate nohighlight">\(\min\limits_{\alpha}f(\mathbf{x}_{i-1}+\alpha\mathbf{d}_i)\)</span>的最优值。</p>
 <p>  为了简要描述共轭的思想，以上图为例，坐标轴可以指定为搜索方向。第一步沿着水平方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_1\)</span>分量部分。第二步没着垂直方向到达<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的<span class="math notranslate nohighlight">\(x_2\)</span>分量部分，然后结束搜索过程就可以确定<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的值。如果定义<span class="math notranslate nohighlight">\(\mathbf{e}_i=\mathbf{x}^*-\mathbf{x}_i\)</span>，则可以发现,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_i^\top\mathbf{e}_{i+1}=0
 \]</div>
+</div>
 <p>共轭梯度下降法源于二次规划问题的求解，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \min\limits_{\mathbf{x}}\quad \frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}-\mathbf{b}^\top\mathbf{x}\quad(\mathbf{A}\succeq0)
 \]</div>
+</div>
 <p>其梯度为<span class="math notranslate nohighlight">\(\nabla f(\mathbf{x})=\mathbf{Ax}-b\triangleq r(\mathbf{x})\)</span>，则求解最优值<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>等价于求解方程组<span class="math notranslate nohighlight">\(\mathbf{Ax}-\mathbf{b}=\mathbf{0}\)</span>。如果<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么必然可以构建一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，显然基的每个向量与其它基向量是共轭的。</p>
 <p>  下降方向能不能和这些基向量建立联系呢？答案是肯定的。易知，最优解<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span>可以表示为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*=\sum_{i=0}^{n-1}\alpha_i\mathbf{d}_i\tag{12}
 \]</div>
+</div>
 <p>如果<span class="math notranslate nohighlight">\(\alpha_i,\mathbf{d}_i\)</span>都已知，则<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>可通过上式确定。</p>
 <section id="mathbf-a">
 <h3><span class="section-number">2.3.1. </span><span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭<a class="headerlink" href="#mathbf-a" title="Link to this heading">#</a></h3>
 <p>  <strong>定义1</strong>.假设<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>是一个对称正定矩阵，那么称向量<span class="math notranslate nohighlight">\(\mathbf{d}_i,\mathbf{d}_j\)</span>是<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的，如果满足，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_i^\top\mathbf{A}\mathbf{d}_j=0,\quad i\neq j.
 \]</div>
+</div>
 <p>  <strong>定理1</strong>. 两两向量相互<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量集<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>构成了一个<span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>空间的一个基，即<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>线性无关。</p>
 <p>  有了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭就可以来确定式(12)的各参数值了。</p>
 <ul class="simple">
 <li><p>首先求<span class="math notranslate nohighlight">\(\alpha_i\)</span>的表达式。</p></li>
 </ul>
 <p>  对式(12)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>，利用<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可得</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -536,13 +585,17 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{b}}{\mathbf{d}_k^\top\mathbf{Ad}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可以看出，<span class="math notranslate nohighlight">\(\alpha_k\)</span>只与搜索方向<span class="math notranslate nohighlight">\(\mathbf{d}_k\)</span>有关，因此，只需要迭代<span class="math notranslate nohighlight">\(n\)</span>次就可以计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*=\sum_{i=0}^{n-1}\frac{\mathbf{d}_i^\top\mathbf{b}}{\mathbf{d}_i^\top\mathbf{Ad}_i}\mathbf{d}_i
 \]</div>
+</div>
 <p>  为了演示上述过程在<span class="math notranslate nohighlight">\(n\)</span>步计算出<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>，引入如下定理。</p>
 <p>  <strong>定理2</strong>. 假设<span class="math notranslate nohighlight">\(\{\mathbf{d}_0,...,\mathbf{d}_{n-1}\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭的向量，<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>是初使点，令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -551,23 +604,31 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \alpha_k&amp;=\frac{\mathbf{g}_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}=\frac{(\mathbf{b}-\mathbf{Ax})_k^\top\mathbf{d}_k}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则迭代<span class="math notranslate nohighlight">\(n\)</span>次后，<span class="math notranslate nohighlight">\(\mathbf{x}_n=\mathbf{x}^*\)</span>。</p>
 <p>  <strong>证明</strong>. 从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>的误差<span class="math notranslate nohighlight">\(\mathbf{e}_0\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}^*-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{n-1}\mathbf{d}_{n-1}
 \]</div>
+</div>
 <p>从起始点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>到<span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>可以表示为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{x}_k-\mathbf{x}_0=\alpha_0\mathbf{d}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_{k-1}\mathbf{d}_{k-1}
 \]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(\mathbf{x}_k\)</span>的残差为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{g}_k=\mathbf{b}-\mathbf{Ax}_k=\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
 \]</div>
+</div>
 <p>因此可得<span class="math notranslate nohighlight">\(\alpha_k\)</span>如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -575,7 +636,9 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 \Rightarrow\alpha_k&amp;=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_0)}{\mathbf{d}_k^\top\mathbf{Ad}_k}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>但仍然需要提前知道<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>才能计算<span class="math notranslate nohighlight">\(\alpha_k\)</span>。下面分析一下分子项。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -583,12 +646,15 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 &amp;=\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>上式中，用到了<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性，因此可以得知<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}_k-\mathbf{x}_0)=0\)</span>。</p>
 <p>  最终有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \alpha_k=\frac{\mathbf{d}_k^\top\mathbf{A}(\mathbf{x}^*-\mathbf{x}_k)}{\mathbf{d}_k^\top\mathbf{Ad}_k}=\frac{\mathbf{d}_k^\top\mathbf{g}_k}{\mathbf{d}_k^\top\mathbf{Ad}_k}\tag{13}
 \]</div>
+</div>
 </section>
 <section id="id6">
 <h3><span class="section-number">2.3.2. </span>共轭梯度法<a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
@@ -596,21 +662,27 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <p>  假设有<span class="math notranslate nohighlight">\(D=\{\mathbf{d}_1,...,\mathbf{d}_n\}\)</span>是<span class="math notranslate nohighlight">\(n\)</span>个<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭向量集，则函数<span class="math notranslate nohighlight">\(f(\mathbf{x}_0+\alpha_1\mathbf{d}_1+\cdots+\alpha_n\mathbf{d}_n)\)</span>的最小化可以从<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_1\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>，然后从<span class="math notranslate nohighlight">\(\mathbf{x}_1\)</span>出发沿着<span class="math notranslate nohighlight">\(\mathbf{d}_2\)</span>的方向到达极小值点<span class="math notranslate nohighlight">\(\mathbf{x}_2\)</span>，如此继续就可以达到函数的最小值点。这种优化方法称之为共轭梯度法。</p>
 <p>  上一节根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭已解决了<span class="math notranslate nohighlight">\(\alpha_i\)</span>的计算问题，剩下的工作就是要解决<span class="math notranslate nohighlight">\(\mathbf{d}_i\)</span>的计算问题。</p>
 <p>  线性共轭梯度法一般使用以下规则来确定共轭方向<span class="math notranslate nohighlight">\(\mathbf{d}_{k+1}\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_{k+1}=\mathbf{g}_k+\beta_k\mathbf{d}_{k}\tag{14}
 \]</div>
+</div>
 <p>即，下一个搜索方向是上一个搜索方向与负梯度的线性组合。那么，<span class="math notranslate nohighlight">\(\beta_k\)</span>怎么确定呢？</p>
 <p>  显然，根据<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭性可知，<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=0\)</span>，因此，对式(14)左右同时乘上<span class="math notranslate nohighlight">\(\mathbf{d}_k^\top\mathbf{A}\)</span>可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k+1}=\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}+\beta_k\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}=0
 \]</div>
+</div>
 <p>整理可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \beta_k=-\frac{\mathbf{d}_k^\top\mathbf{A}\mathbf{g}_{k}}{\mathbf{d}_k^\top\mathbf{A}\mathbf{d}_{k}}\tag{15}
 \]</div>
+</div>
 <p>至此，线性共轭梯度算法的所有参数<span class="math notranslate nohighlight">\((\alpha_i,\beta_i)\)</span>已确定。</p>
 <p>  对于二次凸函数，共轭梯度法的计算步骤如下：</p>
 <ol class="arabic simple">
@@ -624,15 +696,19 @@ L(\mathbf{x},\lambda)=\frac12\lVert \mathbf{x}-\mathbf{z}\rVert_2^2  +\lambda( \
 <section id="id7">
 <h3><span class="section-number">2.3.3. </span>案例<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>  <strong>例1</strong>. 考虑如下二次规划，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{x}
 \]</div>
+</div>
 <p>  其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbf{A}=\left[\begin{array}{cc}\frac12&amp;\frac12\\\frac12&amp;1\end{array}\right],\quad\mathbf{b}=\left[\begin{array}{c}0\\2\end{array}\right]
 \end{split}\]</div>
+</div>
 <p>求函数最小值，以及变量最优解<span class="math notranslate nohighlight">\(\mathbf{x}^*\)</span>。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
@@ -677,30 +753,38 @@ f(\mathbf{x})=\frac12\mathbf{x}^\top\mathbf{A}\mathbf{x}+\mathbf{b}^\top\mathbf{
 <ol class="arabic simple">
 <li><p>给定初使点<span class="math notranslate nohighlight">\(\mathbf{x}_0\)</span>，允许误差<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>。</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{y}_0=\mathbf{x}_0,\mathbf{d}_0=-\nabla f(\mathbf{y}_0),k=1,j=1
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>若<span class="math notranslate nohighlight">\(\lVert\nabla f(\mathbf{y}_j)\rVert&lt;\epsilon\)</span>则停止计算。否则一维搜索，求<span class="math notranslate nohighlight">\(\alpha_j\)</span>满足下式，</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alpha\mathbf{d}_j)
 \]</div>
+</div>
 <p>令</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{y}_{j+1}=\mathbf{y}_j+\alpha_j\mathbf{d}_j
 \]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p>如果<span class="math notranslate nohighlight">\(j&lt;n\)</span>，则进行步骤4；否则进行步骤5.</p></li>
 <li><p>令<span class="math notranslate nohighlight">\(\mathbf{d}_{j+1}=-\nabla f(\mathbf{y}_{j+1})+\beta_j\mathbf{d}_j\)</span>，<span class="math notranslate nohighlight">\(j=j+1;\)</span>转步骤2。 其中，</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \beta_j=\frac{\lVert\nabla f(\mathbf{y}_{j+1})\rVert^2}{\lVert\nabla f(\mathbf{y}_{j})\rVert^2}
 \]</div>
+</div>
 <ol class="arabic simple" start="5">
 <li><p>令<span class="math notranslate nohighlight">\(\mathbf{x}_{k+1}=\mathbf{y}_{n+1},\mathbf{y}_0=\mathbf{x}_{k+1},\mathbf{d}_0=-\nabla f(\mathbf{y}_0),j=1,k=k+1\)</span>转步骤2.</p></li>
 </ol>
@@ -710,13 +794,16 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 <h2><span class="section-number">2.4. </span>Newton方法<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
 <ul>
 <li><p><strong>Newton步径</strong>.  对于<span class="math notranslate nohighlight">\(x\in \mathbf{dom}f\)</span>，我们称向量</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \Delta \mathbf{x}_{nt}=-\nabla^2f(\mathbf{x})^{-1}\nabla f(\mathbf{x})
   \]</div>
+</div>
 <p>为<span class="math notranslate nohighlight">\(f\)</span>在<span class="math notranslate nohighlight">\(x\)</span>处的Newton步径。该步径是下降方向（除非<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>是最优点）。由<span class="math notranslate nohighlight">\(\nabla^2f( \mathbf{x})\)</span>的正定性可知，除非<span class="math notranslate nohighlight">\(\nabla f( \mathbf{x})=0\)</span>，否则就有，<span class="math notranslate nohighlight">\(\nabla f( \mathbf{x})^\top\Delta  \mathbf{x}_{nt}=-\nabla f( \mathbf{x})^\top\nabla^2f( \mathbf{x})^{-1}\nabla f( \mathbf{x})&lt;0\)</span>。</p>
 </li>
 </ul>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>Newton方法(阻尼Newton)</p></th>
@@ -727,24 +814,31 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 </tr>
 </tbody>
 </table>
+</div>
 <p>这实际上是通用下降方法，只是采用Newton步径为搜索方向。</p>
 <ul class="simple">
 <li><p><strong>Newton步的由来</strong>. 函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在第<span class="math notranslate nohighlight">\(n\)</span>步点<span class="math notranslate nohighlight">\(\mathbf{x}_n\)</span>处Taylor展开至第2阶近似，</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   f(\mathbf{x})=f(\mathbf{x}_n)+\nabla f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)+\frac{1}{2}\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)^2
   \]</div>
+</div>
 <p>使用<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的最小点为新的探索点<span class="math notranslate nohighlight">\(\mathbf{x}_{n+1}\)</span>，因此，对式(67)左右同时求导，并令：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \nabla f(\mathbf{x})=\nabla f(\mathbf{x}_n)+\nabla^2 f(\mathbf{x}_n)(\mathbf{x}-\mathbf{x}_n)=0
   \]</div>
+</div>
 <p>从而求得迭代公式：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   \mathbf{x}=\mathbf{x}_n-\nabla^2 f(\mathbf{x}_n)^{-1}\nabla f(\mathbf{x}_n)=\mathbf{x}_n+\Delta \mathbf{x}_{nt}
   \]</div>
+</div>
 <ul class="simple">
 <li><p>Newton方法<strong>示例</strong></p></li>
 </ul>
@@ -859,10 +953,12 @@ f(\mathbf{y}_j+\alpha_j\mathbf{d}_j)=\min\limits_{\alpha\ge0}f(\mathbf{y}_j+\alp
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 下降法</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 最速下降法</a></li>

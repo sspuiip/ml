@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -356,6 +360,7 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 高斯分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 线性高斯系统</a></li>
 </ul>
             </nav>
         </div>
@@ -374,11 +379,14 @@ document.write(`
 <h2><span class="section-number">2.1. </span>高斯分布<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  （一）<strong>定义</strong></p>
 <p>  高斯分布(Gaussian Distribution)。随机变量<span class="math notranslate nohighlight">\(\forall \pmb{x}\in\mathbb{R}^D\)</span>服从高斯分布，记为<span class="math notranslate nohighlight">\(\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>的概率密度函数为，</p>
+<div class="math-wrapper docutils container" id="equation-multi-guassian-dist-def">
 <div class="math notranslate nohighlight" id="equation-multi-guassian-dist-def">
 <span class="eqno">(1)<a class="headerlink" href="#equation-multi-guassian-dist-def" title="Link to this equation">#</a></span>\[
 p(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}\underbrace{(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1} (\pmb{x}-\pmb{\mu})}_{马氏距离}\right\}
 \]</div>
+</div>
 <p>  上式中<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}\)</span>为对称可逆矩阵。对方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>进行特征值分解可知，<span class="math notranslate nohighlight">\(\pmb{\Sigma}=\pmb{U}\pmb{\Lambda}\pmb{U}^\top, s.t. \pmb{U}^\top\pmb{U}=\pmb{I}\)</span>。从而有<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}=\pmb{U}\pmb{\Lambda}^{-1}\pmb{U}^\top\)</span>，继续展开可得<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}=\sum_{i=1}^d\lambda_i^{-1}\pmb{u}_i\pmb{u}_i^\top\)</span>。将<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}\)</span>代回马氏距离，于是有，</p>
+<div class="math-wrapper docutils container" id="equation-guassian-ellipse">
 <div class="math notranslate nohighlight" id="equation-guassian-ellipse">
 <span class="eqno">(2)<a class="headerlink" href="#equation-guassian-ellipse" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
@@ -387,17 +395,21 @@ p(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp
 &amp;=\sum_{i=1}^d\frac{y_i}{\lambda_i}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>在二维平面，椭圆方程为<span class="math notranslate nohighlight">\(\frac{y_1^2}{\lambda_1}+\frac{y_2^2}{\lambda_2}=1\)</span>，由此可知高斯密度函数的等高线和椭圆相似。</p>
 <p>  （二）<strong>参数的最大似然估计</strong></p>
 <p>  假设有<span class="math notranslate nohighlight">\(N\)</span>个独立同分布的随机样本<span class="math notranslate nohighlight">\(\pmb{x}_i\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，则参数<span class="math notranslate nohighlight">\(\pmb{\mu},\pmb{\Sigma}\)</span>的最大似然估计分别为，</p>
+<div class="math-wrapper docutils container" id="equation-gaussian-mle">
 <div class="math notranslate nohighlight" id="equation-gaussian-mle">
 <span class="eqno">(3)<a class="headerlink" href="#equation-gaussian-mle" title="Link to this equation">#</a></span>\[
 \hat{\pmb{\mu}}=\sum_{i=1}^{N}\pmb{x}_i=\bar{\pmb{x}},\quad \hat{\pmb{\Sigma}}=\frac1N\sum_{i=1}^N(\pmb{x}_i-\bar{\pmb{x}})(\pmb{x}_i-\bar{\pmb{x}})^\top=\frac1N\sum_{i=1}^N\pmb{x}_i\pmb{x}_i^\top - \bar{\pmb{x}}\bar{\pmb{x}}^\top
 \]</div>
+</div>
 <div class="dropdown admonition">
 <p class="admonition-title"><strong>证明</strong></p>
 <div style="background-color: #F8F8F8  ">
 <p>  <span class="math notranslate nohighlight">\(N\)</span>个样本的似然函数为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -405,22 +417,30 @@ p(\mathcal{D})&amp;=\prod_{i=1}^N \mathcal{N}(\pmb{x}_i|\pmb{\mu},\pmb{\Sigma})\
 &amp;=(2\pi)^{-ND/2}|\pmb{\Sigma}|^{-N/2}\exp\left\{\sum_{i=1}^N  -\frac{1}{2}(\pmb{x}_i-\pmb{\mu})^\top\pmb{\Sigma}^{-1} (\pmb{x}_i-\pmb{\mu}) \right\}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>取对数(注意：<span class="math notranslate nohighlight">\(\pmb{\Sigma}^{-1}=\pmb{\Lambda}\)</span>)，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \ell(\pmb{\mu},\pmb{\Sigma})=-\frac{ND}{2}\log (2\pi)+\frac{N}{2}\log|\pmb{\Lambda}|-\frac12\sum_{i=1}^N(\pmb{x}_i-\pmb{\mu})^\top\pmb{\Sigma}^{-1} (\pmb{x}_i-\pmb{\mu})
 \]</div>
+</div>
 <p>  先对<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>求偏导，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \ell}{\partial \pmb{\mu}}\xlongequal[\pmb{y}_i=\pmb{x}_i-\pmb{\mu}]{\quad\quad}\frac{\partial \ell}{\partial \pmb{y_i}}\frac{\partial \pmb{y}_i}{\partial \pmb{\mu}}=-\frac12\sum_{i=1}^N(\pmb{\Sigma}^{-1}+\pmb{\Sigma}^{-1\top})\pmb{y}_i\cdot -1
 \]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \pmb{\mu}}=0\)</span>，可解得，</p>
+<div class="math-wrapper docutils container" id="equation-multi-gauss-mle-mu">
 <div class="math notranslate nohighlight" id="equation-multi-gauss-mle-mu">
 <span class="eqno">(4)<a class="headerlink" href="#equation-multi-gauss-mle-mu" title="Link to this equation">#</a></span>\[
 \hat{\pmb{\mu}}=\frac1N\sum_{i=1}^N \pmb{x}_i=\pmb{\bar{x}}
 \]</div>
+</div>
 <p>  下面对<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>求偏导，为简化计算，可转化为求<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \pmb{\Lambda}}\)</span>。利用迹技巧，似然函数可改写为如下形式，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -428,43 +448,57 @@ p(\mathcal{D})&amp;=\prod_{i=1}^N \mathcal{N}(\pmb{x}_i|\pmb{\mu},\pmb{\Sigma})\
 &amp;=\frac{N}{2}\log|\pmb{\Lambda}|-\frac12\textrm{tr}\left( \pmb{S}\pmb{\Lambda}\right)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>对<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>求偏导，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \ell}{\partial \pmb{\Lambda}}=\frac{N}{2}\pmb{\Lambda}^{-1\top}-\frac12\pmb{S}^\top
 \]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\frac{\partial \ell}{\partial \pmb{\Lambda}}=0\)</span>，可解出，</p>
+<div class="math-wrapper docutils container" id="equation-multi-gauss-var-mle">
 <div class="math notranslate nohighlight" id="equation-multi-gauss-var-mle">
 <span class="eqno">(5)<a class="headerlink" href="#equation-multi-gauss-var-mle" title="Link to this equation">#</a></span>\[
 \pmb{\Lambda}^{-1}=\frac1N\pmb{S},\quad\text{i.e.}\quad\pmb{\hat{\Sigma}}=\frac1N\sum_{i=1}^N(\pmb{x}_i-\pmb{\bar{x}})(\pmb{x}_i-\pmb{\bar{x}})^\top
 \]</div>
 </div>
 </div>
+</div>
 <p>  （三）<strong>高斯判别分析</strong></p>
 <p>  MVN的一个重要应用是定义生成分类器的类条件密度函数，即</p>
+<div class="math-wrapper docutils container" id="equation-gda-def">
 <div class="math notranslate nohighlight" id="equation-gda-def">
 <span class="eqno">(6)<a class="headerlink" href="#equation-gda-def" title="Link to this equation">#</a></span>\[
 p(\pmb{x}|y=c,\pmb{\theta})\triangleq\mathcal{N}(\pmb{x}|\pmb{\mu}_c,\pmb{\Sigma}_c)
 \]</div>
+</div>
 <p>该式称为<strong>高斯判别分析</strong>(gaussian discriminate analysis, GDA)。如果<span class="math notranslate nohighlight">\(\pmb{\Sigma}_c\)</span>为对角阵，则GDA等价于Naive Bayes。GDA是一种生成式方法，该方法假设数据在给定标签下服从多元高斯分布，而标签则服从伯努利分布(或Cat分布)。具体来说，样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的条件概率<span class="math notranslate nohighlight">\(p(\pmb{x}|y=c,\pmb{\theta})\)</span>服从多元高斯分布，即<span class="math notranslate nohighlight">\(\pmb{x}\sim\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\)</span>，其中<span class="math notranslate nohighlight">\(\pmb{\mu}\)</span>为均值，<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>为协方差矩阵。先验分布<span class="math notranslate nohighlight">\(p(y)\)</span>则服从伯努利分布(或Cat分布)。通过样本来确定高斯分布和伯努利分布(或Cat分布)的模型参数，即最大似然估计，然后通过最大后验概率来进行分类。对于任意给定的样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>，可使用下式规则决策类别，</p>
+<div class="math-wrapper docutils container" id="equation-gda-decision-rule">
 <div class="math notranslate nohighlight" id="equation-gda-decision-rule">
 <span class="eqno">(7)<a class="headerlink" href="#equation-gda-decision-rule" title="Link to this equation">#</a></span>\[
 \hat{y}(\pmb{x})=\arg\max\limits_{c}\quad\left[\log p(y=c|\pmb{\pi})+\log p(\pmb{x}|\pmb{\theta}_c) \right]
  \]</div>
+</div>
 <p>当计算<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的类<span class="math notranslate nohighlight">\(c\)</span>条件概率时，使用的是<span class="math notranslate nohighlight">\(\pmb{x}\)</span>与<span class="math notranslate nohighlight">\(\pmb{\mu}_c\)</span>的马氏距离。该过程也可以认为是近邻中心分类。对于上式<a class="reference internal" href="#equation-gda-decision-rule">(7)</a>使用均匀先验，则分类规则可以简化为，</p>
+<div class="math-wrapper docutils container" id="equation-gda-decision-rule-without-prior">
 <div class="math notranslate nohighlight" id="equation-gda-decision-rule-without-prior">
 <span class="eqno">(8)<a class="headerlink" href="#equation-gda-decision-rule-without-prior" title="Link to this equation">#</a></span>\[
 \hat{y}(\pmb{x})=\arg\max\limits_{c} \quad(\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c)
 \]</div>
+</div>
 <p>  - <strong>二次判别分析</strong></p>
 <p>  由贝叶斯公式可知类别后验为<span class="math notranslate nohighlight">\(p(y=c|\pmb{x})=\frac{p(\pmb{x}|y=c)p(y=c)}{\sum_{c'}p(\pmb{x}|y=c')p(y=c')}\)</span>，如果把类条件概率密度定义为高斯密度，则有，</p>
+<div class="math-wrapper docutils container" id="equation-quadratic-da">
 <div class="math notranslate nohighlight" id="equation-quadratic-da">
 <span class="eqno">(9)<a class="headerlink" href="#equation-quadratic-da" title="Link to this equation">#</a></span>\[
 p(y=c|\pmb{x})=\frac{ \pi_c\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_c|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_c)^\top\pmb{\Sigma}_c^{-1}(\pmb{x}-\pmb{\mu}_c) \right\} }{   \sum_{c'}\pi_{c'}\cdot (2\pi)^{-D/2}\cdot |\pmb{\Sigma}_{c'}|^{-1/2} \cdot \exp\left\{-\frac12 (\pmb{x}-\pmb{\mu}_{c'})^\top\pmb{\Sigma}_{c'}^{-1}(\pmb{x}-\pmb{\mu}_{c'}) \right\} }
 \]</div>
+</div>
 <p>上式<a class="reference internal" href="#equation-quadratic-da">(9)</a>也称为<strong>二次判别分析</strong>(quadratic disciminate analysis, QDA)。</p>
 <p>  - <strong>线性判别分析</strong></p>
 <p>  对于二次判别分析QDA，考虑一个特殊情况<span class="math notranslate nohighlight">\(\pmb{\Sigma}_c=\pmb{\Sigma}\)</span>，即所有类条件概率的方差相等，则QDA可简化为，</p>
+<div class="math-wrapper docutils container" id="equation-linear-discrimante-analysis">
 <div class="math notranslate nohighlight" id="equation-linear-discrimante-analysis">
 <span class="eqno">(10)<a class="headerlink" href="#equation-linear-discrimante-analysis" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
@@ -472,12 +506,16 @@ p(y=c|\pmb{x},\pmb{\theta})&amp;\propto \pi_c\exp\left\{ (\pmb{x}-\pmb{\mu})^\to
 &amp;=\exp\left\{\pmb{\mu}_c\pmb{\Sigma}^{-1}\pmb{x}-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c \right\} \cdot\underbrace{\exp\left\{ -\frac12\pmb{x}^\top\pmb{\Sigma}^{-1}\pmb{x} \right\}}_{与c无关，同时出现在分子分母会抵消}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>记<span class="math notranslate nohighlight">\(\pmb{\beta}_c=\pmb{\Sigma}^{-1}\pmb{\mu}_c, \gamma_c=-\frac12\pmb{\mu}_c^\top\pmb{\Sigma}^{-1}\pmb{\mu}_c+\log\pi_c\)</span>，则上式可改写为，</p>
+<div class="math-wrapper docutils container" id="equation-lda-def">
 <div class="math notranslate nohighlight" id="equation-lda-def">
 <span class="eqno">(11)<a class="headerlink" href="#equation-lda-def" title="Link to this equation">#</a></span>\[
 p(y=c|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_c^\top\pmb{x}+\gamma_c}}{\sum_{c'}e^{\pmb{\beta}_{c'}^\top\pmb{x}+\gamma_{c'}}}=\underbrace{\mathcal{S}(\eta)_c}_{S为Softmax函数}
 \]</div>
+</div>
 <p>  该式<a class="reference internal" href="#equation-lda-def">(11)</a>有一个有趣的属性，如果对分子取对数，则会得到一个关于<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的线性函数，任意两类<span class="math notranslate nohighlight">\(c\)</span>与<span class="math notranslate nohighlight">\(c'\)</span>的决策边界将会是一条直线。因此该方法也称为线性判别分析(linear discriminate analysis, LDA)，<strong>分类界线</strong>可由下式给出，</p>
+<div class="math-wrapper docutils container" id="equation-lda-border">
 <div class="math notranslate nohighlight" id="equation-lda-border">
 <span class="eqno">(12)<a class="headerlink" href="#equation-lda-border" title="Link to this equation">#</a></span>\[\begin{split}
 \begin{split}
@@ -486,13 +524,17 @@ p(y=c|\pmb{x},\pmb{\theta})&amp;=p(y=c'|\pmb{x},\pmb{\theta})\\
 \pmb{x}^\top (\pmb{\beta}_c-\pmb{\beta}_{c'})&amp;=\gamma_{c'}-\gamma_c
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  - <strong>线性判别分析-两个类别情况</strong></p>
 <p>  当只有两个类别的情形，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(y=1|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}}{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}+e^{\pmb{\beta}_0^\top\pmb{x}+\gamma_0}}=\frac{1}{1+e^{-(\pmb{\beta}_1^\top\pmb{x}+\gamma_1-\pmb{\beta}_0^\top\pmb{x}-\gamma_0)}}
 \]</div>
+</div>
 <p>此时，<span class="math notranslate nohighlight">\(\gamma_1-\gamma_0=-\frac{1}{2}(\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1+\pmb{\mu}_0)+\log(\pi_1/\pi_0)\)</span>。若定义</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -500,28 +542,259 @@ p(y=1|\pmb{x},\pmb{\theta})=\frac{e^{\pmb{\beta}_1^\top\pmb{x}+\gamma_1}}{e^{\pm
 \pmb{x}_0&amp;=\frac12(\pmb{\mu}_1+\pmb{\mu}_0)-(\pmb{\mu}_1-\pmb{\mu}_0)\frac{\log(\pi_1/\pi_2)}{ (\pmb{\mu}_1-\pmb{\mu}_0)^\top\pmb{\Sigma}^{-1}(\pmb{\mu}_1-\pmb{\mu}_0) }
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{w}^\top\pmb{x}_0=-(\gamma_1-\gamma_0)
 \]</div>
+</div>
 <p>因此，</p>
+<div class="math-wrapper docutils container" id="equation-lda-2-class">
 <div class="math notranslate nohighlight" id="equation-lda-2-class">
 <span class="eqno">(13)<a class="headerlink" href="#equation-lda-2-class" title="Link to this equation">#</a></span>\[
 p(y=1|\pmb{x},\pmb{\theta})=\text{sigm}(\pmb{w}^\top(\pmb{x}-\pmb{x_0}))
 \]</div>
+</div>
 <p>  最终决策规则为，移动<span class="math notranslate nohighlight">\(\pmb{x}\)</span>至<span class="math notranslate nohighlight">\(\pmb{x}_0\)</span>点，投影到直线<span class="math notranslate nohighlight">\(\pmb{w}\)</span>，观察结果为正或负，为正则判别为类1，否则判别为类0。</p>
 <p>  - <strong>判别模型的参数估计</strong></p>
 <p>  已知判别模型的参数，我们可以根据模型来进行类别判定。然而，当参数未知时，我们要对这些模型参数先进行估计。最简单的方法是最大似然估计(MLE)。已有数据<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>其对数似然函数为，</p>
+<div class="math-wrapper docutils container" id="equation-data-log-likelihood">
 <div class="math notranslate nohighlight" id="equation-data-log-likelihood">
 <span class="eqno">(14)<a class="headerlink" href="#equation-data-log-likelihood" title="Link to this equation">#</a></span>\[
 p(\mathcal{D}|\pmb{\theta})=\left[\sum_{i=1}^N\sum_{c=1}^C \mathbb{I}(y_i=c)\log\pi_c \right]+\sum_{c=1}^C\left[\sum_{i:y_i=c}\log \mathcal{N}(\pmb{x}_i|\pmb{\mu}_c,\pmb{\Sigma}_c) \right]
 \]</div>
+</div>
 <p>可以看到，似然函数可以划分为先验<span class="math notranslate nohighlight">\(\pmb{\pi}\)</span>的项和<span class="math notranslate nohighlight">\(C\)</span>个<span class="math notranslate nohighlight">\(\pmb{\mu}_c,\pmb{\Sigma}_c\)</span>的项，因此参数可以分别单独估计。对于类别先验可以使用<span class="math notranslate nohighlight">\(\pmb{\hat{\pi}}=\frac{N_c}{N}\)</span>估计，与naive Bayes一致。对于类条件密度参数，可以根据类别标签将数据集拆分成<span class="math notranslate nohighlight">\(C\)</span>个子数据集，然后分别估计该子集的类别参数，</p>
+<div class="math-wrapper docutils container" id="equation-lda-para-esitmator">
 <div class="math notranslate nohighlight" id="equation-lda-para-esitmator">
 <span class="eqno">(15)<a class="headerlink" href="#equation-lda-para-esitmator" title="Link to this equation">#</a></span>\[
 \pmb{\hat{\mu}}_c=\frac{1}{N_c}\sum_{i:y_i=c}\pmb{x}_i,\quad\pmb{\hat{\Sigma}}_c=\frac{1}{N_c}\sum_{i:y_i=c}(\pmb{x}_i-\pmb{\hat{\mu}}_c)(\pmb{x}_i-\pmb{\hat{\mu}}_c)^\top
 \]</div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">2.2. </span>线性高斯系统<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>  假设<span class="math notranslate nohighlight">\(\pmb{z}\in \mathbb{R}^L\)</span>为未知向量，<span class="math notranslate nohighlight">\(\pmb{y}\in \mathbb{R}^D\)</span>，且它们之间的关系如下，</p>
+<div class="math-wrapper docutils container" id="equation-lin-gauss">
+<div class="math notranslate nohighlight" id="equation-lin-gauss">
+<span class="eqno">(16)<a class="headerlink" href="#equation-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+     p(\pmb{z}) &amp;=\mathcal{N}(\pmb{z}|\pmb{\mu}_z,\pmb{\Sigma}_z) \\
+       p(\pmb{y}|\pmb{z})&amp;=\mathcal{N}(\pmb{y}|\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y) \nonumber
+  \end{split}
+\end{split}\]</div>
+</div>
+<p>则上式称为线性高斯系统。相应的联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})=p(\pmb{y}|\pmb{x})p(\pmb{x})\)</span>是一个<span class="math notranslate nohighlight">\(L+D\)</span>维的高斯分布，其均值与协方差为，</p>
+<div class="math-wrapper docutils container" id="equation-equ-lin-gauss">
+<div class="math notranslate nohighlight" id="equation-equ-lin-gauss">
+<span class="eqno">(17)<a class="headerlink" href="#equation-equ-lin-gauss" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+   \pmb{\mu} &amp;=\begin{pmatrix}
+                \pmb{\mu}_z \\
+                \pmb{W\mu}_z+\pmb{b}
+              \end{pmatrix} \\
+     \pmb{\Sigma} &amp;=\begin{pmatrix}
+                     \pmb{\Sigma}_z &amp; \pmb{\Sigma}_z \pmb{W}^{\top} \\
+                    \pmb{W}\pmb{\Sigma}_z &amp; \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^{\top}
+                   \end{pmatrix}
+\end{split}
+\end{split}\]</div>
+</div>
+<p>  <strong>（一）高斯配方法</strong></p>
+<p>  根据指数族分布，高斯分布<span class="math notranslate nohighlight">\(\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\)</span>，</p>
+<div class="math-wrapper docutils container" id="equation-multi-gauss-dist-normal">
+<div class="math notranslate nohighlight" id="equation-multi-gauss-dist-normal">
+<span class="eqno">(18)<a class="headerlink" href="#equation-multi-gauss-dist-normal" title="Link to this equation">#</a></span>\[
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})\triangleq \frac{1}{(2\pi)^{D/2}|\pmb{\Sigma}|^{1/2}}\exp\left\{-\frac{1}{2}(\pmb{x}-\pmb{\mu})^\top\pmb{\Sigma}^{-1}(\pmb{x}-\pmb{\mu})\right\}
+\]</div>
+</div>
+<p>可以写成经典型(Canonical form)，即</p>
+<div class="math-wrapper docutils container" id="equation-canonical-form-gauss">
+<div class="math notranslate nohighlight" id="equation-canonical-form-gauss">
+<span class="eqno">(19)<a class="headerlink" href="#equation-canonical-form-gauss" title="Link to this equation">#</a></span>\[
+\mathcal{N}(\pmb{x}|\pmb{\mu},\pmb{\Sigma})=\exp\left\{-\frac{1}{2}\pmb{x}^{\top}\pmb{\Sigma}^{-1}\pmb{x}+\pmb{\eta}^\top \pmb{x}+\pmb{\zeta} \right\}
+\]</div>
+</div>
+<p>其中，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\pmb{\eta}&amp;=\pmb{\Sigma}^{-1}\pmb{\mu}\\
+\pmb{\zeta}&amp;=-\frac{1}{2}\left(d\log 2\pi -\log|\pmb{\Lambda}|+\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}\right)\nonumber
+\end{split}
+\end{split}\]</div>
+</div>
+<p>将<span class="math notranslate nohighlight">\(\pmb{\zeta}\)</span>中的最后一项展开，我们可以发现，<span class="math notranslate nohighlight">\(\pmb{\eta}^\top \pmb{\Lambda}^{-1}\pmb{\eta}=\pmb{\mu}^\top \pmb{\Lambda}\pmb{\mu}\)</span>。</p>
+<p>  通过配方，可以得到<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>如下，</p>
+<div class="math-wrapper docutils container" id="equation-equ-pzy">
+<div class="math notranslate nohighlight" id="equation-equ-pzy">
+<span class="eqno">(20)<a class="headerlink" href="#equation-equ-pzy" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+   p(\pmb{z},\pmb{y})&amp;=p(\pmb{z})p(\pmb{y}|\pmb{z}) \\
+     &amp;=\mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)\cdot \mathcal{N}(\pmb{Wz}+\pmb{b},\pmb{\Sigma}_y)\\
+     &amp;=\exp \left( -\frac{1}{2}\pmb{z}^\top \pmb{\Sigma}_z^{-1}\pmb{z}+\pmb{\mu}^{\top}\pmb{\Sigma}_z^{-1}\pmb{z} +C_1\right) \\
+     &amp;\times\exp\left( -\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y}+(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1} \pmb{y}-\frac{1}{2}(\pmb{Wz}+\pmb{b})^{\top}\pmb{\Sigma}_y^{-1}(\pmb{Wz}+\pmb{b})+C_2\right)\\
+     &amp;=\exp\left(-\frac{1}{2}\pmb{z}^\top \left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]\pmb{z}+\pmb{z}^\top \pmb{W}^\top\pmb{\Sigma}_y^{-1}\pmb{y}-\frac{1}{2}\pmb{y}^{\top}\pmb{\Sigma}_y^{-1}\pmb{y} \right)+C_3\\
+     &amp;=\exp\left(-\frac{1}{2}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}^\top\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} &amp; -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}&amp; \pmb{\Sigma}_y^{-1}                                               \end{pmatrix}\begin{pmatrix}\pmb{z}\\ \pmb{y}\end{pmatrix}+ \begin{pmatrix}
+       \pmb{\eta}_z\\
+       \pmb{\eta}_y
+     \end{pmatrix}^\top \begin{pmatrix}
+       \pmb{z}\\
+       \pmb{y}
+     \end{pmatrix} +C_4\right)
+\end{split}
+\end{split}\]</div>
+</div>
+<p>其中，最后一行的<span class="math notranslate nohighlight">\(\pmb{\eta}_z=\pmb{\mu}_z^\top\pmb{\Sigma}_z^{-1}\)</span>，<span class="math notranslate nohighlight">\(\pmb{\eta}_y=(\pmb{W\mu}_z+\pmb{b})^\top (\pmb{\Sigma}_y+\pmb{W\Sigma}_z^{-1}\pmb{W}^\top)^{-1}\)</span>。由式<a class="reference internal" href="#equation-equ-pzy">(20)</a>可知联合分布<span class="math notranslate nohighlight">\(p(\pmb{z},\pmb{y})\)</span>的精度矩阵<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>为，</p>
+<div class="math-wrapper docutils container" id="equation-joint-precision-matrix">
+<div class="math notranslate nohighlight" id="equation-joint-precision-matrix">
+<span class="eqno">(21)<a class="headerlink" href="#equation-joint-precision-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+\pmb{\Sigma^{-1}}=\begin{pmatrix} \pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W} &amp; -\pmb{W}^\top \pmb{\Sigma}_y^{-1}\\ -\pmb{\Sigma}_y^{-1}\pmb{W}&amp; \pmb{\Sigma}_y^{-1}\end{pmatrix}\triangleq \begin{pmatrix}\pmb{\Lambda}_{zz}&amp;\pmb{\Lambda}_{zy}\\ \pmb{\Lambda}_{yz}&amp;\pmb{\Lambda}_{yy} \end{pmatrix}=\pmb{\Lambda}
+\end{split}\]</div>
+</div>
+<p>根据<a class="reference internal" href="prob_dist.html#equation-pricision-matrix">(39)</a>可知，</p>
+<div class="math-wrapper docutils container" id="equation-joint-variance-matrix">
+<div class="math notranslate nohighlight" id="equation-joint-variance-matrix">
+<span class="eqno">(22)<a class="headerlink" href="#equation-joint-variance-matrix" title="Link to this equation">#</a></span>\[\begin{split}
+\pmb{\Sigma}=\begin{pmatrix} \pmb{\Sigma}_z &amp; \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z&amp; \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
+\end{split}\]</div>
+</div>
+<p>  <strong>（二）分布计算</strong></p>
+<p>  由配方可知，<strong>联合分布</strong>为，</p>
+<div class="math-wrapper docutils container" id="equation-joint-gaussian-distribution">
+<div class="math notranslate nohighlight" id="equation-joint-gaussian-distribution">
+<span class="eqno">(23)<a class="headerlink" href="#equation-joint-gaussian-distribution" title="Link to this equation">#</a></span>\[\begin{split}
+\boxed{
+\begin{split}
+p(\pmb{z},\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
+\pmb{\mu}&amp;=\begin{pmatrix}\pmb{\mu}_z \\ \pmb{W}\pmb{\mu}_z+\pmb{b} \end{pmatrix}\\
+\pmb{\Sigma}&amp;=\begin{pmatrix} \pmb{\Sigma}_z &amp; \pmb{\Sigma}_z\pmb{W}^\top\\ \pmb{W}\pmb{\Sigma}_z&amp; \pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top\end{pmatrix}
+\end{split}
+}
+\end{split}\]</div>
+</div>
+<p>  由配方可知，<strong>边缘分布</strong>为，</p>
+<div class="math-wrapper docutils container" id="equation-joint-edge-dist">
+<div class="math notranslate nohighlight" id="equation-joint-edge-dist">
+<span class="eqno">(24)<a class="headerlink" href="#equation-joint-edge-dist" title="Link to this equation">#</a></span>\[\begin{split}
+\boxed{
+  \begin{split}
+  \pmb{y}&amp;\sim \mathcal{N}(\pmb{W\mu}_z+\pmb{b},\pmb{\Sigma}_y+\pmb{W}\pmb{\Sigma}_z\pmb{W}^\top)\\
+  \pmb{z}&amp;\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
+  \end{split}
+}
+\end{split}\]</div>
+</div>
+<p>  由配方可知，<strong>后验分布</strong>为，</p>
+<div class="math-wrapper docutils container" id="equation-posterior-gaussian-dist">
+<div class="math notranslate nohighlight" id="equation-posterior-gaussian-dist">
+<span class="eqno">(25)<a class="headerlink" href="#equation-posterior-gaussian-dist" title="Link to this equation">#</a></span>\[\begin{split}
+\boxed{
+  \begin{split}
+   p(\pmb{z}|\pmb{y})&amp;=\mathcal{N}(\pmb{y}_{z|y},\pmb{\Sigma}_{z|y})\\
+   \pmb{\Sigma}_{z|y}&amp;=(\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W})^{-1}=\pmb{\Lambda}_{zz}^{-1}\\
+   \pmb{\mu}_{z|y}&amp;=\pmb{\Sigma}_{z|y}(\pmb{\Lambda}_{zz}\pmb{\mu}_z-\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b})))\\
+   &amp;=\pmb{\mu}_z-\pmb{\Lambda}_{zz}^{-1}\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
+   &amp;=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
+  \end{split}
+}
+\end{split}\]</div>
+</div>
+<p>  <strong>（三）例子</strong></p>
+<ul class="simple">
+<li><p><strong>标量后验</strong></p></li>
+</ul>
+<p>  假设有<span class="math notranslate nohighlight">\(N\)</span>个关于潜在变量<span class="math notranslate nohighlight">\(z\)</span>的带噪测度<span class="math notranslate nohighlight">\(y_i(i=1,...,N)\)</span>，并假设带噪测度具有固定的精度<span class="math notranslate nohighlight">\(\lambda_y=\frac{1}{\sigma^2}\)</span>，所以有如下似然，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+p(y_i|z)=\mathcal{N}(z,\lambda_y^{-1})
+\]</div>
+</div>
+<p>可以给未知变量<span class="math notranslate nohighlight">\(z\)</span>一个高斯先验，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+p(z)=\mathcal{N}(\mu_0,\lambda_0^{-1})
+\]</div>
+</div>
+<p>则，我们对未知变量<span class="math notranslate nohighlight">\(z\)</span>可以通过计算后验<span class="math notranslate nohighlight">\(p(z|y_1,...,y_N,\sigma^2)\)</span>得到它的一个估计。</p>
+<p>  假设<span class="math notranslate nohighlight">\(\pmb{y}=(y_1,...,y_N)\)</span>，<span class="math notranslate nohighlight">\(\pmb{W}=\pmb{1}_N,\pmb{\Sigma}_y^{-1}=\text{diag}(\lambda_y\pmb{I})\)</span>，则有如下形式的分布，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+z&amp;\sim \mathcal{N}(\mu_0,\lambda_0^{-1})\\
+\pmb{y}|z&amp;\sim \mathcal{N}(\pmb{1}_N \mu_0, \text{diag}(\lambda_y^{-1}\pmb{I}))
+\end{split}
+\end{split}\]</div>
+</div>
+<p>联合分布为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(z,\pmb{y})&amp;=\mathcal{N}(\pmb{\mu},\pmb{\Sigma})\\
+\pmb{\mu}&amp;=\begin{pmatrix}\mu_0 \\ \pmb{1}_Nz \end{pmatrix}\\
+\pmb{\Sigma}&amp;=\begin{pmatrix} \lambda_0^{-1}&amp;\lambda_0^{-1}\pmb{1}_N^\top \\ \pmb{1}_N\lambda_0^{-1}&amp;\Sigma_y+\pmb{1}_N \lambda_0^{-1}\pmb{1}_N^\top \end{pmatrix}\\
+\pmb{\Lambda}&amp;=\pmb{\Sigma}^{-1}=\begin{pmatrix} \lambda_0+N\lambda_y&amp;-\pmb{1}_N^\top \Sigma_y^{-1} \\ -\Sigma_y^{-1}\pmb{1}_N&amp;\Sigma_y^{-1} \end{pmatrix}\\
+\end{split}
+\end{split}\]</div>
+</div>
+<p>后验分布为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+p(z|\pmb{y})&amp;=\mathcal{N}(\pmb{\mu}_{z|\pmb{y}},\pmb{\Sigma}_{z|\pmb{y}})\\
+\pmb{\Sigma}_{z|\pmb{y}}&amp;=\pmb{\Lambda}_{zz}^{-1}=(\lambda_0+N\lambda_y)^{-1} \\
+\pmb{\mu}_{z|\pmb{y}}&amp;=\pmb{\Sigma}_{z|\pmb{y}}(\pmb{\Lambda}_{zz}\mu_z-\pmb{\Lambda}_{z\pmb{y}}(\pmb{y}-\pmb{\mu}_y))\\
+&amp;=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{\mu}_y) }{\lambda_0+N\lambda_y}\\
+&amp;=\frac{(\lambda_0+N\lambda_y)\mu_0 + \pmb{1}_N^\top \Sigma_y^{-1}(\pmb{y}-\pmb{1}_N \mu_0) }{\lambda_0+N\lambda_y}\\
+&amp;=\frac{\lambda_0\mu_0 + N\lambda_y \bar{y} }{\lambda_0+N\lambda_y}
+\end{split}
+\end{split}\]</div>
+</div>
+<ul class="simple">
+<li><p><strong>向量后验</strong></p></li>
+</ul>
+<p>  未知变量给一个先验分布，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\pmb{z}\sim \mathcal{N}(\pmb{\mu}_z,\pmb{\Sigma}_z)
+\]</div>
+</div>
+<p>假设有<span class="math notranslate nohighlight">\(N\)</span>个关于<span class="math notranslate nohighlight">\(\pmb{z}\)</span>的测量值<span class="math notranslate nohighlight">\(\pmb{y}_i,i=1,2,...,N\)</span>，则似然函数为，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+p(\mathcal{D}|\pmb{z})=\prod_{i=1}^{N}\mathcal{N}(\pmb{y}_i|\pmb{z},\pmb{\Sigma}_y)=\mathcal{N}(\pmb{\bar{y}}|\pmb{\mu}_z,\frac{1}{N}\pmb{\Sigma}_y)
+\]</div>
+</div>
+<p>  注意：我们可以将<span class="math notranslate nohighlight">\(N\)</span>个观测值用它们的平均值<span class="math notranslate nohighlight">\(\bar{\pmb{y}}\)</span>以及它们的方差的<span class="math notranslate nohighlight">\(1/N\)</span>来代替。设置<span class="math notranslate nohighlight">\(\pmb{W}=\pmb{I},\pmb{b}=\pmb{0}\)</span>，根据贝叶斯规则有，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+p(\pmb{z}|\pmb{y}_1,...,\pmb{y}_N)=\mathcal{N}(\hat{\pmb{\mu}},\hat{\pmb{\Sigma}})
+\]</div>
+</div>
+<p>其中，</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{\Sigma}}^{-1}=\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1}
+\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
+\]</div>
+</div>
 </section>
 </section>
 
@@ -565,12 +838,15 @@ p(\mathcal{D}|\pmb{\theta})=\left[\sum_{i=1}^N\sum_{c=1}^C \mathbb{I}(y_i=c)\log
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 高斯分布</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.2. 线性高斯系统</a></li>
 </ul>
   </nav></div>
 

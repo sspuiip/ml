@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -381,42 +385,55 @@ document.write(`
 <section id="id1">
 <h2><span class="section-number">3.1. </span>EM算法<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
 <p>  令<span class="math notranslate nohighlight">\(\pmb{y}_i\)</span>为数据<span class="math notranslate nohighlight">\(i\)</span>的可观测变量，<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>为隐变量或缺失变量，则可观测数据的最大对数似然为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \ell(\pmb{\theta})=\log P(\pmb{Y}|\pmb{\theta})=\log \sum_{\pmb{Z}}P(\pmb{Y},\pmb{Z}|\pmb{\theta})
 \tag{1}
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{Y}=[\pmb{y}_1,...,\pmb{y}_n]^\top, \pmb{Z}=[\pmb{z}_1,...,\pmb{z}_n]^\top\)</span>, <span class="math notranslate nohighlight">\(\log P(\pmb{Y}|\pmb{\theta})\)</span>称为<strong>不完全数据对数似然</strong>。很明显，这个问题难于优化，因为<span class="math notranslate nohighlight">\(\log\)</span>不能被塞进到<code class="docutils literal notranslate"><span class="pre">sum</span></code>求和运算中(包含和的对数)。</p>
 <p>  EM算法绕开这个问题如下，首先定义<strong>完全数据对数似然</strong>（complete data log likelihood）,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \ell_c(\pmb{\theta})\triangleq\log P(\pmb{Y},\pmb{Z}|\pmb{\theta})
 \tag{2}
 \]</div>
+</div>
 <p>因为<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>未知，上式不能直接计算。可以定义<strong>期望的完全数据对数似然</strong>(expected complete data log likelihood)，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}_{\pmb{z}}[\ell_c (\pmb{\theta}|\mathcal{D},\pmb{\theta}^{t-1})]=\sum_{\pmb{Z}}P(\pmb{Z}|\pmb{Y},\pmb{\theta}^{t-1}) P(\pmb{Y},\pmb{Z}|\pmb{\theta})
 \tag{3}
 \]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(t\)</span>为当前迭代，<span class="math notranslate nohighlight">\(Q\)</span>为辅助函数(auxiliary function)，期望是关于旧参数<span class="math notranslate nohighlight">\(\pmb{\theta}^{t-1}\)</span>和观测数据<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>的。E步的目标正是计算<span class="math notranslate nohighlight">\(Q\)</span>函数。M步的目标为优化<span class="math notranslate nohighlight">\(Q\)</span>函数的参数<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{\theta}^t =\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t-1})
 \]</div>
+</div>
 <p>最大后验则对应以下优化，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{\theta}^t =\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t-1})+\log p(\pmb{\theta})
 \]</div>
+</div>
 <section id="id2">
 <h3><span class="section-number">3.1.1. </span>EM算法推导<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>  对于一个含有隐变量的概率模型，目标是极大化观测数据<span class="math notranslate nohighlight">\(Y\)</span>关于参数<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>的对数似然函数，即极大化下式，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \ell(\pmb{\theta})=\log p(\pmb{Y}|\pmb{\theta})=\log\sum_{\pmb{Z}}p(\pmb{Y},\pmb{Z}|\pmb{\theta})
 \]</div>
+</div>
 <p>上式的极大化困难主要是含有未观测变量。EM通过迭代的方法逐步近似极大化<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>，希望达到<span class="math notranslate nohighlight">\(\ell(\pmb{\theta}^t)&gt;\ell(\pmb{\theta}^{t-1})\)</span>。现考虑，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -426,17 +443,23 @@ Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}_{\pmb{z}}[\ell_c (\pmb{\theta}|\ma
 &amp;=\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \ell(\pmb{\theta})\ge\ell(\pmb{\theta}^{i})+\sum_{\pmb{Z}} p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)\log\frac{p(\pmb{Y}|\pmb{Z},\pmb{\theta})p(\pmb{Z}|\pmb{\theta})}{p(\pmb{Z}|\pmb{Y},\pmb{\theta}^i)p(\pmb{Y}|\pmb{\theta}^i)}\triangleq \underbrace{B(\pmb{\theta},\pmb{\theta}^i)}_{\mathrm{\ell(\pmb{\theta})的下界}}
 \]</div>
+</div>
 <p>显然有<span class="math notranslate nohighlight">\( \ell(\pmb{\theta}^i)=B(\pmb{\theta}^i,\pmb{\theta}^i)\)</span>成立。因此，可以使<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>增大的任何<span class="math notranslate nohighlight">\(\pmb{\theta}\)</span>都可以使得<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>增大。<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>也称之为<span class="math notranslate nohighlight">\(\ell(\pmb{\theta})\)</span>的一个<strong>下界</strong>。为此，可以极大化<span class="math notranslate nohighlight">\(B(\pmb{\theta},\pmb{\theta}^i)\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{\theta}^{t+1}=\arg\max\limits_{\pmb{\theta}}B(\pmb{\theta},\pmb{\theta}^i)
 \]</div>
+</div>
 <p>具体地，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -447,17 +470,21 @@ Q(\pmb{\theta},\pmb{\theta}^{t-1})=\mathbb{E}_{\pmb{z}}[\ell_c (\pmb{\theta}|\ma
 &amp;=\arg\max\limits_{\pmb{\theta}} Q(\pmb{\theta},\pmb{\theta}^{t})
 \end{split}
 \end{split}\]</div>
+</div>
 <p>到此，EM算法每次迭代都是通过不断极大化下界来极大化对数似然函数，从而实现隐变量概率模型的极大似然估计。</p>
 </section>
 <section id="id3">
 <h3><span class="section-number">3.1.2. </span>案例<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
 <p>  假设有3枚硬币<span class="math notranslate nohighlight">\(A,B,C\)</span>，按以下规则投掷，并记录实验结果。先投掷<span class="math notranslate nohighlight">\(A\)</span>，若<span class="math notranslate nohighlight">\(A\)</span>的结果为正面，则投掷硬币<span class="math notranslate nohighlight">\(B\)</span>的结果记录为实验结果；若<span class="math notranslate nohighlight">\(A\)</span>的结果为反面，则投掷硬币<span class="math notranslate nohighlight">\(C\)</span>的结果记录为实验结果。假设整个实验只能观测到实验结果，不能观测到掷硬币的过程，独立重复<span class="math notranslate nohighlight">\(n\)</span>次试验，若观测到以下结果：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 1,1,0,1,0,0,0,1,1,0,...
 \]</div>
+</div>
 <p>问这3枚硬币正面出现的概率是多少？</p>
 <p>  现假设硬币<span class="math notranslate nohighlight">\(A,B,C\)</span>正面向上的概率分别为<span class="math notranslate nohighlight">\(\pi,p,q\)</span>，<span class="math notranslate nohighlight">\(y\)</span>为一次实验的观测结果，<span class="math notranslate nohighlight">\(z\)</span>为<span class="math notranslate nohighlight">\(A\)</span>的投掷结果，则一次投掷的过程可以用以下模型来建模，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -466,7 +493,9 @@ p(y|\theta)&amp;=\sum_zp(y,z|\theta)=\sum_zp(y|z,\theta)p(z)\\
 &amp;= p^y(1-p)^{1-y}\pi+q^y(1-q)^{1-y}(1-\pi)
 \end{split}
 \end{split}\]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(n\)</span>次实验结果，可以表示为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -474,7 +503,9 @@ p(y|\theta)&amp;=\sum_zp(y,z|\theta)=\sum_zp(y|z,\theta)p(z)\\
 &amp;=\prod_{j=1}^n \left[\pi p^{y_j}(1-p)^{1-y_j}+(1-\pi)q^{y_j}(1-q)^{1-y_j}\right]
 \end{split}
 \end{split}\]</div>
+</div>
 <p>取对数，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -483,16 +514,20 @@ p(y|\theta)&amp;=\sum_zp(y,z|\theta)=\sum_zp(y|z,\theta)p(z)\\
 &amp;=\sum_{j=1}^n\log \left[\pi p^{y_j}(1-p)^{1-y_j}+(1-\pi)q^{y_j}(1-q)^{1-y_j}\right]
 \end{split}
 \end{split}\]</div>
+</div>
 <p>对该模型使用极大似然估计法，即可得最优参数值<span class="math notranslate nohighlight">\(\hat{\theta}=(\hat{\pi},\hat{p},\hat{q})\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\theta}=\arg\max\limits_{\theta}\ell(\theta)
 \]</div>
+</div>
 <p>  由于含有隐变量<span class="math notranslate nohighlight">\(z\)</span>，没有确定的观测值，上述问题没有解析解。可以通过迭代的方法求解。EM算法就是一种解决这类问题的迭代方法。</p>
 <p>首先，对所有参数赋初值，<span class="math notranslate nohighlight">\(\theta^{(0)}=(\pi^{(0)},p^{(0)},q^{(0)})\)</span>，然后迭代计算参数的估计值，直至收敛。</p>
 <ul class="simple">
 <li><p>E步： 计算<span class="math notranslate nohighlight">\(\mathbb{E}_{z_j}[\log p(y_j,z_j)]\)</span>。 由题设可知(使用逆概公式)</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -503,9 +538,11 @@ p(z_j=1|y_j)&amp;=\frac{p(y_j|z_j=1)p(z_j=1)}{\sum_{z_j} p(y|z_j)p(z_j)}\\
 &amp;\triangleq\mu_j^{(i+1)}
 \end{split}
 \end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p>M步：计算参数的新估计值</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -514,7 +551,9 @@ p^{(i+1)}&amp;=\frac{\sum_{j=1}^n\mu_j^{(i+1)}y_j}{\sum_{j=1}^n\mu_j^{(i+1)}}\\
 q^{(i+1)}&amp;=\frac{\sum_{j=1}^n(1-\mu_j^{(i+1)})y_j}{\sum_{j=1}^n(1-\mu_j^{(i+1)})}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  注：上例中<span class="math notranslate nohighlight">\(Q(\pmb{\theta}|\pmb{\theta}^t)\)</span>计算如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -525,6 +564,7 @@ Q(\pmb{\theta}|\pmb{\theta}^t)&amp;= \mathbb{E}_{\pmb{Z}} [\log P(\pmb{Y},\pmb{Z
 &amp;=\sum_i\mu_j^{(t+1)}\log [\pi p^{y_i}(1-p)^{1-y_i}]+(1-\mu_j^{(t+1)})\log [(1-\pi) q^{y_i}(1-q)^{1-y_i}]
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <section id="id4">
 <h3><span class="section-number">3.1.3. </span>实验代码<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
@@ -615,10 +655,12 @@ Q(\pmb{\theta}|\pmb{\theta}^t)&amp;= \mathbb{E}_{\pmb{Z}} [\log P(\pmb{Y},\pmb{Z
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">3.1. EM算法</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1.1. EM算法推导</a></li>

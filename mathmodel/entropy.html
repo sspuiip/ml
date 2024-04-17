@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -375,34 +379,43 @@ document.write(`
 <section id="id2">
 <h2><span class="section-number">3.1. </span>信息量<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>  一般来说，一个信息发送源送出的信号是具有不确定性的。一个信号的不确定性可以根据信号出现的概率来度量，即概率越大出现机会越多，不确定性就越小；反之不确定性就越大。因此，不确定性函数<span class="math notranslate nohighlight">\(f\)</span>应该满足输入为概率(<span class="math notranslate nohighlight">\([0,1]\)</span>)，输出为<span class="math notranslate nohighlight">\([0,+\infty]\)</span>。此外，对于多个独立信号的不确定性函数发，我们还需要考虑信号不确定性的可加性，即<span class="math notranslate nohighlight">\(f(A\cap B)=f(A)+f(B)\)</span>。同时满足这两个条件的函数，可以考虑对数函数，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(p)=\log \frac1p=-\log p
 \]</div>
+</div>
 <p>函数图像如下图所示：</p>
 <p><img alt="自信息" src="../_images/self_info.png" /></p>
 <p>  现对这个不确定性函数进一步加以定义，并赋予一个新的名称为自信息。对于一个事件（信号）<span class="math notranslate nohighlight">\(X=x\)</span>，其发生概率为<span class="math notranslate nohighlight">\(p(x)\)</span>，则其<strong>自信息</strong>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 I(x)=-\log p(x)
 \]</div>
+</div>
 <p>很明显，事件发生的概率越大，不确定性越小，所含的信息量越少；反之，越多。符合不确定性函数的要求。</p>
 </section>
 <section id="id3">
 <h2><span class="section-number">3.2. </span>信息熵<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  一个信号系统有若干信号发送，那么整个信号源的平均不确定性如何度量呢？若所有信号相互独立，则可以考虑所有信号的不确定性度量值的<em>加权平均值</em>，该值即为信息熵。</p>
 <p><strong>定义（信息熵）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X\)</span>，则<span class="math notranslate nohighlight">\(X\)</span>的信息熵为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \textrm{H}(X)=-\sum_x p(x)\log p(x)
 \]</div>
+</div>
 <p>信息熵的非负性：信息熵一定是大于等于0的，即<span class="math notranslate nohighlight">\(H(X)\ge 0\)</span>。</p>
 <p><strong>定义（联合熵）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X，Y\)</span>，其联合分布为<span class="math notranslate nohighlight">\(p(x,y)\)</span>，则<span class="math notranslate nohighlight">\(X,Y\)</span>的联合熵为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \textrm{H}(X,Y)=-\sum_x\sum_y p(x,y)\log p(x,y)
 \]</div>
+</div>
 <p><strong>定义（条件熵）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X，Y\)</span>，其联合分布为<span class="math notranslate nohighlight">\(p(x,y)\)</span>，则条件熵<span class="math notranslate nohighlight">\(H(Y|X)\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -411,22 +424,28 @@ I(x)=-\log p(x)
 &amp;=-\sum_x\sum_y p(x,y)\log p(y|x)
 \end{split}
 \end{split}\]</div>
+</div>
 <p><strong>定义（交叉熵）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X\)</span>，若有两人个分布分为<span class="math notranslate nohighlight">\(p(x),q(x)\)</span>，则交叉熵为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
 \textrm{cross_entropy}(p,q)&amp;=-\sum_x p(x)\log q(x)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p><strong>定义（相对熵）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X\)</span>，若有两人个分布分为<span class="math notranslate nohighlight">\(p(x),q(x)\)</span>，则相对熵<span class="math notranslate nohighlight">\(D_{KL}(p||q)\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
 D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>注意：不对称性<span class="math notranslate nohighlight">\(D_{KL}(p||q)\neq D_{KL}(q||p)\)</span>。</p>
 <p><strong>定义（互信息）</strong>. 给定离散随机变量<span class="math notranslate nohighlight">\(X,Y\)</span>，其联合分布为<span class="math notranslate nohighlight">\(p(x,y)\)</span>，则互信息为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -436,6 +455,7 @@ D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
 &amp;=H(Y)-H(Y|X)
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <section id="python">
 <h2><span class="section-number">3.3. </span>Python代码<a class="headerlink" href="#python" title="Link to this heading">#</a></h2>
@@ -562,10 +582,12 @@ D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1. 信息量</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2. 信息熵</a></li>

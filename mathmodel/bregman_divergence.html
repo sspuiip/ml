@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -378,42 +382,54 @@ document.write(`
 <section id="squared-euclidean-distance">
 <h2><span class="section-number">2.1. </span>Squared Euclidean Distance<a class="headerlink" href="#squared-euclidean-distance" title="Link to this heading">#</a></h2>
 <p>One member of the Bregman divergence family is the squared Euclidean distance (SED), i.e.,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d^2(\pmb{x},\pmb{y})=\sum_{i=1}^n(x_i-y_i)^2
 \]</div>
+</div>
 <p>SED can be represented as follow,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d^2(\pmb{x},\pmb{y})=\Vert \pmb{x}-\pmb{y}\Vert^2=\Vert \pmb{x}\Vert^2-\Vert \pmb{y}\Vert^2-\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle
 \]</div>
+</div>
 <p>Obviously, the derivative of <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> is <span class="math notranslate nohighlight">\(2\pmb{y}\)</span>. Now, we take a look on the term <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle\)</span> which is the value of the tangent line to <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. This means the whole expression is just the difference between the function <span class="math notranslate nohighlight">\(f(\pmb{x})=\Vert \pmb{x}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{x}\)</span> and the value of <span class="math notranslate nohighlight">\(f\)</span>’s tangent at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. That is,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d^2(\pmb{x},\pmb{y})=f(\pmb{x})-\underbrace{(f(\pmb{y})+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle)}_{\textrm{Tangent of $f$ at $\pmb{y}$ evaluated at $\pmb{x}$}}
 \]</div>
+</div>
 <p><img alt="Bregman Divergence" src="../_images/bregman.png" /></p>
 </section>
 <section id="bregman-divergences">
 <h2><span class="section-number">2.2. </span>Bregman divergences<a class="headerlink" href="#bregman-divergences" title="Link to this heading">#</a></h2>
 <p>So far, the only one constraint which is placed on the distance measure <span class="math notranslate nohighlight">\(d^2\)</span> is that it be non-negative for all possible choices of point <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>. This is equivalent to the function <span class="math notranslate nohighlight">\(f\)</span> always sitting above its tangent, that is,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(x)\ge f(y)+\langle \nabla f(y),x-y\rangle, \quad \forall x,y\in\mathbb{R}^n.
 \]</div>
+</div>
 <p>Obviously, the above condition placed on the function <span class="math notranslate nohighlight">\(f\)</span> is equivalent to functions <span class="math notranslate nohighlight">\(f\)</span> being convex. This means that we can derive a distance measure <span class="math notranslate nohighlight">\(d_f\)</span> that has a similar stucture to the SED by simply choosing a convex function <span class="math notranslate nohighlight">\(f\)</span> and defining,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{d_f(x,y)=f(x)-f(y)-\langle \nabla f(y), x-y\rangle}
 \]</div>
+</div>
 <p>Distance defined like this are precisely the <strong>Bregman divergence</strong> and the convexity of <span class="math notranslate nohighlight">\(f\)</span> guarantees they are non-negative for all <span class="math notranslate nohighlight">\(x,y\in\mathbb{R}^n\)</span>.</p>
 <ul class="simple">
 <li><p>Kullback-Leibler(KL) divergence can be expressed as a Bregman divergence using the convex function,</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f_{KL}(p)=\sum_{i=1}^np_i\log p_i
 \]</div>
+</div>
 <p><img alt="Bregman divergences" src="../_images/bregmanfun.png" /></p>
 </section>
 <section id="reference">
@@ -462,10 +478,12 @@ f_{KL}(p)=\sum_{i=1}^np_i\log p_i
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#squared-euclidean-distance">2.1. Squared Euclidean Distance</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bregman-divergences">2.2. Bregman divergences</a></li>

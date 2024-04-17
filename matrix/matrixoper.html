@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -378,10 +382,12 @@ document.write(`
 <li><p><strong>定义</strong></p></li>
 </ol>
 <p>所谓直和运算是指定义在任意矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m}\)</span>和<span class="math notranslate nohighlight">\(\pmb{B}_{n\times n}\)</span>的运算，其规则如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}\oplus\pmb{B}=\left[\begin{array}{cc}\pmb{A}&amp;\pmb{0}_{m\times n}\\ \pmb{0}_{n\times m}&amp;\pmb{B}\end{array}\right]
 \end{split}\]</div>
+</div>
 <p>记为<span class="math notranslate nohighlight">\(\pmb{A}\oplus\pmb{B}\)</span>。</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
@@ -399,10 +405,12 @@ document.write(`
 <li><p><strong>定义</strong></p></li>
 </ol>
 <p>Hadamard积是定义在任意同维度矩阵<span class="math notranslate nohighlight">\(\pmb{A,B}\in\mathbb{R}^{m\times n}\)</span>的运算，记为<span class="math notranslate nohighlight">\(\pmb{A}* \pmb{B}\)</span>，也称为逐元素乘法，运算规则如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 [\pmb{A}* \pmb{B}]_{ij}=a_{ij}b_{ij}
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
@@ -428,28 +436,36 @@ document.write(`
 <ul class="simple">
 <li><p>右积</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}\otimes\pmb{B}=[\pmb{a}_1\pmb{B},\cdots,\pmb{a}_n\pmb{B}]= \begin{bmatrix}a_{11}\pmb{B}&amp;a_{12}\pmb{B}&amp;\cdots&amp;a_{1n}\pmb{B}\\ a_{21}\pmb{B}&amp;a_{22}\pmb{B}&amp;\cdots&amp;a_{2n}\pmb{B}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\a_{m1}\pmb{B}&amp;a_{m2}\pmb{B}&amp;\cdots&amp;a_{mn}\pmb{B}\end{bmatrix}_{mp\times nq}
 \end{split}\]</div>
+</div>
 <ul class="simple">
 <li><p>左积</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 [\pmb{A}\otimes\pmb{B}]_{\mathrm{left}}=[\pmb{A}\pmb{b}_1,\cdots,\pmb{A}\pmb{b}_n]= \begin{bmatrix}\pmb{A}b_{11}&amp;\pmb{A}b_{12}&amp;\cdots&amp;\pmb{A}b_{1q}\\ \pmb{A}b_{21}&amp;\pmb{A}b_{22}&amp;\cdots&amp;\pmb{A}b_{2q}\\ \vdots&amp;\vdots&amp;\vdots&amp;\vdots\\\pmb{A}b_{p1}&amp;\pmb{A}b_{p2}&amp;\cdots&amp;\pmb{A}b_{pq}\\\end{bmatrix}_{mp\times nq}
 \end{split}\]</div>
+</div>
 <p>无论左积还是右积都是同一个映射<span class="math notranslate nohighlight">\(\mathbb{R}^{m\times n}\times\mathbb{R}^{p\times q}\rightarrow\mathbb{R}^{mp\times nq}\)</span>。可以看出<span class="math notranslate nohighlight">\([\pmb{A}\otimes\pmb{B}]_{\mathrm{left}}=\pmb{B}\otimes\pmb{A}\)</span>，故默认采用右积。</p>
 <p>当<span class="math notranslate nohighlight">\(n=q=1\)</span>时，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{a}\otimes \pmb{b}=\begin{bmatrix}a_1b_1\\a_1b_2\\\vdots\\a_mb_p \end{bmatrix}_{mp\times 1}
 \end{split}\]</div>
+</div>
 <p>显然，向量外积<span class="math notranslate nohighlight">\(\pmb{x}\pmb{y}^\top\)</span>也可以写成Kronecker积的形式<span class="math notranslate nohighlight">\(\pmb{x}\otimes\pmb{y}^\top\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{x}\pmb{y}^\top=\begin{bmatrix}x_1\pmb{y}^\top\\x_2\pmb{y}^\top\\\vdots \\x_m\pmb{y}^\top\\ \end{bmatrix}_{m\times p}=\pmb{x}\otimes\pmb{y}^\top
 \end{split}\]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
@@ -478,15 +494,19 @@ document.write(`
 <li><p><strong>定义</strong></p></li>
 </ol>
 <p>矩阵的向量化指的是将矩阵按列序排成一个向量的操作。如，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}=\begin{bmatrix}a_{11}&amp;a_{12}\\a_{21}&amp;a_{22} \end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>列向量化后，结果为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathrm{vec}(\pmb{A})=\begin{bmatrix}a_{11}\\a_{21}\\a_{12}\\a_{22} \end{bmatrix}
 \end{split}\]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>性质</strong></p></li>
 </ol>
@@ -497,31 +517,39 @@ document.write(`
 <li><p><span class="math notranslate nohighlight">\(\mathrm{tr}(\pmb{A}\pmb{B}\pmb{C})=[\mathrm{vec}(\pmb{A}^\top)]^\top(\pmb{I}_p\otimes\pmb{B})\mathrm{vec}\pmb{C}=[\mathrm{vec}(\pmb{AB})^\top]^\top\mathrm{vec}(\pmb{C})\)</span></p></li>
 <li><p>多矩阵相乘</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  \mathrm{vec}(\pmb{A}_{m\times p}\pmb{B}_{p\times q}\pmb{C}_{q\times n})=(\pmb{C}^\top\otimes \pmb{A})\mathrm{vec}(\pmb{B})=(\pmb{I}_q\otimes\pmb{AB})\mathrm{vec}(\pmb{C})=(\pmb{C}^\top\pmb{B}^\top\otimes\pmb{I}_m)\mathrm{vec}(\pmb{A})
  \]</div>
+</div>
 <ul class="simple">
 <li><p><font color="red">两矩阵乘积向量化</font></p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  \mathrm{vec}(\pmb{A}\pmb{C})=(\pmb{I}_p\otimes \pmb{A})\mathrm{vec}(\pmb{C})=(\pmb{C}^\top\otimes\pmb{I}_m)\mathrm{vec}(\pmb{A})
  \]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p><strong>例</strong></p></li>
 </ol>
 <p>向量化求解矩阵方程<span class="math notranslate nohighlight">\(\pmb{AX}+\pmb{XB}=\pmb{Y}\)</span>的解<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>，其中所有矩阵均为<span class="math notranslate nohighlight">\(n\times n\)</span>阶矩阵。</p>
 <p>对等式左右同时向量化，由向量化公式可知，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\pmb{I}_n\otimes\pmb{A}+\pmb{B}^\top\otimes\pmb{I}_n)\mathrm{vec}(\pmb{X})=\mathrm{vec}(\pmb{Y})
  \]</div>
+</div>
 <p>则，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{vec}(\pmb{X})=(\pmb{I}_n\otimes\pmb{A}+\pmb{B}^\top\otimes\pmb{I}_n)^{\dagger}\mathrm{vec}(\pmb{Y})
  \]</div>
+</div>
 <p>最后再矩阵化即为<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>的值。</p>
 </section>
 </section>
@@ -566,10 +594,12 @@ document.write(`
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 直和</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hadamard">2.2. Hadamard积</a></li>

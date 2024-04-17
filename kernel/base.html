@@ -33,15 +33,19 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
+    <script src="../_static/jquery.js?v=5d32c60e"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
-    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -390,10 +394,12 @@ document.write(`
 </figcaption>
 </figure>
 <p>  如果我们对原输入空间样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>做如下映射<span class="math notranslate nohighlight">\(\phi :\mathbb{R}^2\rightarrow\mathbb{R}^3\)</span>，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \phi: \pmb{x}=(x_1,x_2)\rightarrow \phi(\pmb{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)
 \]</div>
+</div>
 <p>不难发现，原空间不可分的XOR问题在新特征空间变的可分，如下图所示</p>
 <figure class="align-default" id="id9">
 <a class="reference internal image-reference" href="../_images/featurespace.png"><img alt="特征空间" src="../_images/featurespace.png" style="width: 500px;" /></a>
@@ -402,6 +408,7 @@ document.write(`
 </figcaption>
 </figure>
 <p>  因此，原空间难以解决的问题映射至新特征空间后可以得到解决。特征映射成为了关键步骤。那么特征映射<span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>是否必须显式的计算呢？下面，我们来分析一下新特征空间两个任意数据点<span class="math notranslate nohighlight">\(\phi(\pmb{x}),\phi(\pmb{z})\)</span>之间的相似性。采用未正则化的余弦相似性来度量，可知</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -412,6 +419,7 @@ document.write(`
 &amp;\triangleq\kappa(\pmb{x},\pmb{z})
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  经过上式分析，我们发现特征映射后的向量做内积运算等价于原空间向量内积的平方。换句话说，我们可以不用显式计算映射<span class="math notranslate nohighlight">\(\phi\)</span>，直接计算<span class="math notranslate nohighlight">\(\kappa(\pmb{x},\pmb{z})\)</span>就可以实现特征映射后的效果，这一技巧也称之为核技巧(kernel trick), 函数<span class="math notranslate nohighlight">\(\kappa(\cdot,\cdot)\)</span>也称之为核函数。</p>
 <figure class="align-default" id="id10">
 <a class="reference internal image-reference" href="../_images/kernelfun.jpeg"><img alt="核函数示例" src="../_images/kernelfun.jpeg" style="width: 400px;" /></a>
@@ -436,10 +444,12 @@ document.write(`
 <dl class="simple myst">
 <dt><strong>定义2(核函数, Kernel)</strong>.</dt><dd><p>令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
 </dd>
-<dd><div class="math notranslate nohighlight" id="equation-eq-kernel-fun">
+<dd><div class="math-wrapper docutils container" id="equation-eq-kernel-fun">
+<div class="math notranslate nohighlight" id="equation-eq-kernel-fun">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-kernel-fun" title="Link to this equation">#</a></span>\[
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 \]</div>
+</div>
 </dd>
 <dt><strong>Lemma(Sums of kernels are kernels)</strong>.</dt><dd><p>给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
 </dd>
@@ -454,74 +464,95 @@ k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 <blockquote>
 <div><p><strong>定义 (多项式核函数, Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有如下核函数：</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=(\langle x,x'\rangle+c)^m
 \]</div>
+</div>
 <p>  我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。</p>
 <blockquote>
 <div><p><strong>定义 (<span class="math notranslate nohighlight">\(l_p\)</span>空间)</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  \sum_{i=1}^{\infty}a_i^p &lt;\infty
  \]</div>
+</div>
 <p>  核函数可以用<span class="math notranslate nohighlight">\(\ell_2\)</span>序列来定义。</p>
 <blockquote>
 <div><p><strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
  \]</div>
+</div>
 <p>  泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。</p>
 <blockquote>
 <div><p><strong>定义 (泰勒级数核， Taylor series kernel)</strong>. 假设我们可以定义泰勒级数</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
 \]</div>
+</div>
 <p>for <span class="math notranslate nohighlight">\(r\in (0,\infty]\)</span>, with <span class="math notranslate nohighlight">\(a_n\ge 0\)</span> for all <span class="math notranslate nohighlight">\(n\ge 0\)</span>. 可定义<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为空间<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的<span class="math notranslate nohighlight">\(\sqrt{r}\)</span>-球, 则如果<span class="math notranslate nohighlight">\(x,x'\in\mathbb{R}^d\)</span>满足<span class="math notranslate nohighlight">\(\Vert x\Vert &lt;\sqrt{r}\)</span>, 我们有以下核函数</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \]</div>
+</div>
 <p>  <strong>证明</strong>. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\sum_{n=1}^\infty a_n(\langle x,x'\rangle)^n
 \]</div>
+</div>
 <p>根据Cauchy-Schwarz不等式</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
   |\langle x,x'\rangle |\le \Vert x\Vert\Vert x'\Vert&lt;r
  \]</div>
+</div>
 <p>因此泰勒级数核收敛.</p>
 <p>  泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。</p>
 <blockquote>
 <div><p><strong>定义 (指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核定义为</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(\langle x,x'\rangle)
  \]</div>
+</div>
 <p>  我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)</p>
 <blockquote>
 <div><p><strong>示例 (高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  \]</div>
+</div>
 <p>  <strong>证明</strong>. 对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
  k_1(x,x')&amp;=\exp\left\{\frac{\langle x,x'\rangle}{\gamma^2}\right\}\\
 \end{split}
  \end{split}\]</div>
+</div>
 <p>则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
@@ -531,8 +562,10 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
  &amp;=k(x,x')
  \end{split}
  \end{split}\]</div>
+</div>
 <p>因此可得，高斯核为指数核<span class="math notranslate nohighlight">\(k_1\)</span>的标准化结果。显然高斯核也是一个核函数。</p>
 <p>  高斯核的特征映射为无穷维。下面对其特征映射进行分解，为简化计算，可先假设<span class="math notranslate nohighlight">\(\gamma =1 \)</span>。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -542,11 +575,14 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 &amp;=\sum_{n=0}^\infty\underbrace{\left(\exp(-x^2)\sqrt{\frac{2^n}{n!}}x^n\right)}_{\phi(x)}\underbrace{\left(\exp(-x'^2)\sqrt{\frac{2^n}{n!}}x'^n\right)}_{\phi(x')}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>可知，特征映射为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \phi(x)=\exp(-x^2)(1,\sqrt{\frac{2^1}{1!}}x^1,\sqrt{\frac{2^2}{2!}}x^2,...,\sqrt{\frac{2^n}{n!}}x^n,...)
 \]</div>
+</div>
 </section>
 </section>
 </section>
@@ -556,69 +592,88 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 <ol class="arabic simple">
 <li><p>模长</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert \phi(\pmb{x})\Vert=\sqrt{\langle \phi(\pmb{x}),\phi(\pmb{x})\rangle}=\sqrt{\kappa(\pmb{x},\pmb{x})}
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>标准化</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\phi}(\pmb{x})=\frac{\phi(\pmb{x})}{\Vert\phi(\pmb{x}) \Vert}
 \]</div>
+</div>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\kappa}(\pmb{x},\pmb{z})=\frac{\kappa(\pmb{x},\pmb{z})}{\sqrt{\kappa(\pmb{x},\pmb{x})\kappa(\pmb{z},\pmb{z})}}
 \]</div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p>线性组合</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left\Vert \sum_{i=1}^la_i\phi(\pmb{x}_i)\right\Vert^2=\sum_{i,j=1}^l a_ia_j\kappa(\pmb{x}_i\pmb{x}_j)
 \]</div>
+</div>
 <ol class="arabic simple" start="4">
 <li><p>距离</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left\Vert \phi(\pmb{x})-\phi(\pmb{z})\right\Vert^2=\kappa(\pmb{x},\pmb{x})-2\kappa(\pmb{x},\pmb{z})+\kappa(\pmb{z},\pmb{z})
 \]</div>
+</div>
 <ol class="arabic simple" start="5">
 <li><p>均值</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left\Vert \phi_S \right\Vert^2=\left\Vert \frac{1}{l}\sum_{i=1}^l\phi(\pmb{x}) \right\Vert^2=\frac1l\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
+</div>
 <ol class="arabic simple" start="6">
 <li><p>样本均值距离</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left\Vert \phi(\pmb{x})-\phi_S\right\Vert^2=\kappa(\pmb{x},\pmb{x})-\frac2l\sum_{i=1}^l\kappa(\pmb{x},\pmb{x}_i)+\frac{1}{l^2}\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
+</div>
 <ol class="arabic simple" start="7">
 <li><p>平均样本均值距离</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac1l\sum_{i=1}^l\left\Vert \phi(\pmb{x}_i)-\phi_S\right\Vert^2=\frac1l\sum_{i=1}\kappa(\pmb{x}_i,\pmb{x}_j)-\frac{1}{l^2}\sum_{i=1}\sum_{j=1}\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
+</div>
 <ol class="arabic simple" start="8">
 <li><p>中心化</p></li>
 </ol>
 <ul class="simple">
 <li><p>样本中心化</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \tilde{\phi}(\pmb{x})=\phi(\pmb{x})-\phi_S
 \]</div>
+</div>
 <ul class="simple">
 <li><p>核函数中心化</p></li>
 </ul>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -627,25 +682,32 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \tilde{\pmb{K}}&amp;=\pmb{K}-\frac1l\pmb{K11}^\top-\frac1l\pmb{11}^\top\pmb{K}+\frac{1}{l^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="id7">
 <h2><span class="section-number">1.3. </span>投影<a class="headerlink" href="#id7" title="Link to this heading">#</a></h2>
 <p><span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的<strong>投影</strong><span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
 \]</div>
+</div>
 <p>如果<span class="math notranslate nohighlight">\(\pmb{w}\)</span>已单位化，则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
 \]</div>
+</div>
 <p>即，<strong>正交投影</strong><span class="math notranslate nohighlight">\( P_{\pmb{w}}^\bot \phi(\pmb{x}) \)</span> 为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 \]</div>
+</div>
 </section>
 </section>
 
@@ -689,10 +751,12 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 
 
   <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <nav class="bd-toc-nav page-toc">
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 核函数</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.1.1. 示例</a></li>
