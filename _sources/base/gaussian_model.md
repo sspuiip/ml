@@ -396,7 +396,7 @@ $$
 其中，
 
 $$
-\hat{\pmb{\Sigma}}^{-1}=\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1}
+\hat{\pmb{\Sigma}}=(\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1})^{-1}
 $$
 
 $$
