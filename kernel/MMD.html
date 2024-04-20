@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -382,46 +378,35 @@ document.write(`
 <section id="mean-embedding">
 <h2><span class="section-number">3.1. </span>均值嵌入 (Mean Embedding)<a class="headerlink" href="#mean-embedding" title="Link to this heading">#</a></h2>
 <p>  若给定一集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的一个Borel概率测度<span class="math notranslate nohighlight">\(P\)</span>，则概率分布<span class="math notranslate nohighlight">\(P\)</span>的特征映射为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mu_P=(...,\mathbb{E}_P[\varphi_i(x)],...)
 \]</div>
-</div>
 <p>对于正定函数<span class="math notranslate nohighlight">\(k(x,y)\)</span>,<span class="math notranslate nohighlight">\(x\sim P, y\sim Q\)</span>,则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \langle \mu_P,\mu_Q\rangle_\mathcal{F}=\mathbb{E}_{P,Q}[k(x,y)]
 \]</div>
-</div>
 <p>  <strong>例</strong>. 对于有限维内积空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，可以定义关于内积的期望，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \varphi(x)=k(\cdot,x)=\begin{bmatrix} x\\ x^2\end{bmatrix},\quad f(\cdot)=\begin{bmatrix} a\\ b \end{bmatrix}
 \end{split}\]</div>
-</div>
 <p>则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} x\\ x^2 \end{bmatrix}=ax+bx^2
 \end{split}\]</div>
-</div>
 <p>  若有随机变量<span class="math notranslate nohighlight">\(x\sim P\)</span>，则</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathbb{E}_P[f(x)]=\mathbb{E}_P\left(\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} x\\ x^2 \end{bmatrix} \right)=\begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} \mathbb{E}_P[x]\\ \mathbb{E}_P[x^2] \end{bmatrix}\triangleq \begin{bmatrix} a \\ b\end{bmatrix}^\top\begin{bmatrix} \mathbb{E}_P[\varphi_1(x)]\\ \mathbb{E}_P[\varphi_2(x)] \end{bmatrix} =\langle f,\mu_P\rangle_\mathcal{F}
 \end{split}\]</div>
-</div>
 <p>  上述<span class="math notranslate nohighlight">\(\mu_P\)</span>即为<strong>均值嵌入(Mean Embedding)</strong>。若是无穷维，均值嵌入还存在吗？也就是说，是否存在一个<span class="math notranslate nohighlight">\(\mu_P\in\mathcal{F}\)</span>，使得<span class="math notranslate nohighlight">\(\mathbb{E}_P[f(x)]=\langle f,\mu_P\rangle_\mathcal{F}=\langle f,\mathbb{E}_P[\varphi(x)]\rangle_\mathcal{F}\)</span>成立？</p>
 <blockquote>
 <div><p><strong>定理 (均值嵌入存在性)</strong>. 如果<span class="math notranslate nohighlight">\(\mathbb{E}_P \sqrt{k(x,x)}&lt;\infty\)</span>，则<span class="math notranslate nohighlight">\(\exists \mu_P \in \mathcal{F} \)</span>.</p>
 </div></blockquote>
 <p>  <strong>证明</strong>. 线性算子<span class="math notranslate nohighlight">\(T_Pf\triangleq \mathbb{E}_P[f(x)]\)</span>，<span class="math notranslate nohighlight">\(\forall f\in \mathcal{F}\)</span>是有界的。因为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -431,7 +416,6 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 &amp;\le\mathbb{E}_P\left(\sqrt{k(x,x)}\cdot\Vert f\Vert_\mathcal{F} \right)
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此，通过Riesz定理(<span class="math notranslate nohighlight">\(\lambda_{T_P}=\mathbb{E}_P\sqrt{k(x,x)}\)</span>)可知，<span class="math notranslate nohighlight">\(\exists \mu_P\in\mathcal{F}\)</span>满足<span class="math notranslate nohighlight">\(T_P f=\langle f,\mu_P\rangle_\mathcal{F}\)</span>。</p>
 <p>  注意：Riesz定理是指在Hilbert空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，所有有界的线性算子<span class="math notranslate nohighlight">\(A\)</span>可以表示为<span class="math notranslate nohighlight">\(\langle \cdot,g_A\rangle_\mathcal{F}\)</span>对于某些<span class="math notranslate nohighlight">\(g_A\in \mathcal{F}\)</span>，即<span class="math notranslate nohighlight">\(Af=\langle f,g_A\rangle_\mathcal{F}\)</span>。同时，有界线性算子是指满足<span class="math notranslate nohighlight">\(Af\le \lambda_A \Vert f\Vert_\mathcal{F}\)</span>条件。</p>
 </section>
@@ -441,7 +425,6 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 <blockquote>
 <div><p><strong>定义</strong>. 最大均值差分(Maximum Mean Discrepancy)是指特征均值之间的距离。</p>
 </div></blockquote>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -449,9 +432,7 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 &amp;=\underbrace{\mathbb{E}_P k(x,x')+\mathbb{E}_Q k(y,y')}_{\textrm{within distrib. similarity}}-\underbrace{2\mathbb{E}_{P,Q}k(x,y)}_{\textrm{cross-distrib. similarity}}
 \end{split}
 \end{split}\]</div>
-</div>
 <p>  <strong>证明</strong>.</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\begin{split}
 \begin{split}
@@ -462,7 +443,6 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 &amp;=\underbrace{\mathbb{E}_P[\langle\mu_P,k(\cdot,x)\rangle]}_{\mu_P\triangleq(...,\mathbb{E}_P[\varphi_i(x)],...)}+...\\
 &amp;=\mathbb{E}_P[k(x,x')]+\mathbb{E}_Q[k(y,y')]-2\mathbb{E}_{P,Q}[k(x,y)]\\\end{split}\\\end{split}
 \end{aligned}\end{align} \]</div>
-</div>
 </section>
 <hr class="docutils" />
 <section id="id2">
@@ -470,14 +450,11 @@ f(x)=\langle f(\cdot),\varphi(x)\rangle_{\mathcal{F}}=\begin{bmatrix} a \\ b\end
 <section id="integral-probability-metric-ipm">
 <h3><span class="section-number">3.3.1. </span>积分概率度量(Integral Probability Metric, IPM)<a class="headerlink" href="#integral-probability-metric-ipm" title="Link to this heading">#</a></h3>
 <p>  IPM主要用于衡量两个概率分布之间的距离(相似性)。IPM寻求某种限制条件的函数集<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>中的连续函数<span class="math notranslate nohighlight">\(f\)</span>，使得该函数能够提供更多的矩信息，然后寻找最优<span class="math notranslate nohighlight">\(f\)</span>使得概率分布<span class="math notranslate nohighlight">\(P(x)\)</span>与<span class="math notranslate nohighlight">\(Q(x)\)</span>之间的差异最大，该最大差异即为两分布之间的距离，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]\triangleq\textrm{IPM}(P,Q)
 \]</div>
-</div>
 <p>  选择不同的函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>，会导致IPM具有不同形式。如</p>
-<div class="table-wrapper colwidths-auto colwidths-given docutils container" id="id3">
 <table class="table table-center" id="id3" style="width: 750px">
 <caption><span class="caption-text">常见积分概率度量</span><a class="headerlink" href="#id3" title="Link to this table">#</a></caption>
 <thead>
@@ -501,7 +478,6 @@ d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 </tr>
 </tbody>
 </table>
-</div>
 </section>
 <section id="mmd">
 <h3><span class="section-number">3.3.2. </span>MMD积分概率度量<a class="headerlink" href="#mmd" title="Link to this heading">#</a></h3>
@@ -509,14 +485,11 @@ d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 <blockquote>
 <div><p><strong>定义</strong>. MMD积分概率度量定义为，</p>
 </div></blockquote>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \textrm{MMD}(f,P,Q)\triangleq\sup_{\Vert f\Vert_\mathcal{H}\le 1}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 \]</div>
-</div>
 <p>  由Riesz定理可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -524,23 +497,17 @@ d_{\mathcal{F}}(P,Q)=\sup_{f\in\mathcal{F}}\mathbb{E}_P[f(x)]-\mathbb{E}_Q[f(x)]
 &amp;=\sup_{\Vert f\Vert_\mathcal{H}\le 1}\langle f,\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]\rangle_\mathcal{H}
 \end{split}
 \end{split}\]</div>
-</div>
 <p>两向量内积的最大值必定在两向量同方向上最得，即，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f^*=\frac{\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]}{\Vert \mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]\Vert_\mathcal{H}}
 \]</div>
-</div>
 <p>代入原式即可得，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\textrm{MMD}(f,P,Q)=\Vert\mu_P-\mu_Q \Vert_\mathcal{H}}
 \]</div>
-</div>
 <p>  应用蒙特卡罗估计，可以计算出MMD。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -549,7 +516,6 @@ f^*=\frac{\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]}{\Vert \mathbb{E}_P[
 &amp;\approx \boxed{\frac{1}{m^2}\sum_{i=1}^m\sum_{i'=1}^m k(x_i,x_{i'})+\frac{1}{n^2}\sum_{j=1}^n\sum_{j'=1}^m k(x_j,x_{j'})-\frac{2}{mn}\sum_{i=1}^m\sum_{j=1}^n k(x_i,x_j)}
 \end{split}
 \end{split}\]</div>
-</div>
 </section>
 </section>
 </section>
@@ -594,12 +560,10 @@ f^*=\frac{\mathbb{E}_P[\varphi(x)]-\mathbb{E}_Q[\varphi(x)]}{\Vert \mathbb{E}_P[
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-mean-discrepancy">3.2. 最大均值差分(Maximum Mean Discrepancy)</a></li>

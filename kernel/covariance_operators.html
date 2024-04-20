@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -392,25 +388,20 @@ document.write(`
 <blockquote>
 <div><p><strong>定义 (Hilbert-Schmidt算子)</strong>. 若有以下Hilbert-Schmidt范式</p>
 </div></blockquote>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert L\Vert_{\textrm{HS}}^2\triangleq \sum_{j\in J}\Vert Lf_j\Vert_\mathcal{F}^2=\sum_{i\in I}\sum_{j\in J}|\langle Lf_j,e_i\rangle_{\mathcal{F}}|^2
 \]</div>
-</div>
 <p>是有限的(<span class="math notranslate nohighlight">\(&lt;\infty\)</span>)，则称<span class="math notranslate nohighlight">\(L\)</span>为Hilbert-Schmidty算子。</p>
 <blockquote>
 <div><p><strong>定义 (Hilbert-Schmidt算子空间与内积)</strong>. Hibert-Schmidty算子从<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>映射至<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>（即<span class="math notranslate nohighlight">\(\delta:\mathcal{G}\rightarrow\mathcal{F}\)</span>），并形成一个Hilbert空间，记为<span class="math notranslate nohighlight">\(\textrm{HS}(\mathcal{G},\mathcal{F})\)</span>，其内积定义为</p>
 </div></blockquote>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \langle L,M\rangle_{\textrm{HS}}=\sum_{j\in J}\langle Lf_j,Mf_j\rangle_\mathcal{F}.
 \]</div>
-</div>
 <p>该内积定义与正交基的选择无关。</p>
 <p>  显然，根据上述内积定义可知，Hilbert-Schmidty范式可以通过内积计算得到。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -420,25 +411,19 @@ document.write(`
 &amp;=\Vert L\Vert_{\textrm{HS}}^2
 \end{split}
 \end{split}\]</div>
-</div>
 <blockquote>
 <div><p><strong>定义 (内积2)</strong>. 内积的另一种等价形式，</p>
 </div></blockquote>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \langle L,M\rangle_{\textrm{HS}}=\sum_{i\in I}\sum_{j\in J}\langle Lf_j,e_i\rangle_\mathcal{F}\langle Mf_j,e_i\rangle_\mathcal{F}
 \]</div>
-</div>
 <p>  下面开始验证两种定义的等价性。任何<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的元素都可以展开为正交基的形式，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{i'}
 \]</div>
-</div>
 <p>代入原定义可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -448,20 +433,16 @@ Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{
 &amp;=\sum_{i\in I}\sum_{j\in J}\langle Lf_j,e_i\rangle_\mathcal{F}\langle Mf_j,e_i\rangle_\mathcal{F}
 \end{split}
 \end{split}\]</div>
-</div>
 <hr class="docutils" />
 <section id="rank-one">
 <h3><span class="section-number">4.1.1. </span>Rank-one算子<a class="headerlink" href="#rank-one" title="Link to this heading">#</a></h3>
 <p>  给定<span class="math notranslate nohighlight">\(b\in\mathcal{G},a\in\mathcal{F}\)</span>，可以定义张量积<span class="math notranslate nohighlight">\(a\otimes b\)</span>(tensor product)为rank-one算子<span class="math notranslate nohighlight">\(a\otimes b:\mathcal{G}\rightarrow \mathcal{F}\)</span>,</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (a\otimes b)g\rightarrow \langle g,b\rangle_\mathcal{G}a
 \]</div>
-</div>
 <p>这是标准外积的推广，即如果<span class="math notranslate nohighlight">\(a,b,g\)</span>都是向量，则有<span class="math notranslate nohighlight">\((ab^\top)g=(b^\top g)a\)</span>成立。</p>
 <p>  该算子是Hilbert-Schmidt算子吗？下面来计算算子的范数，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -471,31 +452,23 @@ Lf_j=\sum_{i\in I}\alpha_i^{(j)}e_i,\quad Mf_j=\sum_{i'\in I}\beta_{i'}^{(j)}e_{
 &amp;=\Vert a\Vert_\mathcal{F}^2\Vert b\Vert_\mathcal{G}^2 &lt; \infty
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此，该算子是一个Hilbert-Schmidt算子。</p>
 <p>  给定另一个Hilbert-Schmidt算子<span class="math notranslate nohighlight">\(L\in \textrm{HS}(\mathcal{G},\mathcal{F})\)</span>，则有如下结果，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\langle L,a\otimes b\rangle_{\textrm{HS}}=\langle a,Lb\rangle_{\mathcal{F}}}
 \]</div>
-</div>
 <p>一个特别的结果是，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\langle u\otimes v,a\otimes b\rangle_{\textrm{HS}}=\langle u,a\rangle_\mathcal{F}\langle b,v\rangle_\mathcal{G}}
 \]</div>
-</div>
 <p>  <strong>证明</strong>. <span class="math notranslate nohighlight">\(b\)</span>可以由<span class="math notranslate nohighlight">\(\mathcal{G}\)</span>的正交基展开为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 \]</div>
-</div>
 <p>则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -506,9 +479,7 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 &amp;=\sum_j\langle b,f_j\rangle_\mathcal{G}\langle a,Lf_j\rangle_\mathcal{F},\qquad \langle a,kb\rangle=k\langle a,b\rangle
 \end{split}
 \end{split}\]</div>
-</div>
 <p>以及，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -517,15 +488,12 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 &amp;=\sum_j\langle b,f_j\rangle_\mathcal{G}\langle Lf_j,a\rangle_\mathcal{F}
 \end{split}
 \end{split}\]</div>
-</div>
 <p>显然，上述两个等式相等是成立的。特别地，如果我们用<span class="math notranslate nohighlight">\(u\otimes v\)</span>代替<span class="math notranslate nohighlight">\(L\)</span>，则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \langle a\otimes b,u\otimes v\rangle_{\textrm{HS}}=\langle a,(u\otimes v)b\rangle_\mathcal{F}
 =\langle b,v\rangle_{\mathcal{G}}\langle a,u\rangle_\mathcal{F}
 \]</div>
-</div>
 </section>
 <hr class="docutils" />
 <section id="cross-covariance">
@@ -533,28 +501,21 @@ b=\sum_{j\in J}\langle b,f_j\rangle_\mathcal{G}f_j
 <section id="id2">
 <h4><span class="section-number">4.1.2.1. </span>Cross-covariance算子定义<a class="headerlink" href="#id2" title="Link to this heading">#</a></h4>
 <p>  定义算子前，我们先假设<span class="math notranslate nohighlight">\(\mathcal{F},\mathcal{G}\)</span>为再生核Hilbert空间，其核分别为<span class="math notranslate nohighlight">\(k\)</span>和<span class="math notranslate nohighlight">\(l\)</span>，对应的特征映射分别为<span class="math notranslate nohighlight">\(\phi,\psi\)</span>。该算子主要作用是互协方差矩阵泛化到无穷维。所期望达到的特征映射类似于，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \tilde{C}_{XY}=\mathbb{E}[xy^\top],\qquad f^\top\tilde{C}_{XYg}=\mathbb{E}_{XY}[(f^\top x)(g^\top y)]
 \]</div>
-</div>
 <p>其中<span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>未中心化，中心化的协方差算子为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 C_{XY}=\tilde{C}_{XY}-\mu_X\mu_Y^\top
 \]</div>
-</div>
 <p>  注意：<span class="math notranslate nohighlight">\(\phi(x)\otimes \psi(y)\)</span>是<span class="math notranslate nohighlight">\(\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>空间的一个随机变量（已证明<span class="math notranslate nohighlight">\(\forall A\in\textrm{HS}(\mathcal{G},\mathcal{L})\)</span>,线性形式(linear form)<span class="math notranslate nohighlight">\(\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}\)</span>是可度量的）。为了使得该随机变量的期望存在，必要条件<span class="math notranslate nohighlight">\(\phi(x)\otimes\psi(y)\)</span>的范式(norm)有界，也就是<span class="math notranslate nohighlight">\(\mathbb{E}_{XY}[\Vert \phi(x)\otimes\psi(y)\Vert_{\textrm{HS}}]&lt;\infty\)</span>。若给定期望(记为, <span class="math notranslate nohighlight">\(\tilde{C}_{XY}\)</span>)存在，则这个期望是某个成员且惟一，且满足，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{\langle\tilde{C}_{XY},A\rangle_{\textrm{HS}}=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}}
 \]</div>
-</div>
 <p>  <strong>证明</strong>. 算子<span class="math notranslate nohighlight">\(T_{XY}\)</span>验证有界性。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -562,10 +523,8 @@ T_{XY}: \textrm{HS}(\mathcal{G},\mathcal{F})&amp;\rightarrow \mathbb{R}\\
 A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 \end{split}
 \end{split}\]</div>
-</div>
 <p><strong>当<span class="math notranslate nohighlight">\(\mathbb{E}_{XY}[\Vert\phi(x)\otimes \psi(y)\Vert_{\textrm{HS}}]&lt;\infty\)</span>，可知算子<span class="math notranslate nohighlight">\(T_{XY}\)</span>是有界的。</strong></p>
 <p>  因为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -573,10 +532,8 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 &amp;\le\Vert A\Vert_{\textrm{HS}}\mathbb{E}_{XY}[\Vert \phi(x)\otimes \psi(y)\Vert_{\textrm{HS}}]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>通过Riesz表示定理可知，对于有界线性算子<span class="math notranslate nohighlight">\(T_{XY}\)</span>，总存在一个<span class="math notranslate nohighlight">\(\mathbb{E}_{XY}\langle \cdot,\phi(x)\otimes\psi(y)\rangle_{\textrm{HS}}\)</span>，使得<span class="math notranslate nohighlight">\(T_{XY}A\)</span>可以写成内积的形式<span class="math notranslate nohighlight">\(T_{XY}A=\mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}\)</span>。</p>
 <p>  上述条件可以继续简化，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -584,13 +541,11 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 &amp;=\mathbb{E}_{XY}\left(\sqrt{k(x,x)l(y,y)} \right)&lt;\infty
 \end{split}
 \end{split}\]</div>
-</div>
 <p>简化后的结果可以当作一个弱条件(weaker condition)来使用。这个条件是上述Jensen’s不等式所隐含的。</p>
 </section>
 <section id="f-otimes-g">
 <h4><span class="section-number">4.1.2.2. </span>特例——<span class="math notranslate nohighlight">\(f\otimes g\)</span><a class="headerlink" href="#f-otimes-g" title="Link to this heading">#</a></h4>
 <p>  当<span class="math notranslate nohighlight">\(A=f\otimes g\)</span>时，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -601,7 +556,6 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 &amp;=\textrm{cov}(f(x),g(y)),\qquad \{\phi(x)=\phi(x)-\mathbb{E}_x\phi(x), \psi(y)=\psi(y)-\mathbb{E}_y\psi(y)\}
 \end{split}
 \end{split}\]</div>
-</div>
 </section>
 </section>
 </section>
@@ -609,18 +563,15 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 <section id="id3">
 <h2><span class="section-number">4.2. </span>约束协方差<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  一般来说，传统的协方差是指，若有随机变量<span class="math notranslate nohighlight">\(x,y\)</span>，则使用协方差可以判断两随机变量是否独立，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \textrm{cov}(x,y)=\mathbb{E}_{xy}[xy]-\mathbb{E}[x]\mathbb{E}[y]
 \]</div>
-</div>
 <p>更一般地，已有工作证明，</p>
 <blockquote>
 <div><p><strong>定理</strong><a class="reference external" href="https://proceedings.mlr.press/r5/gretton05a.html">1</a>. 随机变量<span class="math notranslate nohighlight">\(x\)</span>与<span class="math notranslate nohighlight">\(y\)</span>是独立的当且仅当对于每一对连续有界算子<span class="math notranslate nohighlight">\(f,g\)</span>，都有<span class="math notranslate nohighlight">\(\textrm{cov}(f(x),g(y))=0\)</span>成立。</p>
 </div></blockquote>
 <p>由此可以引出约束协方差(constrained covariance, COCO)的定义，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -628,9 +579,7 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 &amp;=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\textrm{cov}\left[\left(\sum_{j=1}^\infty f_j\varphi_j(x)\right)\left(\sum_{j=1}^\infty g_j\phi_j(y)\right)  \right]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>若对特征映射中心化，即<span class="math notranslate nohighlight">\(\tilde{\varphi}(x)=\varphi(x)-\mathbb{E}_x\varphi(x), \tilde{\phi}(y)=\phi(y)-\mathbb{E}_y\phi(y)\)</span>，则COCO转变为以下形式，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -641,79 +590,60 @@ A&amp;\mapsto \mathbb{E}_{XY}\langle\phi(x)\otimes\psi(y),A\rangle_{\textrm{HS}}
 &amp;=\sup\limits_{\Vert f\Vert_\mathcal{F}\le 1, \Vert g\Vert_\mathcal{G}\le 1}\begin{bmatrix}f_1\\f_2\\ \vdots\end{bmatrix}^\top\underbrace{\mathbb{E}_{xy}\left(\begin{bmatrix}\tilde{\varphi}_1(x) \\ \tilde{\varphi}_2(x)\\\vdots \end{bmatrix} \begin{bmatrix}\tilde{\phi}_1(y) &amp; \tilde{\phi}_2(y)&amp;\cdots \end{bmatrix}\right)}_{C_{\tilde{\varphi}(x)\tilde{\phi}(y)}}\begin{bmatrix}g_1\\g_2\\ \vdots\end{bmatrix}
 \end{split}
 \end{split}\]</div>
-</div>
 <p>可以看出，COCO即为<span class="math notranslate nohighlight">\(C_{\tilde{\varphi}(x)\tilde{\phi}(y)}\)</span>的最大奇异值。</p>
 <section id="coco">
 <h3><span class="section-number">4.2.1. </span>COCO的估计<a class="headerlink" href="#coco" title="Link to this heading">#</a></h3>
 <p>  给定样本集<span class="math notranslate nohighlight">\(\{(x_i,y_i)\}_{i=1}^n\sim P_{XY}\)</span>，COCO的经验估计<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>(empirical)怎么计算？<span class="math notranslate nohighlight">\({\textrm{COCO}_{\textrm{emp}}}\)</span>是下式的最大特征值<span class="math notranslate nohighlight">\(\gamma_{\textrm{max}}\)</span>，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{bmatrix}0 &amp; \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&amp;0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&amp;0\\0&amp;\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
 \end{split}\]</div>
-</div>
 <p>  其中，<span class="math notranslate nohighlight">\(\tilde{K}_{ij}=\langle \phi(x_i)-\hat{\mu}_x,\phi(x_j)-\hat{\mu}_x\rangle_\mathcal{F}\triangleq\langle\tilde{\phi}(x_i),\tilde{\phi}(x_j)\rangle_\mathcal{F}\)</span>，以及<span class="math notranslate nohighlight">\(\tilde{L}_{ij}=\langle\tilde{\psi}(y_i),\tilde{\psi}(y_j)\rangle_\mathcal{G}\)</span>。</p>
 <p><strong>proof</strong>.</p>
 <ol class="arabic simple">
 <li><p>首先，协方差算子可以根据下式估计，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{C}_{XY}\triangleq\frac1n\sum_{i=1}^n\phi(x_i)\otimes\psi(y_i)-\hat{\mu}_x\otimes\hat{\mu}_y;\quad\hat{\mu}_x=\frac1n\sum_i^n\phi(x_i)
 \]</div>
-</div>
 <p>引入中心化矩阵<span class="math notranslate nohighlight">\(H=I_n-n^{-1}11^\top\)</span>，则有</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{C}_{XY}=\frac1n XHY^\top
 \]</div>
-</div>
 <p>其中，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 X=\begin{bmatrix}\phi(x_1)&amp;\phi(x_2)&amp;\cdots&amp;\phi(x_n)\end{bmatrix};\quad Y=\begin{bmatrix}\psi(y_1)&amp;\psi(y_2)&amp;\cdots&amp;\psi(y_n)\end{bmatrix}
 \]</div>
-</div>
 <ol class="arabic simple">
 <li><p>构造拉格朗日函数，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(f,g,\lambda,\gamma)=-f^\top \hat{C}_{XY} g+\frac{\lambda}{2}\left(\Vert f\Vert_\mathcal{F}^2-1 \right)+\frac{\gamma}{2}\left(\Vert g\Vert_\mathcal{G}^2-1\right)
 \]</div>
-</div>
 <p>其中，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f=\sum_{i=1}^n\alpha_i[\phi(x_i)-\hat{\mu}_x]=XH\alpha; \quad g=YH\beta
 \]</div>
-</div>
 <p>容易得到，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Vert^2=\alpha^\top HXX^\top H\alpha=\alpha^\top\tilde{K}\alpha;\quad \Vert g\Vert^2_\mathcal{G}=\beta^\top \tilde{L}\beta
 \]</div>
-</div>
 <p>整理后代入拉格朗日函数，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(\alpha,\beta,\lambda,\gamma)=-\frac1n\alpha^\top\tilde{K}\tilde{L}\beta+\frac{\lambda}{2}(\alpha^\top\tilde{K}\alpha-1)+\frac{\gamma}{2}(\beta^\top \tilde{L}\beta-1)
 \]</div>
-</div>
 <p>  求偏导后整理得到，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{bmatrix}0 &amp; \frac1n\tilde{K}\tilde{L}\\\frac1n\tilde{L}\tilde{K}&amp;0 \end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}=\gamma\begin{bmatrix}\tilde{K}&amp;0\\0&amp;\tilde{L}\end{bmatrix}\begin{bmatrix}\alpha\\\beta \end{bmatrix}
 \end{split}\]</div>
-</div>
 <p>即，<span class="math notranslate nohighlight">\(\gamma\)</span>最优值为上式最大特征值<span class="math notranslate nohighlight">\(\gamma_{\textrm{max}}\)</span>。</p>
 </section>
 </section>
@@ -759,12 +689,10 @@ f^\top \hat{C}_{XY} g=\frac1n\alpha^\top\tilde{K}\tilde{L}\beta;\quad \Vert f\Ve
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert-schmidt">4.1. Hilbert-Schmidt算子</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rank-one">4.1.1. Rank-one算子</a></li>

@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -381,68 +377,53 @@ document.write(`
 <p class="attribution">—Bayesian decision theory</p>
 </div></blockquote>
 <p>  假设有类型标记<span class="math notranslate nohighlight">\(\mathcal{Y}=\{c_1,...,c_n\}\)</span>，在决策过程中类别<span class="math notranslate nohighlight">\(c_j\)</span>的样本划分为类别<span class="math notranslate nohighlight">\(c_i\)</span>所产生的<strong>损失</strong>记为<span class="math notranslate nohighlight">\(\lambda_{ij}\)</span>，则将样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>分类为<span class="math notranslate nohighlight">\(c_i\)</span>产生的损失期望(expected loss)，也称为<strong>条件风险</strong>，</p>
-<div class="math-wrapper docutils container" id="equation-expected-loss">
 <div class="math notranslate nohighlight" id="equation-expected-loss">
 <span class="eqno">(1)<a class="headerlink" href="#equation-expected-loss" title="Link to this equation">#</a></span>\[
 R(c_i|\pmb{x})=\sum_{j}^N \lambda_{ij}\cdot P(c_j|\pmb{x})
 \]</div>
-</div>
 <p>其中，<span class="math notranslate nohighlight">\(P(c_j|\pmb{x})\)</span>为类别标记<span class="math notranslate nohighlight">\(c_j\)</span>的<strong>后验概率</strong>。分类的任务是寻找一个<strong>最优分类映射</strong><span class="math notranslate nohighlight">\(h:\mathcal{x}\rightarrow \mathcal{Y}\)</span>，从而最小化<strong>总体风险</strong>，</p>
-<div class="math-wrapper docutils container" id="equation-total-risk">
 <div class="math notranslate nohighlight" id="equation-total-risk">
 <span class="eqno">(2)<a class="headerlink" href="#equation-total-risk" title="Link to this equation">#</a></span>\[
 R(h)=\mathbb{E}_{\pmb{x}}\{R[h(\pmb{x})|\pmb{x}]\}
 \]</div>
-</div>
 <p>如果<span class="math notranslate nohighlight">\(h\)</span>对每个样本都能最小化条件风险<a class="reference internal" href="#equation-expected-loss">(1)</a><span class="math notranslate nohighlight">\(R[h(\pmb{x}|\pmb{x}]\)</span>，则总体风险<a class="reference internal" href="#equation-total-risk">(2)</a>也能最小化。因此就有了<strong>贝叶斯判定准则</strong>：</p>
 <blockquote>
 <div><p>为了最小化总体风险，对每个样本都选择能使条件风险<a class="reference internal" href="#equation-expected-loss">(1)</a>最小的类别标记。</p>
 <p class="attribution">—Bayes decision rule</p>
 </div></blockquote>
 <p>也就是，</p>
-<div class="math-wrapper docutils container" id="equation-optimal-function">
 <div class="math notranslate nohighlight" id="equation-optimal-function">
 <span class="eqno">(3)<a class="headerlink" href="#equation-optimal-function" title="Link to this equation">#</a></span>\[
 h^*(\pmb{x})=\arg\min\limits_{c\in\mathcal{Y}} R(c|\pmb{x})
 \]</div>
-</div>
 <p>此时，<span class="math notranslate nohighlight">\(h^*\)</span>称为<strong>贝叶斯最优分类器</strong>，对应的总体风险<span class="math notranslate nohighlight">\(R(h^*)\)</span>称为<strong>贝叶斯风险</strong>。</p>
 </section>
 <section id="id3">
 <h2><span class="section-number">5.2. </span>朴素贝叶斯分类器<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>  贝叶斯公式<a class="reference internal" href="#equation-bayes-formula">(4)</a>估计后验概率的主要困难在于<font color="blue">类条件概率<span class="math notranslate nohighlight">\(P(\pmb{x}|c)\)</span>是样本的所有属性上的联合概率</font>，难以从有限的训练样本直接估计得到，</p>
-<div class="math-wrapper docutils container" id="equation-bayes-formula">
 <div class="math notranslate nohighlight" id="equation-bayes-formula">
 <span class="eqno">(4)<a class="headerlink" href="#equation-bayes-formula" title="Link to this equation">#</a></span>\[
 \underbrace{P(c|\pmb{x})}_{\mathrm{posterior}}=\frac{\overbrace{P(c)}^{\mathrm{prior}}\times\overbrace{P(\pmb{x}|c)}^{\mathrm{likelihood}}}{\underbrace{p(\pmb{x})}_{\mathrm{evidence}}}
 \]</div>
-</div>
 <p>  对于这一问题，假设所有属性相互独立，则类条件概率可以拆分为如下形式，</p>
-<div class="math-wrapper docutils container" id="equation-class-condition">
 <div class="math notranslate nohighlight" id="equation-class-condition">
 <span class="eqno">(5)<a class="headerlink" href="#equation-class-condition" title="Link to this equation">#</a></span>\[
 P(\pmb{x}|c)=\prod_{i=1}^d P(\pmb{x}_i|c)
 \]</div>
-</div>
 <p>相应地，贝叶斯判定准则式<a class="reference internal" href="#equation-optimal-function">(3)</a>可以改写为，</p>
-<div class="math-wrapper docutils container" id="equation-naive-bayes-target">
 <div class="math notranslate nohighlight" id="equation-naive-bayes-target">
 <span class="eqno">(6)<a class="headerlink" href="#equation-naive-bayes-target" title="Link to this equation">#</a></span>\[
 h_{nb}(\pmb{x})=\arg\max\limits_{c\in\mathcal{Y}}P(c)\prod_{i=1}^d P(x_i|c)
 \]</div>
-</div>
 <p>上式<a class="reference internal" href="#equation-naive-bayes-target">(6)</a>即为<strong>朴素贝叶斯分类器</strong>。训练该模型就是使用训练集<span class="math notranslate nohighlight">\(D\)</span>来估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span>。</p>
 <ul class="simple">
 <li><p><strong>估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span></strong></p></li>
 </ul>
 <p>  假设<span class="math notranslate nohighlight">\(D_c\)</span>为第<span class="math notranslate nohighlight">\(c\)</span>类样本组成的集合，若独立同分布的样本足够多，则很容易估计出类别<span class="math notranslate nohighlight">\(c\)</span>的先验概率，</p>
-<div class="math-wrapper docutils container" id="equation-nb-prior">
 <div class="math notranslate nohighlight" id="equation-nb-prior">
 <span class="eqno">(7)<a class="headerlink" href="#equation-nb-prior" title="Link to this equation">#</a></span>\[
 P(c)=\frac{|D_c|}{|D|}
 \]</div>
-</div>
-<div class="table-wrapper colwidths-auto docutils container" id="id4">
 <table class="table table-center" id="id4" style="width: 650px">
 <caption><span class="caption-text">朴素贝叶斯分类器参数估计</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
 <thead>
@@ -462,7 +443,6 @@ P(c)=\frac{|D_c|}{|D|}
 </tr>
 </tbody>
 </table>
-</div>
 </section>
 </section>
 
@@ -506,12 +486,10 @@ P(c)=\frac{|D_c|}{|D|}
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. 贝叶斯决策</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2. 朴素贝叶斯分类器</a></li>

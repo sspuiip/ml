@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -389,30 +385,24 @@ document.write(`
 <p>  从整体<span class="math notranslate nohighlight">\(\pmb{X}\)</span>抽取一个样本<span class="math notranslate nohighlight">\((\pmb{X}_1,...,\pmb{X}_n)\)</span>，则样本服从特定的分布，一般有：卡方分布、t分布、F分布等。</p>
 <p>  - <strong>卡方分布</strong></p>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}_i \sim \mathcal{N}(0,1)\)</span>，且<span class="math notranslate nohighlight">\(\pmb{X}_i\)</span>相互独立，则统计量</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \chi=\sum_i^n\pmb{X}_i^2\sim \chi^2(n)
 \]</div>
-</div>
 <p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的<span class="math notranslate nohighlight">\(\chi^2\)</span>分分布。</p>
 <p>  - <strong>t分布</strong></p>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \mathcal{N}(0,1), \pmb{Y}\sim \chi^2(n)\)</span>，则统计量，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 T = \frac{\pmb{X}}{\sqrt{\pmb{Y}/n}}\sim t(n)
 \]</div>
-</div>
 <p>服从自由度为<span class="math notranslate nohighlight">\(n\)</span>的t分布。</p>
 <p>  - <strong>F分布</strong></p>
 <p>  若<span class="math notranslate nohighlight">\(\pmb{X}\sim \chi^2(n_1), \pmb{Y}\sim \chi^2(n_2)\)</span>，则统计量，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
 \]</div>
-</div>
 <p>服从第一自由度为<span class="math notranslate nohighlight">\(n_1\)</span>和第二自由度为<span class="math notranslate nohighlight">\(n_2\)</span>的F分布。</p>
 </section>
 <section id="id3">
@@ -431,12 +421,10 @@ F = \frac{\pmb{X}/n_1}{\pmb{Y}/n_2}\sim F(n_1,n_2)
 <ol class="arabic simple">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>未知，使用t分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\frac{a}{2}}(n-1)  \right\}=1-a
 \]</div>
-</div>
 <p>  即置信区间为<span class="math notranslate nohighlight">\([\bar{\pmb{X}}-\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1),\bar{\pmb{X}}+\frac{S}{\sqrt{n}}t_{\frac{a}{2}}(n-1)]\)</span></p>
 <ol class="arabic simple" start="2">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma^2\)</span>已知，使用正态分布来检测<span class="math notranslate nohighlight">\(\mu\)</span>的区间</strong></p></li>
@@ -448,21 +436,17 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 <ol class="arabic simple">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2=\sigma_2^2=\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{S_w\sqrt{\frac{1}{n_1}+\frac{1}{n_2}}}\sim t(n_1+n_2-2),\quad S_w=\frac{(n-1)S_1^2}{\sigma^2}+\frac{(n-1)S_2^2}{\sigma^2}
 \]</div>
-</div>
 <ol class="arabic simple" start="2">
 <li><p><strong><span class="math notranslate nohighlight">\(\sigma_1^2\neq\sigma_2^2\neq\sigma^2\)</span>时，使用t分布来检测<span class="math notranslate nohighlight">\(\mu_1-\mu_2\)</span>的区间</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{(\bar{\pmb{X}}-\bar{\pmb{Y}})-(\mu_1-\mu_2)}{\sqrt{\frac{S_1^2}{n_1}+\frac{S_2^2}{n_2}}}\sim t(\tilde{\nu}),\quad \tilde{\nu}=\left(\frac{S_1^2}{\sigma^2}+\frac{S_2^2}{\sigma^2}\right)^2\left/\left(\frac{(S_1^2)^2}{n_1^2(n_1-1)}+ \frac{(S_2^2)^2}{n_2^2(n_2-1)}\right)\right.
 \]</div>
-</div>
 </section>
 </section>
 <section id="sigma">
@@ -511,12 +495,10 @@ P\left\{ \left\lvert \frac{\bar{\pmb{X}}-\mu}{S/ \sqrt{n}}\right\rvert \le t_{\f
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.1. 抽样分布</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.2. 参数区间估计与假设检验</a><ul class="nav section-nav flex-column">

@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -393,12 +389,10 @@ document.write(`
 <section id="id2">
 <h3><span class="section-number">7.1.1. </span>QR的一般形式<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
 <p>  对于一般矩阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times n}(m\ge n)\)</span>，可以分解为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}_{m\times n}=\pmb{Q}_{m\times m}\pmb{R}_{m\times n}=\pmb{Q}\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\left[ \pmb{Q}_1\quad \pmb{Q}_2\right]\left[ \begin{array}{c}\pmb{R}_1\\\pmb{0}\end{array}\right]=\pmb{Q}_1\pmb{R}_1
 \end{split}\]</div>
-</div>
 <p>其中<span class="math notranslate nohighlight">\(\pmb{Q}\)</span>为正交矩阵<span class="math notranslate nohighlight">\(\pmb{Q}^\top=\pmb{Q}^{-1}\)</span>（列向量正交），<span class="math notranslate nohighlight">\(\pmb{R}\)</span>为上三角矩阵，即<span class="math notranslate nohighlight">\(\pmb{R}_1\)</span>为<span class="math notranslate nohighlight">\(n\times n\)</span>的上三角矩阵。一般来说，<span class="math notranslate nohighlight">\(\pmb{Q}\)</span>矩阵的前<span class="math notranslate nohighlight">\(k(1\le k\le n)\)</span>个列向量构建了矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的前<span class="math notranslate nohighlight">\(k\)</span>列张成的一个标准正交基。</p>
 <ul class="simple">
 <li><p><strong>例</strong>1</p></li>
@@ -481,14 +475,11 @@ document.write(`
 <section id="qrgram-schmidt">
 <h3><span class="section-number">7.1.2. </span>QR分解的Gram-Schmidt正交化方法<a class="headerlink" href="#qrgram-schmidt" title="Link to this heading">#</a></h3>
 <p>  考虑矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>，即，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]
 \]</div>
-</div>
 <p>Gram-Schmidt正交化过程如下，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -498,24 +489,18 @@ document.write(`
 \pmb{u}_{k+1}&amp;=\pmb{a}_{k+1}-\sum_{i=1}^k\langle\pmb{a}_{k+1},\pmb{e}_i\rangle\pmb{e}_i\quad\quad\pmb{e}_{k+1}=\frac{\pmb{u}_{k+1}}{\Vert \pmb{u}_{k+1}\Vert}
 \end{split}
 \end{split}\]</div>
-</div>
 <p>则QR分解结果为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}=\left[\pmb{a}_1,\pmb{a}_2,...,\pmb{a}_n \right]=\left[\pmb{e}_1,\pmb{e}_2,...,\pmb{e}_n \right]\begin{bmatrix}\langle\pmb{a}_1,\pmb{e}_1\rangle&amp; \langle\pmb{a}_2,\pmb{e}_1\rangle &amp;\cdots &amp;\langle\pmb{a}_n,\pmb{e}_1\rangle\\ 0&amp; \langle\pmb{a}_2,\pmb{e}_2\rangle &amp;\cdots &amp;\langle\pmb{a}_n,\pmb{e}_2\rangle\\ \vdots&amp; \vdots&amp; \ddots &amp; \vdots &amp;\\ 0&amp; 0&amp;\cdots&amp;\langle\pmb{a}_n,\pmb{e}_n\rangle \end{bmatrix}=\pmb{QR}
 \end{split}\]</div>
-</div>
 <p>其中，<span class="math notranslate nohighlight">\(\langle \pmb{e}_i,\pmb{a}_i\rangle=\Vert\pmb{u}_i\Vert\)</span>。</p>
 <p>  注意，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \langle \pmb{e}_i,\pmb{a}_i\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i+\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j\right\rangle=\left\langle\frac{\pmb{u}_i}{\Vert\pmb{u}_i\Vert},\pmb{u}_i\right\rangle=\Vert\pmb{u}_i\Vert
 \]</div>
-</div>
 <p>以及，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -524,7 +509,6 @@ document.write(`
 &amp;=\sum_{j=1}^{i-1}\langle\pmb{a}_i,\pmb{e}_j\rangle\pmb{e}_j+\pmb{e}_i\langle \pmb{e}_i,\pmb{a}_i\rangle\\
 \end{split}
 \end{split}\]</div>
-</div>
 </section>
 </section>
 <section id="id3">
@@ -532,67 +516,51 @@ document.write(`
 <section id="id4">
 <h3><span class="section-number">7.2.1. </span>方阵的特征值分解<a class="headerlink" href="#id4" title="Link to this heading">#</a></h3>
 <p>  若方阵<span class="math notranslate nohighlight">\(\pmb{A}_{m\times m}\)</span>可对角化，则有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\pmb{X}\pmb{\Lambda}\pmb{X}^{-1}
 \]</div>
-</div>
 <p>  矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的特征向量是经过矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>变换后方向保持不变的向量，而特征值为这个变换中特征向量的缩放因子，即矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>对特征向量<span class="math notranslate nohighlight">\(\pmb{x}\)</span>的变换等于特征向量与特征值的乘积。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Ax}=\lambda \pmb{x}
 \]</div>
-</div>
 <p>  令，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix},\quad \pmb{\Lambda}=\begin{pmatrix}\lambda_1&amp;&amp;&amp;\\&amp;\lambda_2&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\lambda_n \end{pmatrix}
 \end{split}\]</div>
-</div>
 <p>可以得到，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}\pmb{AX}&amp;=A\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\\&amp;=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\lambda_1\pmb{x}_1&amp;\lambda_2\pmb{x}_2&amp;\dots&amp;\lambda_n\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\\&amp;=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_n\\|&amp;|&amp;\dots&amp;| \end{pmatrix}\begin{pmatrix}\lambda_1&amp;&amp;&amp;\\&amp;\lambda_2&amp;&amp;\\&amp;&amp;\ddots&amp;\\&amp;&amp;&amp;\lambda_n \end{pmatrix}\\&amp;=\pmb{X\Lambda}\end{split}
 \end{split}\]</div>
-</div>
 <p>最终，我们可以得到结论（特征向量线性无关，故<span class="math notranslate nohighlight">\(\pmb{X}^{-1}\)</span>存在），</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\pmb{X}\pmb{\Lambda} \pmb{X}^{-1}
 \]</div>
-</div>
 <section id="id5">
 <h4><span class="section-number">7.2.1.1. </span>对称矩阵的特征值分解<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <p>  任意对称实矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>可分解为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^{-1}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^\top.
 \]</div>
-</div>
 <p>  对称矩阵有一个<strong>非常重要的性质</strong>：</p>
 <blockquote>
 <div><p>对称矩阵的特征向量是正交向量，即<span class="math notranslate nohighlight">\(\langle\pmb{x}_i, \pmb{x}_j\rangle=0,\forall i\neq j\)</span>。</p>
 </div></blockquote>
 <p>  <strong>证</strong>：假设<span class="math notranslate nohighlight">\(\lambda_1,\lambda_2,\pmb{x}_1,\pmb{x}_2\)</span>为对称矩阵<span class="math notranslate nohighlight">\(S\)</span>的任意互不相等的特征值和特征向量，那么，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \lambda_1\langle\pmb{x}_i, \pmb{x}_j\rangle=\langle\pmb{Ax}_1, \pmb{x}_2\rangle=\pmb{x}_1^\top \pmb{Ax}_2=\pmb{x}_1^\top\lambda_2\pmb{x}_2=\lambda_2\langle\pmb{x}_1, \pmb{x}_2\rangle
 \]</div>
-</div>
 <p>等式左边减去右边，得</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\lambda_1-\lambda_2)\langle\pmb{x}_1, \pmb{x}_2\rangle=0.
 \]</div>
-</div>
 <p>  由于<span class="math notranslate nohighlight">\(\lambda_1\neq\lambda_2\)</span>，因此只能<span class="math notranslate nohighlight">\(\langle\pmb{x}_1, \pmb{x}_2\rangle=0\)</span>，即对称矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的任意不相同的特征向量是正交的。于是，我们可以得到一个<strong>重要结论</strong>：</p>
 <blockquote>
 <div><p>对称矩阵可以分解为两个由正交向量组成的矩阵与其对角阵的乘积，即<span class="math notranslate nohighlight">\(\pmb{A}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^{-1}=\pmb{Q}\pmb{\Lambda} \pmb{Q}^\top\)</span>。</p>
@@ -603,25 +571,20 @@ document.write(`
 <section id="id6">
 <h2><span class="section-number">7.3. </span>奇异值分解<a class="headerlink" href="#id6" title="Link to this heading">#</a></h2>
 <p>  对于<span class="math notranslate nohighlight">\(m\times n\)</span>的矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>，没有特征值的定义。因此，不能进行特征值分解。但可以使用奇异值分解，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{A}=\pmb{U}\pmb{\Sigma} \pmb{V}^\top=\sum_{i=1}\sigma_i\pmb{u}_i\pmb{v}_i^\top
 \]</div>
-</div>
 <p>其中<span class="math notranslate nohighlight">\(\pmb{U}=(\pmb{u}_1,\pmb{u}_2,...,\pmb{u}_m)\)</span>为<span class="math notranslate nohighlight">\(m\times m\)</span>的正交矩阵，<span class="math notranslate nohighlight">\(\pmb{u}_i\)</span>称为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的左奇异向量。<span class="math notranslate nohighlight">\(\pmb{V}=(\pmb{v}_1,\pmb{v}_2,...,\pmb{v}_n)\)</span>为<span class="math notranslate nohighlight">\(n\times n\)</span>的正交矩阵，<span class="math notranslate nohighlight">\(\pmb{v}_i\)</span>称为矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的右奇异向量。<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>的主对角线上的元素<span class="math notranslate nohighlight">\(\sigma_i\)</span>称为奇异值。</p>
 <p>  奇异值分解(SVD)的目标就是找到参数<span class="math notranslate nohighlight">\(\pmb{U},\pmb{V}\)</span>和奇异值矩阵<span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>。<span class="math notranslate nohighlight">\(\pmb{u}_i,\pmb{v}_i\)</span>都是正交向量且满足，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Av}_i=\sigma_i\pmb{u}_i
 \]</div>
-</div>
 <p>也就是说，一个<span class="math notranslate nohighlight">\(n\)</span>维向量<span class="math notranslate nohighlight">\(\pmb{v}\)</span>经过矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>的变换<strong>等于</strong>一个<span class="math notranslate nohighlight">\(m\)</span>维向量<span class="math notranslate nohighlight">\(\pmb{u}\)</span>经过奇异值<span class="math notranslate nohighlight">\(\sigma\)</span>的缩放。</p>
 <section id="svd">
 <h3><span class="section-number">7.3.1. </span>SVD参数求解<a class="headerlink" href="#svd" title="Link to this heading">#</a></h3>
 <p>  SVD参数一般通过<span class="math notranslate nohighlight">\(\pmb{AA}^\top\)</span>求<span class="math notranslate nohighlight">\(\pmb{U}\)</span>,<span class="math notranslate nohighlight">\(\pmb{A}^\top\pmb{A}\)</span>求<span class="math notranslate nohighlight">\(\pmb{V}\)</span>。</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -629,7 +592,6 @@ document.write(`
 \pmb{A}^\top\pmb{A}&amp;=\pmb{V}\pmb{\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
 \end{split}
 \end{split}\]</div>
-</div>
 <p>由于上述矩阵均为对称矩阵，因此，可以使用特征值分解求得矩阵<span class="math notranslate nohighlight">\(\pmb{U},\pmb{V}\)</span>。</p>
 <p>  <span class="math notranslate nohighlight">\(\pmb{\Sigma}\)</span>与<span class="math notranslate nohighlight">\(\pmb{AA}^\top,\pmb{A}^\top\pmb{A}\)</span>的关系，可以求得奇异值。</p>
 <blockquote>
@@ -681,12 +643,10 @@ document.write(`
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#qr">7.1. QR分解</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">7.1.1. QR的一般形式</a></li>

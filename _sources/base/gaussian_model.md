@@ -312,13 +312,22 @@ $$
 \boxed{
   \begin{split}
    p(\pmb{z}|\pmb{y})&=\mathcal{N}(\pmb{y}_{z|y},\pmb{\Sigma}_{z|y})\\
-   \pmb{\Sigma}_{z|y}&=(\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W})^{-1}=\pmb{\Lambda}_{zz}^{-1}\\
+   \pmb{\Sigma}_{z|y}&=\left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]^{-1}\\
    \pmb{\mu}_{z|y}&=\pmb{\Sigma}_{z|y}(\pmb{\Lambda}_{zz}\pmb{\mu}_z-\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b})))\\
+   &=\pmb{\Sigma}_{z|y}\left[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{W}^\top\pmb{\Sigma}_y^{-1}(\pmb{y}-\pmb{b}) \right]\\
    &=\pmb{\mu}_z-\pmb{\Lambda}_{zz}^{-1}\pmb{\Lambda}_{zy}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
    &=\pmb{\mu}_z + \pmb{\Sigma}_{zy}\pmb{\Sigma}_{yy}^{-1}(\pmb{y}_2-(\pmb{W\mu}_z+\pmb{b}))\\
   \end{split}
 }
 $$(posterior-gaussian-dist)
+
+整理后验计算公式，下式为常用计算公式，即
+
+$$
+\boxed{
+  \pmb{\Sigma}_{z|y}=\left[\pmb{\Sigma}_z^{-1}+\pmb{W}^\top \pmb{\Sigma}_y^{-1}\pmb{W}\right]^{-1},\quad \pmb{\mu}_{z|y}=\pmb{\Sigma}_{z|y}\left[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{W}^\top\pmb{\Sigma}_y^{-1}(\pmb{y}-\pmb{b}) \right]
+}
+$$(posterior-common-used)
 
 
 &emsp;&emsp;**（三）例子**
@@ -396,12 +405,10 @@ $$
 其中，
 
 $$
-\hat{\pmb{\Sigma}}=(\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1})^{-1}
+\hat{\pmb{\Sigma}}=(\pmb{\Sigma}_z^{-1}+N\pmb{\Sigma}_y^{-1})^{-1},\quad \hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
 $$
 
-$$
-\hat{\pmb{\mu}}=\hat{\pmb{\Sigma}}[\pmb{\Sigma}_z^{-1}\pmb{\mu}_z+\pmb{\Sigma}_y^{-1}(N\bar{\pmb{y}})]
-$$
+
 
 ## 高斯分布的参数推理
 

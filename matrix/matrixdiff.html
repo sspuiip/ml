@@ -33,19 +33,15 @@
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
   <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/jquery.js?v=5d32c60e"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/scripts/furo.js"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -393,7 +389,6 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">4. </span>矩阵微分<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <p>矩阵微分是多变量函数微分的推广。首先注意区分以下标记。</p>
-<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><strong>标记</strong></p></th>
@@ -445,103 +440,82 @@ document.write(`
 </tr>
 </tbody>
 </table>
-</div>
 <section id="jacobian">
 <h2><span class="section-number">4.1. </span>Jacobian矩阵<a class="headerlink" href="#jacobian" title="Link to this heading">#</a></h2>
 <ol class="arabic simple">
 <li><p><strong>向量偏导算子（分子布局）</strong>。
 <span class="math notranslate nohighlight">\(1\times m\)</span>行向量<span class="math notranslate nohighlight">\(\mathbf{x}^\top\)</span><strong>偏导算子</strong>记为，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathbf{x}}\triangleq\frac{\partial}{\partial\mathbf{x}^\top}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]
 \]</div>
-</div>
 <ol class="arabic simple" start="2">
 <li><p><strong>标量函数偏导向量</strong>。
 标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的偏导向量由如下<span class="math notranslate nohighlight">\(1\times m\)</span>行向量给出，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}=\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_m} \right]
 \]</div>
-</div>
 <ol class="arabic" start="3">
 <li><p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的变元为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>时有，</p>
 <ul class="simple">
 <li><p>定义1 (<strong>Jacobian矩阵</strong>)</p></li>
 </ul>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
     \mathbf{D}_{\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}^\top}=\left[\begin{array}{ccc} \frac{\partial f(\mathbf{X})}{\partial x_{11}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{m1}}\\ \vdots &amp;\ddots &amp; \vdots \\ \frac{\partial f(\mathbf{X})}{\partial x_{1n}} &amp;\cdots &amp; \frac{\partial f(\mathbf{X})}{\partial x_{mn}}\end{array} \right]\in \mathbb{R}^{n\times m}
     \end{split}\]</div>
-</div>
 <ul class="simple">
 <li><p>定义2 (<strong>行向量偏导</strong>)</p></li>
 </ul>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
     \mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathrm{vec}^\top (\mathbf{X})}=\left[\frac{\partial f(\mathbf{X})}{\partial x_{11}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{m1}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{1n}},\cdots,\frac{\partial f(\mathbf{X})}{\partial x_{mn}}    \right]
     \]</div>
-</div>
 </li>
 </ol>
 <p>两者之间的关系为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\left[\mathrm{vec}\left(\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})\right)\right]^\top
 \]</div>
-</div>
 <p>即标量函数的行向量偏导<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>等于标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的Jacobian矩阵。</p>
 </section>
 <section id="id2">
 <h2><span class="section-number">4.2. </span>梯度矩阵<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p><strong>梯度算子(分母布局)</strong> 指的是以列向量形式<span class="math notranslate nohighlight">\(\mathbf{x}=[x_1,...,x_m]^\top\)</span>定义的偏导算子，记为<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}\)</span>，定义为</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\mathbf{x}}\triangleq\frac{\partial}{\partial \mathbf{x}}=\left[\frac{\partial}{\partial x_1},\cdots,\frac{\partial}{\partial x_m} \right]^\top
 \]</div>
-</div>
 <ol class="arabic simple">
 <li><p>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的<strong>梯度向量</strong><span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}f(\mathbf{x})\)</span>为1个与<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>同维度的列向量，即</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\mathbf{x}}f(\mathbf{x})\triangleq\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_m}\right]^\top=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}\neq \frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}=\mathbf{D}_{\mathbf{x}}f(\mathbf{x})
 \]</div>
-</div>
 <ol class="arabic simple" start="2">
 <li><p>当标量函数的变元为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\in \mathbb{R}^{m\times n}\)</span>,并列向理化后，函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>关于矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的<strong>梯度向量</strong>为，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})=\frac{\partial f(\mathbf{X})}{\partial \mathrm{vec}\mathbf{X}}=\left[\frac{\partial  f(\mathbf{X})}{\partial x_{11}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{m1}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{1n}},\cdots,\frac{\partial  f(\mathbf{X})}{\partial x_{mn}}\right]^\top
 \]</div>
-</div>
 <ol class="arabic simple" start="3">
 <li><p>也可以直接定义<strong>梯度矩阵</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \nabla_{\mathbf{X}}f(\mathbf{X})=\left[\begin{array}{ccc} \frac{\partial f(\mathbf{X})}{\partial x_{11}} &amp;\cdots&amp;\frac{\partial f(\mathbf{X})}{\partial x_{1n}}\\\vdots&amp;\ddots&amp;\vdots\\ \frac{\partial f(\mathbf{X})}{\partial x_{m1}}&amp;\cdots &amp;\frac{\partial f(\mathbf{X})}{\partial x_{mn}} \end{array} \right]=\frac{\partial f(\mathbf{X})}{\partial \mathbf{x}}
 \end{split}\]</div>
-</div>
 <p>可以看出，梯度矩阵<span class="math notranslate nohighlight">\(\nabla_{\mathbf{x}}f(\mathbf{X})\)</span>是梯度向量<span class="math notranslate nohighlight">\(\nabla_{\mathrm{vec}\mathbf{X}}f(\mathbf{X})\)</span>的矩阵化，以及以下关系，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \nabla_{\mathbf{X}}f(\mathbf{X})=\mathbf{D}_{\mathbf{X}}^\top f(\mathbf{X})
 \]</div>
-</div>
 <p>即，标量函数的梯度矩阵等价于Jacobian矩阵的转置。</p>
 </section>
 <section id="id3">
@@ -553,83 +527,65 @@ document.write(`
 <li><p>若<span class="math notranslate nohighlight">\(f(\mathbf{X})=c\)</span>为常数，则梯度<span class="math notranslate nohighlight">\(\frac{\partial c}{\partial \mathbf{X}}=\mathbf{0}_{m\times n}\)</span>。</p></li>
 <li><p><strong>线性规则</strong> 若<span class="math notranslate nohighlight">\(f(\mathbf{X}),g(\mathbf{X})\)</span>分别为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的实值函数,<span class="math notranslate nohighlight">\(c_1,c_2\)</span>为实常数，则有以下等式成立，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial [c_1f(\mathbf{X})+c_2g(\mathbf{X})]}{\partial \mathbf{X}}=c_1\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+c_2\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
 \]</div>
-</div>
 <ol class="arabic simple" start="3">
 <li><p><strong>乘法规则</strong> 若<span class="math notranslate nohighlight">\(f(\mathbf{X}),g(\mathbf{X}),h(\mathbf{X})\)</span>分别为矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>的实值函数，则有以下等式成立，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial [f(\mathbf{X})g(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}
 \]</div>
-</div>
 <p>和，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial [f(\mathbf{X})g(\mathbf{X})h(\mathbf{X})]}{\partial \mathbf{X}}=g(\mathbf{X})h(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial \mathbf{X}}+
 f(\mathbf{X})h(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial \mathbf{X}}+
 f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 \]</div>
-</div>
 <ol class="arabic simple" start="4">
 <li><p><strong>商规则</strong> 若<span class="math notranslate nohighlight">\((\mathbf{X})\neq 0\)</span>，则有，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial [f(\mathbf{X})/g(\mathbf{X})]}{\partial \mathbf{X}}=\frac{1}{g^2(\mathbf{X})}\left[ g(\mathbf{X})\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}-f(\mathbf{X})\frac{\partial g(\mathbf{X})}{\partial\mathbf{X}}\right]
 \]</div>
-</div>
 <ol class="arabic simple" start="5">
 <li><p><strong>链式规则</strong> 假设<span class="math notranslate nohighlight">\(y=f(\mathbf{X})\)</span>和<span class="math notranslate nohighlight">\(g(y)\)</span>分别是以矩阵<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>和标量<span class="math notranslate nohighlight">\(y\)</span>为变元的实值函数，则</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial g[f(\mathbf{X})]}{\partial \mathbf{X}}=\frac{dg(y)}{dy}\frac{\partial f(\mathbf{X})}{\partial\mathbf{X}}
 \]</div>
-</div>
 <p>推广，记<span class="math notranslate nohighlight">\(g(\mathbf{F}(\mathbf{X}))=g(\mathbf{F})\)</span>，其中，<span class="math notranslate nohighlight">\(\mathbf{F}=[f_{kl}]\in \mathbb{R}^{p\times q}, \mathbf{X}\in \mathbb{R}^{m\times n}\)</span>，则链式法则为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left[\frac{\partial g(\mathbf{F})}{\partial \mathbf{X}}\right]_{ij}=\frac{\partial g(\mathbf{F})}{\partial x_{ij}}=\sum_{k=1}^p\sum_{l=1}^q \frac{\partial g(\mathbf{F})}{\partial f_{kl}}\frac{\partial f_{kl}}{\partial x_{ij}}
 \]</div>
-</div>
 <section id="id5">
 <h4><span class="section-number">4.3.1.1. </span>独立性假设<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
 <p>假定实值函数的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}=[x_i]_{i=1}^m\in\mathbb{R}^m\)</span>或者矩阵变元<span class="math notranslate nohighlight">\(\mathbf{X}_{ij}\in\mathbb{R}^{m\times n}\)</span>本身无任何特殊结构，也就是向量或矩阵变元的元素之间是相互独立的，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \frac{\partial x_i}{\partial x_j}=\delta_{ij}=\left\{\begin{array}{ll}1,&amp;i=j\\ 0,&amp;i\neq j \end{array} \right.
 \end{split}\]</div>
-</div>
 <p>以及，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \frac{\partial x_{kl}}{\partial x_{ij}}=\delta_{ki}\delta_{lj}=\left\{\begin{array}{ll}1,&amp;k=i \wedge l=j\\ 0,&amp;others \end{array} \right.
 \end{split}\]</div>
-</div>
 </section>
 <section id="id6">
 <h4><span class="section-number">4.3.1.2. </span>案例<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
 <li><p>求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。由于<span class="math notranslate nohighlight">\(\mathbf{x}^\top\mathbf{A}\mathbf{x}=\sum_{k=1}^n\sum_{l=1}^n a_{kl}x_kx_l\)</span>，则根据<span class="math notranslate nohighlight">\(\mathbf{D}_{\mathbf{x}}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\)</span>可知第<span class="math notranslate nohighlight">\(i\)</span>分量为，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]_i=\frac{\partial f(\mathbf{x})}{\partial x_i}=\sum_{k=1}^n\sum_{l=1}^n\frac{\partial a_{kl}x_kx_l}{\partial x_i}=\sum_{l=1}^na_{il}x_l+\sum_{i=1}^na_{ki}x_k=[\mathbf{x}^\top\mathbf{A}^\top_i]+[\mathbf{x}^\top\mathbf{A}_i]
 \]</div>
-</div>
 <p>其中，<span class="math notranslate nohighlight">\(\mathbf{A}_i\)</span>为矩阵<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>列。可知，<span class="math notranslate nohighlight">\(\mathbf{D}f(\mathbf{x})=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\)</span>(根据公式可知<strong>标量函数对行向量求偏导的计算结果为一行向量</strong>)， 同理可知梯度向量<span class="math notranslate nohighlight">\(\nabla_\mathbf{x}f(\mathbf{x})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}=\mathbf{D}^\top f(\mathbf{x})\)</span> (根据公式可知<strong>结果为一列向量</strong>)</p>
 <p>从上述计算过程可以看出，根据<span class="math notranslate nohighlight">\(\frac{\partial x_{kl}}{\partial x_{ij}}\)</span>可以计算出大部分的矩阵函数的Jacobian矩阵和梯度矩阵，但是对于复杂的矩阵函数，偏导<span class="math notranslate nohighlight">\(\frac{\partial x_{kl}}{\partial x_{ij}}\)</span>的计算就会比较困难。因此，产生了一种相对简单计算的方法：使用矩阵微分计算(<strong>标量、向量和矩阵</strong>)函数关于(<strong>向量或矩阵</strong>)变元的偏导。</p>
 </section>
@@ -637,12 +593,10 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 <section id="id7">
 <h3><span class="section-number">4.3.2. </span>一阶实矩阵微分<a class="headerlink" href="#id7" title="Link to this heading">#</a></h3>
 <p>矩阵微分记为<span class="math notranslate nohighlight">\(\mathrm{d}\mathbf{X}\)</span>，其定义为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}\mathbf{X}=[\mathrm{d}X_{ij}]_{i=1,j=1}^{m,n}
 \]</div>
-</div>
 <section id="id8">
 <h4><span class="section-number">4.3.2.1. </span>性质<a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
 <ol class="arabic simple">
@@ -653,117 +607,88 @@ f(\mathbf{X})g(\mathbf{X})\frac{\partial h(\mathbf{X})}{\partial \mathbf{X}}
 <li><p><span class="math notranslate nohighlight">\(\mathrm{d}(\mathbf{AXB})=\mathbf{A}\mathrm{d}(\mathbf{X})\mathbf{B}\)</span></p></li>
 <li><p>若有矩阵函数<span class="math notranslate nohighlight">\(\mathbf{U}=\mathbf{F}(\mathbf{X}),\mathbf{V}=\mathbf{G}(\mathbf{X}),\mathbf{W}=\mathbf{H}(\mathbf{X})\)</span>，则以下等式成立，</p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d(\mathbf{UV})=(\mathrm{d}\mathbf{U})\mathbf{V}+\mathbf{U}(\mathrm{d}\mathbf{V})
 \]</div>
-</div>
 <p>和</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V})\mathbf{W}+\mathbf{U}\mathbf{V}(\mathrm{d}\mathbf{W})
 \]</div>
-</div>
 <ol class="arabic simple" start="7">
 <li><p><strong>迹不变性</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}(\mathrm{tr}(\mathbf{X}))=\mathrm{tr}(\mathrm{d} \mathbf{X})\]</div>
-</div>
 <ol class="arabic simple" start="8">
 <li><p><strong>行列式微分</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}|\mathbf{X}|=|\mathbf{X}|\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X})
 \]</div>
-</div>
 <p>和</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}\log|\mathbf{X}|=\mathrm{tr}(\mathbf{X}^{-1}\mathrm{d}\mathbf{X})
 \]</div>
-</div>
 <ol class="arabic simple" start="9">
 <li><p><strong>Kronecker积</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathbf{U}\otimes\mathbf{V})=\mathrm{d}(\mathbf{U})\otimes\mathbf{V}+\mathbf{U}\otimes\mathrm{d}(\mathbf{V})
 \]</div>
-</div>
 <ol class="arabic simple" start="10">
 <li><p><strong>Hadamard</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathbf{U}*\mathbf{V})=\mathrm{d}(\mathbf{U})*\mathbf{V}+\mathbf{U}*\mathrm{d}(\mathbf{V})
 \]</div>
-</div>
 <ol class="arabic simple" start="11">
 <li><p><strong>向量化</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}(\mathrm{vec}(\mathbf{X}))=\mathrm{vec}(\mathrm{d}(\mathbf{X}))\]</div>
-</div>
 <ol class="arabic simple" start="12">
 <li><p><strong>对数函数</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}\log\mathbf{X}=\mathbf{X}^{-1} \mathrm{d}\mathbf{X}\]</div>
-</div>
 <ol class="arabic simple" start="13">
 <li><p><strong>逆</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}\mathbf{X}^{-1}=-\mathbf{X}^{-1} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}\]</div>
-</div>
 <ol class="arabic simple" start="14">
 <li><p><strong>逐元素函数</strong></p></li>
 </ol>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}\sigma(\mathbf{X})=\sigma'(\mathbf{X})* \mathrm{d}\mathbf{X}
 \]</div>
-</div>
 </section>
 <section id="f-mathbf-x-mathbf-x">
 <h4><span class="section-number">4.3.2.2. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的向量变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>全微分求偏导方法<a class="headerlink" href="#f-mathbf-x-mathbf-x" title="Link to this heading">#</a></h4>
 <p>考虑标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),\mathbf{x}\in\mathbb{R}^n\)</span>的全微分，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}f(\mathbf{x})=\frac{\partial f(\mathbf{x})}{\partial x_1}\mathrm{d}x_1+\cdots+\frac{\partial f(\mathbf{x})}{\partial x_n}\mathrm{d}x_n
 \]</div>
-</div>
 <p>写成内积形式，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathrm{d}f(\mathbf{x})=\left[\frac{\partial f(\mathbf{x})}{\partial x_1},\cdots,\frac{\partial f(\mathbf{x})}{\partial x_n}\right]\left[\begin{array}{cc}\mathrm{d}x_1\\\vdots\\\mathrm{d}x_n\end{array}\right]=\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}=\mathrm{tr}\left(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\right)
 \end{split}\]</div>
-</div>
 <p>显然，如果函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的微分可以写成</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\mathrm{d}f(\mathbf{x})=\mathrm{tr}\left(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\mathrm{d}\mathbf{x}\right)\]</div>
-</div>
 <p>的形式，则<span class="math notranslate nohighlight">\(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\)</span>就是函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>关于变元<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的Jacobian矩阵<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{x}f(\mathbf{x})\)</span>，其转置<span class="math notranslate nohighlight">\(\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}}=\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top}\right]^\top\)</span>即为梯度<span class="math notranslate nohighlight">\(\nabla_\mathbf{x}f(\mathbf{x})\)</span>。</p>
 </section>
 <section id="id9">
 <h4><span class="section-number">4.3.2.3. </span>标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X})\)</span>的矩阵量变元<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>全微分求偏导方法<a class="headerlink" href="#id9" title="Link to this heading">#</a></h4>
 <p>和向量一样，把变元矩阵的每个元素看作是一个变量，则标量函数<span class="math notranslate nohighlight">\(f(\mathbf{X}),\mathbf{X}\in\mathbb{R}^{m\times n}\)</span>的全微分可以写成如下形式，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -775,13 +700,11 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}))\mathrm{d}\mathbf{X})
 \end{split}
 \end{split}\]</div>
-</div>
 <p>易知：<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=\mathbf{D}^\top_\mathbf{X}f(\mathbf{X})\)</span>，即可求出梯度矩阵。</p>
 </section>
 <section id="id10">
 <h4><span class="section-number">4.3.2.4. </span>求导方法<a class="headerlink" href="#id10" title="Link to this heading">#</a></h4>
 <p>综上所述，若标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),f(\mathbf{X})\)</span>在<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{X}\)</span>可微，则Jacobin矩阵存在，且可以通过以下形式计算，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -789,7 +712,6 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 \mathrm{d}f(\mathbf{X})&amp;=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}) \mathrm{d}\mathbf{X})=\mathrm{tr}(\nabla_\mathbf{X}f(\mathbf{X})^\top \mathrm{d}\mathbf{X})\\
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此有以下通过对函数微分求偏导数的方法：将函数<span class="math notranslate nohighlight">\(f(\mathbf{X}),f(\mathbf{x})\)</span>求关于变元<span class="math notranslate nohighlight">\(\mathbf{X},\mathbf{x}\)</span>的微分(利用第1小节的性质)，并将结果整理成规范形式<span class="math notranslate nohighlight">\(\mathrm{d}f(\mathbf{x})=\mathrm{tr}(\mathbf{D}_\mathbf{x}f(\mathbf{x}) \mathrm{d}\mathbf{x})\)</span>或<span class="math notranslate nohighlight">\(\mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{D}_\mathbf{X}f(\mathbf{X}) \mathrm{d}\mathbf{X})\)</span>。Jacobian矩阵的转置即为梯度矩阵。</p>
 <p>因为最终要整理成规范形式，因此，需要用到迹的一些性质：</p>
 <ol class="arabic simple">
@@ -806,7 +728,6 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 <h4><span class="section-number">4.3.2.5. </span>案例<a class="headerlink" href="#id11" title="Link to this heading">#</a></h4>
 <p><strong>例1</strong>. 求实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x})=\mathbf{x}^\top\mathbf{A}\mathbf{x}\)</span>的梯度向量与Jacobian矩阵。</p>
 <p>使用微分法，凑规范形式如下，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -815,10 +736,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{x}]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{x}f(\mathbf{x})=\mathbf{x}^\top(\mathbf{A}+\mathbf{A}^\top)\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{x}f(\mathbf{x})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{x}\)</span>。</p>
 <p><strong>例2</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{X})\)</span>的Jacobian矩阵和梯度矩阵</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -826,10 +745,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[2\mathbf{X}^\top\mathrm{d}\mathbf{X}]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=2\mathbf{X}^\top\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=2\mathbf{X}\)</span>。</p>
 <p><strong>例3</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{X}^\top\mathbf{AX})\)</span>的Jacobian矩阵和梯度矩阵</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -837,10 +754,8 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\)</span>，<span class="math notranslate nohighlight">\(\nabla_\mathbf{X}f(\mathbf{X})=(\mathbf{A}+\mathbf{A}^\top)\mathbf{X}=\frac{\partial \mathrm{tr}(\mathbf{X}^\top\mathbf{AX})}{\partial\mathbf{X}}\)</span>。</p>
 <p><strong>例4</strong>. 求<span class="math notranslate nohighlight">\(\mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})\)</span>的Jacobian矩阵和梯度矩阵</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -849,13 +764,11 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此可知，<span class="math notranslate nohighlight">\(\mathbf{D}_\mathbf{X}f(\mathbf{X})=-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}\)</span>，<span class="math notranslate nohighlight">\(
 \nabla_\mathbf{X}f(\mathbf{X})=[-\mathbf{X}^{-1}\mathbf{A}\mathbf{X}^{-1}]^\top=\frac{\partial \mathrm{tr}(\mathbf{A}\mathbf{X}^{-1})}{\partial\mathbf{X}}\)</span>。</p>
 <p>总的来说，相较于按定义求偏导，微分法更易于计算且不易出错。</p>
 <p><strong>例5</strong>. 求<span class="math notranslate nohighlight">\(f(\mathbf{w})=\lVert \mathbf{Xw}-\mathbf{y}\rVert_2^2\)</span>的偏导数。</p>
 <p>这是一个关于<span class="math notranslate nohighlight">\(\mathbf{w}\)</span>的标量函数，使用微分法凑规范型如下，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -864,12 +777,10 @@ d(\mathbf{UVW})=(\mathrm{d}\mathbf{U})\mathbf{VW}+\mathbf{U}(\mathrm{d}\mathbf{V
 &amp;=\mathrm{tr}\left[2(\mathbf{Xw}-\mathbf{y})^\top\mathbf{X}\mathrm{d}\mathbf{w}\right]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此可知，<span class="math notranslate nohighlight">\(
 \nabla_\mathbf{w}f(\mathbf{w})=2\mathbf{X}^\top(\mathbf{Xw}-\mathbf{y})\)</span>。</p>
 <p><strong>例6</strong>. 求<span class="math notranslate nohighlight">\(f(\mathbf{W})=-\mathbf{y}^\top\log(\mathrm{softmax}(\mathbf{Wx}))\)</span>关于矩阵变元<span class="math notranslate nohighlight">\(\mathbf{W}\)</span>的梯度，其中<span class="math notranslate nohighlight">\(\mathbf{y}\)</span>是one-hot向量，<span class="math notranslate nohighlight">\(\mathbf{1}\)</span>为全1向量， <span class="math notranslate nohighlight">\(\mathrm{softmax}(\mathbf{a})=\frac{\exp{\mathbf{a}}}{\mathbf{1}^\top\exp{\mathbf{a}}}\)</span>，<span class="math notranslate nohighlight">\(\exp(\mathbf{a})\)</span>为逐元素求指数。</p>
 <p>首先化简，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -877,9 +788,7 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 &amp;=-\mathbf{y}^\top\mathbf{Wx}+\log(\mathbf{1}^\top\exp(\mathbf{Wx}))
 \end{split}
 \end{split}\]</div>
-</div>
 <p>此处用到2个公式如下，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -887,9 +796,7 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 \mathbf{y}^\top\mathbf{1}&amp;=1
 \end{split}
 \end{split}\]</div>
-</div>
 <p>使用微分法，凑规范型，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -901,21 +808,17 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 &amp;=\mathrm{tr}\left[\mathbf{x}\left(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})^\top\right)\mathrm{d}\mathbf{W}\right]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>因此，<span class="math notranslate nohighlight">\(\nabla_\mathbf{W}f(\mathbf{W})=(\mathrm{softmax}(\mathbf{Wx})-\mathbf{y})\mathbf{x}^\top\)</span>。</p>
 </section>
 </section>
 <section id="id12">
 <h3><span class="section-number">4.3.3. </span>实矩阵函数的偏导计算<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
 <p>实值矩阵函数<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X})\)</span>的第<span class="math notranslate nohighlight">\(k\)</span>行,<span class="math notranslate nohighlight">\(j\)</span>列元素记为<span class="math notranslate nohighlight">\(f_{kl}\)</span>，则<span class="math notranslate nohighlight">\(\mathrm{d}f_{kl}(\mathbf{X})=[\mathrm{d}\mathbf{F}(\mathbf{X})]\)</span>表示为以<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>为变元的标量函数微分，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \mathrm{d}f_{kl}(\mathbf{X})=\left[\begin{array}{l}\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{11}}&amp;,\cdots,&amp;\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{m1}}&amp;,\cdots,&amp;\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{1n}} &amp;,\cdots,&amp;\frac{\partial f_{kl}(\mathbf{X})}{\partial x_{mn}}\end{array}\right]\left[\begin{array}{c}\mathrm{d}x_{11}\\\vdots\\\mathrm{d}x_{m1}\\\vdots\\\mathrm{d}x_{1n}\\\vdots \\\mathrm{d}x_{mn} \end{array}\right]
 \end{split}\]</div>
-</div>
 <p>将<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X}),\mathbf{X}\)</span>向量化后再微分，可得Jacobian矩阵为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -930,39 +833,29 @@ f(\mathbf{W})&amp;=-\mathbf{y}^\top[\log(\exp(\mathbf{Wx}))-\mathbf{1}\log(\math
 &amp;=\mathbf{D}_\mathbf{X}\mathbf{F}(\mathbf{X})\mathrm{d}(\mathrm{vec}\mathbf{X})
 \end{split}
 \end{split}\]</div>
-</div>
 <p>对于一个包含<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>和<span class="math notranslate nohighlight">\(\mathbf{X}^\top\)</span>矩阵函数<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X})\in\mathbb{R}^{p\times q},\mathbf{X}\in\mathbb{R}^{m\times n}\)</span>，一阶矩阵微分为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathrm{vec}\mathbf{F(X)})=\mathbf{A}\mathrm{d}(\mathrm{vec}\mathbf{X})+\mathbf{B}\mathrm{d}(\mathrm{vec}\mathbf{X}^\top)
 \]</div>
-</div>
 <p>可改写为</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathrm{vec}\mathbf{F(X)})=(\mathbf{A}+\mathbf{BK}_{mn})\mathrm{d}(\mathrm{vec}\mathbf{X})
 \]</div>
-</div>
 <p>因为有<span class="math notranslate nohighlight">\(\mathrm{d}(\mathrm{vec}\mathbf{X}^\top)=\mathbf{K}_{mn}\mathrm{d}(\mathrm{vec}\mathbf{X})\)</span>。</p>
 <p><strong><font color='red'>因此可知有如下求Jacobian矩阵的方法</font></strong>，</p>
 <p>矩阵函数<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X}):\mathbb{R}^{m\times n}\rightarrow\mathbb{R}^{p\times q}\)</span>的Jacobian矩阵可以通过以下形式计算，若对矩阵函数求微分后有如下形式，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathbf{F(X)})=\mathbf{A}\mathrm{d}(\mathbf{X})\mathbf{B}+\mathbf{C}\mathrm{d}(\mathbf{X}^\top)\mathbf{D}
 \]</div>
-</div>
 <p>可得，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\partial (\mathrm{vec}\mathbf{X})^\top}=(\mathbf{B}^\top\otimes\mathbf{A})+(\mathbf{D}^\top\otimes\mathbf{C})\mathbf{K}_{mn}
 \]</div>
-</div>
 <p>转置后即为梯度矩阵<span class="math notranslate nohighlight">\(\nabla_{\mathbf{X}}\mathbf{F}(\mathbf{X})\)</span>。</p>
-<div class="table-wrapper colwidths-auto docutils container">
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><strong>函数类型</strong></p></th>
@@ -1001,36 +894,27 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 </tr>
 </tbody>
 </table>
-</div>
 <p><strong>例1</strong>求矩阵函数<span class="math notranslate nohighlight">\(\mathbf{F}(\mathbf{X})=\mathbf{X}^\top\mathbf{X}\)</span>的Jacobian矩阵。</p>
 <p>对矩阵函数微分可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}\mathbf{F}(\mathbf{X})=\mathrm{d}(\mathbf{X}^\top)\mathbf{X}+\mathbf{X}^\top\mathrm{d}(\mathbf{X})
 \]</div>
-</div>
 <p>由上述求导公式可知，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=(\mathbf{X}^\top\otimes\mathbf{I}_n)\mathbf{K}_{mn}+(\mathbf{I}_n\otimes\mathbf{X}^\top)
 \]</div>
-</div>
 <p><strong><font color="red">若不能展开成上述标准形式，则可以使用向量化形式求Jacobian矩阵</font></strong>。即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}(\mathrm{vec}\mathbf{F}(\mathbf{X}))=\mathbf{A}\mathrm{d}(\mathrm{vec}\mathbf{X})+\mathbf{B}\mathrm{d}(\mathrm{vec}\mathbf{X})^\top
 \]</div>
-</div>
 <p>则，Jacobian矩阵可以得出为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf{X})}{\mathrm{d}(\mathrm{vec}\mathbf{X})^\top}=\mathbf{A}+\mathbf{BK}_{mn}
 \]</div>
-</div>
 </section>
 </section>
 <section id="hessian">
@@ -1039,19 +923,15 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 <li><p><strong>定义</strong></p></li>
 </ol>
 <p>实值函数<span class="math notranslate nohighlight">\(f(\mathbf{x}),f(\mathbf{X})\)</span>对于变量<span class="math notranslate nohighlight">\(\mathbf{x},\mathbf{X}\)</span>的二阶偏导称为Hessian矩阵，记为<span class="math notranslate nohighlight">\(\mathbf{H}[f(\mathbf{x})],\mathbf{H}[f(\mathbf{x})]\)</span>，即</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{H}[f(\mathbf{x})]\triangleq\frac{\partial}{\partial \mathbf{x}}\left[\frac{\partial f(\mathbf{x})}{\partial \mathbf{x}^\top} \right]=\frac{\partial^2f(\mathbf{x})}{\partial \mathbf{x}\partial\mathbf{x}^\top}=\nabla_\mathbf{x}[D_\mathbf{x}f(\mathbf{x})]
 \]</div>
-</div>
 <p>和</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{H}[f(\mathbf{X})]\triangleq\frac{\partial^2f(\mathbf{X})}{\partial \mathrm{vec}(\mathbf{X})\partial \mathrm{vec}(\mathbf{X})^\top}
 \]</div>
-</div>
 <p>根据定义可知，<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵是一个实对称矩阵。</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>如何求解<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>矩阵</strong></p></li>
@@ -1061,7 +941,6 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 <li><p>先考察标量函数<span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span>的<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>的求解。
 对函数进行二次微分可得，</p></li>
 </ul>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1072,19 +951,15 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 &amp;=(\mathrm{d}\mathbf{x})^\top \mathbf{H}\mathrm{d}\mathbf{x}\\
 \end{split}
 \end{split}\]</div>
-</div>
 <p>注意：<span class="math notranslate nohighlight">\(\mathrm{d}\mathbf{x}\)</span>不是<span class="math notranslate nohighlight">\(\mathbf{x}\)</span>的函数。</p>
 <p>类似有，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{H}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]
 \]</div>
-</div>
 <ul class="simple">
 <li><p>求解方法：若标量函数的具有二阶微分，则存在如下关系</p></li>
 </ul>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1092,35 +967,27 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 \mathrm{d}^2f(\mathbf{X})=[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]^\top \mathbf{B}[\mathrm{d}(\mathrm{vec}(\mathbf{X}))]&amp;\Leftrightarrow \mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{B}+\mathbf{B}^\top)\\
 \end{split}
 \end{split}\]</div>
-</div>
 <ul class="simple">
 <li><p>若矩阵向量化比较麻烦，则可以使用以下方法避免向量化</p></li>
 </ul>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X}^\top)]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}(\mathbf{U}^\top\otimes\mathbf{V}+\mathbf{U}\otimes\mathbf{V}^\top)
 \]</div>
-</div>
 <p>或</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}^2f(\mathbf{X})=\mathrm{tr}[\mathbf{V}(\mathbf{d}\mathbf{X})\mathbf{U}(\mathbf{d}\mathbf{X})]\Leftrightarrow\mathbf{H}[f(\mathbf{X})]=\frac{1}{2}\mathbf{K}_{nm}(\mathbf{C}^\top\otimes\mathbf{B}+\mathbf{B}^\top\otimes \mathbf{C})
 \]</div>
-</div>
 <ul class="simple">
 <li><p><strong>例1</strong></p></li>
 </ul>
 <p><span class="math notranslate nohighlight">\(f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^{-1})\)</span>，其中<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>是一个<span class="math notranslate nohighlight">\(n\times n\)</span>的矩阵。其一阶微分为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}f(\mathbf{X})=-\mathrm{tr}(\mathbf{X}^{-1}(\mathrm{d}\mathbf{X})\mathbf{X}^{-1})
 \]</div>
-</div>
 <p>则其二阶微分为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1129,33 +996,25 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 &amp;=2\mathrm{tr}[\mathbf{X}^{-2} (\mathrm{d}\mathbf{X})\mathbf{X}^{-1}(\mathrm{d}\mathbf{X}) ]
 \end{split}
 \end{split}\]</div>
-</div>
 <p>则有Hessian矩阵，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathbf{H}=\mathbf{K}_{nn}(\mathbf{X}^{-\top}\otimes\mathbf{X}^{-2}+\mathbf{X}^{-2}\otimes\mathbf{X}^{-1})
 \]</div>
-</div>
 <ul class="simple">
 <li><p><strong>例2</strong></p></li>
 </ul>
 <p>对于<span class="math notranslate nohighlight">\(f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top\mathbf{A}\mathbf{X})\)</span>，其一阶微分为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}f(\mathbf{X})=\mathrm{tr}(\mathbf{X}^\top(\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X})
 \]</div>
-</div>
 <p>二阶微分为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathrm{d}^2f(\mathbf{X})=\mathrm{tr}((\mathbf{A}+\mathbf{A}^\top)\mathrm{d}\mathbf{X}\mathrm{d}\mathbf{X}^\top)
 \]</div>
-</div>
 <p>则Hessian矩阵为，</p>
-<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -1163,7 +1022,6 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 &amp;=\mathbf{I}_n\otimes(\mathbf{A}+\mathbf{A}^\top)
 \end{split}
 \end{split}\]</div>
-</div>
 </section>
 </section>
 
@@ -1207,12 +1065,10 @@ D_\mathbf{X}\mathbf{F}(\mathbf{X})=\frac{\partial \mathrm{vec}\mathbf{F}(\mathbf
 
 
   <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> 目录
   </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+  <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jacobian">4.1. Jacobian矩阵</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">4.2. 梯度矩阵</a></li>
