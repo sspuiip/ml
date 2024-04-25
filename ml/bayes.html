@@ -403,46 +403,84 @@ h^*(\pmb{x})=\arg\min\limits_{c\in\mathcal{Y}} R(c|\pmb{x})
 <p>  贝叶斯公式<a class="reference internal" href="#equation-bayes-formula">(4)</a>估计后验概率的主要困难在于<font color="blue">类条件概率<span class="math notranslate nohighlight">\(P(\pmb{x}|c)\)</span>是样本的所有属性上的联合概率</font>，难以从有限的训练样本直接估计得到，</p>
 <div class="math notranslate nohighlight" id="equation-bayes-formula">
 <span class="eqno">(4)<a class="headerlink" href="#equation-bayes-formula" title="Link to this equation">#</a></span>\[
-\underbrace{P(c|\pmb{x})}_{\mathrm{posterior}}=\frac{\overbrace{P(c)}^{\mathrm{prior}}\times\overbrace{P(\pmb{x}|c)}^{\mathrm{likelihood}}}{\underbrace{p(\pmb{x})}_{\mathrm{evidence}}}
+\underbrace{P(y=c|\pmb{x})}_{\mathrm{posterior}}=\frac{\overbrace{P(y=c)}^{\mathrm{prior}}\times\overbrace{P(\pmb{x}|y=c)}^{\mathrm{likelihood}}}{\underbrace{p(\pmb{x})}_{\mathrm{evidence}}}
 \]</div>
 <p>  对于这一问题，假设所有属性相互独立，则类条件概率可以拆分为如下形式，</p>
 <div class="math notranslate nohighlight" id="equation-class-condition">
 <span class="eqno">(5)<a class="headerlink" href="#equation-class-condition" title="Link to this equation">#</a></span>\[
-P(\pmb{x}|c)=\prod_{i=1}^d P(\pmb{x}_i|c)
+P(\pmb{x}|y=c)=\prod_{j=1}^d P(x_j|y=c)
 \]</div>
 <p>相应地，贝叶斯判定准则式<a class="reference internal" href="#equation-optimal-function">(3)</a>可以改写为，</p>
 <div class="math notranslate nohighlight" id="equation-naive-bayes-target">
 <span class="eqno">(6)<a class="headerlink" href="#equation-naive-bayes-target" title="Link to this equation">#</a></span>\[
-h_{nb}(\pmb{x})=\arg\max\limits_{c\in\mathcal{Y}}P(c)\prod_{i=1}^d P(x_i|c)
+h_{nb}(\pmb{x})=\arg\max\limits_{c\in\mathcal{Y}}P(y=c)\prod_{j=1}^d P(x_j|y=c)
 \]</div>
-<p>上式<a class="reference internal" href="#equation-naive-bayes-target">(6)</a>即为<strong>朴素贝叶斯分类器</strong>。训练该模型就是使用训练集<span class="math notranslate nohighlight">\(D\)</span>来估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span>。</p>
-<ul class="simple">
-<li><p><strong>估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span></strong></p></li>
-</ul>
-<p>  假设<span class="math notranslate nohighlight">\(D_c\)</span>为第<span class="math notranslate nohighlight">\(c\)</span>类样本组成的集合，若独立同分布的样本足够多，则很容易估计出类别<span class="math notranslate nohighlight">\(c\)</span>的先验概率，</p>
-<div class="math notranslate nohighlight" id="equation-nb-prior">
-<span class="eqno">(7)<a class="headerlink" href="#equation-nb-prior" title="Link to this equation">#</a></span>\[
-P(c)=\frac{|D_c|}{|D|}
+<p>上式<a class="reference internal" href="#equation-naive-bayes-target">(6)</a>即为<strong>朴素贝叶斯分类器</strong>。训练该模型就是使用训练集<span class="math notranslate nohighlight">\(D\)</span>来估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span>的参数。</p>
+<p>  （一）<strong>模型训练</strong></p>
+<p>  单个样本的似然函数为，</p>
+<div class="math notranslate nohighlight" id="equation-single-sample-likelihood">
+<span class="eqno">(7)<a class="headerlink" href="#equation-single-sample-likelihood" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(\pmb{x}_i,y_i|\pmb{\theta})&amp;=p(y=y_i|\pmb{\pi})\prod_{j=1}^D p(\pmb{x}_i|y=y_i)\\
+\end{split}
+\end{split}\]</div>
+<p>可以得到所有样本的对数似然函数，</p>
+<div class="math notranslate nohighlight" id="equation-dataset-log-likelihood">
+<span class="eqno">(8)<a class="headerlink" href="#equation-dataset-log-likelihood" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+\ln p(\mathcal{D}|\pmb{\theta})&amp;= \sum_{i=1}^N \ln p(\pmb{x}_i,y_i|\pmb{\theta})\\
+&amp;=\sum_{c=1}^C N_c\ln \pi_c +\sum_{j=1}^D\sum_{c=1}^C\sum_{i:y_i=c}\ln p(x_{ij}|\theta_{jc}),\quad N_c\triangleq\sum_{i=1}^N \mathbb{I}(y_i=c)
+\end{split}
+\end{split}\]</div>
+<p>  对式<a class="reference internal" href="#equation-dataset-log-likelihood">(8)</a>求偏导，并令其等于0，可得到参数的估值，</p>
+<div class="math notranslate nohighlight" id="equation-pic-hat">
+<span class="eqno">(9)<a class="headerlink" href="#equation-pic-hat" title="Link to this equation">#</a></span>\[
+\begin{split}
+\hat{\pi}_c=\frac{N_c}{N}
+\end{split}
 \]</div>
-<table class="table table-center" id="id4" style="width: 650px">
-<caption><span class="caption-text">朴素贝叶斯分类器参数估计</span><a class="headerlink" href="#id4" title="Link to this table">#</a></caption>
-<thead>
-<tr class="row-odd"><th class="head text-center"><p>属性类型</p></th>
-<th class="head text-left"><p>计算方法</p></th>
-<th class="head text-left"><p>说明</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-center"><p>离散型</p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(P(x_i|c)=\frac{|D_{c,x_i}|}{|D_c|}\)</span></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(D_{c,x_i}\)</span>表示<span class="math notranslate nohighlight">\(D_c\)</span>中第<span class="math notranslate nohighlight">\(i\)</span>个属性取值为<span class="math notranslate nohighlight">\(x_i\)</span>的样本集合。</p></td>
-</tr>
-<tr class="row-odd"><td class="text-center"><p>连续型</p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(p(x_i|c)\sim \mathcal{N}(\mu_{c,i},\sigma^2_{c,i})\)</span></p></td>
-<td class="text-left"><p><span class="math notranslate nohighlight">\(\mu_{c,i},\sigma^2_{c,i}\)</span>分别为<span class="math notranslate nohighlight">\(c\)</span>类样本在第<span class="math notranslate nohighlight">\(i\)</span>个属性的均值和方差。</p></td>
-</tr>
-</tbody>
-</table>
+<p>  <span class="math notranslate nohighlight">\(\theta_{jc}\)</span>的估值依赖于具体的特征类型所使用的分布。<strong>以<span class="math notranslate nohighlight">\(x_i|y\sim \text{Ber}(\theta_{jc})\)</span>为例</strong>，</p>
+<div class="math notranslate nohighlight" id="equation-thetajc-hat">
+<span class="eqno">(10)<a class="headerlink" href="#equation-thetajc-hat" title="Link to this equation">#</a></span>\[
+\hat{\theta}_{jc}=\frac{N_{jc}}{N_c}
+\]</div>
+<p>  通过对上述参数的求解可以看出，该模型的训练非常容易实现，且模型训练时间复杂度仅为<span class="math notranslate nohighlight">\(O(ND)\)</span>。处理混合类型特征也相对容易实现。最大似然估计的问题是过拟合。例如，假设特征<span class="math notranslate nohighlight">\(j\)</span>的值（有且只有一个）在所有类别中出现，则可以得到<span class="math notranslate nohighlight">\(\hat{\theta}_{jc}=1\)</span>。当我们遇到一个不含有此特征值的样本时，算法将会失效，因为对于所有类来说<span class="math notranslate nohighlight">\(p(y=c|\pmb{x},\hat{\theta})=0\)</span>。一个简单的办法是贝叶斯化。</p>
+<p>  （二）<strong>贝叶斯naive Bayes</strong></p>
+<p>  使用一个因子化的先验，</p>
+<div class="math notranslate nohighlight" id="equation-conjugate-prior-bayes">
+<span class="eqno">(11)<a class="headerlink" href="#equation-conjugate-prior-bayes" title="Link to this equation">#</a></span>\[
+p(\pmb{\theta})=p(\pmb{\pi})\prod_{j=1}^D\prod_{c=1}^C p(\theta_{jc}),\quad \pmb{\pi}\sim \text{Dir}(\pmb{\alpha}),\theta_{jc}\sim \text{Beta}(\beta_0,\beta_1).
+\]</div>
+<p>与似然函数相乘后，得到后验，</p>
+<div class="math notranslate nohighlight" id="equation-posterior-bayes">
+<span class="eqno">(12)<a class="headerlink" href="#equation-posterior-bayes" title="Link to this equation">#</a></span>\[
+p(\pmb{\theta})=p(\pmb{\pi}|\mathcal{D})\prod_{j=1}^D\prod_{c=1}^C p(\theta_{jc}|\mathcal{D})
+\]</div>
+<p>由共轭先验可知后验形式，</p>
+<div class="math notranslate nohighlight" id="equation-posterior-bayes-detail">
+<span class="eqno">(13)<a class="headerlink" href="#equation-posterior-bayes-detail" title="Link to this equation">#</a></span>\[
+p(\pmb{\pi}|\mathcal{D})=\text{Dir}(N_1+\alpha_1,...,N_c+\alpha_c),\quad p(\theta_{jc}|\mathcal{D})=\text{Beta}((N_c-N_{jc})+\beta_0,N_{jc}+\beta_1)
+\]</div>
+<p>  （三）<strong>预测</strong></p>
+<p>  预测的目标是计算后验，</p>
+<div class="math notranslate nohighlight">
+\[
+p(y=c|\pmb{x},\mathcal{D})\propto p(y=c)\prod_{j=1}^D p(x_j|y=c,\mathcal{D})
+\]</div>
+<p>贝叶斯的作法是把未知参数积分去除，即，</p>
+<div class="math notranslate nohighlight" id="equation-predict-bayes">
+<span class="eqno">(14)<a class="headerlink" href="#equation-predict-bayes" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathcal{D})d\pi\\
+&amp;\times \prod_{j=1}^D\int \text{Ber}(x_j|y=c,\theta_{jc})p(\theta_{jc}|\mathcal{D})d\theta_{jc}\\
+&amp;=\bar{\pi}\prod_{j=1}^D\bar{\theta}_{jc}^{\mathbb{I}(x_j=1)}(1-\bar{\theta}_{jc})^{\mathbb{I}(x_j=0)}
+\end{split}
+\end{split}\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[
+\bar{\theta}_{jc}=\frac{N_{jc}+\beta_1}{N_c+\beta_0+\beta_1},\quad \bar{\pi}=\frac{N_c+\alpha_c}{N+\alpha_0}.\quad \alpha_0=\sum_c \alpha_c.
+\]</div>
 </section>
 </section>
 
