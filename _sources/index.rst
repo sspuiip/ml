@@ -76,6 +76,7 @@
    mathmodel/entropy.md
    mathmodel/conjugate_dist.md
    mathmodel/mcmc.md
+   mathmodel/RFF.md
    
 
 
