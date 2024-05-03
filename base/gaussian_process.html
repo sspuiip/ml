@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. Random Fourier features &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>3. 高斯过程 &#8212; Machine Learning Fundation 1.0 文档</title>
   
   
   
@@ -55,10 +55,11 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'mathmodel/RFF';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'base/gaussian_process';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="prev" title="5. 随机模拟" href="mcmc.html" />
+    <link rel="next" title="1. 数据降维" href="../ml/dimension_reduce.html" />
+    <link rel="prev" title="2. 高斯模型" href="gaussian_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
   </head>
@@ -160,10 +161,10 @@
         <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">基础知识</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 高斯过程</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -201,13 +202,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="statistic_model.html">1. 不确定模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="bregman_divergence.html">2. Bregman divergence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="entropy.html">3. 信息熵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="conjugate_dist.html">4. 共轭分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mcmc.html">5. 随机模拟</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">6. Random Fourier features</a></li>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
 </ul>
 
     </div>
@@ -262,7 +263,7 @@
       
       
       
-      <li><a href="../_sources/mathmodel/RFF.md" target="_blank"
+      <li><a href="../_sources/base/gaussian_process.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="下载源文件"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -346,7 +347,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Random Fourier features</h1>
+    <h1>高斯过程</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -356,11 +357,8 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">6.1. 附录</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1.1. 复数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.1.2. 欧拉公式</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1. 什么是高斯过程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mercer">3.2. Mercer核</a></li>
 </ul>
             </nav>
         </div>
@@ -372,90 +370,100 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="random-fourier-features">
-<h1><span class="section-number">6. </span>Random Fourier features<a class="headerlink" href="#random-fourier-features" title="Link to this heading">#</a></h1>
-<p>  概率分布Pdf的Fourier变换可表示静态核。Fourier变换可由Monte Carlo近似。Monte Carlo抽取的样本可
-称为Random Fourier features, RFF，可以做为贝叶斯回归模型的特征。贝叶斯线性回归的代价<span class="math notranslate nohighlight">\(O\min(N^3,M^3)\)</span>，<span class="math notranslate nohighlight">\(M\)</span>为回归模型的特征数量。
-当<span class="math notranslate nohighlight">\(M&lt;N\)</span>时，可以显著减少算法代价。</p>
-<section id="id1">
-<h2><span class="section-number">6.1. </span>附录<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">3. </span>高斯过程<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
 <section id="id2">
-<h3><span class="section-number">6.1.1. </span>复数<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
-<dl class="simple myst">
-<dt>复数</dt><dd><p>复数由实部和虚部组成。如<span class="math notranslate nohighlight">\(c=a+ib\)</span>。<span class="math notranslate nohighlight">\(i\)</span>为虚数单位且<span class="math notranslate nohighlight">\(i^2=-1\)</span>。</p>
-</dd>
-<dt>复数共轭</dt><dd><p>-实部相同虚部相反的两个复数共轭。如：<span class="math notranslate nohighlight">\(c=a+ib\)</span>的共轭复数为<span class="math notranslate nohighlight">\(\bar{c}=a-ib\)</span>。</p>
-</dd>
-<dd><p>-共轭复数相乘结果为实数。如：<span class="math notranslate nohighlight">\(c\bar{c}=a^2+b^2\)</span>。</p>
-</dd>
-<dd><p>-<span class="math notranslate nohighlight">\(\text{Re}(c)=\frac12(c+\bar{c})\)</span>，<span class="math notranslate nohighlight">\(\text{img}(c)=\frac{1}{2i}(c-\bar{c})\)</span>。</p>
-</dd>
-<dt>复数运算</dt><dd><p>加法: 实部和虚部分别相加。如<span class="math notranslate nohighlight">\(z=a+ib\)</span>, <span class="math notranslate nohighlight">\(y=c+id\)</span>，则<span class="math notranslate nohighlight">\(z+y=a+c+i(b+d)\)</span>。</p>
-</dd>
-<dd><p>乘法: 类似于多项式乘法。如<span class="math notranslate nohighlight">\(z=a+ib\)</span>, <span class="math notranslate nohighlight">\(y=c+id\)</span>，则<span class="math notranslate nohighlight">\(z*y=ac-bd+i(ad+bc)\)</span>。</p>
-</dd>
-</dl>
+<h2><span class="section-number">3.1. </span>什么是高斯过程<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<p>  我们知道长度为<span class="math notranslate nohighlight">\(N\)</span>的高斯随机向量<span class="math notranslate nohighlight">\(\pmb{f}=[f_1,f_2,...,f_n]\)</span>，它的期望和方差分别为<span class="math notranslate nohighlight">\(\mathbb{E}[\pmb{f}]=\pmb{\mu}\)</span>，和<span class="math notranslate nohighlight">\(\pmb{\Sigma}=\text{cov}(\pmb{f})\)</span>。现考虑一个函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow\mathbb{R}\)</span>，在一输入集<span class="math notranslate nohighlight">\(\mathcal{X}=\{\pmb{x}_n\}_{n=1}^N\)</span>的估值。令<span class="math notranslate nohighlight">\(\pmb{f}_X=[f(\pmb{x}_1),f(\pmb{x}_2),...,f(\pmb{x}_N)]\)</span>为未知函数在这些点的函数估值。</p>
+<p>  如果<span class="math notranslate nohighlight">\(\pmb{f}_X\)</span>是任何<span class="math notranslate nohighlight">\(N\)</span>个点的的联合高斯分布，则<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>是一个<strong>高斯过程</strong>。该过程由均值函数和协方差函数定义，记为，</p>
+<div class="math notranslate nohighlight" id="equation-gp-def">
+<span class="eqno">(1)<a class="headerlink" href="#equation-gp-def" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+f(\pmb{x})&amp;\sim \text{GP}(\pmb{m}(\pmb{x}),\pmb{K}(\pmb{x},\pmb{x}'))\\
+\pmb{m}(\pmb{x})&amp;=\mathbb{E}[f(\pmb{x})]\\
+\pmb{K}(\pmb{x},\pmb{x}'))&amp;=\mathbb{E}\left[ (f(\pmb{x})-\pmb{m}(\pmb{x}))(f(\pmb{x}')-\pmb{m}(\pmb{x}')^\top \right]
+\end{split}
+\end{split}\]</div>
+<p>这意味着，对于有限集<span class="math notranslate nohighlight">\(X=\{\pmb{x}_1,...,\pmb{x}_N\}\)</span>，我们可以得到以下知识，</p>
+<div class="math notranslate nohighlight" id="equation-gp-knowledge">
+<span class="eqno">(2)<a class="headerlink" href="#equation-gp-knowledge" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(f_{X}|X)&amp;=\mathcal{N}(\pmb{f}_{X}|\pmb{\mu}_X,\mathcal{K}_{XX})\\
+\pmb{\mu}_X&amp;=[\pmb{m}(\pmb{x}_1),\pmb{m}(\pmb{x}_2),...,\pmb{m}(\pmb{x}_N)]\\
+\mathcal{K}_{XX}(i,j)&amp;=\pmb{K}(\pmb{x}_i,\pmb{x}_j)\\
+\end{split}
+\end{split}\]</div>
+<p>  (一)<strong>高斯过程的作用</strong></p>
+<p>  高斯过程可以定义为<strong>函数的先验</strong>。我们可以在任何点集上计算该先验。然而要从数据学习函数，我们需要使用从似然函数来更新先验。一般来说，我们有观察数据样本<span class="math notranslate nohighlight">\(\mathcal{D}=\{(\pmb{x}_i,y_i):i=1,2,...,N\}\)</span>，其中<span class="math notranslate nohighlight">\(y_i\sim p(y|f(\pmb{x}_i))\)</span>。如果使用一个高斯似然函数，则可以计算<span class="math notranslate nohighlight">\(p(f|\mathcal{D})\)</span>的后验闭式形式。对于其它形式的似然函数，则需要使用近似推断。</p>
+<p>下图为一个示例以及相应的python核心代码。</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/gp-prior.png"><img alt="GP-Prior" src="../_images/gp-prior.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">高斯过程先验示例，一个样本即为一个函数。</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernels</span><span class="o">.</span><span class="n">ExpSquared</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">gp</span> <span class="o">=</span> <span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">],</span> <span class="n">diag</span><span class="o">=</span><span class="mf">1e-8</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noise&quot;</span><span class="p">])</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;n_samples&quot;</span><span class="p">],))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">samples</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c_0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>  (二)<strong>高斯似然</strong></p>
+<p>  给定一个测试集<span class="math notranslate nohighlight">\(\pmb{X}_*(N_*\times D)\)</span>，我们需要预测函数输出<span class="math notranslate nohighlight">\(f_*=[f(\pmb{x}_1),...,f(\pmb{x}_N)\)</span>。由GP的定义可知，联合分布为，</p>
+<div class="math notranslate nohighlight" id="equation-gp-predict">
+<span class="eqno">(3)<a class="headerlink" href="#equation-gp-predict" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+\begin{bmatrix}\pmb{f}_X\\ \pmb{f}_*\end{bmatrix}&amp;\sim\mathcal{N}\left( \begin{bmatrix}\pmb{\mu}_X\\ \pmb{\mu}_*\end{bmatrix} , \begin{bmatrix}\pmb{K}_{XX}&amp;\pmb{K}_{X*}\\ \pmb{K}_{*X}&amp;\pmb{K}_{**}\end{bmatrix}\right)\\
+\pmb{\mu}_X&amp;=[\pmb{m}(\pmb{x}_1),\pmb{m}(\pmb{x}_2),...,\pmb{m}(\pmb{x}_N)]\\
+\pmb{\mu}_*&amp;=[\pmb{m}(\pmb{x}_1),\pmb{m}(\pmb{x}_2),...,\pmb{m}(\pmb{x}_{N*})]\\
+&amp;\pmb{K}_{XX}维度为N\times N\\
+&amp;\pmb{K}_{X*}维度为N\times N*\\
+&amp;\pmb{K}_{**}维度为N*\times N*\\
+\end{split}
+\end{split}\]</div>
+<p>由后验公式可知，</p>
+<div class="math notranslate nohighlight" id="equation-gp-posterior">
+<span class="eqno">(4)<a class="headerlink" href="#equation-gp-posterior" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+p(f_*|X_*,\mathcal{D})&amp;=\mathcal{N}(\pmb{f}_*|\pmb{\mu}_{*|X},\pmb{\Sigma}_{*|X})\\
+\pmb{\Sigma}_{*|X}&amp;=\pmb{K}_{**}-\pmb{K}_{X*}^\top \pmb{K}_{XX}^{-1}\pmb{K}_{X*}\\
+\pmb{\mu}_{*|X}&amp;=\pmb{\mu}_*+\pmb{K}_{X*}^\top \pmb{K}_{XX}^{-1}(\pmb{f}_X-\pmb{\mu}_X)
+\end{split}
+\end{split}\]</div>
+<p>下图为一个示例以及相应的python核心代码。</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/gp-post-predict.png"><img alt="GP-Prior" src="../_images/gp-post-predict.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">高斯过程后验预测示例</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<div class="highlight-ptyhon notranslate"><div class="highlight"><pre><span></span>    kernel = kernels.ExpSquared(scale=1.0)
+    gp = GaussianProcess(kernel, data[&quot;x_train&quot;], diag=1e-8 + data[&quot;noise&quot;])
+    pred_gp = gp.condition(data[&quot;y_train&quot;], data[&quot;x_test&quot;]).gp
+    samples = pred_gp.sample(key, shape=(data[&quot;n_samples&quot;],))
+    mean = pred_gp.mean
+    std = pred_gp.variance**0.5
+
+    plt.figure()
+    plt.plot(data[&quot;x_test&quot;], samples.T, color=c_0)
+    plt.scatter(data[&quot;x_train&quot;], data[&quot;y_train&quot;], color=c_1, zorder=10, s=5)
+    plt.fill_between(data[&quot;x_test&quot;].flatten(), mean - 2 * std, mean + 2 * std, alpha=0.2)
+    plt.xlabel(&quot;$x$&quot;)
+    plt.ylabel(&quot;$f$&quot;)
+</pre></div>
+</div>
 </section>
-<section id="id3">
-<h3><span class="section-number">6.1.2. </span>欧拉公式<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
-<p>  欧拉公式是指下式：</p>
-<div class="math notranslate nohighlight" id="equation-eular-formula">
-<span class="eqno">(1)<a class="headerlink" href="#equation-eular-formula" title="Link to this equation">#</a></span>\[
-\boxed{
-e^{i\theta}=\cos\theta+i\sin\theta}
+<section id="mercer">
+<h2><span class="section-number">3.2. </span>Mercer核<a class="headerlink" href="#mercer" title="Link to this heading">#</a></h2>
+<p>  高斯过程的泛化特性归结为我们如何编码两个输入向量相似性的先验知识。如果我们知道<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>和<span class="math notranslate nohighlight">\(\pmb{x}_j\)</span>相似，则模型可以这两处的的输出尽可能的相似。为了定义相似性，可以使用核函数。这里只介绍正定核也称为<strong>Mercer核</strong>。这是一个对称函数<span class="math notranslate nohighlight">\(\mathcal{K}:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}^+\)</span>，且满足，</p>
+<div class="math notranslate nohighlight" id="equation-mercer-kernel-def">
+<span class="eqno">(5)<a class="headerlink" href="#equation-mercer-kernel-def" title="Link to this equation">#</a></span>\[
+\sum_{i=1}^N\sum_{j=1}^N\mathcal{K}(\pmb{x}_i,\pmb{x}_j)c_ic_j\ge 0
 \]</div>
-<p>该公式的特例，</p>
-<div class="math notranslate nohighlight" id="equation-interest-eular">
-<span class="eqno">(2)<a class="headerlink" href="#equation-interest-eular" title="Link to this equation">#</a></span>\[
-\boxed{
-e^{i\pi}=-1}
-\]</div>
-<p>将<span class="math notranslate nohighlight">\(e,\pi,i\)</span>三个数学单位统一在一个公式里。</p>
-<p>  （一）<strong>Eular公式在指数复平面运算的应用</strong></p>
-<p>  若<span class="math notranslate nohighlight">\(c_1,c_2\)</span>为两复数，则有以下等式成立，</p>
-<div class="math notranslate nohighlight" id="equation-eular-app-1">
-<span class="eqno">(3)<a class="headerlink" href="#equation-eular-app-1" title="Link to this equation">#</a></span>\[\begin{split}
-\begin{split}
-e^{c_1+c_2}&amp;=e^{a_1+a_2}\cdot e^{i(b_1+b_2)}\\
-&amp;=e^{a_1+a_2}(\cos(b_1+b_2)+i\sin(b_1+b_2))\\
-&amp;=e^{a_1+a_2}(\cos b_1\cos b_2-\sin b_1\sin b_2+i(\sin b_1\cos b_2+\cos b_1\sin b_2))\\
-&amp;=e^{a_1}(\cos b_1 + i\sin b_1)e^{a_2}(\cos b_2 + i\sin b_2)\\
-&amp;=e^{c_1}e^{c_2}
-\end{split}
-\end{split}\]</div>
-<p>因此，乘上<span class="math notranslate nohighlight">\(e^{i\theta}\)</span>等价于旋转<span class="math notranslate nohighlight">\(\theta\)</span>角度，即</p>
-<div class="math notranslate nohighlight" id="equation-eular-app-1-esp">
-<span class="eqno">(4)<a class="headerlink" href="#equation-eular-app-1-esp" title="Link to this equation">#</a></span>\[
-e^{i\theta_1}e^{i\theta_2}=e^{i(\theta_1+\theta_2)}
-\]</div>
-<p>上式<a class="reference internal" href="#equation-eular-app-1-esp">(4)</a>可应用于求三角公式。由式<a class="reference internal" href="#equation-eular-formula">(1)</a>可知，其等式右边<span class="math notranslate nohighlight">\(\cos\theta+i\sin\theta\)</span>为一个复数，即</p>
-<div class="math notranslate nohighlight" id="equation-cos-add">
-<span class="eqno">(5)<a class="headerlink" href="#equation-cos-add" title="Link to this equation">#</a></span>\[\begin{split}
-\begin{split}
-\cos(\theta_1+\theta_2)&amp;=\text{Re}(e^{i(\theta_1+\theta_2)})\\
-&amp;=\text{Re}(e^{i\theta_1}e^{i\theta_2})\\
-&amp;=\text{Re}((\cos\theta_1+i\sin\theta_1)*(\cos\theta_2+i\sin\theta_2))\\
-&amp;=\cos\theta_1\cos\theta_2-\sin\theta_1\sin\theta_2
-\end{split}
-\end{split}\]</div>
-<p>  同理可知，</p>
-<div class="math notranslate nohighlight" id="equation-sin-add">
-<span class="eqno">(6)<a class="headerlink" href="#equation-sin-add" title="Link to this equation">#</a></span>\[\begin{split}
-\begin{split}
-\sin(\theta_1+\theta_2)&amp;=\text{img}(e^{i(\theta_1+\theta_2)})\\
-&amp;=\sin\theta_1\cos\theta_2+\cos\theta_1\sin\theta_2
-\end{split}
-\end{split}\]</div>
-<p>  以及，</p>
-<div class="math notranslate nohighlight" id="equation-plusn">
-<span class="eqno">(7)<a class="headerlink" href="#equation-plusn" title="Link to this equation">#</a></span>\[\begin{split}
-\begin{split}
-\cos(n\theta)+i\sin(n\theta)&amp;=e^{in\theta}\\
-&amp;=(e^{i\theta})^n\\
-&amp;=(\cos\theta+i\sin\theta)^n
-\end{split}
-\end{split}\]</div>
-</section>
+<p>对于任意<span class="math notranslate nohighlight">\(N\)</span>个数据点<span class="math notranslate nohighlight">\(\pmb{x}_i\in\mathcal{X}\)</span>集合，以及任意实数<span class="math notranslate nohighlight">\(c_i\in\mathbb{R}\)</span>。如果<span class="math notranslate nohighlight">\(\mathcal{K}(\pmb{x}_i,\pmb{x}_j)&gt;0\)</span>，则等式成立只有当所有<span class="math notranslate nohighlight">\(c_i=0\)</span>。</p>
 </section>
 </section>
 
@@ -471,13 +479,22 @@ e^{i\theta_1}e^{i\theta_2}=e^{i(\theta_1+\theta_2)}
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mcmc.html"
+       href="gaussian_model.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">5. </span>随机模拟</p>
+        <p class="prev-next-title"><span class="section-number">2. </span>高斯模型</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../ml/dimension_reduce.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">下一页</p>
+        <p class="prev-next-title"><span class="section-number">1. </span>数据降维</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -495,11 +512,8 @@ e^{i\theta_1}e^{i\theta_2}=e^{i(\theta_1+\theta_2)}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">6.1. 附录</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">6.1.1. 复数</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">6.1.2. 欧拉公式</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.1. 什么是高斯过程</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mercer">3.2. Mercer核</a></li>
 </ul>
   </nav></div>
 

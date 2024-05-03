@@ -13,6 +13,7 @@
 
    base/prob_dist.md
    base/gaussian_model.md
+   base/gaussian_process.md
 
 .. toctree::
    :maxdepth: 3
