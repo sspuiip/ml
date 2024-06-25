@@ -381,6 +381,12 @@ document.write(`
 <section id="lstm">
 <h3><span class="section-number">6.1.1. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">#</a></h3>
 <p>  RNN的<strong>不足</strong>：RNN层不能学习长期信赖。RNN通过向过去传递“有意义的梯度”，能够学习时间方向上的依赖。梯度理论上包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免梯度消失或梯度爆炸问题。</p>
+<figure class="align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/lstm.png"><img alt="LSTM" src="../_images/lstm.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>
