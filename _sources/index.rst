@@ -25,6 +25,7 @@
    ml/EM.md
    ml/PGM.md
    ml/bayes.md
+   ml/neuro_network.md
 
 .. toctree::
    :maxdepth: 3
