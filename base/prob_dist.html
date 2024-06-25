@@ -14,30 +14,30 @@
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
 
     <script src="../_static/documentation_options.js?v=c893ba89"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
@@ -48,9 +48,9 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -69,27 +69,23 @@
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -111,8 +107,13 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
     </header>
   
 
@@ -224,7 +225,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main">
+      <main id="main-content" class="bd-main" role="main">
         
         
 
@@ -233,14 +234,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article">
+              <div class="bd-header-article d-print-none">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</label></div>
+</button></div>
       
     </div>
   
@@ -334,9 +335,9 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</label>
+</button>
 </div></div>
       
     </div>
@@ -511,7 +512,7 @@ Pr(a&lt;X\leq b)=\int_a^b p(x)dx=P(B)-P(A)
 p(x,y)\triangleq p(X=x,Y=y)
 \]</div>
 <p>如下表所示：</p>
-<table class="table table-center" id="id17" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id17" style="width: 300px">
 <caption><span class="caption-text">联合分布</span><a class="headerlink" href="#id17" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
@@ -530,6 +531,7 @@ p(x,y)\triangleq p(X=x,Y=y)
 </tr>
 </tbody>
 </table>
+</div>
 <dl class="simple myst">
 <dt>边缘分布</dt><dd><p>给定联合分布，则随机变量的边缘分布为，</p>
 </dd>
@@ -544,7 +546,7 @@ p(X=x)=\sum_{y}p(X=x,Y=y)
 p(x)=\int_y p(x,y)
 \]</div>
 <p>如下表所示，</p>
-<table class="table table-center" id="id18" style="width: 600px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id18" style="width: 600px">
 <caption><span class="caption-text">边缘分布</span><a class="headerlink" href="#id18" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(p(X,Y)\)</span></p></th>
@@ -571,6 +573,7 @@ p(x)=\int_y p(x,y)
 </tr>
 </tbody>
 </table>
+</div>
 <dl class="simple myst">
 <dt>条件分布</dt><dd><p>给定联合分布，则随机变量的条件分布为，</p>
 </dd>
@@ -1166,7 +1169,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 <span class="eqno">(48)<a class="headerlink" href="#equation-equ-student-dist" title="Link to this equation">#</a></span>\[
 \mathcal{T}(y|\mu,\sigma^2,\nu)\propto\left[1+\frac{1}{\nu}\left( \frac{y-\mu}{\sigma}\right)^2 \right]^{-\frac{\nu+1}{2}}
 \]</div>
-<table class="table table-center" id="id19" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id19" style="width: 300px">
 <caption><span class="caption-text">Student分布参数</span><a class="headerlink" href="#id19" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>参数</p></th>
@@ -1188,6 +1191,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 </tr>
 </tbody>
 </table>
+</div>
 <p>  当<span class="math notranslate nohighlight">\(\nu=1\)</span>时，t分布退化为Cauchy(或Lorentz)分布</p>
 <div class="math notranslate nohighlight" id="equation-equ-cauchy-dist">
 <span class="eqno">(49)<a class="headerlink" href="#equation-equ-cauchy-dist" title="Link to this equation">#</a></span>\[
@@ -1206,7 +1210,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 <span class="eqno">(51)<a class="headerlink" href="#equation-laplace-dist" title="Link to this equation">#</a></span>\[
 \text{Lap}(y|\mu,b)=\frac{1}{2b}\exp\left(-\frac{|y-\mu|}{b} \right)
 \]</div>
-<table class="table table-center" id="id20" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id20" style="width: 300px">
 <caption><span class="caption-text">Laplace分布参数</span><a class="headerlink" href="#id20" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>参数</p></th>
@@ -1225,6 +1229,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="gamma">
 <h4><span class="section-number">1.1.4.12. </span>Gamma分布<a class="headerlink" href="#gamma" title="Link to this heading">#</a></h4>
@@ -1233,7 +1238,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 <span class="eqno">(52)<a class="headerlink" href="#equation-gamma-dist" title="Link to this equation">#</a></span>\[
 \text{Ga}(x|a,b)\triangleq \frac{b^a}{\Gamma(a)}x^{a-1}e^{-bx}
 \]</div>
-<table class="table table-center" id="id21" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id21" style="width: 300px">
 <caption><span class="caption-text">Gamma分布参数</span><a class="headerlink" href="#id21" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>参数</p></th>
@@ -1252,6 +1257,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 </tr>
 </tbody>
 </table>
+</div>
 <p>  - <span class="math notranslate nohighlight">\(a=k+1,b=1\)</span>时为泊松分布，</p>
 <div class="math notranslate nohighlight" id="equation-poisson-dist-equ-gamma">
 <span class="eqno">(53)<a class="headerlink" href="#equation-poisson-dist-equ-gamma" title="Link to this equation">#</a></span>\[
@@ -1276,7 +1282,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 <span class="eqno">(56)<a class="headerlink" href="#equation-equ-beta-dist" title="Link to this equation">#</a></span>\[
  \text{Beta}(x|a,b)=\frac{1}{B(a,b)}x^{a-1}(1-x)^{b-1}
 \]</div>
-<table class="table table-center" id="id22" style="width: 300px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id22" style="width: 300px">
 <caption><span class="caption-text">Beta分布参数</span><a class="headerlink" href="#id22" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>参数</p></th>
@@ -1295,6 +1301,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 <section id="id15">
@@ -1307,7 +1314,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 \end{split}
 \end{split}\]</div>
 <p>其中的参数如下：</p>
-<table class="table table-center" id="id23" style="width: 500px">
+<div class="pst-scrollable-table-container"><table class="table table-center" id="id23" style="width: 500px">
 <caption><span class="caption-text">指数族分布参数</span><a class="headerlink" href="#id23" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>参数</p></th>
@@ -1332,6 +1339,7 @@ Z_{Wi}=2^{\gamma D/2}\Gamma_D(\gamma/2)|\pmb{S}|^{-\gamma/2},\quad \Gamma_D(x)=\
 </tr>
 </tbody>
 </table>
+</div>
 <p>若<span class="math notranslate nohighlight">\(\pmb{\theta}=f(\pmb{\phi})\)</span>，则，</p>
 <div class="math notranslate nohighlight" id="equation-expon-family-dist-especil">
 <span class="eqno">(58)<a class="headerlink" href="#equation-expon-family-dist-especil" title="Link to this equation">#</a></span>\[
@@ -1386,7 +1394,7 @@ p(\pmb{y}|\pmb{\phi})=h(\pmb{y})\exp[f(\pmb{\phi})^\top \pmb{t}(\pmb{y})-A(f(\pm
               
               
               
-                <footer class="prev-next-footer">
+                <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
     <a class="left-prev"
@@ -1504,8 +1512,8 @@ p(\pmb{y}|\pmb{\phi})=h(\pmb{y})\exp[f(\pmb{\phi})^\top \pmb{t}(\pmb{y})-A(f(\pm
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
 
   <footer class="bd-footer">
   </footer>
