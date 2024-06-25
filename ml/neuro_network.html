@@ -53,6 +53,8 @@
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'ml/neuro_network';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
@@ -380,13 +382,64 @@ document.write(`
 <p>  循环神经网络。</p>
 <section id="lstm">
 <h3><span class="section-number">6.1.1. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">#</a></h3>
-<p>  RNN的<strong>不足</strong>：RNN层不能学习长期信赖。RNN通过向过去传递“有意义的梯度”，能够学习时间方向上的依赖。梯度理论上包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免梯度消失或梯度爆炸问题。</p>
+<p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免梯度消失或梯度爆炸问题。</p>
+<p>  为了解决这类问题，发展出了一种称为LSTM的网络，也称为长短时记忆网络。该模型通过“门机制”解决了长期信息保存和短期输入缺失的问题。以下是模型图概况。</p>
 <figure class="align-default" id="id2">
 <a class="reference internal image-reference" href="../_images/lstm.png"><img alt="LSTM" src="../_images/lstm.png" style="width: 500px;" /></a>
 <figcaption>
 <p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
+<ul class="simple">
+<li><p><strong>门函数的选择依据</strong></p></li>
+</ul>
+<p>  因为tanh函数的输出为<span class="math notranslate nohighlight">\([-1,+1]\)</span>，可以认为介于这个区间的数值表示“信息”的强弱。而sigmoid函数输出为<span class="math notranslate nohighlight">\([0,+1]\)</span>，可以认为是数据流出的比例。因此，在大多数情况下，门函数一般选sigmoid作为激活函数；而包含实质信息的数据则使用tanh作为激活函数。</p>
+<ul class="simple">
+<li><p><strong>输出门</strong></p></li>
+</ul>
+<p>  LSTM中，隐状态<span class="math notranslate nohighlight">\(H_t\)</span>仅对记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>应用了tanh函数实现信息传递。如果考虑信息的重要性，可以添加一个门管理隐状态<span class="math notranslate nohighlight">\(H_t\)</span>的输出，这个门就是输出门，即，</p>
+<div class="math notranslate nohighlight" id="equation-output-gate">
+<span class="eqno">(1)<a class="headerlink" href="#equation-output-gate" title="Link to this equation">#</a></span>\[
+O_t = \sigma(x_tW_xo + H_{t-1}W_{ho} + b_o)
+\]</div>
+<p>因此，隐状态就相应的更新为，</p>
+<div class="math notranslate nohighlight" id="equation-hidden-state-with-o-gate">
+<span class="eqno">(2)<a class="headerlink" href="#equation-hidden-state-with-o-gate" title="Link to this equation">#</a></span>\[
+H_t = \underbrace{\text{tanh}(C_t)\odot O_t}_{隐状态与记忆单元的关系}
+\]</div>
+<ul class="simple">
+<li><p><strong>遗忘门</strong></p></li>
+</ul>
+<p>  同理，对于上一时序的记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来说，为了去除不必要的记忆元，可以通过遗忘门来实现，即</p>
+<div class="math notranslate nohighlight" id="equation-forget-gate">
+<span class="eqno">(3)<a class="headerlink" href="#equation-forget-gate" title="Link to this equation">#</a></span>\[
+F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
+\]</div>
+<p>因此可以得到新记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来自于<span class="math notranslate nohighlight">\(C_{t-1}\)</span>的一部分，即<span class="math notranslate nohighlight">\(C_{t-1}\odot F_t\)</span>。</p>
+<ul class="simple">
+<li><p><strong>候选记忆单元</strong></p></li>
+</ul>
+<p>  遗忘门删除了应该忘记的内容，如果不补充应当记忆的内容，则只会遗忘。为此，就当向<span class="math notranslate nohighlight">\(C_t\)</span>添加需要记忆的新信息，也就是候选记忆信息，即</p>
+<div class="math notranslate nohighlight" id="equation-candidate-memo-cell">
+<span class="eqno">(4)<a class="headerlink" href="#equation-candidate-memo-cell" title="Link to this equation">#</a></span>\[
+\tilde{C}_t = \tanh(x_tW_{xc}+H_{t-1}W_{hc}+b_c)
+\]</div>
+<ul class="simple">
+<li><p><strong>输入门</strong></p></li>
+</ul>
+<p>  候选记忆信息加入记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>时需取舍，因此可以根据门控机制添加一个输入门来控制，即</p>
+<div class="math notranslate nohighlight" id="equation-input-gate">
+<span class="eqno">(5)<a class="headerlink" href="#equation-input-gate" title="Link to this equation">#</a></span>\[
+I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
+\]</div>
+<ul class="simple">
+<li><p><strong>新记忆单元</strong></p></li>
+</ul>
+<p>  通过上述输入、遗忘操作可以得到新记忆单元，即</p>
+<div class="math notranslate nohighlight" id="equation-t-memo-cell">
+<span class="eqno">(6)<a class="headerlink" href="#equation-t-memo-cell" title="Link to this equation">#</a></span>\[
+C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C}_t }_{输入部分}
+\]</div>
 </section>
 </section>
 </section>
