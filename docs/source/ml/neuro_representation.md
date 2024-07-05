@@ -16,7 +16,7 @@
 
 $$
 \pmb{z}\triangleq E_\phi(\pmb{x})=\sigma(\pmb{Wx}+\pmb{b}),\quad \pmb{\hat{x}}\triangleq D_\theta (\pmb{z})=\sigma(\pmb{Hz}+\pmb{d})
-$$
+$$(auto-encoder)
 
 其中，$\pmb{W},\pmb{H}$分别为编码层参数和解码层参数，$\sigma$为激活函数。
 
@@ -32,16 +32,19 @@ $$
 
 $$
 \min\limits_{\theta,\phi} \quad \mathcal{L}(\phi,\theta)=\mathbb{E}_{x\sim q}[d(\pmb{x},D_\theta (E_\phi (\pmb{x})))]
-$$
+$$(ae-min0)
 
 &emsp;&emsp;一般来说，$q(\pmb{x})$取值为经验分布，
 
 $$
 q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
-$$
+$$(ae-q)
 
 以及$d(\pmb{x},\pmb{x}')=\Vert \pmb{x}-\pmb{x}'\Vert_2^2$. 因此，寻找最估自编码器就等价于一个最小二乘优化，即
 
 $$
 \min\limits_{\theta,\phi}\quad\frac{1}{N}\sum_{i=1}^N \left\Vert \pmb{x}-D_\theta (E_\phi (\pmb{x}))\right\Vert_2^2
-$$
+$$(ae-min)
+
+
+## 变分自编码器(Variational AutoEncoder)
