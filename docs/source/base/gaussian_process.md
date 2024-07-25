@@ -87,7 +87,7 @@ $$(gp-posterior)
 高斯过程后验预测示例
 :::
 
-```ptyhon
+```python
     kernel = kernels.ExpSquared(scale=1.0)
     gp = GaussianProcess(kernel, data["x_train"], diag=1e-8 + data["noise"])
     pred_gp = gp.condition(data["y_train"], data["x_test"]).gp

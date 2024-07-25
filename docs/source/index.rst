@@ -7,16 +7,17 @@
 ============
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 基础知识
    :numbered:
 
    base/prob_dist.md
    base/gaussian_model.md
    base/gaussian_process.md
+   base/calc_theory.md
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 监督学习
    :numbered:
 
@@ -28,14 +29,14 @@
    ml/neuro_network.md
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 无监督学习
    :numbered:
 
    ml/biClustering.md
    
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 核方法
    :numbered:
 
@@ -47,7 +48,7 @@
 
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 最优化
    :numbered:
 
@@ -56,7 +57,7 @@
    optimization/convex_neq_solve.md
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 矩阵分析
    :numbered:
 
@@ -69,7 +70,7 @@
    matrix/decomposition.md
    
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: 数学建模
    :numbered:
 
