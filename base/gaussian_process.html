@@ -58,7 +58,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'base/gaussian_process';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 数据降维" href="../ml/dimension_reduce.html" />
+    <link rel="next" title="4. 计算学习理论" href="calc_theory.html" />
     <link rel="prev" title="2. 高斯模型" href="gaussian_model.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="zh-CN"/>
@@ -168,6 +168,7 @@
 <li class="toctree-l1"><a class="reference internal" href="prob_dist.html">1. 概率及分布</a></li>
 <li class="toctree-l1"><a class="reference internal" href="gaussian_model.html">2. 高斯模型</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calc_theory.html">4. 计算学习理论</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -445,19 +446,19 @@ p(f_*|X_*,\mathcal{D})&amp;=\mathcal{N}(\pmb{f}_*|\pmb{\mu}_{*|X},\pmb{\Sigma}_{
 <p><span class="caption-text">高斯过程后验预测示例</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<div class="highlight-ptyhon notranslate"><div class="highlight"><pre><span></span>    kernel = kernels.ExpSquared(scale=1.0)
-    gp = GaussianProcess(kernel, data[&quot;x_train&quot;], diag=1e-8 + data[&quot;noise&quot;])
-    pred_gp = gp.condition(data[&quot;y_train&quot;], data[&quot;x_test&quot;]).gp
-    samples = pred_gp.sample(key, shape=(data[&quot;n_samples&quot;],))
-    mean = pred_gp.mean
-    std = pred_gp.variance**0.5
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>    <span class="n">kernel</span> <span class="o">=</span> <span class="n">kernels</span><span class="o">.</span><span class="n">ExpSquared</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">gp</span> <span class="o">=</span> <span class="n">GaussianProcess</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;x_train&quot;</span><span class="p">],</span> <span class="n">diag</span><span class="o">=</span><span class="mf">1e-8</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;noise&quot;</span><span class="p">])</span>
+    <span class="n">pred_gp</span> <span class="o">=</span> <span class="n">gp</span><span class="o">.</span><span class="n">condition</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;y_train&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;x_test&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">gp</span>
+    <span class="n">samples</span> <span class="o">=</span> <span class="n">pred_gp</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;n_samples&quot;</span><span class="p">],))</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">pred_gp</span><span class="o">.</span><span class="n">mean</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">pred_gp</span><span class="o">.</span><span class="n">variance</span><span class="o">**</span><span class="mf">0.5</span>
 
-    plt.figure()
-    plt.plot(data[&quot;x_test&quot;], samples.T, color=c_0)
-    plt.scatter(data[&quot;x_train&quot;], data[&quot;y_train&quot;], color=c_1, zorder=10, s=5)
-    plt.fill_between(data[&quot;x_test&quot;].flatten(), mean - 2 * std, mean + 2 * std, alpha=0.2)
-    plt.xlabel(&quot;$x$&quot;)
-    plt.ylabel(&quot;$f$&quot;)
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x_test&quot;</span><span class="p">],</span> <span class="n">samples</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">c_0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x_train&quot;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;y_train&quot;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">c_1</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;x_test&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">mean</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">std</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$x$&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$f$&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -493,11 +494,11 @@ p(f_*|X_*,\mathcal{D})&amp;=\mathcal{N}(\pmb{f}_*|\pmb{\mu}_{*|X},\pmb{\Sigma}_{
       </div>
     </a>
     <a class="right-next"
-       href="../ml/dimension_reduce.html"
+       href="calc_theory.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>数据降维</p>
+        <p class="prev-next-title"><span class="section-number">4. </span>计算学习理论</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

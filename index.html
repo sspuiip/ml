@@ -169,6 +169,7 @@
 <li class="toctree-l1"><a class="reference internal" href="base/prob_dist.html">1. 概率及分布</a></li>
 <li class="toctree-l1"><a class="reference internal" href="base/gaussian_model.html">2. 高斯模型</a></li>
 <li class="toctree-l1"><a class="reference internal" href="base/gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base/calc_theory.html">4. 计算学习理论</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul class="nav bd-sidenav">
@@ -384,14 +385,7 @@ document.write(`
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">基础知识</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="base/prob_dist.html">1. 概率及分布</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="base/prob_dist.html#id2">1.1. 概率</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="base/prob_dist.html#id3">1.1.1. 事件的概率</a></li>
-<li class="toctree-l3"><a class="reference internal" href="base/prob_dist.html#id6">1.1.2. 随机变量概率分布的数字特征</a></li>
-<li class="toctree-l3"><a class="reference internal" href="base/prob_dist.html#id8">1.1.3. 变量替换</a></li>
-<li class="toctree-l3"><a class="reference internal" href="base/prob_dist.html#id9">1.1.4. 常见分布</a></li>
-<li class="toctree-l3"><a class="reference internal" href="base/prob_dist.html#id15">1.1.5. 指数族分布</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="base/prob_dist.html#id2">1.1. 概率</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="base/gaussian_model.html">2. 高斯模型</a><ul>
@@ -405,47 +399,22 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="base/gaussian_process.html#mercer">3.2. Mercer核</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="base/calc_theory.html">4. 计算学习理论</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="base/calc_theory.html#id3">4.1. 概率近似正确学习理论</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ml/dimension_reduce.html">1. 数据降维</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id2">1.1. 主成分分析</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id3">1.1.1. 最近重构性</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id4">1.1.2. 最大可分性</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id5">1.1.3. 优化问题的求解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id6">1.1.4. 算法1–特征值分解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#svd">1.1.5. 算法2–SVD分解</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id7">1.1.6. 核主成分分析</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id8">1.2. 多维缩放</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id9">1.2.1. 算法</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id10">1.3. 等度量映射</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id11">1.3.1. 算法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id12">1.3.2. 流形</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#lle">1.4. LLE局部线性嵌入</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id13">1.4.1. LLE基本思想</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id14">1.4.2. LLE求解</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id15">1.5. 拉普拉斯特征映射</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id16">1.5.1. 拉普拉斯算子</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id17">1.5.2. 拉普拉斯矩阵</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id18">1.5.3. 拉普拉斯变换</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id19">1.6. 随机近邻嵌入</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#sne">1.6.1. SNE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#id20">1.6.2. 对称SNE</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/dimension_reduce.html#t-sne">1.6.3. t-SNE</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id2">1.1. 主成分分析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id8">1.2. 多维缩放</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id10">1.3. 等度量映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#lle">1.4. LLE局部线性嵌入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id15">1.5. 拉普拉斯特征映射</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/dimension_reduce.html#id19">1.6. 随机近邻嵌入</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ml/neuro_representation.html">2. 表示学习</a><ul>
@@ -454,31 +423,13 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ml/EM.html">3. EM算法概述</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ml/EM.html#id1">3.1. EM算法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/EM.html#id2">3.1.1. EM算法推导</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/EM.html#id3">3.1.2. 案例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/EM.html#id4">3.1.3. 实验代码</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ml/EM.html#id1">3.1. EM算法</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ml/PGM.html">4. 概率图模型</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id2">4.1. 贝叶斯网</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id3">4.1.1. 联合分布</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id4">4.1.2. 有向图的条件独立性</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id6">4.1.3. 隐马尔可夫模型</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id7">4.2. 马尔可夫随机场</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id8">4.2.1. 联合概率</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id9">4.2.2. 条件独立性</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id10">4.3. 推断与参数学习</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id11">4.3.1. 精确推断</a></li>
-<li class="toctree-l3"><a class="reference internal" href="ml/PGM.html#id14">4.3.2. 近似推断</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id2">4.1. 贝叶斯网</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id7">4.2. 马尔可夫随机场</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ml/PGM.html#id10">4.3. 推断与参数学习</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ml/bayes.html">5. 贝叶斯分类</a><ul>
@@ -487,10 +438,7 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ml/neuro_network.html">6. 神经网络</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ml/neuro_network.html#rnn">6.1. RNN</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="ml/neuro_network.html#lstm">6.1.1. LSTM</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="ml/neuro_network.html#rnn">6.1. RNN</a></li>
 </ul>
 </li>
 </ul>
@@ -508,48 +456,26 @@ document.write(`
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="kernel/base.html">1. 核函数基础</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kernel/base.html#id2">1.1. 核函数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/base.html#id3">1.1.1. 示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kernel/base.html#id4">1.1.2. 什么是核函数</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/base.html#id2">1.1. 核函数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kernel/base.html#id6">1.2. 特征映射的基本运算</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kernel/base.html#id7">1.3. 投影</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kernel/RKHS.html">2. 再生核希尔伯特空间</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kernel/RKHS.html#id2">2.1. 基本概念</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/RKHS.html#id3">2.1.1. 泛函</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/RKHS.html#id2">2.1. 基本概念</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kernel/RKHS.html#id8">2.2. 线性算子</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kernel/RKHS.html#hilbert">2.3. 再生核Hilbert空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/RKHS.html#id9">2.3.1. 求值泛函</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kernel/RKHS.html#id10">2.3.2. 再生核</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/RKHS.html#hilbert">2.3. 再生核Hilbert空间</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kernel/MMD.html">3. 最大均值差</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="kernel/MMD.html#mean-embedding">3.1. 均值嵌入 (Mean Embedding)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="kernel/MMD.html#maximum-mean-discrepancy">3.2. 最大均值差分(Maximum Mean Discrepancy)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="kernel/MMD.html#id2">3.3. 一种积分概率度量</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/MMD.html#integral-probability-metric-ipm">3.3.1. 积分概率度量(Integral Probability Metric, IPM)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kernel/MMD.html#mmd">3.3.2. MMD积分概率度量</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/MMD.html#id2">3.3. 一种积分概率度量</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="kernel/covariance_operators.html">4. 协方差算子</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="kernel/covariance_operators.html#hilbert-schmidt">4.1. Hilbert-Schmidt算子</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/covariance_operators.html#rank-one">4.1.1. Rank-one算子</a></li>
-<li class="toctree-l3"><a class="reference internal" href="kernel/covariance_operators.html#cross-covariance">4.1.2. Cross-covariance算子</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="kernel/covariance_operators.html#id3">4.2. 约束协方差</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="kernel/covariance_operators.html#coco">4.2.1. COCO的估计</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/covariance_operators.html#hilbert-schmidt">4.1. Hilbert-Schmidt算子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kernel/covariance_operators.html#id3">4.2. 约束协方差</a></li>
 </ul>
 </li>
 </ul>
@@ -558,50 +484,22 @@ document.write(`
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="optimization/convex_prob.html">1. 凸优化问题</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_prob.html#id2">1.1. 凸函数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#id3">1.1.1. 判定方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#id4">1.1.2. 保凸运算与性质判定</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_prob.html#id5">1.2. 凸优化问题</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#lagrangian">1.2.1. Lagrangian乘子法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#id6">1.2.2. 对偶方法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#kkt">1.2.3. KKT条件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_prob.html#slater">1.2.4. 强对偶性（Slater定理）</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_prob.html#id2">1.1. 凸函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_prob.html#id5">1.2. 凸优化问题</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="optimization/convex_solve.html">2. 优化问题求解(1)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id2">2.1. 下降法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#id3">2.1.1. 最速下降法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#newton">2.1.2. Newton法</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id2">2.1. 下降法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id4">2.2. 梯度投影法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id5">2.3. 共轭梯度下降法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#mathbf-a">2.3.1. <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>-共轭</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#id6">2.3.2. 共轭梯度法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#id7">2.3.3. 案例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_solve.html#id8">2.3.4. 一般函数的共轭梯度法</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id5">2.3. 共轭梯度下降法</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimization/convex_solve.html#id9">2.4. Newton方法</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="optimization/convex_neq_solve.html">3. 优化问题求解(2)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_neq_solve.html#id2">3.2.1. 等式约束</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_neq_solve.html#id3">3.2.2. 混合约束</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#admm">3.3. 交替方向乘子法(ADMM)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#id4">3.4. 内点法</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_neq_solve.html#id5">3.4.1. 障碍法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="optimization/convex_neq_solve.html#id6">3.4.2. <strong>原对偶内点法</strong></a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="optimization/convex_neq_solve.html#id4">3.4. 内点法</a></li>
 </ul>
 </li>
 </ul>
@@ -610,31 +508,11 @@ document.write(`
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="matrix/base.html">1. 矩阵性能指标</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id2">1.1. 二次型</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id3">1.1.1. 常用性质</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id4">1.2. 行列式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id5">1.2.1. 定义</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id6">1.2.2. 余子式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id7">1.2.3. 性质一</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id8">1.2.4. 性质二</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id2">1.1. 二次型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id4">1.2. 行列式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id9">1.3. 矩阵内积</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id10">1.4. 矩阵范数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id11">1.4.1. 向量范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id12">1.4.2. 矩阵范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id13">1.4.3. 诱导范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id14">1.4.4. 元素形式范数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#schatten">1.4.5. Schatten范数</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id17">1.5. 迹</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id18">1.5.1. 性质一</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/base.html#id19">1.5.2. 性质二</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id10">1.4. 矩阵范数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/base.html#id17">1.5. 迹</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrix/matrixoper.html">2. 矩阵运算</a><ul>
@@ -645,23 +523,13 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrix/vectorspace.html">3. 向量空间</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix/vectorspace.html#id2">3.1. 概念</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/vectorspace.html#id3">3.1.1. 向量空间</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/vectorspace.html#id4">3.1.2. 内积空间</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/vectorspace.html#id5">3.1.3. 赋范空间</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/vectorspace.html#id2">3.1. 概念</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrix/matrixdiff.html">4. 矩阵微分</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix/matrixdiff.html#jacobian">4.1. Jacobian矩阵</a></li>
 <li class="toctree-l2"><a class="reference internal" href="matrix/matrixdiff.html#id2">4.2. 梯度矩阵</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/matrixdiff.html#id3">4.3. 偏导和梯度计算</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/matrixdiff.html#id4">4.3.1. 基本规则</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/matrixdiff.html#id7">4.3.2. 一阶实矩阵微分</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/matrixdiff.html#id12">4.3.3. 实矩阵函数的偏导计算</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/matrixdiff.html#id3">4.3. 偏导和梯度计算</a></li>
 <li class="toctree-l2"><a class="reference internal" href="matrix/matrixdiff.html#hessian">4.4. Hessian矩阵</a></li>
 </ul>
 </li>
@@ -672,32 +540,14 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrix/subspace.html">6. 子空间分析</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix/subspace.html#id2">6.1. 什么是子空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/subspace.html#id3">6.1.1. 概念</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/subspace.html#id4">6.1.2. 正交补</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/subspace.html#id5">6.1.3. 正交投影</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/subspace.html#id6">6.2. 列（行）空间与零空间</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/subspace.html#id7">6.2.1. 子空间基的构造</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/subspace.html#id2">6.1. 什么是子空间</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/subspace.html#id6">6.2. 列（行）空间与零空间</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="matrix/decomposition.html">7. 矩阵分解</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#qr">7.1. QR分解</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/decomposition.html#id2">7.1.1. QR的一般形式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="matrix/decomposition.html#qrgram-schmidt">7.1.2. QR分解的Gram-Schmidt正交化方法</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#id3">7.2. 特征值分解</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/decomposition.html#id4">7.2.1. 方阵的特征值分解</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#id6">7.3. 奇异值分解</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="matrix/decomposition.html#svd">7.3.1. SVD参数求解</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#qr">7.1. QR分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#id3">7.2. 特征值分解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix/decomposition.html#id6">7.3. 奇异值分解</a></li>
 </ul>
 </li>
 </ul>
@@ -707,11 +557,7 @@ document.write(`
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="mathmodel/statistic_model.html">1. 不确定模型</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mathmodel/statistic_model.html#id2">1.1. 抽样分布</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathmodel/statistic_model.html#id3">1.2. 参数区间估计与假设检验</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/statistic_model.html#mu">1.2.1. <span class="math notranslate nohighlight">\(\mu\)</span>均值检测</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/statistic_model.html#sigma">1.2.2. <span class="math notranslate nohighlight">\(\sigma\)</span>方差比检测</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="mathmodel/statistic_model.html#id3">1.2. 参数区间估计与假设检验</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mathmodel/bregman_divergence.html">2. Bregman divergence</a><ul>
@@ -727,35 +573,19 @@ document.write(`
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mathmodel/conjugate_dist.html">4. 共轭分布</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mathmodel/conjugate_dist.html#gamma">4.1. Gamma分布</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/conjugate_dist.html#id2">4.1.1. Gamma函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/conjugate_dist.html#id3">4.1.2. Gamma分布</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="mathmodel/conjugate_dist.html#beta">4.2. Beta分布</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/conjugate_dist.html#beta-binomial">4.2.1. Beta-Binomial共轭</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/conjugate_dist.html#dirichlet-multinomial">4.2.2. Dirichlet-Multinomial共轭</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="mathmodel/conjugate_dist.html#gamma">4.1. Gamma分布</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mathmodel/conjugate_dist.html#beta">4.2. Beta分布</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mathmodel/mcmc.html">5. 随机模拟</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mathmodel/mcmc.html#box-muller">5.1. Box-Muller变换</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mathmodel/mcmc.html#id2">5.2. 接受-拒绝采样</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mathmodel/mcmc.html#id3">5.3. 重要性采样</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mathmodel/mcmc.html#mcmc">5.4. MCMC</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/mcmc.html#id4">5.4.1. 马氏链</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/mcmc.html#markov-chain-monte-carlo">5.4.2. Markov Chain Monte Carlo</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="mathmodel/mcmc.html#mcmc">5.4. MCMC</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mathmodel/RFF.html">6. Random Fourier features</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="mathmodel/RFF.html#id1">6.1. 附录</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/RFF.html#id2">6.1.1. 复数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mathmodel/RFF.html#id3">6.1.2. 欧拉公式</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="mathmodel/RFF.html#id1">6.1. 附录</a></li>
 </ul>
 </li>
 </ul>
