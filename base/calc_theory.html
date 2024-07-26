@@ -365,9 +365,13 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1. 概率近似正确学习理论</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pac">4.1.1. PAC</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathcal-h">4.1.1.1. 有限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>有限)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1.1.2. 无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vc">4.1.2. VC维</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1.2.1. 无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rademacher">4.1.3. Rademacher复杂度</a></li>
 </ul>
 </li>
 </ul>
@@ -552,9 +556,11 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 \]</div>
 <p>则称假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是不可知PAC可学习的。</p>
 </section>
+</section>
+<section id="vc">
+<h3><span class="section-number">4.1.2. </span>VC维<a class="headerlink" href="#vc" title="Link to this heading">#</a></h3>
 <section id="id4">
-<h4><span class="section-number">4.1.1.2. </span>无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
-<p>  1. <strong>VC维</strong></p>
+<h4><span class="section-number">4.1.2.1. </span>无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
 <p>  对于无限假设空间的学习，需要度量<em>假设空间的复杂度</em>。最常见的办法是考虑假设空间的“VC维”。</p>
 <blockquote>
 <div><p><strong>定义</strong> (<strong>VC维</strong>). VC维就是假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能打散的最大示例集大小，即</p>
@@ -621,6 +627,35 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <p>  如果<span class="math notranslate nohighlight">\(1\le d &lt;\infty\)</span>，那么学习<span class="math notranslate nohighlight">\(\epsilon&gt;0,\delta&lt;\frac{1}{64}\)</span>所需的样本量至少为<span class="math notranslate nohighlight">\(\frac{d}{320\epsilon^2}\)</span>，此外，如果<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中至少包含2个<span class="math notranslate nohighlight">\(h\)</span>，那么对于<span class="math notranslate nohighlight">\(0&lt;\epsilon&lt;1\)</span>和<span class="math notranslate nohighlight">\(0&lt;\delta&lt;\frac14\)</span>来说，样本量至少为</p>
 <div class="math notranslate nohighlight" id="equation-sample-count-up">
 <span class="eqno">(20)<a class="headerlink" href="#equation-sample-count-up" title="Link to this equation">#</a></span>\[m\ge 2\left[ \frac{1-\epsilon^2}{2\epsilon^2}\ln \left(\frac{1}{8\delta(1-2\delta)} \right) \right]\]</div>
+</section>
+</section>
+<section id="rademacher">
+<h3><span class="section-number">4.1.3. </span>Rademacher复杂度<a class="headerlink" href="#rademacher" title="Link to this heading">#</a></h3>
+<p>  基于VC维的泛化误差界是分布无关数据独立的，也就是说对任意数据分布都成立，使得基于VC维的可学习性分析结果具有一定的普适性；但从另一方面来说，由于没有考虑数据本身，基于VC维得到的泛化误差界比较松。Rademacher复杂度是另一种描述假设空间复杂度的途径，与VC维不同，它在一定程度上考虑了数据分布。</p>
+<p>  假设<span class="math notranslate nohighlight">\(h\)</span>的经验误差为，</p>
+<div class="math notranslate nohighlight" id="equation-hyposis-experi">
+<span class="eqno">(21)<a class="headerlink" href="#equation-hyposis-experi" title="Link to this equation">#</a></span>\[\begin{split}
+\begin{split}
+\hat{E}(h)&amp;=\frac1m\sum_{i=1}^m \mathbb{I}(h(\pmb{x}_i)\neq y_i)\\
+&amp;=\frac1m\sum_{i=1}^m\frac{1-y_ih(\pmb{x}_i)}{2}\\
+&amp;=\frac12-\frac{1}{2m}\sum_{i=1}^m y_ih(\pmb{x}_i)
+\end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)\)</span>体现了预测值<span class="math notranslate nohighlight">\(h(\pmb{x}_i)\)</span>与样例真实标记<span class="math notranslate nohighlight">\(y_i\)</span>之间的一致性，若对于所有<span class="math notranslate nohighlight">\(i\)</span>都有<span class="math notranslate nohighlight">\(h(\pmb{x}_i)=y_i\)</span>，则<span class="math notranslate nohighlight">\(\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)\)</span>取最大值1。换句话说，经验误差最小的假设满足下式，</p>
+<div class="math notranslate nohighlight" id="equation-exp-error-min">
+<span class="eqno">(22)<a class="headerlink" href="#equation-exp-error-min" title="Link to this equation">#</a></span>\[
+\arg\max\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m y_ih(\pmb{x}_i)
+\]</div>
+<p>  然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记<span class="math notranslate nohighlight">\(y_i\)</span>可能受随机因素影响不再是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的真实标记。<strong>这种情况下，选择假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>在训练集上表现良好的假设，有时还不如选择<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中事先已考虑了随机噪声影响的假设</strong>。</p>
+<p>  考虑随机变量<span class="math notranslate nohighlight">\(\sigma_i\)</span>，且<span class="math notranslate nohighlight">\(P(\sigma_i=+1)=0.5=P(\sigma_i=-1)\)</span>，称为Rademacher随机变量，将此变量引入<a class="reference internal" href="#equation-exp-error-min">(22)</a>，则有，</p>
+<div class="math notranslate nohighlight" id="equation-radermacher-error">
+<span class="eqno">(23)<a class="headerlink" href="#equation-radermacher-error" title="Link to this equation">#</a></span>\[
+\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
+\]</div>
+<p>考虑<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中所有假设，可对式<a class="reference internal" href="#equation-radermacher-error">(23)</a>取期望，则有</p>
+<div class="math notranslate nohighlight" id="equation-all-rade-expectation">
+<span class="eqno">(24)<a class="headerlink" href="#equation-all-rade-expectation" title="Link to this equation">#</a></span>\[\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i) \right]\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}\)</span>。式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的取值范围是<span class="math notranslate nohighlight">\([0,1]\)</span>，它体现了假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的表示能力。例如：当<span class="math notranslate nohighlight">\(|\mathcal{H}|=1\)</span>时，只有一个假设，这时可计算出式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为0；当<span class="math notranslate nohighlight">\(|\mathcal{H}|=2^m\)</span>且<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能打散<span class="math notranslate nohighlight">\(D\)</span>时，任意<span class="math notranslate nohighlight">\(\pmb{\sigma}\)</span>中总有一个假设使得<span class="math notranslate nohighlight">\(h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)\)</span>，此时式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为1。</p>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="mlzhou" role="doc-footnote">
@@ -633,7 +668,6 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <p>Sanjeev Kulkarni, Gilbert Harman et al. An elementary introduction to statistical learning theory.</p>
 </aside>
 </aside>
-</section>
 </section>
 </section>
 </section>
@@ -686,9 +720,13 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">4.1. 概率近似正确学习理论</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pac">4.1.1. PAC</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mathcal-h">4.1.1.1. 有限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>有限)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1.1.2. 无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vc">4.1.2. VC维</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">4.1.2.1. 无限假设空间(<span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span>无限)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rademacher">4.1.3. Rademacher复杂度</a></li>
 </ul>
 </li>
 </ul>
