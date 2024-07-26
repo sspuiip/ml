@@ -183,10 +183,8 @@ $$(def-no-pac-learning)
 则称假设空间$\mathcal{H}$是不可知PAC可学习的。
 
 
-
+### VC维
 #### 无限假设空间($|\mathcal{H}|$无限)
-
-&emsp;&emsp;1. **VC维**
 
 &emsp;&emsp;对于无限假设空间的学习，需要度量*假设空间的复杂度*。最常见的办法是考虑假设空间的“VC维”。
 
@@ -274,6 +272,42 @@ m\le\frac{64}{\epsilon^2}\left[2d\ln\left(\frac{12}{\epsilon} \right) +\ln\left(
 :label: sample-count-up
 m\ge 2\left[ \frac{1-\epsilon^2}{2\epsilon^2}\ln \left(\frac{1}{8\delta(1-2\delta)} \right) \right]
 ```
+
+
+### Rademacher复杂度
+
+&emsp;&emsp;基于VC维的泛化误差界是分布无关数据独立的，也就是说对任意数据分布都成立，使得基于VC维的可学习性分析结果具有一定的普适性；但从另一方面来说，由于没有考虑数据本身，基于VC维得到的泛化误差界比较松。Rademacher复杂度是另一种描述假设空间复杂度的途径，与VC维不同，它在一定程度上考虑了数据分布。
+
+&emsp;&emsp;假设$h$的经验误差为，
+
+$$
+\begin{split}
+\hat{E}(h)&=\frac1m\sum_{i=1}^m \mathbb{I}(h(\pmb{x}_i)\neq y_i)\\
+&=\frac1m\sum_{i=1}^m\frac{1-y_ih(\pmb{x}_i)}{2}\\
+&=\frac12-\frac{1}{2m}\sum_{i=1}^m y_ih(\pmb{x}_i)
+\end{split}
+$$(hyposis-experi)
+
+其中，$\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)$体现了预测值$h(\pmb{x}_i)$与样例真实标记$y_i$之间的一致性，若对于所有$i$都有$h(\pmb{x}_i)=y_i$，则$\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)$取最大值1。换句话说，经验误差最小的假设满足下式，
+
+$$
+\arg\max\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m y_ih(\pmb{x}_i)
+$$(exp-error-min)
+
+&emsp;&emsp;然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记$y_i$可能受随机因素影响不再是$\pmb{x}_i$的真实标记。**这种情况下，选择假设空间$\mathcal{H}$在训练集上表现良好的假设，有时还不如选择$\mathcal{H}$中事先已考虑了随机噪声影响的假设**。
+
+&emsp;&emsp;考虑随机变量$\sigma_i$，且$P(\sigma_i=+1)=0.5=P(\sigma_i=-1)$，称为Rademacher随机变量，将此变量引入{eq}`exp-error-min`，则有，
+
+$$
+\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
+$$(radermacher-error)
+
+考虑$\mathcal{H}$中所有假设，可对式{eq}`radermacher-error`取期望，则有
+```{math}
+:label: all-rade-expectation
+\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i) \right]
+```
+其中，$\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}$。式{eq}`all-rade-expectation`的取值范围是$[0,1]$，它体现了假设空间$\mathcal{H}$的表示能力。例如：当$|\mathcal{H}|=1$时，只有一个假设，这时可计算出式{eq}`all-rade-expectation`的值为0；当$|\mathcal{H}|=2^m$且$\mathcal{H}$能打散$D$时，任意$\pmb{\sigma}$中总有一个假设使得$h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)$，此时式{eq}`all-rade-expectation`的值为1。
 
 
 
