@@ -296,7 +296,7 @@ $$(exp-error-min)
 
 &emsp;&emsp;然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记$y_i$可能受随机因素影响不再是$\pmb{x}_i$的真实标记。**这种情况下，选择假设空间$\mathcal{H}$在训练集上表现良好的假设，有时还不如选择$\mathcal{H}$中事先已考虑了随机噪声影响的假设**。
 
-&emsp;&emsp;考虑随机变量$\sigma_i$，且$P(\sigma_i=+1)=0.5=P(\sigma_i=-1)$，称为Rademacher随机变量，将此变量引入{eq}`exp-error-min`，则有，
+&emsp;&emsp;考虑随机变量$\sigma_i$，且$P(\sigma_i=+1)=0.5=P(\sigma_i=-1)$，称为**Rademacher随机变量**，将此变量引入{eq}`exp-error-min`，则有，
 
 $$
 \sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
@@ -309,11 +309,27 @@ $$(radermacher-error)
 ```
 其中，$\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}$。式{eq}`all-rade-expectation`的取值范围是$[0,1]$，它体现了假设空间$\mathcal{H}$的表示能力。例如：当$|\mathcal{H}|=1$时，只有一个假设，这时可计算出式{eq}`all-rade-expectation`的值为0；当$|\mathcal{H}|=2^m$且$\mathcal{H}$能打散$D$时，任意$\pmb{\sigma}$中总有一个假设使得$h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)$，此时式{eq}`all-rade-expectation`的值为1。
 
+>**定义 (经验Rademacher复杂度)**. 函数空间$\mathcal{F}$关于样例集$Z$的经验Rademacher复杂度为，
+```{math}
+:label: f-z-rade-comp
+\hat{R}_Z (\mathcal{F})=\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{f\in\mathcal{F}}\frac{1}{m} \sum_{i=1}^m\sigma_i f(\pmb{z}_i) \right]
+```
 
+>**定义 (Rademacher复杂度)**. 函数空间$\mathcal{F}$关于$\mathcal{Z}$上分布$\mathcal{Z}$的Rademacher复杂度为，
+```{math}
+:label: f-z-rade-comp
+R_m (\mathcal{F})=\mathbb{E}_{Z\subseteq\mathcal{Z}:|Z|=m }\left[\hat{R}_Z (\mathcal{F}) \right]
+```
 
+&emsp;&emsp;基于Rademacher复杂度可以得到关于函数空间$\mathcal{F}$的泛化误差界。
 
-
-
+>**定理**. 对实值函数空间$\mathcal{F}:\mathcal{Z}\rightarrow [0,1]$，根据分布$\mathcal{D}$从$\mathcal{Z}$中独立同分布采样得到示例集$Z=\{\pmb{z}_1,...,\pmb{z}_m\}, \pmb{z}_i\in\mathcal{Z}$，$0<\delta<1$，对任意$f\in\mathcal{F}$，以至少$1-\delta$的概率有，
+```{math}
+:label: rad-error-bound
+\begin{split}
+\mathbb{E}[f(\pmb{z})]&\le \sum_{i=1}^m f(\pmb{z}_i) + 2R_m
+\end{split}
+```
 
 
 
