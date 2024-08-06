@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -602,7 +602,8 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <div><p><strong>定理 3</strong>. 若假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的VC维为<span class="math notranslate nohighlight">\(d\)</span>，则对任意<span class="math notranslate nohighlight">\(m&gt;d,0&lt;\delta&lt;1\)</span>和<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>有</p>
 </div></blockquote>
 <div class="math notranslate nohighlight" id="equation-vc-error-relation">
-<span class="eqno">(17)<a class="headerlink" href="#equation-vc-error-relation" title="Link to this equation">#</a></span>\[P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   } \right) \ge 1-\delta\]</div>
+<span class="eqno">(17)<a class="headerlink" href="#equation-vc-error-relation" title="Link to this equation">#</a></span>\[\boxed{
+P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   } \right) \ge 1-\delta}\]</div>
 <p>证明. 令<span class="math notranslate nohighlight">\(\delta=4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilon^2}{8}\right)\le 4 \left(\frac{e\cdot m}{d}\right)^d\exp\left(-\frac{m\epsilon^2}{8}\right)\)</span>，可解得<span class="math notranslate nohighlight">\(\epsilon = \sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   }\)</span>。</p>
 <p>  由此可知，泛化误差界<a class="reference internal" href="#equation-vc-error-relation">(17)</a>只与样例数<span class="math notranslate nohighlight">\(m\)</span>有关，收敛速率为<span class="math notranslate nohighlight">\(O(\sqrt{\frac{1}{m}})\)</span>，与数据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>和样例集<span class="math notranslate nohighlight">\(D\)</span>无关。因此，基于VC维的泛化误差界是分布无关、数据独立的。</p>
 <blockquote>
@@ -647,7 +648,7 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 \arg\max\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m y_ih(\pmb{x}_i)
 \]</div>
 <p>  然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记<span class="math notranslate nohighlight">\(y_i\)</span>可能受随机因素影响不再是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的真实标记。<strong>这种情况下，选择假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>在训练集上表现良好的假设，有时还不如选择<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中事先已考虑了随机噪声影响的假设</strong>。</p>
-<p>  考虑随机变量<span class="math notranslate nohighlight">\(\sigma_i\)</span>，且<span class="math notranslate nohighlight">\(P(\sigma_i=+1)=0.5=P(\sigma_i=-1)\)</span>，称为Rademacher随机变量，将此变量引入<a class="reference internal" href="#equation-exp-error-min">(22)</a>，则有，</p>
+<p>  考虑随机变量<span class="math notranslate nohighlight">\(\sigma_i\)</span>，且<span class="math notranslate nohighlight">\(P(\sigma_i=+1)=0.5=P(\sigma_i=-1)\)</span>，称为<strong>Rademacher随机变量</strong>，将此变量引入<a class="reference internal" href="#equation-exp-error-min">(22)</a>，则有，</p>
 <div class="math notranslate nohighlight" id="equation-radermacher-error">
 <span class="eqno">(23)<a class="headerlink" href="#equation-radermacher-error" title="Link to this equation">#</a></span>\[
 \sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
@@ -656,6 +657,51 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <div class="math notranslate nohighlight" id="equation-all-rade-expectation">
 <span class="eqno">(24)<a class="headerlink" href="#equation-all-rade-expectation" title="Link to this equation">#</a></span>\[\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i) \right]\]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}\)</span>。式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的取值范围是<span class="math notranslate nohighlight">\([0,1]\)</span>，它体现了假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的表示能力。例如：当<span class="math notranslate nohighlight">\(|\mathcal{H}|=1\)</span>时，只有一个假设，这时可计算出式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为0；当<span class="math notranslate nohighlight">\(|\mathcal{H}|=2^m\)</span>且<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能打散<span class="math notranslate nohighlight">\(D\)</span>时，任意<span class="math notranslate nohighlight">\(\pmb{\sigma}\)</span>中总有一个假设使得<span class="math notranslate nohighlight">\(h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)\)</span>，此时式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为1。</p>
+<blockquote>
+<div><p><strong>定义 (经验Rademacher复杂度)</strong>. 函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>关于样例集<span class="math notranslate nohighlight">\(Z\)</span>的经验Rademacher复杂度为，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-f-z-rade-comp">
+<span class="eqno">(25)<a class="headerlink" href="#equation-f-z-rade-comp" title="Link to this equation">#</a></span>\[\hat{R}_Z (\mathcal{F})=\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{f\in\mathcal{F}}\frac{1}{m} \sum_{i=1}^m\sigma_i f(\pmb{z}_i) \right]\]</div>
+<blockquote>
+<div><p><strong>定义 (Rademacher复杂度)</strong>. 函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>关于<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>上分布<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>的Rademacher复杂度为，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-f-z-rade-comp">
+<span class="eqno">(26)<a class="headerlink" href="#equation-f-z-rade-comp" title="Link to this equation">#</a></span>\[R_m (\mathcal{F})=\mathbb{E}_{Z\subseteq\mathcal{Z}:|Z|=m }\left[\hat{R}_Z (\mathcal{F}) \right]\]</div>
+<p>  基于Rademacher复杂度可以得到关于函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的泛化误差界。</p>
+<blockquote>
+<div><p><strong>定理</strong>. 对实值函数空间<span class="math notranslate nohighlight">\(\mathcal{F}:\mathcal{Z}\rightarrow [0,1]\)</span>，根据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>从<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>中独立同分布采样得到示例集<span class="math notranslate nohighlight">\(Z=\{\pmb{z}_1,...,\pmb{z}_m\}, \pmb{z}_i\in\mathcal{Z}\)</span>，<span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，对任意<span class="math notranslate nohighlight">\(f\in\mathcal{F}\)</span>，以至少<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率有，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-rad-error-bound">
+<span class="eqno">(27)<a class="headerlink" href="#equation-rad-error-bound" title="Link to this equation">#</a></span>\[\begin{split}\boxed{
+\begin{split}
+\mathbb{E}[f(\pmb{z})]&amp;\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2R_m(\mathcal{F})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
+\mathbb{E}[f(\pmb{z})]&amp;\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2\hat{R}_Z(\mathcal{F})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
+\end{split}}\end{split}\]</div>
+<blockquote>
+<div><p><strong>定理</strong>. 对假设空间<span class="math notranslate nohighlight">\(\mathcal{H}:\mathcal{X}\rightarrow\{-1,+1\}\)</span>，根据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>从<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>中独立同分布采样得到示例集<span class="math notranslate nohighlight">\(D=\{\pmb{x}_1,...,\pmb{x}_m\}, \pmb{x}_i\in\mathcal{X}\)</span>，<span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，对任意<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>，以至少<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率有，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-rad-error-bound">
+<span class="eqno">(28)<a class="headerlink" href="#equation-rad-error-bound" title="Link to this equation">#</a></span>\[\begin{split}\boxed{
+\begin{split}
+\mathbb{E}[h]&amp;\le \hat{E}(h)+ R_m(\mathcal{H})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
+\mathbb{E}[h]&amp;\le \hat{E}(h)+ \hat{R}_D(\mathcal{H})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
+\end{split}}\end{split}\]</div>
+<blockquote>
+<div><p><strong>定理</strong>.  假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的Rademacher复杂度<span class="math notranslate nohighlight">\(R_m(\mathcal{H})\)</span>与增长函数<span class="math notranslate nohighlight">\(\Pi_\mathcal{H}(m)\)</span>满足，</p>
+</div></blockquote>
+<div class="math notranslate nohighlight" id="equation-rade-increase">
+<span class="eqno">(29)<a class="headerlink" href="#equation-rade-increase" title="Link to this equation">#</a></span>\[R_m(\mathcal{H})\le \sqrt{\frac{2\ln\Pi_{\mathcal{H}}(m)}{m}}\]</div>
+<p>  由此可知，从Rademacher复杂度和增长函数能推导出基于VC维的泛化误差界，</p>
+<div class="math notranslate nohighlight" id="equation-conclusion">
+<span class="eqno">(30)<a class="headerlink" href="#equation-conclusion" title="Link to this equation">#</a></span>\[
+\boxed{
+  E(h)\le\hat{E}(h)+\sqrt{\frac{2d\ln\frac{em}{d}}{m}}+\sqrt{\frac{\ln(1/\delta)}{2m}}
+}
+\]</div>
+<p>可以发现，无论是基于VC维还是Rademacher复杂度来推导泛化误差界，所得到的结果均与具体学习算法无关，对所有学习算法都适用。这使得人们能够脱离具体学习算法的设计来考虑学习问题本身的性质。</p>
+</section>
+</section>
+</section>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="mlzhou" role="doc-footnote">
@@ -668,9 +714,6 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <p>Sanjeev Kulkarni, Gilbert Harman et al. An elementary introduction to statistical learning theory.</p>
 </aside>
 </aside>
-</section>
-</section>
-</section>
 
 
                 </article>

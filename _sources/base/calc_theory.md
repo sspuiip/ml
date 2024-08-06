@@ -239,7 +239,8 @@ P(|E(h)-\hat{E}(h)|>\epsilon)\le 4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilo
 >**定理 3**. 若假设空间$\mathcal{H}$的VC维为$d$，则对任意$m>d,0<\delta<1$和$h\in\mathcal{H}$有
 ```{math}
 :label: vc-error-relation
-P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   } \right) \ge 1-\delta
+\boxed{
+P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   } \right) \ge 1-\delta}
 ```
 证明. 令$\delta=4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilon^2}{8}\right)\le 4 \left(\frac{e\cdot m}{d}\right)^d\exp\left(-\frac{m\epsilon^2}{8}\right)$，可解得$\epsilon = \sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   }$。
 
@@ -296,7 +297,7 @@ $$(exp-error-min)
 
 &emsp;&emsp;然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记$y_i$可能受随机因素影响不再是$\pmb{x}_i$的真实标记。**这种情况下，选择假设空间$\mathcal{H}$在训练集上表现良好的假设，有时还不如选择$\mathcal{H}$中事先已考虑了随机噪声影响的假设**。
 
-&emsp;&emsp;考虑随机变量$\sigma_i$，且$P(\sigma_i=+1)=0.5=P(\sigma_i=-1)$，称为Rademacher随机变量，将此变量引入{eq}`exp-error-min`，则有，
+&emsp;&emsp;考虑随机变量$\sigma_i$，且$P(\sigma_i=+1)=0.5=P(\sigma_i=-1)$，称为**Rademacher随机变量**，将此变量引入{eq}`exp-error-min`，则有，
 
 $$
 \sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
@@ -309,18 +310,55 @@ $$(radermacher-error)
 ```
 其中，$\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}$。式{eq}`all-rade-expectation`的取值范围是$[0,1]$，它体现了假设空间$\mathcal{H}$的表示能力。例如：当$|\mathcal{H}|=1$时，只有一个假设，这时可计算出式{eq}`all-rade-expectation`的值为0；当$|\mathcal{H}|=2^m$且$\mathcal{H}$能打散$D$时，任意$\pmb{\sigma}$中总有一个假设使得$h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)$，此时式{eq}`all-rade-expectation`的值为1。
 
+>**定义 (经验Rademacher复杂度)**. 函数空间$\mathcal{F}$关于样例集$Z$的经验Rademacher复杂度为，
+```{math}
+:label: f-z-rade-comp
+\hat{R}_Z (\mathcal{F})=\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{f\in\mathcal{F}}\frac{1}{m} \sum_{i=1}^m\sigma_i f(\pmb{z}_i) \right]
+```
+
+>**定义 (Rademacher复杂度)**. 函数空间$\mathcal{F}$关于$\mathcal{Z}$上分布$\mathcal{Z}$的Rademacher复杂度为，
+```{math}
+:label: f-z-rade-comp
+R_m (\mathcal{F})=\mathbb{E}_{Z\subseteq\mathcal{Z}:|Z|=m }\left[\hat{R}_Z (\mathcal{F}) \right]
+```
+
+&emsp;&emsp;基于Rademacher复杂度可以得到关于函数空间$\mathcal{F}$的泛化误差界。
+
+>**定理**. 对实值函数空间$\mathcal{F}:\mathcal{Z}\rightarrow [0,1]$，根据分布$\mathcal{D}$从$\mathcal{Z}$中独立同分布采样得到示例集$Z=\{\pmb{z}_1,...,\pmb{z}_m\}, \pmb{z}_i\in\mathcal{Z}$，$0<\delta<1$，对任意$f\in\mathcal{F}$，以至少$1-\delta$的概率有，
+```{math}
+:label: rad-error-bound
+\boxed{
+\begin{split}
+\mathbb{E}[f(\pmb{z})]&\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2R_m(\mathcal{F})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
+\mathbb{E}[f(\pmb{z})]&\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2\hat{R}_Z(\mathcal{F})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
+\end{split}}
+```
+
+>**定理**. 对假设空间$\mathcal{H}:\mathcal{X}\rightarrow\{-1,+1\}$，根据分布$\mathcal{D}$从$\mathcal{X}$中独立同分布采样得到示例集$D=\{\pmb{x}_1,...,\pmb{x}_m\}, \pmb{x}_i\in\mathcal{X}$，$0<\delta<1$，对任意$h\in\mathcal{H}$，以至少$1-\delta$的概率有，
+```{math}
+:label: rad-error-bound
+\boxed{
+\begin{split}
+\mathbb{E}[h]&\le \hat{E}(h)+ R_m(\mathcal{H})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
+\mathbb{E}[h]&\le \hat{E}(h)+ \hat{R}_D(\mathcal{H})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
+\end{split}}
+```
+>**定理**.  假设空间$\mathcal{H}$的Rademacher复杂度$R_m(\mathcal{H})$与增长函数$\Pi_\mathcal{H}(m)$满足，
+```{math}
+:label: rade-increase
+R_m(\mathcal{H})\le \sqrt{\frac{2\ln\Pi_{\mathcal{H}}(m)}{m}}
+```
+
+&emsp;&emsp;由此可知，从Rademacher复杂度和增长函数能推导出基于VC维的泛化误差界，
+
+$$
+\boxed{
+  E(h)\le\hat{E}(h)+\sqrt{\frac{2d\ln\frac{em}{d}}{m}}+\sqrt{\frac{\ln(1/\delta)}{2m}}
+}
+$$(conclusion)
 
 
-
-
-
-
-
-
-
-
-
-
+可以发现，无论是基于VC维还是Rademacher复杂度来推导泛化误差界，所得到的结果均与具体学习算法无关，对所有学习算法都适用。这使得人们能够脱离具体学习算法的设计来考虑学习问题本身的性质。
 
 
 

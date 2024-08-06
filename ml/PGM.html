@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -992,6 +992,11 @@ q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int 
 \]</div>
 <p>  最终，在满足条件<a class="reference internal" href="#equation-q-factor">(18)</a>下，变量子集<span class="math notranslate nohighlight">\(\pmb{z}_j\)</span>最接近的真实分布由<a class="reference internal" href="#equation-optimize-solution">(20)</a>得到。</p>
 <p>  通过恰当的分割独立变量子集<span class="math notranslate nohighlight">\(\pmb{z}_j\)</span>并选择<span class="math notranslate nohighlight">\(q_j\)</span>服从的分布，<span class="math notranslate nohighlight">\(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})]\)</span>往往有闭式解，这使得基于<a class="reference internal" href="#equation-optimize-solution">(20)</a>能高效对隐变量<span class="math notranslate nohighlight">\(\pmb{z}\)</span>进行推断。事实上，对变量<span class="math notranslate nohighlight">\(\pmb{z}_j\)</span>分布<span class="math notranslate nohighlight">\(q_j^*\)</span>进行估计时整合了<span class="math notranslate nohighlight">\(\pmb{z}_j\)</span>之外的其他<span class="math notranslate nohighlight">\(\pmb{z}_{i\neq j}\)</span>的信息，这是通过联合似然函数<span class="math notranslate nohighlight">\(\ln p(\pmb{x},\pmb{z})\)</span>在<span class="math notranslate nohighlight">\(\pmb{z}_j\)</span>之外的隐变量分布上求期望得到的，因此也被称为<strong>均值场(mean field)方法</strong>。</p>
+</section>
+</section>
+</section>
+</section>
+</section>
 <hr class="footnotes docutils" />
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id19" role="doc-footnote">
@@ -999,11 +1004,6 @@ q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int 
 <p><a class="reference external" href="https://sspuiip.github.io/ml/mathmodel/mcmc.html#mcmc">MCMC采样</a></p>
 </aside>
 </aside>
-</section>
-</section>
-</section>
-</section>
-</section>
 
 
                 </article>
