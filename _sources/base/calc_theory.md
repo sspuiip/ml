@@ -212,9 +212,10 @@ P(|E(h)-\hat{E}(h)|>\epsilon)\le 4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilo
 
 
 
-&emsp;&emsp;(一) **VC维计算方法**
+&emsp;&emsp;(一) **VC维计算**
 
-&emsp;&emsp;若存在大小为$d$的示例数据集能被$\mathcal{H}$打散，但不存在任何大小为$d+1$的示例集被$\mathcal{H}$打散，则$\mathcal{H}$的VC维是$d$。
+{attribution="VC维计算方法"}
+>若存在大小为$d$的示例数据集能被$\mathcal{H}$打散，但不存在任何大小为$d+1$的示例集被$\mathcal{H}$打散，则$\mathcal{H}$的VC维是$d$。
 
 &emsp;&emsp;**例1**. 对于实数域区间$[a,b]$，令$\mathcal{H}$表示实数域中所有闭区间构成的集合$\{h_{[a,b]}:a,b\in\mathbb{R},a\le b\}$, $\mathcal{X}=\mathbb{R}$。对于$x\in\mathcal{X}$，若$x\in [a,b]$，则$h_{[a,b]}=+1$，否则$h_{[a,b]}=-1$。若有$x_1=0.5, x_2=1.5$，则假设空间$\{h_{[0,1]},h_{[0,2]},h_{[1,2]},h_{[2,3]}\}$将$x_1,x_2$打散，所以$\mathcal{H}$的VC维至少为2；对于任意大小为3的示例集$\{x_1,x_2,x_3\}$，不妨设$x_1<x_2<x_3$，则$\mathcal{H}$中不存在任何假设$h_{[a,b]}$能实现对分结果$\{(x_1,+),(x_2,-),(x_3,+)\}$。因此$\mathcal{H}$的VC维为2。
 
@@ -360,11 +361,25 @@ $$(conclusion)
 
 可以发现，无论是基于VC维还是Rademacher复杂度来推导泛化误差界，所得到的结果均与具体学习算法无关，对所有学习算法都适用。这使得人们能够脱离具体学习算法的设计来考虑学习问题本身的性质。
 
+### 稳定性
+
+&emsp;&emsp;稳定性主要考查算法在输入变化时，输出是否随之发生较大变化。
+
+>**定义** ($\beta$-均匀稳定性).  对任意$\pmb{x}\in\mathcal{X}, z=(\pmb{x},y)$，若学习算法$\mathfrak{L}$满足，
+```{math}
+:label: beta-stability
+|\ell(\mathfrak{L}_D,z) - \ell(\mathfrak{L}_{D^{\backslash i}}, z) |\le \beta
+```
+则称算法$\mathfrak{L}$关于损失$\ell$满足$\beta$-均匀稳定性。
 
 
+>**定理** (稳定性泛化误差界)  若算法$\mathfrak{L}$关于损失$\ell$满足$\beta$-均匀稳定性，且损失函数$\ell$的上界为$M$， $0<\delta<1$，则对于任意$m\ge 1$（$m$为从分布$\mathcal{D}$上独立同分步采样得到的数据集$D$的大小），至少以$1-\delta$的概率有，
+```{math}
+:label: stability-error-bound
+\ell(\mathfrak{L},D)\le\hat{\ell}(\mathfrak{L},D)+2\beta+(4m\beta+M)\sqrt{\frac{\ln(1/\delta)}{2m}}
+```
 
-
-
+&emsp;&emsp;上述定理给出了基于稳定性分析推导出的学习算法$\mathfrak{L}$学习得到的假设的泛化误差界。稳定性分析不必考虑假设空间所有可能假设，只需要根据算法自身的稳定性来讨论输出假设$\mathfrak{L}_D$的泛化误差界。
 
 
 
