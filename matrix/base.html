@@ -568,9 +568,23 @@ A_{ij}=(-1)^{i+j}\det(\pmb{A}_{ij})
 <li><p><span class="math notranslate nohighlight">\(L_0\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_0\triangleq\)</span>非零元素的个数。是一种虚拟的范数，在稀疏表示中有作用。</p></li>
 <li><p><span class="math notranslate nohighlight">\(L_1\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_1\triangleq\sum_i^n |x_i|=|x_1|+|x_2|+\dots+|x_n|\)</span>。</p></li>
 <li><p><span class="math notranslate nohighlight">\(L_2\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_2\triangleq\left(\sum_i^n x_i^2\right)=(x_1^2+x_2^2+\dots+x_n^2)^{1/2}\)</span>。</p></li>
-<li><p><span class="math notranslate nohighlight">\(L_\infty\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_\infty\triangleq\max\{|x_1|+|x_2|+\dots+|x_n|\}\)</span>。</p></li>
+<li><p><span class="math notranslate nohighlight">\(L_\infty\)</span>范数： <span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_\infty\triangleq\max\{|x_1|,|x_2|,\dots,|x_n|\}\)</span>。</p></li>
 <li><p><span class="math notranslate nohighlight">\(L_p\)</span>范数：<span class="math notranslate nohighlight">\(\lVert \pmb{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}\)</span>。</p></li>
 </ol>
+<p>  对于上述范数，有以下通用不等式成立：</p>
+<div class="math notranslate nohighlight" id="equation-non-equ-formula">
+<span class="eqno">(1)<a class="headerlink" href="#equation-non-equ-formula" title="Link to this equation">#</a></span>\[\begin{split}\boxed{
+\begin{split}
+\lVert \pmb{x}\rVert_2 &amp;\le\lVert\pmb{x}\rVert_{1}\le\sqrt{N}\lVert\pmb{x}\rVert_2\\
+\lVert \pmb{x}\rVert_{\infty} &amp;\le\lVert\pmb{x}\rVert_{2}\le\sqrt{N}\lVert\pmb{x}\rVert_{\infty}\\
+\lVert \pmb{x}\rVert_{\infty} &amp;\le\lVert\pmb{x}\rVert_{1}\le N\lVert\pmb{x}\rVert_{\infty}\\
+\end{split}}\end{split}\]</div>
+<p>  如果存在<span class="math notranslate nohighlight">\(\alpha,\beta&gt;0\)</span>，使得对于所有<span class="math notranslate nohighlight">\(\pmb{x}\)</span>，下式成立，</p>
+<div class="math notranslate nohighlight" id="equation-norm-equivalent">
+<span class="eqno">(2)<a class="headerlink" href="#equation-norm-equivalent" title="Link to this equation">#</a></span>\[\alpha\lVert\pmb{x}\rVert \le\lVert\pmb{x}\rVert'\le\beta\lVert\pmb{x}\rVert\]</div>
+<p>则称两个范数<span class="math notranslate nohighlight">\(\lVert\cdot\rVert, \lVert\cdot\rVert'\)</span>是<strong>等价的</strong>。由此可见，式<a class="reference internal" href="#equation-non-equ-formula">(1)</a>表明了这三种范数的等价性。更一般地，有限维空间上的所有范数都是等价的。对于<span class="math notranslate nohighlight">\(\lVert\cdot\rVert_{infty}\)</span>范数来说，还有以下性质，</p>
+<div class="math notranslate nohighlight" id="equation-equ-infty-norm">
+<span class="eqno">(3)<a class="headerlink" href="#equation-equ-infty-norm" title="Link to this equation">#</a></span>\[\forall p\ge 1,\]</div>
 </section>
 <section id="id12">
 <h3><span class="section-number">1.4.2. </span>矩阵范数<a class="headerlink" href="#id12" title="Link to this heading">#</a></h3>
