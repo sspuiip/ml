@@ -170,9 +170,30 @@ $$
 
 3. $L_2$范数： $\lVert \pmb{x}\rVert_2\triangleq\left(\sum_i^n x_i^2\right)=(x_1^2+x_2^2+\dots+x_n^2)^{1/2}$。
 
-4. $L_\infty$范数： $\lVert \pmb{x}\rVert_\infty\triangleq\max\{|x_1|+|x_2|+\dots+|x_n|\}$。
+4. $L_\infty$范数： $\lVert \pmb{x}\rVert_\infty\triangleq\max\{|x_1|,|x_2|,\dots,|x_n|\}$。
 
 5. $L_p$范数：$\lVert \pmb{x}\rVert_p=\left(\sum_i x_i^p\right)^{1/p}$。
+
+&emsp;&emsp;对于上述范数，有以下通用不等式成立：
+```{math}
+:label: non-equ-formula
+\boxed{
+\begin{split}
+\lVert \pmb{x}\rVert_2 &\le\lVert\pmb{x}\rVert_{1}\le\sqrt{N}\lVert\pmb{x}\rVert_2\\
+\lVert \pmb{x}\rVert_{\infty} &\le\lVert\pmb{x}\rVert_{2}\le\sqrt{N}\lVert\pmb{x}\rVert_{\infty}\\
+\lVert \pmb{x}\rVert_{\infty} &\le\lVert\pmb{x}\rVert_{1}\le N\lVert\pmb{x}\rVert_{\infty}\\
+\end{split}}
+```
+&emsp;&emsp;如果存在$\alpha,\beta>0$，使得对于所有$\pmb{x}$，下式成立，
+```{math}
+:label: norm-equivalent
+\alpha\lVert\pmb{x}\rVert \le\lVert\pmb{x}\rVert'\le\beta\lVert\pmb{x}\rVert
+```
+则称两个范数$\lVert\cdot\rVert, \lVert\cdot\rVert'$是**等价的**。由此可见，式{eq}`non-equ-formula`表明了这三种范数的等价性。更一般地，有限维空间上的所有范数都是等价的。对于$\lVert\cdot\rVert_{infty}$范数来说，还有以下性质，
+```{math}
+:label: equ-infty-norm
+\forall p\ge 1,
+```
 
 ### 矩阵范数
 
