@@ -68,6 +68,13 @@
    matrix/special_matrix.md
    matrix/subspace.md
    matrix/decomposition.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 粗糙集
+   :numbered:
+
+   roughset/roughbase.md
    
 .. toctree::
    :maxdepth: 2
