@@ -1,48 +1,17 @@
-
 <!DOCTYPE html>
 
-
-<html lang="zh-CN" data-content_root="../" >
-
+<html lang="zh-CN" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>5. 贝叶斯分类 &#8212; Machine Learning Fundation 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-  
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
-
-    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,336 +20,55 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'ml/bayes';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="6. 神经网络" href="neuro_network.html" />
-    <link rel="prev" title="4. 概率图模型" href="PGM.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  <meta name="docsearch:version" content="" />
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+    <link rel="prev" title="4. 概率图模型" href="PGM.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="neuro_network.html" title="6. 神经网络"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="PGM.html" title="4. 概率图模型"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>贝叶斯分类</a></li> 
+      </ul>
+    </div>  
 
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
-
-  
-  <dialog id="pst-search-dialog">
-    
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
-</div>
-
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">搜索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">基础知识</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">2. 表示学习</a></li>
-<li class="toctree-l1"><a class="reference internal" href="EM.html">3. EM算法概述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="PGM.html">4. 概率图模型</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">5. 贝叶斯分类</a></li>
-<li class="toctree-l1"><a class="reference internal" href="neuro_network.html">6. 神经网络</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="biClustering.html">1. BiClustering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
-</ul>
-
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</button></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/ml/bayes.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>贝叶斯分类</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. 贝叶斯决策</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2. 朴素贝叶斯分类器</a></li>
-</ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">5. </span>贝叶斯分类<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">5. </span>贝叶斯分类<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="id2">
-<h2><span class="section-number">5.1. </span>贝叶斯决策<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.1. </span>贝叶斯决策<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><p>贝叶斯决策论是概率框架下决策的基本方法。</p>
 <p class="attribution">—Bayesian decision theory</p>
 </div></blockquote>
 <p>  假设有类型标记<span class="math notranslate nohighlight">\(\mathcal{Y}=\{c_1,...,c_n\}\)</span>，在决策过程中类别<span class="math notranslate nohighlight">\(c_j\)</span>的样本划分为类别<span class="math notranslate nohighlight">\(c_i\)</span>所产生的<strong>损失</strong>记为<span class="math notranslate nohighlight">\(\lambda_{ij}\)</span>，则将样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>分类为<span class="math notranslate nohighlight">\(c_i\)</span>产生的损失期望(expected loss)，也称为<strong>条件风险</strong>，</p>
 <div class="math notranslate nohighlight" id="equation-expected-loss">
-<span class="eqno">(1)<a class="headerlink" href="#equation-expected-loss" title="Link to this equation">#</a></span>\[
+<span class="eqno">(1)<a class="headerlink" href="#equation-expected-loss" title="Link to this equation">¶</a></span>\[
 R(c_i|\pmb{x})=\sum_{j}^N \lambda_{ij}\cdot P(c_j|\pmb{x})
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(P(c_j|\pmb{x})\)</span>为类别标记<span class="math notranslate nohighlight">\(c_j\)</span>的<strong>后验概率</strong>。分类的任务是寻找一个<strong>最优分类映射</strong><span class="math notranslate nohighlight">\(h:\mathcal{x}\rightarrow \mathcal{Y}\)</span>，从而最小化<strong>总体风险</strong>，</p>
 <div class="math notranslate nohighlight" id="equation-total-risk">
-<span class="eqno">(2)<a class="headerlink" href="#equation-total-risk" title="Link to this equation">#</a></span>\[
+<span class="eqno">(2)<a class="headerlink" href="#equation-total-risk" title="Link to this equation">¶</a></span>\[
 R(h)=\mathbb{E}_{\pmb{x}}\{R[h(\pmb{x})|\pmb{x}]\}
 \]</div>
 <p>如果<span class="math notranslate nohighlight">\(h\)</span>对每个样本都能最小化条件风险<a class="reference internal" href="#equation-expected-loss">(1)</a><span class="math notranslate nohighlight">\(R[h(\pmb{x}|\pmb{x}]\)</span>，则总体风险<a class="reference internal" href="#equation-total-risk">(2)</a>也能最小化。因此就有了<strong>贝叶斯判定准则</strong>：</p>
@@ -390,40 +78,40 @@ R(h)=\mathbb{E}_{\pmb{x}}\{R[h(\pmb{x})|\pmb{x}]\}
 </div></blockquote>
 <p>也就是，</p>
 <div class="math notranslate nohighlight" id="equation-optimal-function">
-<span class="eqno">(3)<a class="headerlink" href="#equation-optimal-function" title="Link to this equation">#</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-optimal-function" title="Link to this equation">¶</a></span>\[
 h^*(\pmb{x})=\arg\min\limits_{c\in\mathcal{Y}} R(c|\pmb{x})
 \]</div>
 <p>此时，<span class="math notranslate nohighlight">\(h^*\)</span>称为<strong>贝叶斯最优分类器</strong>，对应的总体风险<span class="math notranslate nohighlight">\(R(h^*)\)</span>称为<strong>贝叶斯风险</strong>。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">5.2. </span>朴素贝叶斯分类器<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">5.2. </span>朴素贝叶斯分类器<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  贝叶斯公式<a class="reference internal" href="#equation-bayes-formula">(4)</a>估计后验概率的主要困难在于<font color="blue">类条件概率<span class="math notranslate nohighlight">\(P(\pmb{x}|c)\)</span>是样本的所有属性上的联合概率</font>，难以从有限的训练样本直接估计得到，</p>
 <div class="math notranslate nohighlight" id="equation-bayes-formula">
-<span class="eqno">(4)<a class="headerlink" href="#equation-bayes-formula" title="Link to this equation">#</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-bayes-formula" title="Link to this equation">¶</a></span>\[
 \underbrace{P(y=c|\pmb{x})}_{\mathrm{posterior}}=\frac{\overbrace{P(y=c)}^{\mathrm{prior}}\times\overbrace{P(\pmb{x}|y=c)}^{\mathrm{likelihood}}}{\underbrace{p(\pmb{x})}_{\mathrm{evidence}}}
 \]</div>
 <p>  对于这一问题，假设所有属性相互独立，则类条件概率可以拆分为如下形式，</p>
 <div class="math notranslate nohighlight" id="equation-class-condition">
-<span class="eqno">(5)<a class="headerlink" href="#equation-class-condition" title="Link to this equation">#</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-class-condition" title="Link to this equation">¶</a></span>\[
 P(\pmb{x}|y=c)=\prod_{j=1}^d P(x_j|y=c)
 \]</div>
 <p>相应地，贝叶斯判定准则式<a class="reference internal" href="#equation-optimal-function">(3)</a>可以改写为，</p>
 <div class="math notranslate nohighlight" id="equation-naive-bayes-target">
-<span class="eqno">(6)<a class="headerlink" href="#equation-naive-bayes-target" title="Link to this equation">#</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-naive-bayes-target" title="Link to this equation">¶</a></span>\[
 h_{nb}(\pmb{x})=\arg\max\limits_{c\in\mathcal{Y}}P(y=c)\prod_{j=1}^d P(x_j|y=c)
 \]</div>
 <p>上式<a class="reference internal" href="#equation-naive-bayes-target">(6)</a>即为<strong>朴素贝叶斯分类器</strong>。训练该模型就是使用训练集<span class="math notranslate nohighlight">\(D\)</span>来估计先验概率<span class="math notranslate nohighlight">\(P(c)\)</span>和类条件概率<span class="math notranslate nohighlight">\(P(x_i|c)\)</span>的参数。</p>
 <p>  （一）<strong>模型训练</strong></p>
 <p>  单个样本的似然函数为，</p>
 <div class="math notranslate nohighlight" id="equation-single-sample-likelihood">
-<span class="eqno">(7)<a class="headerlink" href="#equation-single-sample-likelihood" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(7)<a class="headerlink" href="#equation-single-sample-likelihood" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
 p(\pmb{x}_i,y_i|\pmb{\theta})&amp;=p(y=y_i|\pmb{\pi})\prod_{j=1}^D p(\pmb{x}_i|y=y_i)\\
 \end{split}
 \end{split}\]</div>
 <p>可以得到所有样本的对数似然函数，</p>
 <div class="math notranslate nohighlight" id="equation-dataset-log-likelihood">
-<span class="eqno">(8)<a class="headerlink" href="#equation-dataset-log-likelihood" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(8)<a class="headerlink" href="#equation-dataset-log-likelihood" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
 \ln p(\mathcal{D}|\pmb{\theta})&amp;= \sum_{i=1}^N \ln p(\pmb{x}_i,y_i|\pmb{\theta})\\
 &amp;=\sum_{c=1}^C N_c\ln \pi_c +\sum_{j=1}^D\sum_{c=1}^C\sum_{i:y_i=c}\ln p(x_{ij}|\theta_{jc}),\quad N_c\triangleq\sum_{i=1}^N \mathbb{I}(y_i=c)
@@ -431,31 +119,31 @@ p(\pmb{x}_i,y_i|\pmb{\theta})&amp;=p(y=y_i|\pmb{\pi})\prod_{j=1}^D p(\pmb{x}_i|y
 \end{split}\]</div>
 <p>  对式<a class="reference internal" href="#equation-dataset-log-likelihood">(8)</a>求偏导，并令其等于0，可得到参数的估值，</p>
 <div class="math notranslate nohighlight" id="equation-pic-hat">
-<span class="eqno">(9)<a class="headerlink" href="#equation-pic-hat" title="Link to this equation">#</a></span>\[
+<span class="eqno">(9)<a class="headerlink" href="#equation-pic-hat" title="Link to this equation">¶</a></span>\[
 \begin{split}
 \hat{\pi}_c=\frac{N_c}{N}
 \end{split}
 \]</div>
 <p>  <span class="math notranslate nohighlight">\(\theta_{jc}\)</span>的估值依赖于具体的特征类型所使用的分布。<strong>以<span class="math notranslate nohighlight">\(x_i|y\sim \text{Ber}(\theta_{jc})\)</span>为例</strong>，</p>
 <div class="math notranslate nohighlight" id="equation-thetajc-hat">
-<span class="eqno">(10)<a class="headerlink" href="#equation-thetajc-hat" title="Link to this equation">#</a></span>\[
+<span class="eqno">(10)<a class="headerlink" href="#equation-thetajc-hat" title="Link to this equation">¶</a></span>\[
 \hat{\theta}_{jc}=\frac{N_{jc}}{N_c}
 \]</div>
 <p>  通过对上述参数的求解可以看出，该模型的训练非常容易实现，且模型训练时间复杂度仅为<span class="math notranslate nohighlight">\(O(ND)\)</span>。处理混合类型特征也相对容易实现。最大似然估计的问题是过拟合。例如，假设特征<span class="math notranslate nohighlight">\(j\)</span>的值（有且只有一个）在所有类别中出现，则可以得到<span class="math notranslate nohighlight">\(\hat{\theta}_{jc}=1\)</span>。当我们遇到一个不含有此特征值的样本时，算法将会失效，因为对于所有类来说<span class="math notranslate nohighlight">\(p(y=c|\pmb{x},\hat{\theta})=0\)</span>。一个简单的办法是贝叶斯化。</p>
 <p>  （二）<strong>贝叶斯naive Bayes</strong></p>
 <p>  使用一个因子化的先验，</p>
 <div class="math notranslate nohighlight" id="equation-conjugate-prior-bayes">
-<span class="eqno">(11)<a class="headerlink" href="#equation-conjugate-prior-bayes" title="Link to this equation">#</a></span>\[
+<span class="eqno">(11)<a class="headerlink" href="#equation-conjugate-prior-bayes" title="Link to this equation">¶</a></span>\[
 p(\pmb{\theta})=p(\pmb{\pi})\prod_{j=1}^D\prod_{c=1}^C p(\theta_{jc}),\quad \pmb{\pi}\sim \text{Dir}(\pmb{\alpha}),\theta_{jc}\sim \text{Beta}(\beta_0,\beta_1).
 \]</div>
 <p>与似然函数相乘后，得到后验，</p>
 <div class="math notranslate nohighlight" id="equation-posterior-bayes">
-<span class="eqno">(12)<a class="headerlink" href="#equation-posterior-bayes" title="Link to this equation">#</a></span>\[
+<span class="eqno">(12)<a class="headerlink" href="#equation-posterior-bayes" title="Link to this equation">¶</a></span>\[
 p(\pmb{\theta})=p(\pmb{\pi}|\mathcal{D})\prod_{j=1}^D\prod_{c=1}^C p(\theta_{jc}|\mathcal{D})
 \]</div>
 <p>由共轭先验可知后验形式，</p>
 <div class="math notranslate nohighlight" id="equation-posterior-bayes-detail">
-<span class="eqno">(13)<a class="headerlink" href="#equation-posterior-bayes-detail" title="Link to this equation">#</a></span>\[
+<span class="eqno">(13)<a class="headerlink" href="#equation-posterior-bayes-detail" title="Link to this equation">¶</a></span>\[
 p(\pmb{\pi}|\mathcal{D})=\text{Dir}(N_1+\alpha_1,...,N_c+\alpha_c),\quad p(\theta_{jc}|\mathcal{D})=\text{Beta}((N_c-N_{jc})+\beta_0,N_{jc}+\beta_1)
 \]</div>
 <p>  （三）<strong>预测</strong></p>
@@ -466,7 +154,7 @@ p(y=c|\pmb{x},\mathcal{D})\propto p(y=c)\prod_{j=1}^D p(x_j|y=c,\mathcal{D})
 \]</div>
 <p>贝叶斯的作法是把未知参数积分去除，即，</p>
 <div class="math notranslate nohighlight" id="equation-predict-bayes">
-<span class="eqno">(14)<a class="headerlink" href="#equation-predict-bayes" title="Link to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(14)<a class="headerlink" href="#equation-predict-bayes" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
 p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathcal{D})d\pi\\
 &amp;\times \prod_{j=1}^D\int \text{Ber}(x_j|y=c,\theta_{jc})p(\theta_{jc}|\mathcal{D})d\theta_{jc}\\
@@ -482,105 +170,73 @@ p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathc
 </section>
 
 
-                </article>
-              
-
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="PGM.html"
-       title="上一页">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">4. </span>概率图模型</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="neuro_network.html"
-       title="下一页">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">6. </span>神经网络</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">5.1. 贝叶斯决策</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">5.2. 朴素贝叶斯分类器</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
+            <div class="clearer"></div>
           </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">5. 贝叶斯分类</a><ul>
+<li><a class="reference internal" href="#id2">5.1. 贝叶斯决策</a></li>
+<li><a class="reference internal" href="#id3">5.2. 朴素贝叶斯分类器</a></li>
+</ul>
+</li>
+</ul>
 
   </div>
-  
-  <div class="footer-item">
-    
-
-  <p class="copyright">
-    
-      © Copyright 2022-2024, SSPUIIP.
-      <br/>
-    
-  </p>
-
+  <div>
+    <h4>上一主题</h4>
+    <p class="topless"><a href="PGM.html"
+                          title="上一章"><span class="section-number">4. </span>概率图模型</a></p>
   </div>
-  
-  <div class="footer-item">
-    
+  <div>
+    <h4>下一主题</h4>
+    <p class="topless"><a href="neuro_network.html"
+                          title="下一章"><span class="section-number">6. </span>神经网络</a></p>
   </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ml/bayes.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
-
-  <footer class="bd-footer">
-  </footer>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="neuro_network.html" title="6. 神经网络"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="PGM.html" title="4. 概率图模型"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>贝叶斯分类</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
+    </div>
   </body>
 </html>

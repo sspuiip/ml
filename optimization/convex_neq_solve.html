@@ -1,48 +1,17 @@
-
 <!DOCTYPE html>
 
-
-<html lang="zh-CN" data-content_root="../" >
-
+<html lang="zh-CN" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3. 优化问题求解(2) &#8212; Machine Learning Fundation 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-  
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
-
-    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,340 +20,45 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'optimization/convex_neq_solve';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="1. 矩阵性能指标" href="../matrix/base.html" />
-    <link rel="prev" title="2. 优化问题求解(1)" href="convex_solve.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  <meta name="docsearch:version" content="" />
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+    <link rel="prev" title="2. 优化问题求解(1)" href="convex_solve.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="../matrix/base.html" title="1. 矩阵性能指标"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="convex_solve.html" title="2. 优化问题求解(1)"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>优化问题求解(2)</a></li> 
+      </ul>
+    </div>  
 
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
-
-  
-  <dialog id="pst-search-dialog">
-    
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
-</div>
-
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">搜索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">基础知识</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">4. 概率图模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">5. 贝叶斯分类</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network.html">6. 神经网络</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">3. 最大均值差</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">4. 协方差算子</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">3. 优化问题求解(2)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
-</ul>
-
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</button></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/optimization/convex_neq_solve.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>优化问题求解(2)</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">3. </span>优化问题求解(2)<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  求解约束优化问题的标准方法是将约束优化问题转化为无约束优化问题：主要有3种：Lagrangian乘子法、罚函数法和增广Lagrangian乘子法。</p>
 <hr class="docutils" />
 <section id="lagrangian">
-<h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.1. </span>Lagrangian乘子法<a class="headerlink" href="#lagrangian" title="Link to this heading">¶</a></h2>
 <p>  考虑等式约束的凸优化问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -429,10 +103,10 @@ g(\pmb{\lambda})&amp;=\inf\limits_{\pmb{x}} L(\pmb{x},\pmb
 </section>
 <hr class="docutils" />
 <section id="lagrangian-alm">
-<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法(ALM)<a class="headerlink" href="#lagrangian-alm" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.2. </span>增广Lagrangian乘子法(ALM)<a class="headerlink" href="#lagrangian-alm" title="Link to this heading">¶</a></h2>
 <p>  将罚函数与Lagrangian函数相结合，构造出更合适目标函数的方法称为增广Lagrangian乘子法。下面从等式约束和混合约束两个方面讨论该方法。</p>
 <section id="id2">
-<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.2.1. </span>等式约束<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>  考虑等式约束优化问题。记<span class="math notranslate nohighlight">\(\pmb{h}(\pmb{x})=[h_1(\pmb{x}),...,h_q(\pmb{x})]^\top\)</span>。对Lagrangian目标函数<span class="math notranslate nohighlight">\(L(\pmb{x},\pmb{\lambda})\)</span>加惩罚函数，即，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -468,7 +142,7 @@ L_\rho (\pmb{x},\pmb{\lambda})=f_0(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb{b}
 \end{split}\]</div>
 </section>
 <section id="id3">
-<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.2.2. </span>混合约束<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>  考虑不等式和等式约束同时存在的混合约束问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -500,7 +174,7 @@ L_\rho (\pmb{x,s,\lambda,\nu})&amp;=f(\pmb{x})+\pmb{\lambda}^\top (\pmb{Ax}-\pmb
 </section>
 <hr class="docutils" />
 <section id="admm">
-<h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.3. </span>交替方向乘子法(ADMM)<a class="headerlink" href="#admm" title="Link to this heading">¶</a></h2>
 <p>  考虑有以下约束问题，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -535,10 +209,10 @@ L_\rho(\pmb{x},\pmb{z},\pmb{\lambda}) =f(\pmb{x})+g(\pmb{z})+\langle \pmb{\lambd
 </section>
 <hr class="docutils" />
 <section id="id4">
-<h2><span class="section-number">3.4. </span>内点法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">3.4. </span>内点法<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
 <p>  用内点法求解含有不等式约束的凸优化问题，就是用Newton方法求解一系列等式约束问题，或者求解一系列KKT条件的修改形式。</p>
 <section id="id5">
-<h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.4.1. </span>障碍法<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <p>  尝试将不等式约束问题转化为等式约束问题，从而使用Newton方法求解。即，原问题</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -678,7 +352,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 <ul class="simple">
 <li><p><strong>障碍函数方法</strong></p></li>
 </ul>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：障碍法</p></th>
 </tr>
@@ -688,7 +362,6 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 </tr>
 </tbody>
 </table>
-</div>
 <p>  Newton步径<span class="math notranslate nohighlight">\(\Delta \pmb{x}_{nt}\)</span>以及相关的对偶变量由以下线性方程确定，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -707,7 +380,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
   \end{split}\]</div>
 </section>
 <section id="id6">
-<h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">3.4.2. </span><strong>原对偶内点法</strong><a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>   原对偶内点法和障碍方法非常相似，但也有一些差别。</p>
 <ul class="simple">
 <li><p>仅有一层迭代，没有障碍方法的内部迭代和外部迭代的区分。每次迭代时同时更新原对偶变量。</p></li>
@@ -716,7 +389,7 @@ I_{-}(u)=\left\{\begin{array}{l}0 &amp; u\leq 0,\\ \infty&amp;u&gt;0. \end{array
 </ul>
 <p>   原对偶方法经常比障碍方法有效，特别是高精度场合，因为它们可以展现超线性收敛性质。原对偶内点法相对于障碍方法所具有的另一个优点是，它们可以有效处理可行但不严格可行的问题。</p>
 <section id="id7">
-<h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">3.4.2.1. </span><strong>原对偶搜索方向</strong><a class="headerlink" href="#id7" title="Link to this heading">¶</a></h4>
 <p>  如同障碍方法，我们从修改KKT条件开始，该条件可以表述为<span class="math notranslate nohighlight">\(r_t(\pmb{x},\lambda,\nu)=0, t&gt;0\)</span>，其中</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
@@ -780,7 +453,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </ul>
 </section>
 <section id="id8">
-<h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">3.4.2.2. </span><strong>代理对偶间隙</strong><a class="headerlink" href="#id8" title="Link to this heading">¶</a></h4>
 <p>  在原-对偶内点法中，迭代点<span class="math notranslate nohighlight">\(\pmb{x}_k,\lambda_k,\nu_k\)</span>不一定是可行解(not necessarity feasitble),除了在算法收敛的极限情况。这意味着我们不能方便的在每个步骤<span class="math notranslate nohighlight">\(k\)</span>计算对偶间隙<span class="math notranslate nohighlight">\(\eta_k\)</span>。因此，可以定义一个代理对偶间隙(surrogate duality gap)如下，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -789,7 +462,7 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 <p>该代理间隙有可能成为对偶间隙，当<span class="math notranslate nohighlight">\(\pmb{x}\)</span>是原问题可行且<span class="math notranslate nohighlight">\(\lambda,\nu\)</span>是对偶可行时（即，<span class="math notranslate nohighlight">\(r_{\mathrm{pri}}=0 \wedge r_{\mathrm{dual}}=0\)</span>）。注意：参数<span class="math notranslate nohighlight">\(t\)</span>对应的代理间隙为<span class="math notranslate nohighlight">\(\hat{\eta}=m/\hat{\eta}\)</span>.</p>
 <ul>
 <li><p><strong>原-对偶方法</strong></p>
-<div class="pst-scrollable-table-container"><table class="table">
+<table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：原-对偶方法</p></th>
 </tr>
@@ -799,7 +472,6 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </tr>
 </tbody>
 </table>
-</div>
 </li>
 </ul>
 </section>
@@ -808,119 +480,87 @@ r_{cent}=-\pmb{diag}(\lambda)\pmb{f}(\pmb{x})-(1/t)\pmb{1}
 </section>
 
 
-                </article>
-              
-
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="convex_solve.html"
-       title="上一页">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">2. </span>优化问题求解(1)</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="../matrix/base.html"
-       title="下一页">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>矩阵性能指标</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">3.2.1. 等式约束</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">3.2.2. 混合约束</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">3.4. 内点法</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">3.4.1. 障碍法</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
+            <div class="clearer"></div>
           </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">3. 优化问题求解(2)</a><ul>
+<li><a class="reference internal" href="#lagrangian">3.1. Lagrangian乘子法</a></li>
+<li><a class="reference internal" href="#lagrangian-alm">3.2. 增广Lagrangian乘子法(ALM)</a><ul>
+<li><a class="reference internal" href="#id2">3.2.1. 等式约束</a></li>
+<li><a class="reference internal" href="#id3">3.2.2. 混合约束</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#admm">3.3. 交替方向乘子法(ADMM)</a></li>
+<li><a class="reference internal" href="#id4">3.4. 内点法</a><ul>
+<li><a class="reference internal" href="#id5">3.4.1. 障碍法</a></li>
+<li><a class="reference internal" href="#id6">3.4.2. <strong>原对偶内点法</strong></a><ul>
+<li><a class="reference internal" href="#id7">3.4.2.1. <strong>原对偶搜索方向</strong></a></li>
+<li><a class="reference internal" href="#id8">3.4.2.2. <strong>代理对偶间隙</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
   </div>
-  
-  <div class="footer-item">
-    
-
-  <p class="copyright">
-    
-      © Copyright 2022-2024, SSPUIIP.
-      <br/>
-    
-  </p>
-
+  <div>
+    <h4>上一主题</h4>
+    <p class="topless"><a href="convex_solve.html"
+                          title="上一章"><span class="section-number">2. </span>优化问题求解(1)</a></p>
   </div>
-  
-  <div class="footer-item">
-    
+  <div>
+    <h4>下一主题</h4>
+    <p class="topless"><a href="../matrix/base.html"
+                          title="下一章"><span class="section-number">1. </span>矩阵性能指标</a></p>
   </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/optimization/convex_neq_solve.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
-
-  <footer class="bd-footer">
-  </footer>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="../matrix/base.html" title="1. 矩阵性能指标"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="convex_solve.html" title="2. 优化问题求解(1)"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>优化问题求解(2)</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
+    </div>
   </body>
 </html>

@@ -1,48 +1,17 @@
-
 <!DOCTYPE html>
 
-
-<html lang="zh-CN" data-content_root="../" >
-
+<html lang="zh-CN" data-content_root="../">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>2. 再生核希尔伯特空间 &#8212; Machine Learning Fundation 1.0 文档</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
-  </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-  
-  <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
-
-    <script src="../_static/documentation_options.js?v=c893ba89"></script>
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -51,342 +20,45 @@
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script src="../_static/translations.js?v=beaddf03"></script>
     <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'kernel/RKHS';</script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="3. 最大均值差" href="MMD.html" />
-    <link rel="prev" title="1. 核函数基础" href="base.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="zh-CN"/>
-  <meta name="docsearch:version" content="" />
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+    <link rel="prev" title="1. 核函数基础" href="base.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="MMD.html" title="3. 最大均值差"
+             accesskey="N">下一页</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="1. 核函数基础"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>再生核希尔伯特空间</a></li> 
+      </ul>
+    </div>  
 
-  
-  
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">跳转至主要内容</a></div>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>回到顶部</button>
-
-  
-  <dialog id="pst-search-dialog">
-    
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         placeholder="Search..."
-         aria-label="Search..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form>
-  </dialog>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="版本警告"></aside>
-</div>
-
-  
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
-    </header>
-  
-
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      
-      
-      <dialog id="pst-primary-sidebar-modal"></dialog>
-      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-    
-  
-
-<a class="navbar-brand logo" href="../index.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">Machine Learning Fundation 1.0 文档</p>
-  
-</a></div>
-        <div class="sidebar-primary-item">
-
-<button class="btn search-button-field search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
- <i class="fa-solid fa-magnifying-glass"></i>
- <span class="search-button__default-text">搜索</span>
- <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-</button></div>
-        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">基础知识</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce.html">1. 数据降维</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">2. 表示学习</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">3. EM算法概述</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">4. 概率图模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">5. 贝叶斯分类</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network.html">6. 神经网络</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">1. BiClustering</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">核方法</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">2. 再生核希尔伯特空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="MMD.html">3. 最大均值差</a></li>
-<li class="toctree-l1"><a class="reference internal" href="covariance_operators.html">4. 协方差算子</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">最优化</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">数学建模</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
-</ul>
-
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-      <div class="sidebar-primary-item">
-<div id="ethical-ad-placement"
-      class="flat"
-      data-ea-publisher="readthedocs"
-      data-ea-type="readthedocs-sidebar"
-      data-ea-manual="true">
-</div></div>
-  </div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main" role="main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article d-print-none">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</button></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="下载此页面">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/kernel/RKHS.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="下载源文件"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="列印成 PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="全屏模式"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="亮色"></i>
-  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="暗色"></i>
-  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
-</button>
-
-
-<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="搜索" aria-label="搜索" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-</button>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</button>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>再生核希尔伯特空间</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            <div>
-                <h2> 目录 </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-            </nav>
-        </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article">
-                  
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">2. </span>再生核希尔伯特空间<a class="headerlink" href="#id1" title="Link to this heading">#</a></h1>
+<h1><span class="section-number">2. </span>再生核希尔伯特空间<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="id2">
-<h2><span class="section-number">2.1. </span>基本概念<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.1. </span>基本概念<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <section id="id3">
-<h3><span class="section-number">2.1.1. </span>泛函<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">2.1.1. </span>泛函<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>  首先来了解什么是泛函。<strong>泛函</strong>(Functional)通常是指定义域为函数集，而值域为实数或复数的映射。换句话说，泛函是输入为函数，输出为标量的映射。</p>
 <blockquote>
 <div><p><strong>定义0 (泛函)</strong>. 假设有映射<span class="math notranslate nohighlight">\(F[y]: \mathcal{C}\rightarrow \mathbb{B}\)</span>，其中<span class="math notranslate nohighlight">\(\forall y(x)\in \mathcal{C}\)</span>，<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>为函数集, <span class="math notranslate nohighlight">\(y\)</span>为<span class="math notranslate nohighlight">\(x\)</span>的函数，<span class="math notranslate nohighlight">\(x\in\mathcal{X}\)</span>,数集<span class="math notranslate nohighlight">\(\mathbb{B}\subseteq \mathbb{R}\)</span>，则称<span class="math notranslate nohighlight">\(F\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的泛函。一般记为积分形式</p>
@@ -403,7 +75,7 @@ J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
 <a class="reference internal image-reference" href="../_images/functional1.png"><img alt="两点间直线距离最短" src="../_images/functional1.png" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Fig 1. 两点间直线距离最短</span><a class="headerlink" href="#id12" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 1. 两点间直线距离最短</span><a class="headerlink" href="#id12" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  如上图所示，从坐标原点<span class="math notranslate nohighlight">\((0,0)\)</span>到点<span class="math notranslate nohighlight">\((a,b)\)</span>的连接曲线为<span class="math notranslate nohighlight">\(y=y(x)\)</span>，曲线的弧长微分为<span class="math notranslate nohighlight">\(ds=\sqrt{1+\left( \frac{dy}{dx}\right)^2}dx\)</span>，总弧长为<span class="math notranslate nohighlight">\(s=\int_0^a (1+y'^2)^{1/2}dx\)</span>。可以看出<span class="math notranslate nohighlight">\(s\)</span>为一个标量，而等式右边为<span class="math notranslate nohighlight">\(y'(x)\)</span>的函数，即泛函，可记为<span class="math notranslate nohighlight">\(s(y')\)</span>。最终问题转化为：寻找曲线<span class="math notranslate nohighlight">\(y=y(x)\)</span>，使得泛函<span class="math notranslate nohighlight">\(s(y')\)</span>最小。</p>
@@ -414,7 +86,7 @@ J[y(x)]=\int_{x_0}^{x_1}F(x,y,y')dx
 <a class="reference internal image-reference" href="../_images/functional2.png"><img alt="最速降线问题" src="../_images/functional2.png" style="width: 300px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Fig 2. 最速降线问题示例</span><a class="headerlink" href="#id13" title="Link to this image">#</a></p>
+<p><span class="caption-text">Fig 2. 最速降线问题示例</span><a class="headerlink" href="#id13" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  如上图所示，有一物体从原点<span class="math notranslate nohighlight">\((0,0)\)</span>沿着曲线到达<span class="math notranslate nohighlight">\(A\)</span>点<span class="math notranslate nohighlight">\((a,b)\)</span>，若忽略摩擦力，那么沿着什么形状的曲线路径下降时间最短？物体从点<span class="math notranslate nohighlight">\((0,0)\)</span>运动到<span class="math notranslate nohighlight">\(P\)</span>点时，失去的势能为<span class="math notranslate nohighlight">\(mgy\)</span>，获得的动能为<span class="math notranslate nohighlight">\(mv^2/2\)</span>，由能量守恒定律可知，</p>
@@ -440,7 +112,7 @@ dt=\sqrt{\frac{1+y'^2}{2gy}}dx
 <p>物体由<span class="math notranslate nohighlight">\(O\)</span>点运动到<span class="math notranslate nohighlight">\(A\)</span>点所需的时间<span class="math notranslate nohighlight">\(t\)</span>是<span class="math notranslate nohighlight">\(y(x)\)</span>的函数。问题最终转变为满足条件<span class="math notranslate nohighlight">\(y(0)=0,y(a)=b\)</span>的所有连续函数<span class="math notranslate nohighlight">\(y=y(x)\)</span>中，找出一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得<span class="math notranslate nohighlight">\(J[y]\)</span>最小。</p>
 <hr class="docutils" />
 <section id="id4">
-<h4><span class="section-number">2.1.1.1. </span>泛函极值求解–变分法<a class="headerlink" href="#id4" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">2.1.1.1. </span>泛函极值求解–变分法<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
 <p>  对于引入的泛函问题<span class="math notranslate nohighlight">\(J[y]\)</span>，如何求其函数变时的极值<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>呢？一个可行的办法是使用变分法(Calculus of Variations)。传统的微积分中一个基本问题是寻找变最<span class="math notranslate nohighlight">\(x\)</span>的值使得函数<span class="math notranslate nohighlight">\(y(x)\)</span>的值大化(或最小化)。类似的，变分法能够寻找到一个函数<span class="math notranslate nohighlight">\(y(x)\)</span>使得泛函<span class="math notranslate nohighlight">\(F[y]\)</span>的值最大（或最小）。</p>
 <p>  传统的函数中，可以对变量<span class="math notranslate nohighlight">\(x\)</span>的微小变化<span class="math notranslate nohighlight">\(\epsilon\)</span>展开函数，即</p>
 <div class="math notranslate nohighlight">
@@ -485,7 +157,7 @@ F[y(x)+\epsilon\eta(x)]=F[y(x)]+\epsilon\int\left\{\frac{\partial G}{\partial y}
 <p>这便是变分法的核心公式，也称之为Euler-Lagrange方程。有了该公式，就可以找出所寻求的极值点<span class="math notranslate nohighlight">\(\hat{y}(x)\)</span>。一般来说，Euler方程是一个二阶微分方程，<span class="math notranslate nohighlight">\(y(x)\)</span>的通解中含有的两个待定常数刚好通过两个边界条件确定。</p>
 </section>
 <section id="id5">
-<h4><span class="section-number">2.1.1.2. </span>含参变量的定积分<a class="headerlink" href="#id5" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">2.1.1.2. </span>含参变量的定积分<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
 <p>  变分法中，对于泛函求导问题（求导与积分先后顺序问题），可以参考含变量的定积分。含变量的定积分一般具有如下形式，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -505,7 +177,7 @@ I'[y]=\int_a^b f'_y(x,y)dx
 </section>
 <hr class="docutils" />
 <section id="id6">
-<h4><span class="section-number">2.1.1.3. </span>例子<a class="headerlink" href="#id6" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">2.1.1.3. </span>例子<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h4>
 <ul class="simple">
 <li><p><strong>例1</strong>. 求解两点间最短路径。</p></li>
 </ul>
@@ -574,7 +246,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </section>
 <hr class="docutils" />
 <section id="id9">
-<h2><span class="section-number">2.2. </span>线性算子<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.2. </span>线性算子<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><p><strong>定义1 (线性算子)</strong>. 一个函数<span class="math notranslate nohighlight">\(A:\mathcal{F}\rightarrow \mathcal{G}\)</span>称之为线性算子，当且仅当以下条件成立：</p>
 <blockquote>
@@ -644,9 +316,9 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </section>
 <hr class="docutils" />
 <section id="hilbert">
-<h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="Link to this heading">#</a></h2>
+<h2><span class="section-number">2.3. </span>再生核Hilbert空间<a class="headerlink" href="#hilbert" title="Link to this heading">¶</a></h2>
 <section id="id10">
-<h3><span class="section-number">2.3.1. </span>求值泛函<a class="headerlink" href="#id10" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">2.3.1. </span>求值泛函<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <p>  令<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为一个从非空集<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>到复数域<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>的函数Hilbert空间。</p>
 <p>  一个特殊的泛函：求值泛函(Dirac evaluation functional).</p>
 <blockquote>
@@ -691,7 +363,7 @@ y=2r\sin^2\frac{\theta}{2}=r(1-\cos\theta)
 </section>
 <hr class="docutils" />
 <section id="id11">
-<h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id11" title="Link to this heading">#</a></h3>
+<h3><span class="section-number">2.3.2. </span>再生核<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <p>  下面从核函数的角度来探讨RKHS。</p>
 <blockquote>
 <div><p><strong>定义3 (Reproducing kernel Hilbert space, RKHS)</strong>. 设<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是一个定义在非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>上的函数<span class="math notranslate nohighlight">\(f:\mathcal{X}\rightarrow \mathbb{R}\)</span>构成的Hilbert空间，若函数<span class="math notranslate nohighlight">\(\kappa:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\)</span>满足：</p>
@@ -740,7 +412,7 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 <p>因此，<span class="math notranslate nohighlight">\(k\)</span>是一个再生核。</p>
 <p>  从上述定理可以看出，<span class="math notranslate nohighlight">\(k(\cdot,x)\)</span>实际上是在<span class="math notranslate nohighlight">\(x\)</span>点求值算子的一种表示。</p>
 <section id="rkhs">
-<h4><span class="section-number">2.3.2.1. </span>RKHS具体化<a class="headerlink" href="#rkhs" title="Link to this heading">#</a></h4>
+<h4><span class="section-number">2.3.2.1. </span>RKHS具体化<a class="headerlink" href="#rkhs" title="Link to this heading">¶</a></h4>
 <blockquote>
 <div><p><strong>定义 (正定函数)</strong>. 一个函数<span class="math notranslate nohighlight">\(h:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{K}\)</span>是正定的，如果<span class="math notranslate nohighlight">\(\forall n\ge 1,\forall a_i \in \mathbb{K}, x_i\in\mathcal{X}\)</span>,</p>
 </div></blockquote>
@@ -786,121 +458,89 @@ f(x')=\delta_{x'}f=\langle f,I\delta_{x'}\rangle_\mathcal{H}=\langle f,k(\cdot,x
 </aside>
 
 
-                </article>
-              
-
-              
-              
-              
-              
-                <footer class="prev-next-footer d-print-none">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="base.html"
-       title="上一页">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">上一页</p>
-        <p class="prev-next-title"><span class="section-number">1. </span>核函数基础</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="MMD.html"
-       title="下一页">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">下一页</p>
-        <p class="prev-next-title"><span class="section-number">3. </span>最大均值差</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <dialog id="pst-secondary-sidebar-modal"></dialog>
-                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> 目录
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">2.1. 基本概念</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2.1.1. 泛函</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">2.1.1.3. 例子</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">2.2. 线性算子</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hilbert">2.3. 再生核Hilbert空间</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">2.3.1. 求值泛函</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">2.3.2. 再生核</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
-            
+            <div class="clearer"></div>
           </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-作者： SSPUIIP
-</p>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">2. 再生核希尔伯特空间</a><ul>
+<li><a class="reference internal" href="#id2">2.1. 基本概念</a><ul>
+<li><a class="reference internal" href="#id3">2.1.1. 泛函</a><ul>
+<li><a class="reference internal" href="#id4">2.1.1.1. 泛函极值求解–变分法</a></li>
+<li><a class="reference internal" href="#id5">2.1.1.2. 含参变量的定积分</a></li>
+<li><a class="reference internal" href="#id6">2.1.1.3. 例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id9">2.2. 线性算子</a></li>
+<li><a class="reference internal" href="#hilbert">2.3. 再生核Hilbert空间</a><ul>
+<li><a class="reference internal" href="#id10">2.3.1. 求值泛函</a></li>
+<li><a class="reference internal" href="#id11">2.3.2. 再生核</a><ul>
+<li><a class="reference internal" href="#rkhs">2.3.2.1. RKHS具体化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
   </div>
-  
-  <div class="footer-item">
-    
-
-  <p class="copyright">
-    
-      © Copyright 2022-2024, SSPUIIP.
-      <br/>
-    
-  </p>
-
+  <div>
+    <h4>上一主题</h4>
+    <p class="topless"><a href="base.html"
+                          title="上一章"><span class="section-number">1. </span>核函数基础</a></p>
   </div>
-  
-  <div class="footer-item">
-    
+  <div>
+    <h4>下一主题</h4>
+    <p class="topless"><a href="MMD.html"
+                          title="下一章"><span class="section-number">3. </span>最大均值差</a></p>
   </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/kernel/RKHS.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
-
-  <footer class="bd-footer">
-  </footer>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="MMD.html" title="3. 最大均值差"
+             >下一页</a> |</li>
+        <li class="right" >
+          <a href="base.html" title="1. 核函数基础"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>再生核希尔伯特空间</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
+    </div>
   </body>
 </html>
