@@ -13,6 +13,7 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
+# import sphinx_adc_theme
 
 
 # -- Project information -----------------------------------------------------
@@ -70,8 +71,11 @@ source_suffix = {
 # a list of builtin themes.
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' 
 #   classic scrolls sphinxdoc nature haiku bizstyle pyramid agogo traditional
-html_theme = 'sphinx_book_theme'
 
+html_theme = 'nature'
+
+# html_theme = 'sphinx_adc_theme'
+# html_theme_path = [sphinx_adc_theme.get_html_theme_path()]
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
