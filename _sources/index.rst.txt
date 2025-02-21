@@ -33,6 +33,7 @@
    :caption: 无监督学习
    :numbered:
 
+   ml/cmeans.md
    ml/biClustering.md
    
 .. toctree::

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>5. 随机模拟 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
@@ -66,9 +66,9 @@
 \end{split}
 \end{split}\]</div>
 <p>其中<span class="math notranslate nohighlight">\(\#\{\}\)</span>为集合计数函数。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Monte Carlo </span>
 
@@ -96,18 +96,18 @@ I&amp;=\int_a^b f(x)dx\\
 \end{split}
 \end{split}\]</div>
 <p>这样可以通过<span class="math notranslate nohighlight">\(q(x)\)</span>抽取<span class="math notranslate nohighlight">\(n\)</span>个样本，计算<span class="math notranslate nohighlight">\(\frac{f(x)}{q(x)}\)</span>的均值即为原积分<span class="math notranslate nohighlight">\(I\)</span>的值。以下代码模拟计算<span class="math notranslate nohighlight">\(\int_1^3 3x^2dx=26\)</span>，取<span class="math notranslate nohighlight">\(q(x)\)</span>为均匀分布<span class="math notranslate nohighlight">\(\mathrm{Uniform}[1,3]\)</span>。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Monte Carlo  f(x)=3x^2 q(x):Uniform[1,3] = 1/(3-1)</span>
 
-<span class="k">def</span> <span class="nf">fx</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">fx</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">;</span>
-<span class="k">def</span> <span class="nf">qx_pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">qx_pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
     <span class="k">return</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">b</span><span class="o">-</span><span class="n">a</span><span class="p">);</span>
 
-<span class="k">def</span> <span class="nf">integrateFX</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">integrateFX</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">fx</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">qx_pdf</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
     
 
@@ -154,17 +154,17 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <li><p>重复以上过程，直到采样数满足要求。</p></li>
 </ul>
 <p>需要注意的是，合适的<span class="math notranslate nohighlight">\(q\)</span>分布比较难找，且不容易确定<span class="math notranslate nohighlight">\(k\)</span>值。这些问题导致拒绝率升高，无用计算增加。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pylab</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pylab</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
-<span class="k">def</span> <span class="nf">qsample</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">qsample</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span><span class="o">*</span><span class="mf">4.0</span>
 
-<span class="k">def</span> <span class="nf">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">0.3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="mf">0.7</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mf">2.0</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">0.3</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">rejection</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">rejection</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
     <span class="n">M</span> <span class="o">=</span> <span class="mf">0.72</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
     <span class="n">count</span><span class="o">=</span><span class="mi">0</span>
@@ -191,7 +191,7 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
     <span class="n">box</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">realdata</span><span class="p">,</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">box</span><span class="p">,</span><span class="s1">&#39;k--&#39;</span><span class="p">,</span><span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="kn">import</span> <span class="nn">time</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
     <span class="n">t0</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">samples</span> <span class="o">=</span> <span class="n">rejection</span><span class="p">(</span><span class="mi">10000</span><span class="p">)</span>
     <span class="n">t1</span><span class="o">=</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
@@ -233,25 +233,25 @@ P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
 \pmb{P}=\begin{bmatrix}0.65&amp;0.28&amp;0.07\\ 0.15&amp;0.67&amp;0.18\\ 0.12&amp;0.36&amp;0.52 \end{bmatrix}
 \end{split}\]</div>
 <p>假设当前这一代人处在下、中、上层的比例是概率分布向量<span class="math notranslate nohighlight">\(\pi_0=[\pi_0(1),\pi_0(2),\pi_0(3)]\)</span>，那么子代处于三层的比例分布为<span class="math notranslate nohighlight">\(\pi_1=\pi_0\pmb{P}\)</span>，后代的比例分布则是<span class="math notranslate nohighlight">\(\pi_n=\pi_{n-1}\pmb{P}=...=\pi_0\pmb{P}^n\)</span>。若有初始概率<span class="math notranslate nohighlight">\(\pi_0=[0.21,0.68,0.11]\)</span>，则可以计算前<span class="math notranslate nohighlight">\(n\)</span>代人的比例分布最终稳定在<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>，且这一稳定分布与初始概率无关。</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
 
 <span class="c1"># Markov chain demo</span>
 
 <span class="c1">#状态转移矩阵</span>
-<span class="k">def</span> <span class="nf">PrMatrix</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">PrMatrix</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.65</span><span class="p">,</span><span class="mf">0.28</span><span class="p">,</span><span class="mf">0.07</span><span class="p">],</span>
                      <span class="p">[</span><span class="mf">0.15</span><span class="p">,</span><span class="mf">0.67</span><span class="p">,</span><span class="mf">0.18</span><span class="p">],</span>
                      <span class="p">[</span><span class="mf">0.12</span><span class="p">,</span><span class="mf">0.36</span><span class="p">,</span><span class="mf">0.52</span><span class="p">]])</span> 
 <span class="c1">#迭代with Pi0</span>
-<span class="k">def</span> <span class="nf">iterN</span><span class="p">(</span><span class="n">Pi0</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">iterN</span><span class="p">(</span><span class="n">Pi0</span><span class="p">,</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="n">pi</span><span class="o">=</span><span class="n">Pi0</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;pi&#39;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s1">&#39;:&#39;</span><span class="p">,</span><span class="n">pi</span><span class="p">)</span>
         <span class="n">pi</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pi</span><span class="p">,</span><span class="n">P</span><span class="p">)</span>
         
 <span class="c1">#概率转移矩阵稳定收敛</span>
-<span class="k">def</span> <span class="nf">calcPn</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">calcPn</span><span class="p">(</span><span class="n">P</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
     <span class="n">Pn</span><span class="o">=</span><span class="n">P</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P&#39;</span><span class="p">,</span><span class="n">Pn</span><span class="p">)</span>

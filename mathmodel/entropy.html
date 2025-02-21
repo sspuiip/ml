@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>3. 信息熵 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
@@ -125,12 +125,12 @@ D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
 <h2><span class="section-number">3.3. </span>Python代码<a class="headerlink" href="#python" title="Link to this heading">¶</a></h2>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">matlib</span>
-<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">entropy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">matlib</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">entropy</span>
 
 <span class="c1"># 互信息</span>
-<span class="k">def</span> <span class="nf">mutual_info</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mutual_info</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pxy</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;pxy.ndim != 2&quot;</span><span class="p">)</span>
     
@@ -140,20 +140,20 @@ D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
     <span class="k">return</span> <span class="n">Hx</span><span class="o">-</span><span class="n">Hx_y</span>
 
 <span class="c1">#自信息</span>
-<span class="k">def</span> <span class="nf">I</span><span class="p">(</span><span class="n">px</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">I</span><span class="p">(</span><span class="n">px</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">px</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">px</span><span class="p">)</span>
 
 <span class="c1">#信息熵H(p)</span>
-<span class="k">def</span> <span class="nf">H</span><span class="p">(</span><span class="n">pk</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">H</span><span class="p">(</span><span class="n">pk</span><span class="p">):</span>
     <span class="c1"># check prob.</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pk</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pk</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pk</span><span class="p">))</span>
 
 <span class="c1">#条件熵 H(X|Y)</span>
-<span class="k">def</span> <span class="nf">cdH</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cdH</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pxy</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="n">py</span><span class="o">=</span><span class="n">pxy</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -162,19 +162,19 @@ D_\textrm{KL}(p||q)&amp;=\sum_x p(x)\log\frac{p(x)}{q(x)}\\
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span> <span class="n">pxy</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">px_y</span><span class="p">))</span>
 
 <span class="c1">#联合熵</span>
-<span class="k">def</span> <span class="nf">jointH</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">jointH</span><span class="p">(</span><span class="n">pxy</span><span class="p">):</span>
     <span class="k">if</span><span class="p">(</span><span class="n">pxy</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">):</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pxy</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">pxy</span><span class="p">))</span>
 
 <span class="c1">#KL</span>
-<span class="k">def</span> <span class="nf">KL</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">KL</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
     <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;len(p) != len(q)&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">)))</span>
 
 <span class="c1">#交叉熵</span>
-<span class="k">def</span> <span class="nf">cross_entropy</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">cross_entropy</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">q</span><span class="p">):</span>
     <span class="k">if</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)):</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;len(p) != len(q)&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">q</span><span class="p">))</span>
