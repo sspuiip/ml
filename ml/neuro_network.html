@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. 神经网络 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>7. 神经网络 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -29,7 +29,7 @@
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
     <link rel="next" title="1. 聚类(一)" href="cmeans.html" />
-    <link rel="prev" title="5. 贝叶斯分类" href="bayes.html" /> 
+    <link rel="prev" title="6. 贝叶斯分类" href="bayes.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -41,10 +41,10 @@
           <a href="cmeans.html" title="1. 聚类(一)"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="bayes.html" title="5. 贝叶斯分类"
+          <a href="bayes.html" title="6. 贝叶斯分类"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>神经网络</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>神经网络</a></li> 
       </ul>
     </div>  
 
@@ -54,13 +54,13 @@
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">6. </span>神经网络<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">7. </span>神经网络<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  神经网络。</p>
 <section id="rnn">
-<h2><span class="section-number">6.1. </span>RNN<a class="headerlink" href="#rnn" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">7.1. </span>RNN<a class="headerlink" href="#rnn" title="Link to this heading">¶</a></h2>
 <p>  循环神经网络。</p>
 <section id="lstm">
-<h3><span class="section-number">6.1.1. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">7.1.1. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h3>
 <p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免梯度消失或梯度爆炸问题。</p>
 <p>  为了解决这类问题，发展出了一种称为LSTM的网络，也称为长短时记忆网络。该模型通过“门机制”解决了长期信息保存和短期输入缺失的问题。以下是模型图概况。</p>
 <figure class="align-default" id="id2">
@@ -134,9 +134,9 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">6. 神经网络</a><ul>
-<li><a class="reference internal" href="#rnn">6.1. RNN</a><ul>
-<li><a class="reference internal" href="#lstm">6.1.1. LSTM</a></li>
+<li><a class="reference internal" href="#">7. 神经网络</a><ul>
+<li><a class="reference internal" href="#rnn">7.1. RNN</a><ul>
+<li><a class="reference internal" href="#lstm">7.1.1. LSTM</a></li>
 </ul>
 </li>
 </ul>
@@ -147,7 +147,7 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
   <div>
     <h4>上一主题</h4>
     <p class="topless"><a href="bayes.html"
-                          title="上一章"><span class="section-number">5. </span>贝叶斯分类</a></p>
+                          title="上一章"><span class="section-number">6. </span>贝叶斯分类</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
@@ -185,10 +185,10 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
           <a href="cmeans.html" title="1. 聚类(一)"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="bayes.html" title="5. 贝叶斯分类"
+          <a href="bayes.html" title="6. 贝叶斯分类"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>神经网络</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>神经网络</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

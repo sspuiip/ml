@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>4. 概率图模型 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>5. 概率图模型 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -36,8 +36,8 @@ window.addEventListener("load", () => mermaid.run());
 </script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="5. 贝叶斯分类" href="bayes.html" />
-    <link rel="prev" title="3. EM算法概述" href="EM.html" /> 
+    <link rel="next" title="6. 贝叶斯分类" href="bayes.html" />
+    <link rel="prev" title="4. EM算法概述" href="EM.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -46,13 +46,13 @@ window.addEventListener("load", () => mermaid.run());
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="bayes.html" title="5. 贝叶斯分类"
+          <a href="bayes.html" title="6. 贝叶斯分类"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="EM.html" title="3. EM算法概述"
+          <a href="EM.html" title="4. EM算法概述"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>概率图模型</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>概率图模型</a></li> 
       </ul>
     </div>  
 
@@ -62,18 +62,18 @@ window.addEventListener("load", () => mermaid.run());
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">5. </span>概率图模型<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  根据已观察到的数据（样本集）对未知变量（样本所属类别）进行估计，这是从数据学习知识的基本途径，也是机器学习的主要任务。概率模型将这一任务转换为计算变量的概率分布，即利用已知变量推测未知变量，也称之为<strong>推断</strong>。具体来说，假设所关心的变量集为<span class="math notranslate nohighlight">\(Y\)</span>，可观测变量集为<span class="math notranslate nohighlight">\(O\)</span>，其它变量为<span class="math notranslate nohighlight">\(R\)</span>，推断就是通过联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>或条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>计算得到条件分布<span class="math notranslate nohighlight">\(P(Y|O)\)</span>。其中，联合分布<span class="math notranslate nohighlight">\(P(Y,R,O)\)</span>称为<strong>生成式模型</strong>，条件分布<span class="math notranslate nohighlight">\(P(Y,R|O)\)</span>称为<strong>判别式模型</strong>。但是，直接使用概率求和规则消去变量<span class="math notranslate nohighlight">\(R\)</span>是不可行的，因为即使所有变量只有2种取值的特殊情况，计算复杂度也高达<span class="math notranslate nohighlight">\(O(2^{|Y|+|R|})\)</span>。</p>
 <p>  概率图模型是一种用图来表示变量间关系的概率模型。该图的结点表示一个（组）随机变量，结点之间的边表示变量间的相关关系。根据边的类型不同，图模型又可以继续细分为<strong>有向无环图</strong>（贝叶斯网，Bayesian network）和<strong>无向无环图</strong>（马尔可夫网，Markov network）两种。</p>
 <section id="id2">
-<h2><span class="section-number">4.1. </span>贝叶斯网<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.1. </span>贝叶斯网<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  有向图模型的关键属性是结点有序。按照父结点在子结点之前的顺序排序也称为拓扑序列。给定这个序列，则可以定义<strong>有序马尔可夫属性</strong>，即结点只依赖它的直接父结点，不依赖其所有的其它前序结点。</p>
 <div class="math notranslate nohighlight" id="equation-makov-pre">
 <span class="eqno">(1)<a class="headerlink" href="#equation-makov-pre" title="Link to this equation">¶</a></span>\[
 x_s \bot \pmb{x}_{\mathrm{pre}(s)\backslash \mathrm{pa}(s)} | x_{\mathrm{pa}(s)}
 \]</div>
 <section id="id3">
-<h3><span class="section-number">4.1.1. </span>联合分布<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.1.1. </span>联合分布<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>  有向图模型是基于假设条件独立的一种用于表示联合分布的方法。根据有序马尔可夫属性，我们可以从有向图模型得到图所表示的联合概率，</p>
 <div class="math notranslate nohighlight" id="equation-bayesian-joint-dist">
 <span class="eqno">(2)<a class="headerlink" href="#equation-bayesian-joint-dist" title="Link to this equation">¶</a></span>\[
@@ -110,9 +110,9 @@ p(\pmb{x}_{1:5}|G)=\prod_{t=1}^5 p(x_t | \mathrm{pa}(t))
 </div>
 </section>
 <section id="id4">
-<h3><span class="section-number">4.1.2. </span>有向图的条件独立性<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.1.2. </span>有向图的条件独立性<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <section id="d">
-<h4><span class="section-number">4.1.2.1. </span><span class="math notranslate nohighlight">\(d\)</span>-分离<a class="headerlink" href="#d" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.1.2.1. </span><span class="math notranslate nohighlight">\(d\)</span>-分离<a class="headerlink" href="#d" title="Link to this heading">¶</a></h4>
 <dl class="simple myst">
 <dt>无向路径<span class="math notranslate nohighlight">\(P\)</span>的<span class="math notranslate nohighlight">\(d\)</span>-分离</dt><dd><p>无向路径<span class="math notranslate nohighlight">\(P\)</span>被结点集<span class="math notranslate nohighlight">\(E\)</span>所<span class="math notranslate nohighlight">\(d\)</span>-分离，当且仅当以下条件中至少一条成立:</p>
 </dd>
@@ -144,7 +144,7 @@ p(X,Z)=\sum_Y p(X,Y,Z)=\sum_Y p(Y|X,Z)p(X)p(Z)=p(X)p(Z)
 <p>  由<span class="math notranslate nohighlight">\(d\)</span>-分离得到的有向图条件独立属性也称之为<strong>有向全局Markov属性</strong>。</p>
 </section>
 <section id="dagmarkov">
-<h4><span class="section-number">4.1.2.2. </span>DAG的其它Markov属性<a class="headerlink" href="#dagmarkov" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.1.2.2. </span>DAG的其它Markov属性<a class="headerlink" href="#dagmarkov" title="Link to this heading">¶</a></h4>
 <p>除了全局Markov属性，从<span class="math notranslate nohighlight">\(d\)</span>-分离标准，还可以得到如下结论：</p>
 <div class="math notranslate nohighlight" id="equation-dag-local-markov">
 <span class="eqno">(3)<a class="headerlink" href="#equation-dag-local-markov" title="Link to this equation">¶</a></span>\[
@@ -155,7 +155,7 @@ t\bot\{\mathrm{nd}(t)\backslash\mathrm{pa}(t)\}|\mathrm{pa}(t)
 <p>  <strong>注意</strong>：以上三种属性是等价的。</p>
 </section>
 <section id="id5">
-<h4><span class="section-number">4.1.2.3. </span>道德图<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.1.2.3. </span>道德图<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
 <dl class="simple myst">
 <dt>道德图</dt><dd><p>使用有向分离技术，将有向图转为无向图，即为道德图。该过程也称为道德化。道德化后可以快速找到条件独立性。</p>
 </dd>
@@ -171,7 +171,7 @@ t\bot\{\mathrm{nd}(t)\backslash\mathrm{pa}(t)\}|\mathrm{pa}(t)
 </dl>
 </section>
 <section id="markov">
-<h4><span class="section-number">4.1.2.4. </span>Markov毯<a class="headerlink" href="#markov" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.1.2.4. </span>Markov毯<a class="headerlink" href="#markov" title="Link to this heading">¶</a></h4>
 <dl class="simple myst">
 <dt>Markov毯</dt><dd><p>是指让结点<span class="math notranslate nohighlight">\(t\)</span>与其它结点条件独立的<strong>结点集</strong>，记为<span class="math notranslate nohighlight">\(\mathrm{mb}(t)\)</span>。</p>
 </dd>
@@ -228,7 +228,7 @@ p(x_5|\pmb{x}_{-5})\propto p(x_5|x_2,x_3)p(x_6|x_3,x_5)p(x_7|x_4,x_5,x_6)
 </section>
 </section>
 <section id="id6">
-<h3><span class="section-number">4.1.3. </span>隐马尔可夫模型<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.1.3. </span>隐马尔可夫模型<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>  隐马尔可夫模型（Hidden Markov Model, HMM）是一种有向图模型，主要用于时序数据建模、自然语言处理、语音识别等领域。</p>
 <figure class="align-center" id="id23">
 <pre  class="mermaid">
@@ -302,11 +302,11 @@ P(x_1,...,x_n,y_1,...,y_n)=P(y_1)P(x_1|y_1)\prod_{i=2}^n P(x_i|y_i)P(y_{i}|y_{i-
 </section>
 </section>
 <section id="id7">
-<h2><span class="section-number">4.2. </span>马尔可夫随机场<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.2. </span>马尔可夫随机场<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
 <p>  马尔可夫随机场是一种<strong>无向图模型</strong>。图中结点表示一个（组）变量，结点之间的边表示变量之间的依赖关系。马尔可夫随机场的联合概率分布函数由一组<strong>势函数</strong>（potential functions），也称之为<strong>因子</strong>(factor)，构成。势函数是定义在变量子集上的非负实函数。</p>
 <p>  马尔可夫随机场的变量子集根据结点特性可以加以区别。若一个结点子集中任意两结点之间都有边连接，则称该子集为一个<strong>团</strong>（clique）；若在一个团中加入另外任何一个结点后，不再形成团，则该团称为<strong>极大团</strong>（maximal clique）。</p>
 <section id="id8">
-<h3><span class="section-number">4.2.1. </span>联合概率<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.1. </span>联合概率<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <p>  在马尔可夫随机场中，多个变量之间的联合概率分布可能基于团分解为多个势函数（因子）的乘积，每次个势函数只与一个团关联。具体来说，对于<span class="math notranslate nohighlight">\(n\)</span>个变量<span class="math notranslate nohighlight">\(\pmb{x}=\{x_1,...,x_n\}\)</span>，所有团构成的集合为<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>，团<span class="math notranslate nohighlight">\(Q\in\mathcal{C}\)</span>相关的变量集合记为<span class="math notranslate nohighlight">\(\pmb{x}_Q\)</span>，则<strong>联合概率</strong>定义为，</p>
 <div class="math notranslate nohighlight" id="equation-markov-joint">
 <span class="eqno">(7)<a class="headerlink" href="#equation-markov-joint" title="Link to this equation">¶</a></span>\[
@@ -343,7 +343,7 @@ P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{3
 </div>
 </section>
 <section id="id9">
-<h3><span class="section-number">4.2.2. </span>条件独立性<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.2.2. </span>条件独立性<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
 <p>  借助分离集得到变量的条件独立性。若结点集<span class="math notranslate nohighlight">\(A\)</span>到<span class="math notranslate nohighlight">\(B\)</span>中的结点都必须经过结点集<span class="math notranslate nohighlight">\(C\)</span>中的结点，则称<span class="math notranslate nohighlight">\(C\)</span>为<span class="math notranslate nohighlight">\(A\)</span>,<span class="math notranslate nohighlight">\(B\)</span>的<strong>分离集</strong>（separating set）。</p>
 <div class="dropdown admonition">
 <p class="admonition-title"><strong>例</strong>2. 图3给出了分离集<span class="math notranslate nohighlight">\(C\)</span>的示例。子集<span class="math notranslate nohighlight">\(B\)</span>和<span class="math notranslate nohighlight">\(A\)</span>的结点相连都要经过子集<span class="math notranslate nohighlight">\(C\)</span>的结点</p>
@@ -388,7 +388,7 @@ P(\pmb{x})=\frac1Z \psi_{12}(x_1,x_2)\psi_{13}(x_1,x_3)\psi_{24}(x_2,x_4)\psi_{3
 </section>
 </section>
 <section id="id10">
-<h2><span class="section-number">4.3. </span>推断与参数学习<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">5.3. </span>推断与参数学习<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h2>
 <p>  基于概率图模型定义的联合概率分布，我们可以对感兴趣目标变量的<strong>边缘分布进行推断</strong>；或者给定某些观测变量为条件的<strong>条件分布进行推断</strong>。</p>
 <p>  对于概率图模型，还需要确定具体分布的参数，这也称之为参数学习（估计）问题。一般使用极大似然估计或最大后验估计方法求解。特别地，如果将待学习的参数视为待推测变量，则参数估计和推断问题就非常相似，可以认为是推断问题。</p>
 <p>  概率图模型的推断方法大致可以分为两类：</p>
@@ -417,9 +417,9 @@ p(\pmb{x}_E)=\sum_{\pmb{x}_Q}p(\pmb{x}_Q,\pmb{x}_E)
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_{i,v}\)</span>为数据样本<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的观测部分。注意若选择<span class="math notranslate nohighlight">\(p(\pmb{\theta})=1\)</span>，则最大后验估计变成最大似然估计。</p>
 <section id="id11">
-<h3><span class="section-number">4.3.1. </span>精确推断<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.3.1. </span>精确推断<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <section id="id12">
-<h4><span class="section-number">4.3.1.1. </span>变量消除法<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.3.1.1. </span>变量消除法<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h4>
 <p>  精确推断利用图模型所描述的条件独立性来减少计算目标概率所需的计算量。变量消除法是最直观的精确推断算法也是其它精确推断算法的基础。下面通过一个例子来展示该方法。</p>
 <div class="dropdown admonition">
 <p class="admonition-title"><strong>例</strong>3. 下图给出了一个有向图模型</p>
@@ -476,7 +476,7 @@ P(x_5)&amp;=\sum_{x_3}P(x_5|x_3)\sum_{x_4}P(x_4|x_3)\sum_{x_2}P(x_3|x_2)\underbr
 </dl>
 </section>
 <section id="id13">
-<h4><span class="section-number">4.3.1.2. </span>信念传播<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.3.1.2. </span>信念传播<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h4>
 <p>  信念传播将变量消除法中的求和操作当作一个消息传递过程，可以解决求解多个边缘分布重复计算的问题。变量消除法的求和操作可以视为以下过程，</p>
 <div class="math notranslate nohighlight" id="equation-sum-operator">
 <span class="eqno">(12)<a class="headerlink" href="#equation-sum-operator" title="Link to this equation">¶</a></span>\[
@@ -514,10 +514,10 @@ P(x_i)\propto \prod_{k\in n(i)}m_{ki}(x_i)
 </section>
 </section>
 <section id="id14">
-<h3><span class="section-number">4.3.2. </span>近似推断<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">5.3.2. </span>近似推断<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
 <p>  近似推断主要采用采样（sampling）或变分推断（variational inference）来实现。精确推断方法通常需要很大的计算开销，实际应用中近似推断更为常见。</p>
 <section id="mcmc">
-<h4><span class="section-number">4.3.2.1. </span>MCMC采样<a class="headerlink" href="#mcmc" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.3.2.1. </span>MCMC采样<a class="headerlink" href="#mcmc" title="Link to this heading">¶</a></h4>
 <p>  通过概率图模型可以得到一些感兴趣变量的概率分布，在很多实际应用中，对分布本身并没有多大兴趣，而是希望通过这些概率分布计算某些期望，并根据这些期望做出决策。例如图4的贝叶斯网，进行推断的目标可能是为了计算变量<span class="math notranslate nohighlight">\(x_5\)</span>的期望。如果直接计算或近似这个期望比推断概率分布更容易，则直接计算将使推断问题求解更高效。对于概率图模型来说，问题的关键就在于如何高效的基于图模型描述的概率分布来获取样本。</p>
 <p>  概率图模型最常用的采样技术是马尔可夫链蒙特卡罗方法（Markov Chain Monte Carlo, MCMC）。假设有随机变量<span class="math notranslate nohighlight">\(x\sim p(x)\)</span>，函数<span class="math notranslate nohighlight">\(f:X\rightarrow \mathbb{R}\)</span>，则<span class="math notranslate nohighlight">\(f(x)\)</span>的期望为，</p>
 <div class="math notranslate nohighlight" id="equation-efx">
@@ -538,10 +538,10 @@ p(f)=\mathbb{E}_p[f(x)]=\int_x f(x)p(x)dx
 <p>  MCMC方法如何构造马尔可夫链将会产生不同的MCMC算法。一般来说，使用MCMC方法构造一条马尔可夫链产生符合图模型的概率分布的样本集，再利用这些样本对所需要的函数进行估计。常用的MCMC算法有，<strong>Metropolis-Hastings算法</strong>、<strong>Gibbs算法</strong>等<a class="footnote-reference brackets" href="#id19" id="id15" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>。</p>
 </section>
 <section id="id16">
-<h4><span class="section-number">4.3.2.2. </span>变分推断<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h4>
+<h4><span class="section-number">5.3.2.2. </span>变分推断<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h4>
 <p>  变分推断使用已知简单分布来逼近需要推断的复杂分布，通过限制近似分布得到局部最优确定解。</p>
 <section id="id17">
-<h5><span class="section-number">4.3.2.2.1. </span>盘式记法<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h5>
+<h5><span class="section-number">5.3.2.2.1. </span>盘式记法<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h5>
 <figure class="align-center" id="id30">
 <pre  class="mermaid">
         %%{init: { &quot;theme&quot;: &quot;default&quot; } }%%
@@ -614,7 +614,7 @@ Q^{t+1}&amp;=\arg\max\limits_{\Theta}Q(\Theta;\Theta^t)\\
 <p>只有KL散度为0时，<span class="math notranslate nohighlight">\(\mathcal{L}(q)\)</span>才接近对数似然。因为KL散度非负，因此<span class="math notranslate nohighlight">\(\mathcal{L}(q)\)</span>也称为对数似然的一个下界。</p>
 </section>
 <section id="id18">
-<h5><span class="section-number">4.3.2.2.2. </span>均值场方法<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h5>
+<h5><span class="section-number">5.3.2.2.2. </span>均值场方法<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h5>
 <p>  现实中，E步对<span class="math notranslate nohighlight">\(p(\pmb{x}|\Theta^t)\)</span>的推断很可能难以实现，此时可借助变分推断。通常假设<span class="math notranslate nohighlight">\(\pmb{z}\)</span>服从分布，</p>
 <div class="math notranslate nohighlight" id="equation-q-factor">
 <span class="eqno">(18)<a class="headerlink" href="#equation-q-factor" title="Link to this equation">¶</a></span>\[
@@ -666,35 +666,35 @@ q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int 
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">4. 概率图模型</a><ul>
-<li><a class="reference internal" href="#id2">4.1. 贝叶斯网</a><ul>
-<li><a class="reference internal" href="#id3">4.1.1. 联合分布</a></li>
-<li><a class="reference internal" href="#id4">4.1.2. 有向图的条件独立性</a><ul>
-<li><a class="reference internal" href="#d">4.1.2.1. <span class="math notranslate nohighlight">\(d\)</span>-分离</a></li>
-<li><a class="reference internal" href="#dagmarkov">4.1.2.2. DAG的其它Markov属性</a></li>
-<li><a class="reference internal" href="#id5">4.1.2.3. 道德图</a></li>
-<li><a class="reference internal" href="#markov">4.1.2.4. Markov毯</a></li>
+<li><a class="reference internal" href="#">5. 概率图模型</a><ul>
+<li><a class="reference internal" href="#id2">5.1. 贝叶斯网</a><ul>
+<li><a class="reference internal" href="#id3">5.1.1. 联合分布</a></li>
+<li><a class="reference internal" href="#id4">5.1.2. 有向图的条件独立性</a><ul>
+<li><a class="reference internal" href="#d">5.1.2.1. <span class="math notranslate nohighlight">\(d\)</span>-分离</a></li>
+<li><a class="reference internal" href="#dagmarkov">5.1.2.2. DAG的其它Markov属性</a></li>
+<li><a class="reference internal" href="#id5">5.1.2.3. 道德图</a></li>
+<li><a class="reference internal" href="#markov">5.1.2.4. Markov毯</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">4.1.3. 隐马尔可夫模型</a></li>
+<li><a class="reference internal" href="#id6">5.1.3. 隐马尔可夫模型</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id7">4.2. 马尔可夫随机场</a><ul>
-<li><a class="reference internal" href="#id8">4.2.1. 联合概率</a></li>
-<li><a class="reference internal" href="#id9">4.2.2. 条件独立性</a></li>
+<li><a class="reference internal" href="#id7">5.2. 马尔可夫随机场</a><ul>
+<li><a class="reference internal" href="#id8">5.2.1. 联合概率</a></li>
+<li><a class="reference internal" href="#id9">5.2.2. 条件独立性</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id10">4.3. 推断与参数学习</a><ul>
-<li><a class="reference internal" href="#id11">4.3.1. 精确推断</a><ul>
-<li><a class="reference internal" href="#id12">4.3.1.1. 变量消除法</a></li>
-<li><a class="reference internal" href="#id13">4.3.1.2. 信念传播</a></li>
+<li><a class="reference internal" href="#id10">5.3. 推断与参数学习</a><ul>
+<li><a class="reference internal" href="#id11">5.3.1. 精确推断</a><ul>
+<li><a class="reference internal" href="#id12">5.3.1.1. 变量消除法</a></li>
+<li><a class="reference internal" href="#id13">5.3.1.2. 信念传播</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id14">4.3.2. 近似推断</a><ul>
-<li><a class="reference internal" href="#mcmc">4.3.2.1. MCMC采样</a></li>
-<li><a class="reference internal" href="#id16">4.3.2.2. 变分推断</a><ul>
-<li><a class="reference internal" href="#id17">4.3.2.2.1. 盘式记法</a></li>
-<li><a class="reference internal" href="#id18">4.3.2.2.2. 均值场方法</a></li>
+<li><a class="reference internal" href="#id14">5.3.2. 近似推断</a><ul>
+<li><a class="reference internal" href="#mcmc">5.3.2.1. MCMC采样</a></li>
+<li><a class="reference internal" href="#id16">5.3.2.2. 变分推断</a><ul>
+<li><a class="reference internal" href="#id17">5.3.2.2.1. 盘式记法</a></li>
+<li><a class="reference internal" href="#id18">5.3.2.2.2. 均值场方法</a></li>
 </ul>
 </li>
 </ul>
@@ -709,12 +709,12 @@ q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int 
   <div>
     <h4>上一主题</h4>
     <p class="topless"><a href="EM.html"
-                          title="上一章"><span class="section-number">3. </span>EM算法概述</a></p>
+                          title="上一章"><span class="section-number">4. </span>EM算法概述</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
     <p class="topless"><a href="bayes.html"
-                          title="下一章"><span class="section-number">5. </span>贝叶斯分类</a></p>
+                          title="下一章"><span class="section-number">6. </span>贝叶斯分类</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
@@ -744,13 +744,13 @@ q_j^*(\pmb{z}_j)=\frac{\exp(\mathbb{E}_{i\neq j}[\ln p(\pmb{x},\pmb{z})])}{\int 
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="bayes.html" title="5. 贝叶斯分类"
+          <a href="bayes.html" title="6. 贝叶斯分类"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="EM.html" title="3. EM算法概述"
+          <a href="EM.html" title="4. EM算法概述"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>概率图模型</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>概率图模型</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

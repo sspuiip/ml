@@ -21,6 +21,7 @@
    :caption: 监督学习
    :numbered:
 
+   ml/decision_tree.md
    ml/dimension_reduce.md
    ml/neuro_representation.md
    ml/EM.md
