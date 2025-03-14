@@ -110,6 +110,12 @@ $$(information-gain)
 | rainy       | mild            | high         | TRUE      | no       |
 
 
+:::{admonition} **计算过程**
+:class: dropdown
+
+
+<br>
+
 **第1步. 根据信息增益选择分裂属性，对数据集D进行分裂**。
 
 &emsp;&emsp;**1.1 计算分类属性`play`的信息熵**。
@@ -268,3 +274,4 @@ flowchart LR
   id4 -- normal --> id8[YES]
 ```
 
+:::
