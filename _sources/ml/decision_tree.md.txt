@@ -275,3 +275,58 @@ flowchart LR
 ```
 
 :::
+
+
+## CART
+
+&emsp;&emsp;分类与回归树(Classification and Regression Tree, CART)是一种决策树，可用于处理分类或回归任务。CART的形式为一棵二分支的决策树，任意分支为某一特征（依据某种规则选择）的测试条件，其左子树取值为“真”，右子树取值为“假”。
+
+### 回归树
+
+&emsp;&emsp;一棵回归树对应着训练集$D$(输入空间)的一个划分$\{D_1,D_2,...,D_k\}$，以及任意划分$D_j$都对应一个输出值$c_j$($c_j\in\{c_1,c_2,...,c_k\}$)。回归树模型可表示为，
+
+$$
+f(\pmb{x})=\sum_{j=1}^k c_j\times \mathbb{I}(\pmb{x}\in D_j)
+$$(regression-tree-model)
+
+- **数据集的划分**
+
+&emsp;&emsp;选择第$i$个特征$a_i$和它的取值$v$，作为划分变量和划分点，并定义左右两个子区域如下，
+
+$$
+R_1(a,v)=\{\pmb{x}|\pmb{x}_{a}\le v\},\quad R_2(a,v)=\{\pmb{x}|\pmb{x}_{a}> v\}
+$$
+
+其中$\pmb{x}_a$为样本$\pmb{x}$在特征$a$的取值。然后寻求最优化划分变量和划分点，即，
+
+$$
+a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_i-c_1)^2 + \min_{c_2}\sum_{\pmb{x}_i\in R_2}(y_i-c_2)^2 \right]
+$$(region-opt-target)
+
+- $c_j$**的估计**
+
+&emsp;&emsp;若数据集的划分确定后，可用平方误差$\sum_{x_i\in D_j}(y_i-f(\pmb{x}_i))^2$来表示回归树的训练误差。$c_j$可用平方误差最小来求解每个单元上的最优输出，即
+
+$$
+\hat{c}_j=\frac{1}{|D_j|}\sum_{i\in D_j} y_i
+$$(c-j-estimator)
+
+&emsp;&emsp;遍历所有特征，找到最优$a$，并确定$(a,v)$，依此将数据集划分为2个区域。对每个区域重复以上步骤，直到区域内无数据集划分为止，至此一棵回归树就生成好了。由于使用的平方误差来表示训练误差，这种回归树也称为**最小二乘回归树**。
+
+### 分类树
+
+&emsp;&emsp;分类树的构建与ID3类似，区别在于特征选择所用的标准为基尼指数。
+
+&emsp;&emsp;**定义（基尼指数）**. 假设数据集$D$的分类属性有$K$个类别，且样本属于类别$k$的概率为$p_k$，则基尼指数为，
+
+$$
+\textrm{gini}(D)=\sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2
+$$(gini-def)
+
+若样本集$D$根据特征$A$的取值划分为$D_1,D_2,...,D_m$个部分，则在特征$A$的条件下，集合$D$的基尼指数为，
+
+$$
+\textrm{gini}(D,A)=\sum_{i=1}^m\frac{|D_i|}{|D|}\textrm{gini}(D_i)
+$$(set-split-gini)
+
+

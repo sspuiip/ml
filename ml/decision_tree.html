@@ -76,7 +76,7 @@ window.addEventListener("load", () => mermaid.run());
 女儿：那好，我去见见。<br></p>
 </div></blockquote>
 <p>上述对话体现了人类做出见/不见决策的一个过程。根据对话的顺序，该决策过程可以用下图来刻画。</p>
-<figure class="align-center" id="id5">
+<figure class="align-center" id="id7">
 <pre  class="mermaid">
         %%{
     init: {
@@ -98,7 +98,7 @@ flowchart LR
   id7 -- 不是 --&gt; id10[不见]
  
     </pre><figcaption>
-<p><span class="caption-text">Fig 1. 决策过程模拟树。</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 1. 决策过程模拟树。</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  <strong>决策树在构建过程中有个基本问题需要解答</strong>。如上图所示，为什么选择年龄做为第1个分裂的结点而不是其它特征？也就是如何确定分裂特征的顺序？这一问题也称为<strong>特征选择</strong>问题。</p>
@@ -290,7 +290,7 @@ flowchart LR
 \end{split}\]</div>
 <p>  <strong>1.4 选择信息增益最大的属性<code class="docutils literal notranslate"><span class="pre">outlook</span></code>分裂</strong>。</p>
 <p>  当<code class="docutils literal notranslate"><span class="pre">outlook=overcast</span></code>时，该子集的决策属性值一致，都为<code class="docutils literal notranslate"><span class="pre">yes</span></code>，因此不必对该分支继续分裂；相反地，D1·D2还需进一步分裂。分裂结果如下图所示：</p>
-<figure class="align-center" id="id6">
+<figure class="align-center" id="id8">
 <pre  class="mermaid">
         %%{
     init: {
@@ -306,7 +306,7 @@ flowchart LR
   id1 -- sunny --&gt; id4[(D2)]
  
     </pre><figcaption>
-<p><span class="caption-text">Fig 2. 根据属性<em>outlook</em>分裂数据集。</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 2. 根据属性<em>outlook</em>分裂数据集。</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p><strong>第2步. 根据信息增益选择分裂属性，对数据集D1进行分裂</strong>。</p>
@@ -331,7 +331,7 @@ flowchart LR
 \end{split}\]</div>
 <p>  <strong>2.4 选择信息增益最大的属性<code class="docutils literal notranslate"><span class="pre">windy</span></code>分裂</strong>。</p>
 <p>  当<code class="docutils literal notranslate"><span class="pre">windy=yes</span></code>时，该子集的决策属性值一致，都为<code class="docutils literal notranslate"><span class="pre">no</span></code>；当<code class="docutils literal notranslate"><span class="pre">windy=no</span></code>时，该子集的决策属性值一致，都为<code class="docutils literal notranslate"><span class="pre">yes</span></code>，因此不必对所有分支继续分裂。至此，D1分裂结束。分裂结果如下图所示：</p>
-<figure class="align-center" id="id7">
+<figure class="align-center" id="id9">
 <pre  class="mermaid">
         %%{
     init: {
@@ -349,7 +349,7 @@ flowchart LR
   id3 -- no --&gt; id6[YES]
  
     </pre><figcaption>
-<p><span class="caption-text">Fig 3. 根据属性<em>windy</em>分裂数据集D1。</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 3. 根据属性<em>windy</em>分裂数据集D1。</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p><strong>第3步. 根据信息增益选择分裂属性，对数据集D2进行分裂</strong>。</p>
@@ -374,7 +374,7 @@ flowchart LR
 \end{split}\]</div>
 <p>  <strong>3.4 选择信息增益最大的属性<code class="docutils literal notranslate"><span class="pre">humidity</span></code>分裂</strong>。</p>
 <p>  当<code class="docutils literal notranslate"><span class="pre">humidity=high</span></code>时，该子集的决策属性值一致，都为<code class="docutils literal notranslate"><span class="pre">no</span></code>；当<code class="docutils literal notranslate"><span class="pre">humidity=normal</span></code>时，该子集的决策属性值一致，都为<code class="docutils literal notranslate"><span class="pre">yes</span></code>，因此不必对所有分支继续分裂。至此，D2分裂结束。分裂结果如下图所示：</p>
-<figure class="align-center" id="id8">
+<figure class="align-center" id="id10">
 <pre  class="mermaid">
         %%{
     init: {
@@ -393,10 +393,58 @@ flowchart LR
   id4 -- high --&gt; id7[NO]
   id4 -- normal --&gt; id8[YES]
     </pre><figcaption>
-<p><span class="caption-text">Fig 4. 根据属性<em>humidity</em>分裂数据集D2。</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 4. 根据属性<em>humidity</em>分裂数据集D2。</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </div>
+</section>
+</section>
+<section id="cart">
+<h2><span class="section-number">1.2. </span>CART<a class="headerlink" href="#cart" title="Link to this heading">¶</a></h2>
+<p>  分类与回归树(Classification and Regression Tree, CART)是一种决策树，可用于处理分类或回归任务。CART的形式为一棵二分支的决策树，任意分支为某一特征（依据某种规则选择）的测试条件，其左子树取值为“真”，右子树取值为“假”。</p>
+<section id="id5">
+<h3><span class="section-number">1.2.1. </span>回归树<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>  一棵回归树对应着训练集<span class="math notranslate nohighlight">\(D\)</span>(输入空间)的一个划分<span class="math notranslate nohighlight">\(\{D_1,D_2,...,D_k\}\)</span>，以及任意划分<span class="math notranslate nohighlight">\(D_j\)</span>都对应一个输出值<span class="math notranslate nohighlight">\(c_j\)</span>(<span class="math notranslate nohighlight">\(c_j\in\{c_1,c_2,...,c_k\}\)</span>)。回归树模型可表示为，</p>
+<div class="math notranslate nohighlight" id="equation-regression-tree-model">
+<span class="eqno">(4)<a class="headerlink" href="#equation-regression-tree-model" title="Link to this equation">¶</a></span>\[
+f(\pmb{x})=\sum_{j=1}^k c_j\times \mathbb{I}(\pmb{x}\in D_j)
+\]</div>
+<ul class="simple">
+<li><p><strong>数据集的划分</strong></p></li>
+</ul>
+<p>  选择第<span class="math notranslate nohighlight">\(i\)</span>个特征<span class="math notranslate nohighlight">\(a_i\)</span>和它的取值<span class="math notranslate nohighlight">\(v\)</span>，作为划分变量和划分点，并定义左右两个子区域如下，</p>
+<div class="math notranslate nohighlight">
+\[
+R_1(a,v)=\{\pmb{x}|\pmb{x}_{a}\le v\},\quad R_2(a,v)=\{\pmb{x}|\pmb{x}_{a}&gt; v\}
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\pmb{x}_a\)</span>为样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>在特征<span class="math notranslate nohighlight">\(a\)</span>的取值。然后寻求最优化划分变量和划分点，即，</p>
+<div class="math notranslate nohighlight" id="equation-region-opt-target">
+<span class="eqno">(5)<a class="headerlink" href="#equation-region-opt-target" title="Link to this equation">¶</a></span>\[
+a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_i-c_1)^2 + \min_{c_2}\sum_{\pmb{x}_i\in R_2}(y_i-c_2)^2 \right]
+\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(c_j\)</span><strong>的估计</strong></p></li>
+</ul>
+<p>  若数据集的划分确定后，可用平方误差<span class="math notranslate nohighlight">\(\sum_{x_i\in D_j}(y_i-f(\pmb{x}_i))^2\)</span>来表示回归树的训练误差。<span class="math notranslate nohighlight">\(c_j\)</span>可用平方误差最小来求解每个单元上的最优输出，即</p>
+<div class="math notranslate nohighlight" id="equation-c-j-estimator">
+<span class="eqno">(6)<a class="headerlink" href="#equation-c-j-estimator" title="Link to this equation">¶</a></span>\[
+\hat{c}_j=\frac{1}{|D_j|}\sum_{i\in D_j} y_i
+\]</div>
+<p>  遍历所有特征，找到最优<span class="math notranslate nohighlight">\(a\)</span>，并确定<span class="math notranslate nohighlight">\((a,v)\)</span>，依此将数据集划分为2个区域。对每个区域重复以上步骤，直到区域内无数据集划分为止，至此一棵回归树就生成好了。由于使用的平方误差来表示训练误差，这种回归树也称为<strong>最小二乘回归树</strong>。</p>
+</section>
+<section id="id6">
+<h3><span class="section-number">1.2.2. </span>分类树<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>  分类树的构建与ID3类似，区别在于特征选择所用的标准为基尼指数。</p>
+<p>  <strong>定义（基尼指数）</strong>. 假设数据集<span class="math notranslate nohighlight">\(D\)</span>的分类属性有<span class="math notranslate nohighlight">\(K\)</span>个类别，且样本属于类别<span class="math notranslate nohighlight">\(k\)</span>的概率为<span class="math notranslate nohighlight">\(p_k\)</span>，则基尼指数为，</p>
+<div class="math notranslate nohighlight" id="equation-gini-def">
+<span class="eqno">(7)<a class="headerlink" href="#equation-gini-def" title="Link to this equation">¶</a></span>\[
+\textrm{gini}(D)=\sum_{k=1}^Kp_k(1-p_k)=1-\sum_{k=1}^Kp_k^2
+\]</div>
+<p>若样本集<span class="math notranslate nohighlight">\(D\)</span>根据特征<span class="math notranslate nohighlight">\(A\)</span>的取值划分为<span class="math notranslate nohighlight">\(D_1,D_2,...,D_m\)</span>个部分，则在特征<span class="math notranslate nohighlight">\(A\)</span>的条件下，集合<span class="math notranslate nohighlight">\(D\)</span>的基尼指数为，</p>
+<div class="math notranslate nohighlight" id="equation-set-split-gini">
+<span class="eqno">(8)<a class="headerlink" href="#equation-set-split-gini" title="Link to this equation">¶</a></span>\[
+\textrm{gini}(D,A)=\sum_{i=1}^m\frac{|D_i|}{|D|}\textrm{gini}(D_i)
+\]</div>
 </section>
 </section>
 </section>
@@ -415,6 +463,11 @@ flowchart LR
 <li><a class="reference internal" href="#id3">1.1. ID3</a><ul>
 <li><a class="reference internal" href="#id2">1.1.1. ID3构建算法</a></li>
 <li><a class="reference internal" href="#id4">1.1.2. ID3应用案例</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cart">1.2. CART</a><ul>
+<li><a class="reference internal" href="#id5">1.2.1. 回归树</a></li>
+<li><a class="reference internal" href="#id6">1.2.2. 分类树</a></li>
 </ul>
 </li>
 </ul>
