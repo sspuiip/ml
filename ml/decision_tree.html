@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>1. 决策树 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>2. 决策树 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -36,8 +36,8 @@ window.addEventListener("load", () => mermaid.run());
 </script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="2. 数据降维" href="dimension_reduce.html" />
-    <link rel="prev" title="4. 计算学习理论" href="../base/calc_theory.html" /> 
+    <link rel="next" title="3. 贝叶斯分类" href="bayes.html" />
+    <link rel="prev" title="1. 数据降维" href="dimension_reduce.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -46,13 +46,13 @@ window.addEventListener("load", () => mermaid.run());
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="dimension_reduce.html" title="2. 数据降维"
+          <a href="bayes.html" title="3. 贝叶斯分类"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="../base/calc_theory.html" title="4. 计算学习理论"
+          <a href="dimension_reduce.html" title="1. 数据降维"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>决策树</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>决策树</a></li> 
       </ul>
     </div>  
 
@@ -62,7 +62,7 @@ window.addEventListener("load", () => mermaid.run());
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">1. </span>决策树<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">2. </span>决策树<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  <strong>决策树</strong>是一种模拟人决策过程的树形结构。例如：如果有以下一段对话，</p>
 <blockquote>
 <div><p>女儿：多大年纪了？<br>
@@ -120,7 +120,7 @@ flowchart LR
 </tbody>
 </table>
 <section id="id3">
-<h2><span class="section-number">1.1. </span>ID3<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">2.1. </span>ID3<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  ID3（Iterative Dichotomiser 3）算法是一种经典的决策树学习算法，由Ross Quinlan于1986年提出。该算法的主要目的是通过构建一个决策树模型来对样本数据进行分类。ID3算法的核心思想是基于<strong>信息增益</strong>（Information Gain）来选择最佳的属性作为决策树的节点，以此来实现对数据的划分。</p>
 <p>  <strong>定义（信息熵）</strong>. 假设有离散随机变量（连续型同样适用，只是公式的表示形式不一样）<span class="math notranslate nohighlight">\(X\)</span>其取值概率分别为<span class="math notranslate nohighlight">\(\{(x_1,p_1),...,(x_n,p_n)\}\)</span>(s.t.<span class="math notranslate nohighlight">\(\sum_i p_i=1\)</span>)，则该随机变量的信息熵(不确定性)为，</p>
 <div class="math notranslate nohighlight" id="equation-entropy-def">
@@ -141,7 +141,7 @@ flowchart LR
         \textrm{IG}(X,Y)=\textrm{H}(X)-\textrm{H}(X|Y)
 \]</div>
 <section id="id2">
-<h3><span class="section-number">1.1.1. </span>ID3构建算法<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">2.1.1. </span>ID3构建算法<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>  ID3构建算法只需要对上一节的决策树学习算法的第8行进行修改，即为ID3学习算法。</p>
 <table class="docutils align-default">
 <thead>
@@ -161,7 +161,7 @@ flowchart LR
 </table>
 </section>
 <section id="id4">
-<h3><span class="section-number">1.1.2. </span>ID3应用案例<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">2.1.2. </span>ID3应用案例<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>  应用ID3算法构建一棵决策树，该案例使用UCI数据集weather，内容如下表所示：</p>
 <table class="docutils align-default">
 <thead>
@@ -400,10 +400,10 @@ flowchart LR
 </section>
 </section>
 <section id="cart">
-<h2><span class="section-number">1.2. </span>CART<a class="headerlink" href="#cart" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">2.2. </span>CART<a class="headerlink" href="#cart" title="Link to this heading">¶</a></h2>
 <p>  分类与回归树(Classification and Regression Tree, CART)是一种决策树，可用于处理分类或回归任务。CART的形式为一棵二分支的决策树，任意分支为某一特征（依据某种规则选择）的测试条件，其左子树取值为“真”，右子树取值为“假”。</p>
 <section id="id5">
-<h3><span class="section-number">1.2.1. </span>回归树<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">2.2.1. </span>回归树<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <p>  一棵回归树对应着训练集<span class="math notranslate nohighlight">\(D\)</span>(输入空间)的一个划分<span class="math notranslate nohighlight">\(\{D_1,D_2,...,D_k\}\)</span>，以及任意划分<span class="math notranslate nohighlight">\(D_j\)</span>都对应一个输出值<span class="math notranslate nohighlight">\(c_j\)</span>(<span class="math notranslate nohighlight">\(c_j\in\{c_1,c_2,...,c_k\}\)</span>)。回归树模型可表示为，</p>
 <div class="math notranslate nohighlight" id="equation-regression-tree-model">
 <span class="eqno">(4)<a class="headerlink" href="#equation-regression-tree-model" title="Link to this equation">¶</a></span>\[
@@ -433,7 +433,7 @@ a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_
 <p>  遍历所有特征，找到最优<span class="math notranslate nohighlight">\(a\)</span>，并确定<span class="math notranslate nohighlight">\((a,v)\)</span>，依此将数据集划分为2个区域。对每个区域重复以上步骤，直到区域内无数据集划分为止，至此一棵回归树就生成好了。由于使用的平方误差来表示训练误差，这种回归树也称为<strong>最小二乘回归树</strong>。</p>
 </section>
 <section id="id6">
-<h3><span class="section-number">1.2.2. </span>分类树<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<h3><span class="section-number">2.2.2. </span>分类树<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <p>  分类树的构建与ID3类似，区别在于特征选择所用的标准为基尼指数。</p>
 <p>  <strong>定义（基尼指数）</strong>. 假设数据集<span class="math notranslate nohighlight">\(D\)</span>的分类属性有<span class="math notranslate nohighlight">\(K\)</span>个类别，且样本属于类别<span class="math notranslate nohighlight">\(k\)</span>的概率为<span class="math notranslate nohighlight">\(p_k\)</span>，则基尼指数为，</p>
 <div class="math notranslate nohighlight" id="equation-gini-def">
@@ -459,15 +459,15 @@ a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">1. 决策树</a><ul>
-<li><a class="reference internal" href="#id3">1.1. ID3</a><ul>
-<li><a class="reference internal" href="#id2">1.1.1. ID3构建算法</a></li>
-<li><a class="reference internal" href="#id4">1.1.2. ID3应用案例</a></li>
+<li><a class="reference internal" href="#">2. 决策树</a><ul>
+<li><a class="reference internal" href="#id3">2.1. ID3</a><ul>
+<li><a class="reference internal" href="#id2">2.1.1. ID3构建算法</a></li>
+<li><a class="reference internal" href="#id4">2.1.2. ID3应用案例</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#cart">1.2. CART</a><ul>
-<li><a class="reference internal" href="#id5">1.2.1. 回归树</a></li>
-<li><a class="reference internal" href="#id6">1.2.2. 分类树</a></li>
+<li><a class="reference internal" href="#cart">2.2. CART</a><ul>
+<li><a class="reference internal" href="#id5">2.2.1. 回归树</a></li>
+<li><a class="reference internal" href="#id6">2.2.2. 分类树</a></li>
 </ul>
 </li>
 </ul>
@@ -477,13 +477,13 @@ a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_
   </div>
   <div>
     <h4>上一主题</h4>
-    <p class="topless"><a href="../base/calc_theory.html"
-                          title="上一章"><span class="section-number">4. </span>计算学习理论</a></p>
+    <p class="topless"><a href="dimension_reduce.html"
+                          title="上一章"><span class="section-number">1. </span>数据降维</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
-    <p class="topless"><a href="dimension_reduce.html"
-                          title="下一章"><span class="section-number">2. </span>数据降维</a></p>
+    <p class="topless"><a href="bayes.html"
+                          title="下一章"><span class="section-number">3. </span>贝叶斯分类</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
@@ -513,13 +513,13 @@ a^*,v^*=\mathop{\arg\min}\limits_{a,v}\left[\min_{c_1}\sum_{\pmb{x}_i\in R_1}(y_
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="dimension_reduce.html" title="2. 数据降维"
+          <a href="bayes.html" title="3. 贝叶斯分类"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="../base/calc_theory.html" title="4. 计算学习理论"
+          <a href="dimension_reduce.html" title="1. 数据降维"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>决策树</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>决策树</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

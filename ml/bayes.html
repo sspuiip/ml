@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>6. 贝叶斯分类 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>3. 贝叶斯分类 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -28,8 +28,8 @@
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="7. 神经网络" href="neuro_network.html" />
-    <link rel="prev" title="5. 概率图模型" href="PGM.html" /> 
+    <link rel="next" title="4. EM算法概述" href="EM.html" />
+    <link rel="prev" title="2. 决策树" href="decision_tree.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -38,13 +38,13 @@
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="neuro_network.html" title="7. 神经网络"
+          <a href="EM.html" title="4. EM算法概述"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="PGM.html" title="5. 概率图模型"
+          <a href="decision_tree.html" title="2. 决策树"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>贝叶斯分类</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>贝叶斯分类</a></li> 
       </ul>
     </div>  
 
@@ -54,9 +54,9 @@
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">6. </span>贝叶斯分类<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">3. </span>贝叶斯分类<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="id2">
-<h2><span class="section-number">6.1. </span>贝叶斯决策<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">3.1. </span>贝叶斯决策<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <blockquote>
 <div><p>贝叶斯决策论是概率框架下决策的基本方法。</p>
 <p class="attribution">—Bayesian decision theory</p>
@@ -84,7 +84,7 @@ h^*(\pmb{x})=\arg\min\limits_{c\in\mathcal{Y}} R(c|\pmb{x})
 <p>此时，<span class="math notranslate nohighlight">\(h^*\)</span>称为<strong>贝叶斯最优分类器</strong>，对应的总体风险<span class="math notranslate nohighlight">\(R(h^*)\)</span>称为<strong>贝叶斯风险</strong>。</p>
 </section>
 <section id="id3">
-<h2><span class="section-number">6.2. </span>朴素贝叶斯分类器<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">3.2. </span>朴素贝叶斯分类器<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  贝叶斯公式<a class="reference internal" href="#equation-bayes-formula">(4)</a>估计后验概率的主要困难在于<font color="blue">类条件概率<span class="math notranslate nohighlight">\(P(\pmb{x}|c)\)</span>是样本的所有属性上的联合概率</font>，难以从有限的训练样本直接估计得到，</p>
 <div class="math notranslate nohighlight" id="equation-bayes-formula">
 <span class="eqno">(4)<a class="headerlink" href="#equation-bayes-formula" title="Link to this equation">¶</a></span>\[
@@ -179,9 +179,9 @@ p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathc
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">6. 贝叶斯分类</a><ul>
-<li><a class="reference internal" href="#id2">6.1. 贝叶斯决策</a></li>
-<li><a class="reference internal" href="#id3">6.2. 朴素贝叶斯分类器</a></li>
+<li><a class="reference internal" href="#">3. 贝叶斯分类</a><ul>
+<li><a class="reference internal" href="#id2">3.1. 贝叶斯决策</a></li>
+<li><a class="reference internal" href="#id3">3.2. 朴素贝叶斯分类器</a></li>
 </ul>
 </li>
 </ul>
@@ -189,13 +189,13 @@ p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathc
   </div>
   <div>
     <h4>上一主题</h4>
-    <p class="topless"><a href="PGM.html"
-                          title="上一章"><span class="section-number">5. </span>概率图模型</a></p>
+    <p class="topless"><a href="decision_tree.html"
+                          title="上一章"><span class="section-number">2. </span>决策树</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
-    <p class="topless"><a href="neuro_network.html"
-                          title="下一章"><span class="section-number">7. </span>神经网络</a></p>
+    <p class="topless"><a href="EM.html"
+                          title="下一章"><span class="section-number">4. </span>EM算法概述</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
@@ -225,13 +225,13 @@ p(y=c|\pmb{x},\mathcal{D})&amp;=\int \text{Cat}(y=c|\pmb{\pi})p(\pmb{\pi}|\mathc
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="neuro_network.html" title="7. 神经网络"
+          <a href="EM.html" title="4. EM算法概述"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="PGM.html" title="5. 概率图模型"
+          <a href="decision_tree.html" title="2. 决策树"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">6. </span>贝叶斯分类</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>贝叶斯分类</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
