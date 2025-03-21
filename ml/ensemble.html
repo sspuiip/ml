@@ -64,7 +64,7 @@ window.addEventListener("load", () => mermaid.run());
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">6. </span>集成学习<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  <strong>集成学习</strong>其实就是学习器集成，即通过构建多个学习器完成学习任务，综合所有学习器的学习结果按特定策略生成集成学习器的学习结果。结合策略一般有：平均法、投票法以及学习法等。</p>
-<figure class="align-center" id="id3">
+<figure class="align-center" id="id6">
 <pre  class="mermaid">
         %%{
     init: {
@@ -87,7 +87,7 @@ H--&gt;J[Stacking];
 I--调整样本权重与预测器权重--&gt;K[Adaboost];
 I--对前一预测器的结果残差训练--&gt;L[GradientBoosting];
     </pre><figcaption>
-<p><span class="caption-text">Fig 1. 集成学习概要</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 1. 集成学习概要</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -97,7 +97,7 @@ I--对前一预测器的结果残差训练--&gt;L[GradientBoosting];
 <section id="id2">
 <h2><span class="section-number">6.1. </span>投票法<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  要创建一个更好的分类器，是简单的办法就是聚合每个分类器的预测，然后将得票最多的结果作为预测类别，这种大多数投票分类器被称为<strong>硬投票分类器</strong>。如下图所示：</p>
-<figure class="align-center" id="id4">
+<figure class="align-center" id="id7">
 <pre  class="mermaid">
         %%{
     init: {
@@ -124,7 +124,7 @@ graph LR
 	J --vote--&gt; L[+1/-1];
 	K --vote--&gt; L[+1/-1];
     </pre><figcaption>
-<p><span class="caption-text">Fig 2. 多学习器集成–投票法</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 2. 多学习器集成–投票法</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -188,14 +188,274 @@ VotingClassifier 0.912
 </div>
 <p>  投票分类器的准确率通常比集成中最好的分类器还要高。事实上，即使每个分类器都是弱学习器，通过集成依然可以实现一个强学习器。只要有足够大数量且多种类的弱学习器即可。</p>
 <ul class="simple">
-<li><p><strong>为什么会有效</strong></p></li>
+<li><p><strong>为什么会有效？</strong></p></li>
 </ul>
 <p>  下面的类比可以帮助理解。假设一个略微偏倚的硬币，它有51％的机率正面向上。如果投1000次，大致会得到510次正面，所以正面是大多数。也就是说，在1000次投掷之后，大多数硬币正面向上（1000硬币参与结果投票，至少501个硬币结果为正面）的概率接近75％。即</p>
 <div class="math notranslate nohighlight">
 \[
 1-\textrm{pbinom}(499,1000,0.51)\approx 74.67\%
 \]</div>
-<p>10000次后，这个概率达到97%。</p>
+<p>10000次后，这个概率达到97%。同理，假设有1000个分类器的集成，每个分类器都只有51%的概率是正确的。如果，以大多数投票的类别作为预测结果，可以达到准确率接近75%。</p>
+</section>
+<section id="baggingpasting">
+<h2><span class="section-number">6.2. </span>并行集成：bagging和pasting<a class="headerlink" href="#baggingpasting" title="Link to this heading">¶</a></h2>
+<p>  每个预测器使用相同算法，但在训练集的随机子集上进行训练。如果样本放回，这种方法称为bagging(bootstrap aggregating)；如果样本不放回，这种方法称为pasting。</p>
+<figure class="align-center" id="id8">
+<pre  class="mermaid">
+        %%{
+    init: {
+        'theme':'base',
+        'themeVariables': {
+            'fontSize': 8px
+        }
+    }
+}%%
+graph LR
+	A[(训练集)]  --随机选择--&gt; B[(子集1)]
+	A[(训练集)]  --随机选择--&gt; C[(子集2)]
+	A[(训练集)]  --随机选择--&gt; D[(子集3)]
+	A[(训练集)]  --随机选择--&gt; E[(...)]
+	A[(训练集)]  --随机选择--&gt; F[(子集k)]
+	B --训练--&gt; G[分类器1]
+	C --训练--&gt; H[分类器2]
+	D --训练--&gt; I[分类器3]
+	E --训练--&gt; J[...]
+	 F --训练--&gt; K[分类器k]
+	 G --测试集预测--&gt; L[+1/-1]
+	 H --测试集预测--&gt;M[+1/-1]
+	 I --测试集预测--&gt; N[+1/-1]
+	J --测试集预测--&gt; O[+1/-1]
+	K --测试集预测--&gt; P[+1/-1]
+	L --集成--&gt; Q[+1/-1]
+	O--集成--&gt; Q[+1/-1]
+	M--集成--&gt; Q[+1/-1]
+	N --集成--&gt; Q[+1/-1]
+	P --集成--&gt; Q[+1/-1]
+    </pre><figcaption>
+<p><span class="caption-text">Fig 3. 并行集成示例</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>并行集成的效果示例</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#准备数据集</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_moons</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_moons</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">0.30</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1">#Bagging集成分类器</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaggingClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="n">bag_clf</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span>
+    <span class="n">DecisionTreeClassifier</span><span class="p">(),</span> <span class="c1">#分类器种类</span>
+    <span class="n">n_estimators</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>   <span class="c1">#分类器个数</span>
+    <span class="n">max_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>    <span class="c1">#训练子集样本数</span>
+    <span class="n">bootstrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>     <span class="c1">#bagging=True; pasting=False</span>
+    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bag_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">bag_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1">#打印结果</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+<span class="c1">#对比决策树</span>
+<span class="n">tree_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">tree_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_tree</span> <span class="o">=</span> <span class="n">tree_clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_tree</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>0.904
+0.856
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><span class="section-number">6.3. </span>串行集成：提升法<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>  提升法是指可以将几个弱学习器结合成一个强学习器的任意集成方法。大多数提升法的<strong>总体思路</strong>是循环训练预测器，每次都其前序做出一些改正。</p>
+<figure class="align-center" id="id9">
+<pre  class="mermaid">
+        %%{
+    init: {
+        'theme':'base',
+        'themeVariables': {
+            'fontSize': 8px
+        }
+    }
+}%%
+flowchart  LR
+  A2 o--o C1;
+  A3 o--o C2;
+  A4 o--o C3;  
+  subgraph  次序训练1 
+  A1[数据集0]--训练--&gt;B1[预测器];
+  B1 --调整数据权重--&gt; C1[数据集1];
+  end
+  subgraph 次序训练2
+  A2[数据集1]--训练--&gt;B2[预测器];
+  B2--调整数据权重--&gt; C2[数据集2];
+  end
+  subgraph 次序训练...
+  A3[...]-..- C3[...];
+  end
+  subgraph 次序训练n
+  A4[数据集n-1]--训练--&gt;B4[预测器n];
+  end
+    </pre><figcaption>
+<p><span class="caption-text">Fig 4. 提升法示意</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<section id="adaboost">
+<h3><span class="section-number">6.3.1. </span>Adaboost<a class="headerlink" href="#adaboost" title="Link to this heading">¶</a></h3>
+<p>  给定训练集<span class="math notranslate nohighlight">\(T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}\)</span>，其中<span class="math notranslate nohighlight">\(x_i\in\mathcal{X}\subseteq \mathbb{R}^n, y_i\in\mathcal{Y}=\{+1,-1\}\)</span>。</p>
+<ul class="simple">
+<li><p>初使化训练数据的权值分布</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+W_1=(w^{(1)},...,w^{(N)}), w_{1i}=\frac{1}{N},i=1,2,...,N
+\]</div>
+<p>使用该权值分布对第一个预测器进行训练,</p>
+<div class="math notranslate nohighlight">
+\[
+f_j(x):\mathcal{X}\rightarrow \{+1,-1\}, j=1,2,...,M
+\]</div>
+<p>计算加权误差率<span class="math notranslate nohighlight">\(r_1\)</span>如下，</p>
+<div class="math notranslate nohighlight">
+\[
+r_j=\frac{\sum_{i=1,y_j^{(i)}\neq y^{(i)}}^N w^{(i)} }{\sum_{i=1}^N w^{(i)} }, j=1,2,...,M
+\]</div>
+<p>计算预测器权重<span class="math notranslate nohighlight">\(a_j\)</span>如下，</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha_j=\eta\log\frac{1-r_j}{r_j}, j=1,2,...,M
+\]</div>
+<ul class="simple">
+<li><p>更新权值</p></li>
+</ul>
+<p>  对于<span class="math notranslate nohighlight">\(i=1,2,...,N\)</span>，如果<span class="math notranslate nohighlight">\(y_j^{(i)}=y^{(i)}\)</span>，则<span class="math notranslate nohighlight">\(w^{(i)}\leftarrow w^{(i)}\)</span>；否则，</p>
+<div class="math notranslate nohighlight">
+\[
+w^{(i)}\leftarrow w^{(i)}\exp(\alpha_j)
+\]</div>
+<p>最后归一化，即，</p>
+<div class="math notranslate nohighlight">
+\[
+w^{(i)}=\frac{w^{(i)}}{\sum_{i=1}^N w^{(i)}}
+\]</div>
+<ul class="simple">
+<li><p>以此规则，训练后序所有预测器。</p></li>
+</ul>
+<section id="id4">
+<h4><span class="section-number">6.3.1.1. </span>AdaBoost分类器预测<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
+<p>  集成分类器训练好之后，就可以按以下规则预测，</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{y}(x)=\arg\max_{k} \sum_{j=1,\hat{y}_j(x)=k}^M \alpha_j
+\]</div>
+</section>
+<section id="id5">
+<h4><span class="section-number">6.3.1.2. </span>AdaBoost例子<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
+<p>  给定以下训练数据。假设弱分类器由<span class="math notranslate nohighlight">\(x&lt;v\)</span>或<span class="math notranslate nohighlight">\(x&gt;v\)</span>产生，其阈值<span class="math notranslate nohighlight">\(v\)</span>使该分类器在训练数据集上分类误差率最低。下面用AdaBoost算法学习一个强分类器。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>序号</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>8</p></th>
+<th class="head"><p>9</p></th>
+<th class="head"><p>10</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x\)</span></p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>5</p></td>
+<td><p>6</p></td>
+<td><p>7</p></td>
+<td><p>8</p></td>
+<td><p>9</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(y\)</span></p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>-1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>1</p></td>
+<td><p>-1</p></td>
+</tr>
+</tbody>
+</table>
+<div align="center">表1：训练数据</div>
+<p>  第一步，先求数据集的初使权值分布，</p>
+<div class="math notranslate nohighlight">
+\[
+w^{(i)}=\frac{1}{10}, i=1,2,...,10
+\]</div>
+<p>在这个权值分布训练数据上，阈值取3.5时，分类误差率最低，故基本分类器为<span class="math notranslate nohighlight">\(f_1(x)=1; x&lt;3.5\)</span>。<span class="math notranslate nohighlight">\(f_1(x)\)</span>在训练集的误差<span class="math notranslate nohighlight">\(r_1\)</span>为<span class="math notranslate nohighlight">\(0.3\)</span>。所以，分类器<span class="math notranslate nohighlight">\(f_1(x)\)</span>的权值为：<span class="math notranslate nohighlight">\(a_1=\eta\log\frac{1-r_1}{r_1}=0.4236\)</span>，这里<span class="math notranslate nohighlight">\(\eta=0.5\)</span>。</p>
+<p>  第二步，更新权值分布，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+w^{(i)}&amp;=0.1;\quad i=1,2,...,6,10.\\
+w^{(i)}&amp;=0.1\exp(a_1)=0.1527;\quad i=7,8,9.
+\end{split}
+\end{split}\]</div>
+<p>  归一化后得，</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>序号</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+<th class="head"><p>6</p></th>
+<th class="head"><p>7</p></th>
+<th class="head"><p>8</p></th>
+<th class="head"><p>9</p></th>
+<th class="head"><p>10</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(w\)</span></p></td>
+<td><p>0.08633</p></td>
+<td><p>0.08633</p></td>
+<td><p>0.08633</p></td>
+<td><p>0.08633</p></td>
+<td><p>0.08633</p></td>
+<td><p>0.08633</p></td>
+<td><p>0.13188</p></td>
+<td><p>0.13188</p></td>
+<td><p>0.13188</p></td>
+<td><p>0.08633</p></td>
+</tr>
+</tbody>
+</table>
+<p>分类器<span class="math notranslate nohighlight">\(f_1(x)\)</span>的权值<span class="math notranslate nohighlight">\(u^{(1)}\)</span>为：<span class="math notranslate nohighlight">\(0.4236\)</span></p>
+<p>  第三步，以第一步和第二步的规则执行，直到所有分类器都已训练。</p>
+<p>  最终分类器为</p>
+<div class="math notranslate nohighlight">
+\[
+f(x)=\textrm{sign}(u^{(1)}f_1(x)+u^{(2)}f_2(x)+...+u^{(k)}f_k(x))
+\]</div>
+</section>
+</section>
 </section>
 </section>
 
@@ -211,6 +471,15 @@ VotingClassifier 0.912
     <ul>
 <li><a class="reference internal" href="#">6. 集成学习</a><ul>
 <li><a class="reference internal" href="#id2">6.1. 投票法</a></li>
+<li><a class="reference internal" href="#baggingpasting">6.2. 并行集成：bagging和pasting</a></li>
+<li><a class="reference internal" href="#id3">6.3. 串行集成：提升法</a><ul>
+<li><a class="reference internal" href="#adaboost">6.3.1. Adaboost</a><ul>
+<li><a class="reference internal" href="#id4">6.3.1.1. AdaBoost分类器预测</a></li>
+<li><a class="reference internal" href="#id5">6.3.1.2. AdaBoost例子</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
