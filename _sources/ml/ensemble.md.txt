@@ -255,7 +255,12 @@ flowchart  LR
 ```
 ### Adaboost
 
-&emsp;&emsp;给定训练集$T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}$，其中$x_i\in\mathcal{X}\subseteq \mathbb{R}^n, y_i\in\mathcal{Y}=\{+1,-1\}$。
+&emsp;&emsp;假设二分类情况，以下给出了Adaboost算法的框架。给定训练集$T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}$，其中$x_i\in\mathcal{X}\subseteq \mathbb{R}^n, y_i\in\mathcal{Y}=\{+1,-1\}$。
+
+| 算法：Adaboost$\left(S=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),...,(\pmb{x}_m,y_m)\}\right)$|
+| :--- |
+|01&emsp;**for** $i=1$ **to** $m$<br>02&emsp;&emsp;&emsp;$w_1(i)=\frac1m$<br>03&emsp;**for** $t=1$ **to** $T$<br>04&emsp;&emsp;&emsp;$f_t\leftarrow$误差$\epsilon_t=\mathop{\mathbb{P}}\limits_{\pmb{x}_i\sim w_t}\left[f_t(\pmb{x}_i)\neq y_i\right]$较小的基分类器<br>05&emsp;&emsp;&emsp;$\alpha_t\leftarrow \frac12\log\frac{1-\epsilon_t}{\epsilon_t}$<br>06&emsp;&emsp;&emsp;$Z_t\leftarrow 2[\epsilon_t(1-\epsilon_t)]^{\frac12}$ (归一化因子)<br>07&emsp;&emsp;&emsp;**for** $i=1$ **to** $m$<br>08&emsp;&emsp;&emsp;&emsp;&emsp;$w_{t+1}(i)\leftarrow\frac{w_t(i)\exp(-\alpha_t\times y_i\times f_t(\pmb{x}_i))}{Z_t}$<br>09&emsp;$f\leftarrow \sum_{t=1}^T\alpha_t f_t$<br>10&emsp;**return** $f$ |
+
 
 + 初使化训练数据的权值分布
 

@@ -309,7 +309,17 @@ flowchart  LR
 </figure>
 <section id="adaboost">
 <h3><span class="section-number">6.3.1. </span>Adaboost<a class="headerlink" href="#adaboost" title="Link to this heading">¶</a></h3>
-<p>  给定训练集<span class="math notranslate nohighlight">\(T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}\)</span>，其中<span class="math notranslate nohighlight">\(x_i\in\mathcal{X}\subseteq \mathbb{R}^n, y_i\in\mathcal{Y}=\{+1,-1\}\)</span>。</p>
+<p>  假设二分类情况，以下给出了Adaboost算法的框架。给定训练集<span class="math notranslate nohighlight">\(T=\{(x_1,y_1),(x_2,y_2),...,(x_N,y_N)\}\)</span>，其中<span class="math notranslate nohighlight">\(x_i\in\mathcal{X}\subseteq \mathbb{R}^n, y_i\in\mathcal{Y}=\{+1,-1\}\)</span>。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>算法：Adaboost<span class="math notranslate nohighlight">\(\left(S=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),...,(\pmb{x}_m,y_m)\}\right)\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p>01 <strong>for</strong> <span class="math notranslate nohighlight">\(i=1\)</span> <strong>to</strong> <span class="math notranslate nohighlight">\(m\)</span><br>02   <span class="math notranslate nohighlight">\(w_1(i)=\frac1m\)</span><br>03 <strong>for</strong> <span class="math notranslate nohighlight">\(t=1\)</span> <strong>to</strong> <span class="math notranslate nohighlight">\(T\)</span><br>04   <span class="math notranslate nohighlight">\(f_t\leftarrow\)</span>误差<span class="math notranslate nohighlight">\(\epsilon_t=\mathop{\mathbb{P}}\limits_{\pmb{x}_i\sim w_t}\left[f_t(\pmb{x}_i)\neq y_i\right]\)</span>较小的基分类器<br>05   <span class="math notranslate nohighlight">\(\alpha_t\leftarrow \frac12\log\frac{1-\epsilon_t}{\epsilon_t}\)</span><br>06   <span class="math notranslate nohighlight">\(Z_t\leftarrow 2[\epsilon_t(1-\epsilon_t)]^{\frac12}\)</span> (归一化因子)<br>07   <strong>for</strong> <span class="math notranslate nohighlight">\(i=1\)</span> <strong>to</strong> <span class="math notranslate nohighlight">\(m\)</span><br>08     <span class="math notranslate nohighlight">\(w_{t+1}(i)\leftarrow\frac{w_t(i)\exp(-\alpha_t\times y_i\times f_t(\pmb{x}_i))}{Z_t}\)</span><br>09 <span class="math notranslate nohighlight">\(f\leftarrow \sum_{t=1}^T\alpha_t f_t\)</span><br>10 <strong>return</strong> <span class="math notranslate nohighlight">\(f\)</span></p></td>
+</tr>
+</tbody>
+</table>
 <ul class="simple">
 <li><p>初使化训练数据的权值分布</p></li>
 </ul>
