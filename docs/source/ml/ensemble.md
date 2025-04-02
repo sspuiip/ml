@@ -262,6 +262,8 @@ flowchart  LR
 |01&emsp;**for** $i=1$ **to** $m$<br>02&emsp;&emsp;&emsp;$w_1(i)=\frac1m$<br>03&emsp;**for** $t=1$ **to** $T$<br>04&emsp;&emsp;&emsp;$f_t\leftarrow$误差$\epsilon_t=\mathop{\mathbb{P}}\limits_{\pmb{x}_i\sim w_t}\left[f_t(\pmb{x}_i)\neq y_i\right]$较小的基分类器<br>05&emsp;&emsp;&emsp;$\alpha_t\leftarrow \frac12\log\frac{1-\epsilon_t}{\epsilon_t}$<br>06&emsp;&emsp;&emsp;$Z_t\leftarrow 2[\epsilon_t(1-\epsilon_t)]^{\frac12}$ (归一化因子)<br>07&emsp;&emsp;&emsp;**for** $i=1$ **to** $m$<br>08&emsp;&emsp;&emsp;&emsp;&emsp;$w_{t+1}(i)\leftarrow\frac{w_t(i)\exp(-\alpha_t\times y_i\times f_t(\pmb{x}_i))}{Z_t}$<br>09&emsp;$f\leftarrow \sum_{t=1}^T\alpha_t f_t$<br>10&emsp;**return** $f$ |
 
 
+
+
 + 初使化训练数据的权值分布
 
 $$
@@ -301,6 +303,57 @@ w^{(i)}=\frac{w^{(i)}}{\sum_{i=1}^N w^{(i)}}
 $$
 
 + 以此规则，训练后序所有预测器。
+
+
+&emsp;&emsp;**定理**. AdaBoost返回的分类器经验误差满足，
+
+$$
+\boxed{
+\hat{R}_S(f)\le\exp\left[-2\sum_{t=1}^T\left(\frac12-\epsilon_t\right)^2 \right]}
+$$(adaboost-bounder-1)
+
+如果对于所有$t\in [1,T]$，有$\gamma \le(\frac12-\epsilon_t)$成立，则有，
+
+$$
+\hat{R}_S(f)\le\exp\left[-2\gamma^2T\right]
+$$(adaboost-bounder-2)
+
+
+&emsp;&emsp;**证明**. 根据一般不等式$1_{x\le 0}\le\exp(-x)$对于所有$x\in R$成立，则可以得到，
+
+$$
+\begin{split}
+\hat{R}_S(f)&=\frac1m\sum_{i=1}^m 1_{y_if(x_i)\le 0}\\
+&\le\frac1m\sum_{i=1}^m e^{-y_if(x_i)}\\
+&=\frac1m\sum_{i=1}^m\left[m\prod_{t=1}^T Z_t \right]D_{T+1}(i)\\
+&=\prod_{t=1}^T Z_t
+\end{split}
+$$
+
+&emsp;&emsp;$Z_t$是一个归一化因子，可以改写成如下形式，
+
+$$
+\begin{split}
+Z_t &= \sum_{i=1}^m D_t(i)e^{-a_ty_ih_t(x_i)}\\
+&=\sum_{i:y_ih_t(x_i)=+1}D_t(i)e^{-a_t}+\sum_{i:y_ih_t(x_i)=-1}D_t(i)e^{a_t}\\
+&=(1-\epsilon_t)e^{-a_t}+\epsilon_t e^{a_t}\\
+&=(1-\epsilon_t)\sqrt{\frac{\epsilon_t}{1-\epsilon_t}}+\epsilon_t\sqrt{\frac{1-\epsilon_t}{\epsilon_t}}\\
+&=2\sqrt{\epsilon_t(1-\epsilon_t)}
+\end{split}
+$$
+
+在上式的推导过程中，注意有：$\epsilon_t=\mathop{\mathbb{P}}\limits_{x_i\sim D_t}\left[h_t(x_i)\neq y_i \right]$以及$a_t=\frac12\log\frac{1-\epsilon_t}{\epsilon_t}$成立。
+
+&emsp;&emsp;因此，归一化因子的乘积上界可以表示为，
+
+$$
+\begin{split}
+\prod_{i=1}^T Z_t&=\prod_{t=1}^T2\sqrt{\epsilon_t(1-\epsilon_t)}\\
+&=\prod_{i=1}^T\sqrt{1-4\left(\frac12-\epsilon_t \right)^2}\\
+&\le\prod\exp\left[-2\left(\frac12-\epsilon_t\right)^2\right]\\
+&=\exp\left[-2\sum_{i=1}^T\left(\frac12-\epsilon_t\right)^2 \right]
+\end{split}
+$$
 
 #### AdaBoost分类器预测
 &emsp;&emsp;集成分类器训练好之后，就可以按以下规则预测，
