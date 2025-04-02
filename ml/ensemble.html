@@ -358,6 +358,49 @@ w^{(i)}=\frac{w^{(i)}}{\sum_{i=1}^N w^{(i)}}
 <ul class="simple">
 <li><p>以此规则，训练后序所有预测器。</p></li>
 </ul>
+<p>  <strong>定理</strong>. AdaBoost返回的分类器经验误差满足，</p>
+<div class="math notranslate nohighlight" id="equation-adaboost-bounder-1">
+<span class="eqno">(1)<a class="headerlink" href="#equation-adaboost-bounder-1" title="Link to this equation">¶</a></span>\[
+\boxed{
+\hat{R}_S(f)\le\exp\left[-2\sum_{t=1}^T\left(\frac12-\epsilon_t\right)^2 \right]}
+\]</div>
+<p>如果对于所有<span class="math notranslate nohighlight">\(t\in [1,T]\)</span>，有<span class="math notranslate nohighlight">\(\gamma \le(\frac12-\epsilon_t)\)</span>成立，则有，</p>
+<div class="math notranslate nohighlight" id="equation-adaboost-bounder-2">
+<span class="eqno">(2)<a class="headerlink" href="#equation-adaboost-bounder-2" title="Link to this equation">¶</a></span>\[
+\hat{R}_S(f)\le\exp\left[-2\gamma^2T\right]
+\]</div>
+<p>  <strong>证明</strong>. 根据一般不等式<span class="math notranslate nohighlight">\(1_{x\le 0}\le\exp(-x)\)</span>对于所有<span class="math notranslate nohighlight">\(x\in R\)</span>成立，则可以得到，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\hat{R}_S(f)&amp;=\frac1m\sum_{i=1}^m 1_{y_if(x_i)\le 0}\\
+&amp;\le\frac1m\sum_{i=1}^m e^{-y_if(x_i)}\\
+&amp;=\frac1m\sum_{i=1}^m\left[m\prod_{t=1}^T Z_t \right]D_{T+1}(i)\\
+&amp;=\prod_{t=1}^T Z_t
+\end{split}
+\end{split}\]</div>
+<p>  <span class="math notranslate nohighlight">\(Z_t\)</span>是一个归一化因子，可以改写成如下形式，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+Z_t &amp;= \sum_{i=1}^m D_t(i)e^{-a_ty_ih_t(x_i)}\\
+&amp;=\sum_{i:y_ih_t(x_i)=+1}D_t(i)e^{-a_t}+\sum_{i:y_ih_t(x_i)=-1}D_t(i)e^{a_t}\\
+&amp;=(1-\epsilon_t)e^{-a_t}+\epsilon_t e^{a_t}\\
+&amp;=(1-\epsilon_t)\sqrt{\frac{\epsilon_t}{1-\epsilon_t}}+\epsilon_t\sqrt{\frac{1-\epsilon_t}{\epsilon_t}}\\
+&amp;=2\sqrt{\epsilon_t(1-\epsilon_t)}
+\end{split}
+\end{split}\]</div>
+<p>在上式的推导过程中，注意有：<span class="math notranslate nohighlight">\(\epsilon_t=\mathop{\mathbb{P}}\limits_{x_i\sim D_t}\left[h_t(x_i)\neq y_i \right]\)</span>以及<span class="math notranslate nohighlight">\(a_t=\frac12\log\frac{1-\epsilon_t}{\epsilon_t}\)</span>成立。</p>
+<p>  因此，归一化因子的乘积上界可以表示为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\prod_{i=1}^T Z_t&amp;=\prod_{t=1}^T2\sqrt{\epsilon_t(1-\epsilon_t)}\\
+&amp;=\prod_{i=1}^T\sqrt{1-4\left(\frac12-\epsilon_t \right)^2}\\
+&amp;\le\prod\exp\left[-2\left(\frac12-\epsilon_t\right)^2\right]\\
+&amp;=\exp\left[-2\sum_{i=1}^T\left(\frac12-\epsilon_t\right)^2 \right]
+\end{split}
+\end{split}\]</div>
 <section id="id4">
 <h4><span class="section-number">6.3.1.1. </span>AdaBoost分类器预测<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
 <p>  集成分类器训练好之后，就可以按以下规则预测，</p>
