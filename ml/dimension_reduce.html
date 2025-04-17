@@ -296,7 +296,7 @@
 <section id="id7">
 <h3><span class="section-number">1.1.6. </span>核主成分分析<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
-<p>  首先考查<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>特征向量之间的关系。
+<p>  <strong>首先考查协方差矩阵<span class="math notranslate nohighlight">\(m\pmb{C}\triangleq\pmb{X}^\top\pmb{X}\)</span>与核矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{XX}^\top\)</span>特征向量之间的关系</strong>。
 对实对称矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>进行特征值分解<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}\)</span>，等式两边同时乘上<span class="math notranslate nohighlight">\(\pmb{X}\)</span>，则可以得到，</p>
 <div class="math notranslate nohighlight">
 \[
@@ -305,14 +305,14 @@
 <p>从上式可以得到<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量为<span class="math notranslate nohighlight">\(\pmb{V}\triangleq\pmb{XU}\)</span>，特征值对角矩阵为<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>。注意到特征向量的模长，</p>
 <div class="math notranslate nohighlight">
 \[
-\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
+\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\pmb{u}_j^\top\pmb{u}_j\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
 \]</div>
 <p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
-<p>  现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
+<p>  <strong>现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span></strong>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
 <div class="math notranslate nohighlight">
 \[\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}\]</div>
 <p>其中<span class="math notranslate nohighlight">\(\pmb{U\Lambda}\)</span>分别为<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}\)</span>的特征向量矩阵以及对应的特征值。</p>
-<p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
+<p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。<strong>解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span></strong>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
 <div class="math notranslate nohighlight">
 \[
 \hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
