@@ -273,7 +273,7 @@ if __name__=="__main__":
 
 &emsp;&emsp;前面我们通过计算样本协方差矩阵$\pmb{XX}^\top$的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射$\phi :\pmb{x}\rightarrow \phi(\pmb{x})$形成的映射数据矩阵$\pmb{\Phi}^\top$，如何计算PCA。也就是映射后的协方差矩阵$\pmb{\Phi\Phi}^\top$如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。
 
-&emsp;&emsp;首先考查$\pmb{X}^\top\pmb{X}$与$\pmb{XX}^\top$特征向量之间的关系。
+&emsp;&emsp;**首先考查协方差矩阵$m\pmb{C}\triangleq\pmb{X}^\top\pmb{X}$与核矩阵$\pmb{K}\triangleq\pmb{XX}^\top$特征向量之间的关系**。
 对实对称矩阵$\pmb{X}^\top\pmb{X}$进行特征值分解$\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}$，等式两边同时乘上$\pmb{X}$，则可以得到，
 
 $$
@@ -283,18 +283,18 @@ $$
 从上式可以得到$\pmb{XX}^\top$的特征向量为$\pmb{V}\triangleq\pmb{XU}$，特征值对角矩阵为$\pmb{\Lambda}$。注意到特征向量的模长，
 
 $$
-\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
+\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\pmb{u}_j^\top\pmb{u}_j\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
 $$
 
 可以得到单位化的特征向量矩阵$\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}$。
 
-&emsp;&emsp;现在考虑Gram矩阵$\pmb{K}\triangleq\pmb{X}^\top\pmb{X}$。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将$\pmb{x}_i$表示为$\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)$。相应地，数据矩阵$\pmb{X}^\top$映射为$\pmb{\Phi}^\top$，协方差矩阵$\pmb{X}\pmb{X}^\top$映射为$\pmb{\Phi}\pmb{\Phi}^\top$。由$\pmb{X}^\top\pmb{X}$与$\pmb{XX}^\top$的关系可知，$\pmb{\Phi}\pmb{\Phi}^\top$的特征向量矩阵为
+&emsp;&emsp;**现在考虑Gram矩阵$\pmb{K}\triangleq\pmb{X}^\top\pmb{X}$**。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将$\pmb{x}_i$表示为$\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)$。相应地，数据矩阵$\pmb{X}^\top$映射为$\pmb{\Phi}^\top$，协方差矩阵$\pmb{X}\pmb{X}^\top$映射为$\pmb{\Phi}\pmb{\Phi}^\top$。由$\pmb{X}^\top\pmb{X}$与$\pmb{XX}^\top$的关系可知，$\pmb{\Phi}\pmb{\Phi}^\top$的特征向量矩阵为
 
 $$\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}$$
 
 其中$\pmb{U\Lambda}$分别为$\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}$的特征向量矩阵以及对应的特征值。
 
-&emsp;&emsp;根据上面计算的结果，从特征向量矩阵中取$k$个特征向量即可组成投影矩阵，经过数据投影即可得到样本的$k$维压缩表示。**但是**，映射$\phi()$可能没有显示表示，或难以直接计算。解决办法是使用核函数间接计算$\phi()$。任意给定样本$\pmb{x}_*$，则其在特征空间的投影$\hat{\pmb{x}}_i$可通过以下方式计算。
+&emsp;&emsp;根据上面计算的结果，从特征向量矩阵中取$k$个特征向量即可组成投影矩阵，经过数据投影即可得到样本的$k$维压缩表示。**但是**，映射$\phi()$可能没有显示表示，或难以直接计算。**解决办法是使用核函数间接计算$\phi()$**。任意给定样本$\pmb{x}_*$，则其在特征空间的投影$\hat{\pmb{x}}_i$可通过以下方式计算。
 
 $$
 \hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
