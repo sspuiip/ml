@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>数据降维 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">数据降维</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1>数据降维<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>  现实应用中，经常会遇到大量的高维数据。一方面来说，随着维度的增加，高维样本可以使得样本之间的区别更加显著。例如：只提供身高信息判断该样本是否为男性的判别问题中，如果仅依赖身高这个维度，则会有较大概率判断失误。在身高的基础之上，如果再添加头发长度、喉结、胸围等特征，则有较大概率判断正确。然而，维度的增加也不总是合理的。从另外一方面来说，若增加的维度超出了临界值高维空间也会还来一些不良的后果。例如：样本对之间的距离会迅速增大（稀疏）、距离不再具有区分性（所有点对之间都差不多远）、区别样本所需的数量呈指数级增长才能覆盖空间等。这些特性也称之为<strong>维度灾难</strong>。</p>
+<p>  为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题（合适的维度），这一过程也称之为<strong>数据降维</strong>。</p>
+<section id="id2">
+<h2>主成分分析<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量（<span class="math notranslate nohighlight">\(n\)</span>个维度为<span class="math notranslate nohighlight">\(n\)</span>变量）转换为一组线性不相关的变量（降维后的<span class="math notranslate nohighlight">\(d\)</span>个维度）。若有训练数据（<span class="math notranslate nohighlight">\(n\)</span>：维度，<span class="math notranslate nohighlight">\(m\)</span>：样本数），</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{n\times m}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个基<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)=\pmb{W}_{n\times d}\)</span>，使得变换后样本集<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{W}^\top\pmb{X}\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}=\pmb{WZ}\)</span>与原数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>的误差最少。也就是说，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>使得投影后的数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
+<p>  如何找到这个投影超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>呢？一个可行的办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\frac1m\sum_i^m\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是<strong>PCA的主要思想</strong>。</p>
+<p>  假设数据样本已<font color="red">中心化</font>(所有样本减去均值即为中心化；中心化之后再除以样本标准差即为标准化)，变换后的新坐标系为<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)\)</span>，若丢弃部分坐标，将维度降至<span class="math notranslate nohighlight">\(d'&lt;d\)</span>，则样本在低维坐标系中的投影为<span class="math notranslate nohighlight">\(\pmb{z}_i=(z_{i1},z_{i2},...,z_{id'})\)</span> ，其中<span class="math notranslate nohighlight">\(z_{ij}=\langle \pmb{x}_i,\pmb{w}_j\rangle\)</span>是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在低维坐标系的第<span class="math notranslate nohighlight">\(j\)</span>维的坐标。若用<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>来重构<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>，则会有<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i=\sum_{j=1}^{d'}z_{ij}\pmb{w}_j=\pmb{W}\pmb{z}_i\)</span>。</p>
+<p>  对于整个数据集，原样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与投影重构<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>之间距离为，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\sum_{i=1}^m \left\Vert \sum_{j=1}^{d'}z_{ij}\pmb{w}_j-\pmb{x}_i\right\Vert^2 &amp;=\sum_{i=1}^m \pmb{z}_i^\top\pmb{z}_i-2\sum_{i=1}^m\pmb{z}_i^\top\pmb{W}^\top\pmb{x}_i + \textrm{const}\\
+&amp;=\sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i-2\sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i +\textrm{const}\\
+&amp;=-\text{tr}\left( \sum_{i=1}\pmb{x}_i^\top\pmb{W}\pmb{W}^\top\pmb{x}_i  \right)+\textrm{const}\\
+&amp;\propto-\text{tr}\left(\pmb{W}^\top\left(\sum_{i=1}^m \pmb{x}_i\pmb{x}_i^\top  \right)\pmb{W} \right)
+\end{split}
+\end{split}\]</div>
+<p>PCA的优化目标则变成，</p>
+<div class="math notranslate nohighlight" id="equation-pca-target">
+<span class="eqno">(1)<a class="headerlink" href="#equation-pca-target" title="Link to this equation">¶</a></span>\[\begin{split}
+\begin{split}
+\min\limits_{\pmb{W}}\quad &amp;-\text{tr}\left(\pmb{W}^\top\pmb{XX}^\top\pmb{W} \right)\\
+\textrm{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
+\end{split}
+\end{split}\]</div>
+<p>其中，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times m}, \qquad
+\pmb{W}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{w}_1&amp;\pmb{w}_2&amp;\dots&amp;x_{d'}\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times d'}
+\end{split}\]</div>
+<section id="id3">
+<h3>优化问题的求解<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>  使用拉格朗日乘子法，可得，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\mathcal{L}(\pmb{W},\pmb{\lambda})&amp;=\textrm{tr}(\pmb{W}^\top\pmb{XX}^\top\pmb{W})+\lambda(\pmb{W}^\top\pmb{W}-\pmb{I})\\
+&amp;=\sum_{i=1}\pmb{w}_i^\top\pmb{XX}^\top\pmb{w}_i + \sum_{i=1}\lambda_i(\pmb{w}_i^\top\pmb{w}_i-1)
+\end{split}
+\end{split}\]</div>
+<p>则有，<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=\pmb{XX}^\top\pmb{w}_i-\lambda_i\pmb{w}_i
+\]</div>
+<p>令<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=0\)</span>，则有</p>
+<div class="math notranslate nohighlight" id="equation-pca-solution">
+<span class="eqno">(2)<a class="headerlink" href="#equation-pca-solution" title="Link to this equation">¶</a></span>\[
+\pmb{X}\pmb{X}^\top\pmb{w}_i=\lambda_i\pmb{w}_i
+\]</div>
+<p>于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量构成<font color="red">投影矩阵<span class="math notranslate nohighlight">\(W^*=(w_1,w_2,...,w_{d'})\)</span></font>。该矩阵即为主成分分析的<strong>解</strong>。</p>
+</section>
+<section id="pca1">
+<h3>PCA算法1–特征值分解<a class="headerlink" href="#pca1" title="Link to this heading">¶</a></h3>
+<p>  通过样本协方差矩阵计算PCA。</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>算法：特征值分解p实现PCA</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>输入</strong>：样本集<span class="math notranslate nohighlight">\(\mathcal{D}=\{x_1,x_2,...,x_m\}\)</span>，低维空间维数<span class="math notranslate nohighlight">\(d'\)</span>.<br/><strong>过程</strong>：<br/>  1：样本中心化： <span class="math notranslate nohighlight">\(\pmb{x}_i=\pmb{x}_i-\frac{1}{m}\sum_{i=1}^m\pmb{x}_i\)</span>；<br/>  2：计算样本的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^T\)</span>;<br/>  3：对协方差矩阵做特征值分解；<br/>  4：取出最大的<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量<span class="math notranslate nohighlight">\(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'}\)</span>；<br/><strong>输出</strong>： 投影矩阵<span class="math notranslate nohighlight">\(\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})\)</span>。</p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p><strong>示例代码</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">scatter_matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">eig_val</span><span class="p">,</span><span class="n">eig_vec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">scatter_matrix</span><span class="p">)</span>
+    <span class="n">eig_pairs</span><span class="o">=</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eig_val</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">eig_vec</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">)]</span>
+    <span class="n">eig_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">eig_pairs</span><span class="p">[:</span><span class="n">k</span><span class="p">]])</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">features</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">features</span>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+    <span class="n">X_new</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">X_new</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    
+    
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;ro&#39;</span><span class="p">)</span><span class="c1">#,c = &#39;r&#39;,marker = &#39;o&#39;)</span>
+    <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">x1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">y1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="s1">&#39;b-&#39;</span><span class="p">)</span>
+
+    <span class="n">proj_dir</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">proj_dir</span><span class="o">=</span><span class="n">proj_dir</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+    <span class="c1">#计算投影</span>
+    <span class="n">PX</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">proj_dir</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+        <span class="n">px</span><span class="o">=</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">py</span><span class="o">=</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">PX</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">px</span><span class="p">,</span><span class="n">py</span><span class="p">])</span>
+    <span class="n">PX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">PX</span><span class="p">)</span>  
+    <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="s1">&#39;y:&#39;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;(</span><span class="si">%.0f</span><span class="s2">,</span><span class="si">%.0f</span><span class="s2">)&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">xy</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">xy</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">xy</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">)</span> <span class="c1">#标注数据样本</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="pca2svd">
+<h3>PCA算法2–SVD分解<a class="headerlink" href="#pca2svd" title="Link to this heading">¶</a></h3>
+<p>  PCA除了对于协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>进行特征值分解计算得到投影特征向量之外，还可以通过SVD矩阵分解技术得到投影向量。SVD矩阵分解如下式所示，</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
+\]</div>
+<p>这里的<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>是正常的数据集矩阵。即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\hat{\pmb{X}}=\begin{pmatrix}-&amp;\pmb{x}_1 &amp;-\\ -&amp;\pmb{x}_1 &amp;-\\ 
+\vdots&amp;\vdots &amp;\vdots\\ -&amp;\pmb{x}_m &amp;-\\ \end{pmatrix}
+\end{split}\]</div>
+<p>  PCA中的<span class="math notranslate nohighlight">\(\pmb{X}=\hat{\pmb{X}}^\top\)</span>，因此有，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
+\]</div>
+<p>  最终，<span class="math notranslate nohighlight">\(\pmb{V}\)</span>的最大前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量所组成的矩阵即为变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})\)</span>。而<span class="math notranslate nohighlight">\(\pmb{V}\)</span>可以通过SVD分解获得。</p>
+<p>  投影后的新数据(<span class="math notranslate nohighlight">\(d'&lt;n\)</span>)，</p>
+<div class="math notranslate nohighlight" id="equation-pca-svd-proj">
+<span class="eqno">(3)<a class="headerlink" href="#equation-pca-svd-proj" title="Link to this equation">¶</a></span>\[
+\pmb{Z}=\pmb{X}^\top\pmb{W}^*=\pmb{U\Sigma V}^\top\pmb{W}^*\approx\pmb{U\Sigma}
+\]</div>
+<ul class="simple">
+<li><p>示例</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">scatter_matrix</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">X</span><span class="p">),</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">eig_val</span><span class="p">,</span><span class="n">eig_vec</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">scatter_matrix</span><span class="p">)</span>
+    <span class="n">eig_pairs</span><span class="o">=</span><span class="p">[(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eig_val</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span><span class="n">eig_vec</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_features</span><span class="p">)]</span>
+    <span class="n">eig_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">eig_pairs</span><span class="p">[:</span><span class="n">k</span><span class="p">]])</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">features</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pca_svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="o">-</span><span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">U</span><span class="p">,</span><span class="n">S</span><span class="p">,</span><span class="n">Vt</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">W</span><span class="o">=</span><span class="n">Vt</span><span class="o">.</span><span class="n">T</span><span class="p">[:,:</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">W</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span><span class="n">W</span>
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span> 
+    <span class="n">X_new</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">pca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">X_new_svd</span><span class="p">,</span><span class="n">f_svd</span><span class="o">=</span><span class="n">pca_svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X_eig_decom&#39;</span><span class="p">,</span><span class="n">X_new</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;X_svd&#39;</span><span class="p">,</span><span class="n">X_new_svd</span><span class="p">)</span>
+    
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>    
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">=</span><span class="n">features</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>    
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;ro&#39;</span><span class="p">)</span><span class="c1">#,c = &#39;r&#39;,marker = &#39;o&#39;)</span>
+        <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">x1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">b</span><span class="o">/</span><span class="n">a</span><span class="p">))</span><span class="c1">#features[1,0]/features[0,0]))</span>
+        <span class="n">y1</span><span class="o">=</span><span class="n">y</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">b</span><span class="o">/</span><span class="n">a</span><span class="p">))</span><span class="c1">#features[1,0]/features[0,0]))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y1</span><span class="p">,</span><span class="s1">&#39;b--&#39;</span><span class="p">)</span>    
+    
+        <span class="n">proj_dir</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">])</span><span class="c1">#features[0,0],features[1,0]])</span>
+        <span class="n">proj_dir</span><span class="o">=</span><span class="n">proj_dir</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+        <span class="c1">#计算投影</span>
+        <span class="n">PX</span><span class="o">=</span><span class="p">[]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">proj_dir</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+            <span class="n">px</span><span class="o">=</span><span class="n">p</span><span class="o">*</span><span class="n">proj_dir</span>
+            <span class="n">PX</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">px</span><span class="p">)</span>
+            <span class="c1">#px=p*np.cos(np.arctan(features[1,0]/features[0,0]))</span>
+            <span class="c1">#py=p*np.sin(np.arctan(features[1,0]/features[0,0]))</span>
+            <span class="c1">#PX.append([px,py])</span>
+        <span class="n">PX</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">PX</span><span class="p">)</span>  
+        <span class="k">for</span> <span class="n">ix</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">c</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">0</span><span class="p">]],[</span><span class="n">X</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">PX</span><span class="p">[</span><span class="n">ix</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span><span class="s1">&#39;y:&#39;</span><span class="p">)</span>       
+        
+   
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3>核主成分分析<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
+<p>  <strong>首先考查核矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span>与协方差矩阵<span class="math notranslate nohighlight">\(\pmb{C}\triangleq\frac1m\pmb{XX}^\top\)</span>特征向量之间的关系</strong>。
+对实对称矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>进行特征值分解<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}\)</span>，等式两边同时乘上<span class="math notranslate nohighlight">\(\pmb{X}\)</span>，则可以得到，</p>
+<div class="math notranslate nohighlight">
+\[
+(\pmb{XX}^\top)(\pmb{XU})=(\pmb{XU})\pmb{\Lambda}
+\]</div>
+<p>从上式可以得到<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量为<span class="math notranslate nohighlight">\(\pmb{V}\triangleq\pmb{XU}\)</span>，特征值对角矩阵为<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>。注意到特征向量的模长，</p>
+<div class="math notranslate nohighlight">
+\[
+\Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\pmb{u}_j^\top\pmb{u}_j\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
+\]</div>
+<p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
+<p>  <strong>现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span></strong>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
+<div class="math notranslate nohighlight">
+\[\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}\]</div>
+<p>其中<span class="math notranslate nohighlight">\(\pmb{U\Lambda}\)</span>分别为<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}\)</span>的特征向量矩阵以及对应的特征值。</p>
+<p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。<strong>解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span></strong>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
+\]</div>
+<p>  最后要注意的是<span class="math notranslate nohighlight">\(\pmb{K}\)</span>在特征值分解之前，需要中心化。中心化可通过以下步骤计算得到。</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\tilde{\pmb{K}}&amp;=\pmb{K}-\frac1N\pmb{K11}^\top-\frac1N\pmb{11}^\top\pmb{K}+\frac{1}{N^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top\\
+&amp;=\pmb{K}-\pmb{KO}-\pmb{{OK}}+\pmb{OKO}
+\end{split}
+\end{split}\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{O}=\frac1N \pmb{1}\pmb{1}^\top, \pmb{1}=[1,1,...,1]_{1\times N}^\top\)</span>。</p>
+<ul class="simple">
+<li><p>示例</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">kpca</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; </span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    X : np.array with n x d</span>
+<span class="sd">    k : int rank of the low-dimension</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : projection data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">k</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Dimensions of output data has to be lesser than the dimensions of input data</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="c1"># construct K</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">k_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">X</span><span class="p">[</span><span class="n">row</span><span class="p">,:]</span><span class="o">-</span><span class="n">X</span><span class="p">[</span><span class="n">col</span><span class="p">,:])</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_ij</span><span class="p">)</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">K</span><span class="o">+</span><span class="n">K</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">row</span><span class="p">]</span><span class="o">=</span><span class="n">K</span><span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">row</span><span class="p">]</span><span class="o">/</span><span class="mi">2</span>
+        
+    <span class="c1"># normalize K</span>
+    <span class="n">all1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="p">,</span><span class="n">n</span><span class="p">))</span><span class="o">/</span><span class="n">n</span>
+    <span class="n">K_center</span> <span class="o">=</span> <span class="n">K</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all1</span><span class="p">,</span><span class="n">K</span><span class="p">)</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K</span><span class="p">,</span><span class="n">all1</span><span class="p">)</span><span class="o">+</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">all1</span><span class="p">,</span><span class="n">K</span><span class="p">),</span><span class="n">all1</span><span class="p">)</span>
+    
+    <span class="c1"># eigvector</span>
+    <span class="n">S</span><span class="p">,</span><span class="n">U</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">K_center</span><span class="p">)</span>      
+    <span class="n">V</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">S</span><span class="p">))))</span>
+    
+    <span class="n">eig_pairs</span><span class="o">=</span><span class="p">[(</span><span class="n">S</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">V</span><span class="p">[:,</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">S</span><span class="p">))]</span>
+    <span class="n">eig_pairs</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="n">ele</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">ele</span> <span class="ow">in</span> <span class="n">eig_pairs</span><span class="p">[:</span><span class="n">k</span><span class="p">]]))</span>
+    <span class="n">V</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">K_center</span><span class="p">,</span><span class="n">V</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">数据降维</a><ul>
+<li><a class="reference internal" href="#id2">主成分分析</a><ul>
+<li><a class="reference internal" href="#id3">优化问题的求解</a></li>
+<li><a class="reference internal" href="#pca1">PCA算法1–特征值分解</a></li>
+<li><a class="reference internal" href="#pca2svd">PCA算法2–SVD分解</a></li>
+<li><a class="reference internal" href="#id4">核主成分分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/ml/dimension_reduce_2.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">数据降维</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
+    </div>
+  </body>
+</html>
