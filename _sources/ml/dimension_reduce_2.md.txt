@@ -313,3 +313,182 @@ def kpca(X,k):
     data=np.dot(K_center,V)
     return data
 ```
+
+### 多维缩放
+
+&emsp;&emsp;多维缩放(multiple dimensional scaling, MDS)的**主要思想**是原始空间中样本之间的距离在低维空间得以保持。
+
+&emsp;&emsp;假设$m$个样本在原始空间($d$维)的**距离矩阵**为$\pmb{D}\subseteq \mathbb{R}^{m\times m}$，样本集映射后在$d'$维空间的表示为$\pmb{Z}\in \mathbb{R}^{m\times d'}$。MDS的任务是获得$d'$维空间的数据矩阵$\pmb{Z}$，且任意两个样本在$d'$维空间的欧式距离$\parallel\pmb{z}_i-\pmb{z}_j\parallel^2$等于原始空间的距离$D_{ij}$，即
+
+$$
+\boxed{
+\parallel \pmb{z}_i-\pmb{z}_j\parallel^2=D_{ij},\quad \forall i,j\in [1,m]. }
+$$(mds-target)
+
+- **映射前后样本距离保持一致**
+
+&emsp;&emsp;**求解**MDS。假设映射**且中心化**后样本集$\pmb{Z}=\{\pmb{z}_i\}_{i=1}^m$的**内积矩阵**为$\pmb{B}$。根据条件，映射前后的距离要保持一致，可将等式{eq}`mds-target`左边改写为，
+
+$$
+\begin{split}
+\parallel \pmb{z}_i-\pmb{z}_j\parallel^2&=\parallel\pmb{z}_i\parallel^2+\parallel\pmb{z}_j\parallel^2-2\pmb{z}_i^\top\pmb{z}_j\\
+&=B_{ii}+B_{jj}-2B_{ij}\\
+&=D_{ij}
+\end{split}
+$$(detailed-mds-target)
+
+&emsp;&emsp;数据矩阵$\pmb{Z}$已中心化(样本=样本-样本均值)，则可得到以下结论，
+
+$$
+\begin{split}
+\sum_{i}D_{ij}&=\sum_i B_{ii}+B_{jj}-2B_{ij}=\textrm{tr}(\pmb{B})+mB_{jj}\\
+\sum_{j}D_{ij}&=\sum_i B_{ii}+B_{jj}-2B_{ij}=\textrm{tr}(\pmb{B})+mB_{ii}\\
+\sum_{ij}D_{ij}&=\sum_{ij} B_{ii}+B_{jj}-2B_{ij}=\sum_j\textrm{tr}(\pmb{B})+mB_{jj}=2m\cdot\textrm{tr}(\pmb{B})\\
+\end{split}
+$$
+
+令，
+
+$$
+\begin{split}
+D_{i\cdot}&\triangleq\frac1m\sum_{j}D_{ij}\\
+D_{\cdot j}&\triangleq\frac1m\sum_{i}D_{ij}\\
+D_{\cdot\cdot}&\triangleq\frac{1}{m^2}\sum_i\sum_{j}D_{ij}\\
+\end{split}
+$$
+
+综合上述结论，代入等式{eq}`detailed-mds-target`，可得最终结论，
+
+$$
+\boxed{
+\begin{split}
+B_{ij}&=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
+&=-\frac12\left(D_{ij}-D_{i\cdot}-D_{\cdot j}+D_{\cdot\cdot} \right)
+\end{split}}
+$$(mds-solution)
+
+&emsp;&emsp;等式{eq}`mds-solution`**说明**：在保持映射前后样本距离不变的前提下，映射后的$d'$维空间样本的内积矩阵$\pmb{B}$与原$d$维空间样本的距离矩阵$\pmb{D}$的双中心化结果一致。这也是双中心化的意义，即距离信息可转化为内种形式（可表示为相似性）。
+
+- **获得降维后的样本矩阵$\pmb{Z}$**
+
+&emsp;&emsp;对矩阵$\pmb{B}$（实对称矩阵）做特征值分解，$\pmb{B}=\pmb{V\Lambda V}^\top=\pmb{Z}^\top\pmb{Z}$。假设有$d_*$个非零特征值构成对角矩阵$\pmb{\Lambda}_*=\textrm{diag}(\lambda_1,\lambda_2,...,\lambda_{d_*})$,以及所对应的特征向量矩阵$\pmb{V}_*$，则$\pmb{Z}$可以表示为，
+
+$$
+\pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{m\times d_*}
+$$
+
+&emsp;&emsp;现实应用中，可以选择$d'<d$个最大特征值构成的对角阵$\hat{\pmb{\Lambda}}$及特征向量矩阵$\hat{\pmb{V}}$，即
+
+$$
+\pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
+$$
+
+
+#### 中心化
+
+- **中心化**
+
+&emsp;&emsp;所谓**中心化**是指，对所有样本减去样本均值。定义以下矩阵为中心化矩阵，即
+
+$$
+\pmb{H}\triangleq \pmb{I}_m-\frac1m\pmb{1}\pmb{1}^\top
+$$(center-matrix)
+
+&emsp;&emsp;若有矩阵$\pmb{K}\in\mathbb{R}^{m\times m}$，则中心化矩阵有3种情形：
+
+|中心化操作|意义|
+|:---:|:---:|
+|$\pmb{HK}$左乘中心化矩阵|对矩阵$\pmb{K}$的每列（列向量）进行中心化。|
+|$\pmb{KH}$右乘中心化矩阵|对矩阵$\pmb{K}$的每行（行向量）进行中心化。|
+|$-\frac12\pmb{HKH}$双中心化|对矩阵$\pmb{K}$的每行每列进行中心化。|
+
+- **双中心化**
+
+&emsp;&emsp;**双中心化**：若将距离矩阵进行双中心化，则可将距离信息转化为内积形式，这与多维缩放的结果一致。假设$D_{ij}=\parallel \pmb{x}_i-\pmb{x}_j\parallel^2$，数据矩阵$\pmb{X}\in\mathbb{R}^{d\times m}$，中心化的样本$\pmb{x}_i^*=\pmb{x}_i-\bar{\pmb{x}}$，Gram矩阵$\pmb{K}=\pmb{X}^\top\pmb{X}$，则有，
+
+$$
+\begin{split}
+\pmb{K}^*\triangleq{\pmb{X}^*}^\top\pmb{X}^*&=\pmb{XH}^\top\pmb{XH}\\
+&=\pmb{H}\pmb{X}^\top\pmb{X}\pmb{H}\\
+&=\pmb{HKH}\\
+&=\left(\pmb{I}_m-\frac1m\pmb{1}\pmb{1}^\top\right)\pmb{K}\left(\pmb{I}_m-\frac1m\pmb{1}\pmb{1}^\top\right)\\
+&=\pmb{K}-\frac1m\pmb{K}\pmb{1}\pmb{1}^\top-\frac1m\pmb{1}\pmb{1}^\top\pmb{K}+\frac{1}{m^2}\pmb{1}\pmb{1}^\top\pmb{K}\pmb{1}\pmb{1}^\top
+\end{split}
+$$
+
+&emsp;&emsp;若对$\pmb{D}$(实对称矩阵)进行双中心化(先中心化再乘上因子$-\frac12$)，则正好有以下结论，
+
+$$
+\begin{split}
+\pmb{D}^*&=\pmb{HDH}\\
+&=\pmb{D}-\frac1m\pmb{D}\pmb{1}\pmb{1}^\top-\frac1m\pmb{1}\pmb{1}^\top\pmb{D}+\frac{1}{m^2}\pmb{1}\pmb{1}^\top\pmb{D}\pmb{1}\pmb{1}^\top
+\end{split}
+$$
+
+即
+
+$$
+\boxed{
+-\frac12\pmb{HDH}=\pmb{B}}
+$$
+
+&emsp;&emsp;这说明**双中心化与多维缩放的结论是一致的**。
+
+#### 算法
+
+|算法：多维缩放|
+|:---|
+|&emsp;&emsp;**输入**：距离矩阵$\pmb{D}$，低维空间维数$d'$.<br/>&emsp;&emsp;**过程**：<br/>&emsp;&emsp;&emsp;&emsp;1. 计算$\pmb{D}$;<br/>&emsp;&emsp;&emsp;&emsp;2. 计算矩阵$\pmb{B}$;<br/>&emsp;&emsp;&emsp;&emsp;3. 矩阵$\pmb{B}$做特征值分解；<br/>&emsp;&emsp;&emsp;&emsp;4. 选取$\hat{\pmb{V}},\hat{\pmb{\Lambda}}$；<br/>&emsp;&emsp;**输出**： 矩阵$\hat{\pmb{V}}\hat{\pmb{\Lambda}}^{1/2}$每一行即为一个样本的低维坐标。|
+
+
+### 等度量映射
+
+&emsp;&emsp;等度量映射(Isometric Mapping, Isomap)的**基本出发点**在于，Isomap认为低维流行嵌入到高维空间之后，直接在高维空间计算直线距离具有误导性，因为高维空间的直线距离在低维流行是不可达的（如：瑞士卷上两个点（位于同一$x,y$坐标，$z$不同坐标）是不能用直线距离来计算的，因为该流行是扭曲过的）。**流形学习**认为$d$维流形是$n$维空间$(d<n)$的一部分，局部类似于$d$维超平面。例如：2D流形是一个2D形状，该形状可以在更高维的空间中弯曲和扭曲。因此，低维嵌入流形上的**本真距离**（**测地线距离**）不能用高维空间的直线距离来计算，但能用近邻距离来近似。
+
+&emsp;&emsp;**如何计算测地线距离呢**？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。
+
+#### Isomap算法
+
+|算法：Isometric Mapping, Isomap|
+|:---|
+|**输入**：样本集$\mathcal{D}=\{\pmb{x}_1,\pmb{x}_2,...,\pmb{x}_m\}$，低维空间维数$d'$.<br/>**过程**：<br/>&emsp;&emsp;1. 确定每个样本$\pmb{x}_i$的$k$近邻;<br/>&emsp;&emsp;2. 使用最短路径算法(例如：Dijkstra)计算$k$近邻图的任意样本间距离$dist(\pmb{x}_i,\pmb{x}_j)$;<br/>&emsp;&emsp;3. 以$dist(\pmb{x}_i,\pmb{x}_j)$为输入，使用MDS计算低维坐标；<br/>**输出**： MDS计算的低维坐标。|
+
+
+#### 流形
+
+&emsp;&emsp;在介绍流形前，需要一些有关的背景知识。
+
+- **拓扑空间**
+
+&emsp;&emsp;给定集合$\mathcal{X}$，以及$\mathcal{X}$的一些子集构成的族$\mathcal{O}$，如果以下性质成立，则$(\mathcal{X},\mathcal{O})$称为一个拓扑空间：
+1. $\emptyset$和$\mathcal{X}$都属于$\mathcal{O}$；
+2. $\mathcal{O}$中的任意多个元素的并仍属于$\mathcal{O}$；
+3. $\mathcal{O}$中的任意多个元素的交仍属于$\mathcal{O}$；
+
+此时，$\mathcal{X}$中的元素称为点，$\mathcal{O}$中的元素称为开集（可以理解为开区间）。
+
+
+- **度量空间**
+
+&emsp;&emsp;度量空间是一个二元对$(\mathcal{M},d)$，其中$\mathcal{M}$是一个集合，$d$是定义在$\mathcal{M}$上的一个度量，即映射$d: \mathcal{M}\times \mathcal{M}\rightarrow \mathbb{R}$，对于任意$\pmb{x,y,z}\in M$满足以下条件：
+1. $d(\pmb{x,y})=0 \Leftrightarrow \pmb{x}=\pmb{y}$;
+2. $d(\pmb{x,y})=d(\pmb{y,x})$;
+3. $d(\pmb{x,z})\le d(\pmb{x,y})+d(\pmb{y,z})$;
+
+- **流形**
+
+&emsp;&emsp;流形是一个拓扑空间，对于每个点，其周围的邻域局部类似于欧几里得空间。更确切地说，$n$维流形的每个点都有一个邻域开集，该邻域与$n$维欧几里德空间的邻域开集同胚。人们经常可以想象拉伸或平坦流形的局部邻域以得到一个平坦的欧几里得平面。大致地说，拓扑空间是一个几何物体，同胚就是把物体连续延展和弯曲，使其成为一个新的物体。因此，正方形和圆是同胚的，但球面和环面就不是。
+
+&emsp;&emsp;在拓扑学中，同胚(homeomorphism、topological isomorphism、bi continuous function)是两个拓扑空间之间的**双连续函数**。同胚是拓扑空间范畴中的同构；也就是说，它们是保持给定空间的所有拓扑性质的映射。如果两个空间之间存在同胚，那么这两个空间就称为同胚的，从拓扑学的观点来看，两个空间是相同的。
+
+&emsp;&emsp;一个较大的$m$维空间($n<m$)中的$n$维流形
+)局部类似于$n$维欧几里得超平面。例如
+
+1. 1维流形：圆，正方形，曲线等。但8字形不是1维流形，因为8字的中心点局部是2维的欧氏空间同胚。
+2. 2维流形：球面，环面等。
+
+&emsp;&emsp;由于流形结构是由“局部”类似于欧几里得空间的性质定义的，我们不必考虑任何全局的、外部定义的坐标系的几何关系，相反，我们可以只考虑流形的内在几何和拓扑性质。
+
+### 拉普拉斯特征映射
+
+&emsp;&emsp;拉普拉斯特征映射(Laplacian eigenmaps)的基本思想是：保留高维数据的局部结构。即高维空间的两个样本是近邻，则在低维中也应是近邻。

@@ -21,7 +21,7 @@
    :caption: 监督学习
    :numbered:
 
-   ml/dimension_reduce.md
+   ml/dimension_reduce_2.md
    ml/decision_tree.md
    ml/bayes.md
    ml/EM.md
