@@ -39,9 +39,12 @@ extensions = [
     'sphinx_togglebutton',
     'sphinx.ext.mathjax',
     'sphinx-mathjax-offline',  
+    'rst2pdf.pdfbuilder',  # pdf生成 make latexpdf
 ]
 #    "jupyter_sphinx",   
 #]
+
+latex_engine = 'xelatex'  # pdf生成
 
 # 中文pdf配置
 latex_elements={
