@@ -43,6 +43,19 @@ extensions = [
 #    "jupyter_sphinx",   
 #]
 
+# 中文pdf配置
+latex_elements={
+    'papersize':'a4paper',
+    'pointsize':'8pt',
+    'fontpkg':r'''
+        \usepackage{xltxtra,fontspec,xunicode}
+        \usepackage[slantfont,boldfont]{xeCJK}
+        \usepackage{fontspec}
+        \setCJKmainfont[BoldFont=SimHei,ItalicFont=KaiTi]{FangSong}
+    '''
+}
+
+
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
