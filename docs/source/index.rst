@@ -45,6 +45,7 @@
    :numbered:
 
    kernel/base.md
+   kernel/base2.md
    kernel/RKHS.md
    kernel/MMD.md
    kernel/covariance_operators.md

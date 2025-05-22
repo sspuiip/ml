@@ -250,35 +250,5 @@ $$
 \end{split}
 $$(kernel-centering)
 
----
-## 投影
 
-&emsp;&emsp;**定义 （投影）**. 投影$P$是一个映射，且满足以下条件：
 
-$$
-P(\pmb{x})=P(P(\pmb{x}))\quad\wedge\quad\langle P(\pmb{x}),\pmb{x}-P(\pmb{x})\rangle=0
-$$(vector-proj)
-
-&emsp;&emsp;**定义 （正交投影）**. 投影$P$的正交投影$P^\perp$为，
-
-$$
-P^\perp(\pmb{x}) \triangleq \pmb{x}-P(\pmb{x})
-$$(orthogonal-proj)
-
-&emsp;&emsp;$\phi(\pmb{x})$在向量$\pmb{w}$上的**投影**$P_{\pmb{w}}(\phi(\pmb{x}))$为，
-
-$$
-P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
-$$
-
-如果$\pmb{w}$已单位化，则有，
-
-$$
-P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
-$$(feature-proj)
-
-因此，**正交投影**$ P_{\pmb{w}}^\bot \phi(\pmb{x}) $ 为，
-
-$$
-P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
-$$(feature-orthogonal-proj)
