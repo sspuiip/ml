@@ -38,9 +38,9 @@ extensions = [
     'sphinx_design',
     'sphinx_togglebutton',
     'sphinx.ext.mathjax',
-    'sphinx-mathjax-offline',  
+    'sphinx-mathjax-offline',  ]
     #'rst2pdf.pdfbuilder',  # pdf生成 make latexpdf
-]
+#]
 #    "jupyter_sphinx",   
 #]
 

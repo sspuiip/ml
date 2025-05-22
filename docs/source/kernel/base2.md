@@ -84,3 +84,56 @@ $$
 \pmb{u}_j^\top\phi(\pmb{x})=\frac{1}{n\sigma_j}\pmb{v}_j^\top\pmb{Y}^\top\pmb{X}\phi(\pmb{x})=\sum_{i=1}^n\left(\frac{1}{n\sigma_j}\pmb{Yv}_j\right)\kappa(\pmb{x}_i,\pmb{x})
 $$(new-sample-proj)
 
+## 广义特征值
+
+&emsp;&emsp;广义特征值问题如下，
+
+$$
+\boxed{\pmb{Aw}=\lambda\pmb{Bw}}
+$$(generalised-eigenvalue)
+
+其中，$\pmb{A},\pmb{B}$均为对称矩阵，此外，$\pmb{B}$是正定的。标准特征值问题是上述问题的特殊形式，即$\pmb{B}=\pmb{I}$。对于**广义Rayleigh商**(generalized Rayleigh quotient)来说，
+
+$$
+\rho(\pmb{w})=\frac{\pmb{w}^\top\pmb{Aw}}{\pmb{w}^\top\pmb{Bw}}
+$$(generalised-Rayleigh)
+
+广义特征值也是最大化广义Rayleigh商的解，即
+
+$$
+\begin{split}
+\max\limits_{\pmb{w}}\quad &\pmb{w}^\top\pmb{Aw}\\
+\textrm{s.t.}\quad &\pmb{w}^\top\pmb{Bw}=1
+\end{split}
+$$(max-generalised-rayleigh)
+
+&emsp;&emsp;式{eq}`generalised-eigenvalue`可以通过左乘矩阵$\pmb{B}^{-1}$转化为标准特征值问题，即
+
+$$
+\pmb{B}^{-1}\pmb{Aw}=\lambda\pmb{w}
+$$(transform-generalised-eigenvalue)
+
+然而，需要注意的是：虽然$\pmb{A},\pmb{B}$都是对称矩阵，但$\pmb{B}^{-1}\pmb{A}$不一定是对称矩阵。$\pmb{B}$是正定的对称矩阵，因此，可以分解为$\pmb{B}^{1/2}\pmb{B}^{1/2}=\pmb{B}$（可通过特征值分解得到平方根）。
+
+&emsp;&emsp;对式{eq}`generalised-eigenvalue`左乘$\pmb{B}^{-1/2}$，并令$\boxed{\pmb{w}=\pmb{B}^{-1/2}\pmb{v}}$，则可得到下标准特征值等式，
+
+$$
+\boxed{\pmb{B}^{-1/2}\pmb{AB}^{-1/2}\pmb{v}=\lambda\pmb{v}}
+$$(transform-generalized-eigenvalue-normalise)
+
+可以验证$\pmb{B}^{-1/2}\pmb{AB}^{-1/2}=(\pmb{B}^{-1/2}\pmb{AB}^{-1/2})^\top$，即结果矩阵为对称矩阵。对该矩阵使用特征值分解，即可得到正交的特征向量$\pmb{v}_i$及其对应的特征值$\lambda_i$，因此，式{eq}`generalised-eigenvalue`的解为，
+
+$$
+\boxed{\pmb{w}_i=\pmb{B}^{-1/2}\pmb{v}_i}
+$$(solution-of-generalized-eigenvaleu)
+
+&emsp;&emsp;**广义特征值的性质**:
+
+1. 如果特征值不相同，则在$\pmb{A},\pmb{B}$定义的度量(metrics)中，特征向量具有以下正交性：
+  - $\pmb{w}_i^\top\pmb{B}\pmb{w}_j=\delta_{ij}$，满足此性质的向量$\pmb{w}_i,\pmb{w}_j$也称为关于$\pmb{B}$的共轭向量。
+  - $\pmb{w}_i^\top\pmb{A}\pmb{w}_j=\delta_{ij}\lambda_i$
+
+2. 矩阵$\pmb{A}$可分解为：$\pmb{A}=\sum_{i=1}^n\lambda_i\pmb{Bw}_i\pmb{Bw}_i^\top$。
+
+
+
