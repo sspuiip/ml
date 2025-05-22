@@ -28,7 +28,7 @@
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="2. 再生核希尔伯特空间" href="RKHS.html" />
+    <link rel="next" title="2. 核函数基础2" href="base2.html" />
     <link rel="prev" title="2. BiClustering" href="../ml/biClustering.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
@@ -38,7 +38,7 @@
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="RKHS.html" title="2. 再生核希尔伯特空间"
+          <a href="base2.html" title="2. 核函数基础2"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
           <a href="../ml/biClustering.html" title="2. BiClustering"
@@ -60,11 +60,11 @@
 <section id="id3">
 <h3><span class="section-number">1.1.1. </span>示例<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>  首先来看一个核函数的例子。假设有XOR数据集<span class="math notranslate nohighlight">\(X = \{(0,0),(1,0),(0,1),(1,1)\}\)</span>，<span class="math notranslate nohighlight">\(y=\{0,1,1,0\}\)</span>，则该XOR异或问题在原输入空间很难分开两类样本，</p>
-<figure class="align-default" id="id8">
+<figure class="align-default" id="id7">
 <a class="reference internal image-reference" href="../_images/inputspace.png"><img alt="XOR输入空间" src="../_images/inputspace.png" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Fig 1. XOR问题的输入空间示例</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 1. XOR问题的输入空间示例</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  如果我们对原输入空间样本<span class="math notranslate nohighlight">\(\pmb{x}\)</span>做如下映射<span class="math notranslate nohighlight">\(\phi :\mathbb{R}^2\rightarrow\mathbb{R}^3\)</span>，</p>
@@ -73,11 +73,11 @@
 \phi: \pmb{x}=(x_1,x_2)\rightarrow \phi(\pmb{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)
 \]</div>
 <p>不难发现，原空间不可分的XOR问题在新特征空间变的可分，如下图所示</p>
-<figure class="align-default" id="id9">
+<figure class="align-default" id="id8">
 <a class="reference internal image-reference" href="../_images/featurespace.png"><img alt="特征空间" src="../_images/featurespace.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Fig 2. 非线性特征空间</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 2. 非线性特征空间</span><a class="headerlink" href="#id8" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>  因此，原空间难以解决的问题映射至新特征空间后可以得到解决。特征映射成为了关键步骤。那么特征映射<span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>是否必须显式的计算呢？下面，我们来分析一下新特征空间两个任意数据点<span class="math notranslate nohighlight">\(\phi(\pmb{x}),\phi(\pmb{z})\)</span>之间的相似性。采用未正则化的余弦相似性来度量，可知</p>
@@ -92,79 +92,63 @@
 \end{split}
 \end{split}\]</div>
 <p>  经过上式分析，我们发现特征映射后的向量做内积运算等价于原空间向量内积的平方。换句话说，我们可以不用显式计算映射<span class="math notranslate nohighlight">\(\phi\)</span>，直接计算<span class="math notranslate nohighlight">\(\kappa(\pmb{x},\pmb{z})\)</span>就可以实现特征映射后的效果，这一技巧也称之为核技巧(kernel trick), 函数<span class="math notranslate nohighlight">\(\kappa(\cdot,\cdot)\)</span>也称之为核函数。</p>
-<figure class="align-default" id="id10">
+<figure class="align-default" id="id9">
 <a class="reference internal image-reference" href="../_images/kernelfun.jpeg"><img alt="核函数示例" src="../_images/kernelfun.jpeg" style="width: 400px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Fig 3. 非线性映射函数<span class="math notranslate nohighlight">\(\phi\)</span>示例</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+<p><span class="caption-text">Fig 3. 非线性映射函数<span class="math notranslate nohighlight">\(\phi\)</span>示例</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 </section>
 <hr class="docutils" />
 <section id="id4">
 <h3><span class="section-number">1.1.2. </span>什么是核函数<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
-<dl class="simple myst">
-<dt><strong>定义1(内积(inner product))</strong>.</dt><dd><p>令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
-</dd>
-</dl>
+<p>  <strong>定义1(内积(inner product))</strong>. 令 <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> 为一个向量空间，则一个函数<span class="math notranslate nohighlight">\(\langle\cdot,\cdot\rangle_\mathcal{H}:\mathcal{H}\times\mathcal{H}\rightarrow\mathbb{R}\)</span>定义为<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的内积，如果满足以下条件：</p>
 <ol class="arabic simple">
 <li><p><span class="math notranslate nohighlight">\(\langle\alpha_1 f_1+\alpha_2 f_2,g\rangle_{\mathcal{H}}=\alpha_1\langle f_1,g\rangle_\mathcal{H}+\alpha_2\langle f_2,g\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,g\rangle_{\mathcal{H}}=\langle g,f\rangle_{\mathcal{H}}\)</span></p></li>
 <li><p><span class="math notranslate nohighlight">\(\langle f,f\rangle_{\mathcal{H}}\ge 0 and \langle f,f\rangle_{\mathcal{H}}=0\)</span> if and only if <span class="math notranslate nohighlight">\(f=0\)</span></p></li>
 </ol>
 <p>  希尔伯空间是定义了内积的一个空间，并附加了一个技术性条件(A Hilber space is a space on which an inner product is defined, along with an additional technical condition)。</p>
-<dl class="simple myst">
-<dt><strong>定义2(核函数, Kernel)</strong>.</dt><dd><p>令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
-</dd>
-<dd><div class="math notranslate nohighlight" id="equation-eq-kernel-fun">
+<p>  <strong>定义2(核函数, Kernel)</strong>. 令<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为一个非空集合。一个函数 <span class="math notranslate nohighlight">\(k:\mathcal{X}\times\mathcal{X}\rightarrow \mathbb{R}\)</span>称之为核函数，如果存在一个<span class="math notranslate nohighlight">\(\mathbb{R}\)</span>-Hilbert空间以及映射 <span class="math notranslate nohighlight">\(\phi:\mathcal{X}\rightarrow \mathcal{H}\)</span>且满足<span class="math notranslate nohighlight">\(\forall x,x'\in \mathcal{X}\)</span>，</p>
+<div class="math notranslate nohighlight" id="equation-eq-kernel-fun">
 <span class="eqno">(1)<a class="headerlink" href="#equation-eq-kernel-fun" title="Link to this equation">¶</a></span>\[
 k(x,x')=\langle\phi(x),\phi(x')\rangle_\mathcal{H}
 \]</div>
-</dd>
-<dt><strong>Lemma(Sums of kernels are kernels)</strong>.</dt><dd><p>给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-</dd>
-<dt><strong>Lemma(Mapping between spaces)</strong>.</dt><dd><p>若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p>
-</dd>
-<dt><strong>Lemma(Products of kernels are kernels)</strong>.</dt><dd><p>给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p>
-</dd>
-</dl>
-<hr class="docutils" />
+<p>  <strong>核函数性质</strong>. 核函数具有以下性质：</p>
+<ol class="arabic simple">
+<li><p><strong>Lemma(Sums of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(\alpha &gt;0\)</span>以及 <span class="math notranslate nohighlight">\(k,k_1,k_2\)</span>为核函数定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 则有<span class="math notranslate nohighlight">\(\alpha k\)</span>和<span class="math notranslate nohighlight">\(k_1+k_2\)</span>都是定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p></li>
+<li><p><strong>Lemma(Mapping between spaces)</strong>. 若<span class="math notranslate nohighlight">\(\mathcal{X}\)</span> 和<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>为非空集，且有一个映射<span class="math notranslate nohighlight">\(A:\mathcal{X}\rightarrow\tilde{\mathcal{X}}\)</span>. 若有<span class="math notranslate nohighlight">\(k\)</span>定义在域<span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>. 则<span class="math notranslate nohighlight">\(k(A(x),A(x'))\)</span>是一个定义在<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数.</p></li>
+<li><p><strong>Lemma(Products of kernels are kernels)</strong>. 给定<span class="math notranslate nohighlight">\(k_1\)</span>定义在域 <span class="math notranslate nohighlight">\(\mathcal{X}_1\)</span> 以及<span class="math notranslate nohighlight">\(k_2\)</span>定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_2\)</span>, 则 <span class="math notranslate nohighlight">\(k_1\times k_2\)</span>是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}_1\times\mathcal{X}_2\)</span>的核函数。如果<span class="math notranslate nohighlight">\(\mathcal{X}_1=\mathcal{X}_2=\mathcal{X}\)</span>, 则 <span class="math notranslate nohighlight">\(k=k_1\times k_2\)</span> 是一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数。</p></li>
+</ol>
 <section id="id5">
 <h4><span class="section-number">1.1.2.1. </span>常用核函数<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
-<blockquote>
-<div><p><strong>定义 (多项式核函数, Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有如下核函数：</p>
-</div></blockquote>
-<div class="math notranslate nohighlight">
-\[
+<p>  <strong>定义 (多项式核函数, Polynomial kernels)</strong>. 假设<span class="math notranslate nohighlight">\(x,x'\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(d\ge 1\)</span>，且<span class="math notranslate nohighlight">\(m\ge 1\)</span>是一个整数，以及<span class="math notranslate nohighlight">\(c\ge 0\)</span>是一个正实数，则有如下核函数：</p>
+<div class="math notranslate nohighlight" id="equation-poly-kernel">
+<span class="eqno">(2)<a class="headerlink" href="#equation-poly-kernel" title="Link to this equation">¶</a></span>\[
 k(x,x')=(\langle x,x'\rangle+c)^m
 \]</div>
 <p>  我们能否将求和与乘积法则的结合推广到有无限多项的求和?事实证明是可以的。</p>
-<blockquote>
-<div><p><strong>定义 (<span class="math notranslate nohighlight">\(l_p\)</span>空间)</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
-</div></blockquote>
+<p>  <strong>定义 (<span class="math notranslate nohighlight">\(l_p\)</span>空间)</strong> 关于<span class="math notranslate nohighlight">\(p\)</span>-可求和序列的空间<span class="math notranslate nohighlight">\(\ell_p\)</span>，定义为对所有的<span class="math notranslate nohighlight">\((a_i)_{i\ge 1}\)</span>都有</p>
 <div class="math notranslate nohighlight">
 \[
  \sum_{i=1}^{\infty}a_i^p &lt;\infty
  \]</div>
 <p>  核函数可以用<span class="math notranslate nohighlight">\(\ell_2\)</span>序列来定义。</p>
-<blockquote>
-<div><p><strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数</p>
-</div></blockquote>
+<p>  <strong>Lemma</strong>. 给定一个非空集合<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, 以及<span class="math notranslate nohighlight">\(\ell_2\)</span>空间的一个函数序列<span class="math notranslate nohighlight">\((\phi_i(x))_{i\ge 1}\)</span>，其中映射<span class="math notranslate nohighlight">\(\phi_i :\mathcal{X}\rightarrow \mathbb{R}\)</span> 是特征映射<span class="math notranslate nohighlight">\(\phi(x)\)</span>的第<span class="math notranslate nohighlight">\(i\)</span>th坐标，则有一个定义在域<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>的核函数</p>
 <div class="math notranslate nohighlight">
 \[
- k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x')
+ k(x,x')=\sum_{i=1}^\infty\phi_i(x)\phi_i(x').
  \]</div>
 <p>  泰勒级数展开可以用来定义具有无穷多个特征的核(Taylor series expansions may be used to define kernels that have infinityly many features)。</p>
-<blockquote>
-<div><p><strong>定义 (泰勒级数核， Taylor series kernel)</strong>. 假设我们可以定义泰勒级数</p>
-</div></blockquote>
+<p>  <strong>定义 (泰勒级数核， Taylor series kernel)</strong>. 假设我们可以定义泰勒级数</p>
 <div class="math notranslate nohighlight">
 \[
 f(z)=\sum_{n=0}^\infty a_n z^n\quad |z|&lt;r,z\in\mathbb{R}
 \]</div>
 <p>for <span class="math notranslate nohighlight">\(r\in (0,\infty]\)</span>, with <span class="math notranslate nohighlight">\(a_n\ge 0\)</span> for all <span class="math notranslate nohighlight">\(n\ge 0\)</span>. 可定义<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>为空间<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的<span class="math notranslate nohighlight">\(\sqrt{r}\)</span>-球, 则如果<span class="math notranslate nohighlight">\(x,x'\in\mathbb{R}^d\)</span>满足<span class="math notranslate nohighlight">\(\Vert x\Vert &lt;\sqrt{r}\)</span>, 我们有以下核函数</p>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-talor-kernel">
+<span class="eqno">(3)<a class="headerlink" href="#equation-talor-kernel" title="Link to this equation">¶</a></span>\[
 k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 \]</div>
 <p>  <strong>证明</strong>. 核的非负加权和是核，核的乘积是核，所以下面的是核，如果它收敛，</p>
@@ -179,22 +163,18 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
  \]</div>
 <p>因此泰勒级数核收敛.</p>
 <p>  泰勒级数核的一个例子是指数核(An example of a Taylor series kernel is the exponential)。</p>
-<blockquote>
-<div><p><strong>定义 (指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核定义为</p>
-</div></blockquote>
-<div class="math notranslate nohighlight">
-\[
+<p>  <strong>定义 (指数核 (Exponential kernel))</strong>. 域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的指数核(<span class="math notranslate nohighlight">\(f\triangleq \exp(\cdot)\)</span>)定义为,</p>
+<div class="math notranslate nohighlight" id="equation-exp-kernel">
+<span class="eqno">(4)<a class="headerlink" href="#equation-exp-kernel" title="Link to this equation">¶</a></span>\[
  k(x,x')=\exp(\langle x,x'\rangle)
  \]</div>
 <p>  我们可以把以上所有的结果结合起来得到如下结果(乘积规则、映射规则等)</p>
-<blockquote>
-<div><p><strong>示例 (高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
-</div></blockquote>
-<div class="math notranslate nohighlight">
-\[
+<p>  <strong>定义 (高斯核 Gaussian kernel)</strong>. 定义在域<span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>的高斯核为</p>
+<div class="math notranslate nohighlight" id="equation-gauss-kernel">
+<span class="eqno">(5)<a class="headerlink" href="#equation-gauss-kernel" title="Link to this equation">¶</a></span>\[
  k(x,x')=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)
  \]</div>
-<p>  <strong>证明</strong>. 对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
+<p>  <strong>证明</strong>. 高斯核本质上就是指数核的正则化结果。对于指数核函数<span class="math notranslate nohighlight">\(k_1\)</span>进行正则化，</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
@@ -205,14 +185,14 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 <div class="math notranslate nohighlight">
 \[\begin{split}
  \begin{split}
- \underbrace{k_1(x,x')}_{\textrm{normalize}}&amp;=\frac{\exp\{\frac{\langle x,x'\rangle}{\gamma^2}\}}{  \sqrt{\exp\left\{\frac{\Vert x\Vert^2}{\gamma^2} \right\}    \exp\left\{\frac{\Vert x'\Vert^2}{\gamma^2} \right\}}     }\\
+ \underbrace{\hat{k}_1(x,x')}_{\textrm{normalize}}&amp;=\frac{\exp\{\frac{\langle x,x'\rangle}{\gamma^2}\}}{  \sqrt{\exp\left\{\frac{\Vert x\Vert^2}{\gamma^2} \right\}    \exp\left\{\frac{\Vert x'\Vert^2}{\gamma^2} \right\}}     }\\
  &amp;=\exp\left\{{\frac{2\langle x,x'\rangle}{\gamma^2}-\frac{\langle x,x\rangle}{\gamma^2}-\frac{2\langle x',x'\rangle}{\gamma^2}}\right\}\\
  &amp;=\exp(-\gamma^{-2}\Vert x-x'\Vert^2)\\\\
  &amp;=k(x,x')
  \end{split}
  \end{split}\]</div>
 <p>因此可得，高斯核为指数核<span class="math notranslate nohighlight">\(k_1\)</span>的标准化结果。显然高斯核也是一个核函数。</p>
-<p>  高斯核的特征映射为无穷维。下面对其特征映射进行分解，为简化计算，可先假设<span class="math notranslate nohighlight">\(\gamma =1 \)</span>。</p>
+<p>  <strong>高斯核的特征映射为无穷维</strong>。下面对其特征映射进行分解，为简化计算，可先假设<span class="math notranslate nohighlight">\(\gamma =1 \)</span>。</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -232,100 +212,81 @@ k(x,x')=f(\langle x,x'\rangle)=\sum_{n=0}^\infty a_n\langle x,x'\rangle^n
 </section>
 <hr class="docutils" />
 <section id="id6">
-<h2><span class="section-number">1.2. </span>特征映射的基本运算<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">1.2. </span>特征空间的基本运算<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
 <ol class="arabic simple">
-<li><p>模长</p></li>
+<li><p><strong>模长</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-phi-norm">
+<span class="eqno">(6)<a class="headerlink" href="#equation-phi-norm" title="Link to this equation">¶</a></span>\[
 \Vert \phi(\pmb{x})\Vert=\sqrt{\langle \phi(\pmb{x}),\phi(\pmb{x})\rangle}=\sqrt{\kappa(\pmb{x},\pmb{x})}
 \]</div>
 <ol class="arabic simple" start="2">
-<li><p>标准化</p></li>
+<li><p><strong>标准化</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-phi-normalize">
+<span class="eqno">(7)<a class="headerlink" href="#equation-phi-normalize" title="Link to this equation">¶</a></span>\[
 \hat{\phi}(\pmb{x})=\frac{\phi(\pmb{x})}{\Vert\phi(\pmb{x}) \Vert}
 \]</div>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-kernel-normalize">
+<span class="eqno">(8)<a class="headerlink" href="#equation-kernel-normalize" title="Link to this equation">¶</a></span>\[
 \hat{\kappa}(\pmb{x},\pmb{z})=\frac{\kappa(\pmb{x},\pmb{z})}{\sqrt{\kappa(\pmb{x},\pmb{x})\kappa(\pmb{z},\pmb{z})}}
 \]</div>
 <ol class="arabic simple" start="3">
-<li><p>线性组合</p></li>
+<li><p><strong>线性组合</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-phi-linear-comb">
+<span class="eqno">(9)<a class="headerlink" href="#equation-phi-linear-comb" title="Link to this equation">¶</a></span>\[
 \left\Vert \sum_{i=1}^la_i\phi(\pmb{x}_i)\right\Vert^2=\sum_{i,j=1}^l a_ia_j\kappa(\pmb{x}_i\pmb{x}_j)
 \]</div>
 <ol class="arabic simple" start="4">
-<li><p>距离</p></li>
+<li><p><strong>距离</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-phi-dist">
+<span class="eqno">(10)<a class="headerlink" href="#equation-phi-dist" title="Link to this equation">¶</a></span>\[
 \left\Vert \phi(\pmb{x})-\phi(\pmb{z})\right\Vert^2=\kappa(\pmb{x},\pmb{x})-2\kappa(\pmb{x},\pmb{z})+\kappa(\pmb{z},\pmb{z})
 \]</div>
 <ol class="arabic simple" start="5">
-<li><p>均值</p></li>
+<li><p><strong>均值</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
-\left\Vert \phi_S \right\Vert^2=\left\Vert \frac{1}{l}\sum_{i=1}^l\phi(\pmb{x}) \right\Vert^2=\frac1l\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
+<div class="math notranslate nohighlight" id="equation-phi-mean">
+<span class="eqno">(11)<a class="headerlink" href="#equation-phi-mean" title="Link to this equation">¶</a></span>\[
+\left\Vert \phi_S \right\Vert^2=\left\Vert \frac{1}{l}\sum_{i=1}^l\phi(\pmb{x}) \right\Vert^2=\frac{1}{l^2}\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
 <ol class="arabic simple" start="6">
-<li><p>样本均值距离</p></li>
+<li><p><strong>样本均值距离</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-sample-phi-dist">
+<span class="eqno">(12)<a class="headerlink" href="#equation-sample-phi-dist" title="Link to this equation">¶</a></span>\[
 \left\Vert \phi(\pmb{x})-\phi_S\right\Vert^2=\kappa(\pmb{x},\pmb{x})-\frac2l\sum_{i=1}^l\kappa(\pmb{x},\pmb{x}_i)+\frac{1}{l^2}\sum_{i=1}^l\sum_{j=1}^l\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
 <ol class="arabic simple" start="7">
-<li><p>平均样本均值距离</p></li>
+<li><p><strong>平均样本均值距离</strong></p></li>
 </ol>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-mean-sample-phi-dist">
+<span class="eqno">(13)<a class="headerlink" href="#equation-mean-sample-phi-dist" title="Link to this equation">¶</a></span>\[
 \frac1l\sum_{i=1}^l\left\Vert \phi(\pmb{x}_i)-\phi_S\right\Vert^2=\frac1l\sum_{i=1}\kappa(\pmb{x}_i,\pmb{x}_j)-\frac{1}{l^2}\sum_{i=1}\sum_{j=1}\kappa(\pmb{x}_i,\pmb{x}_j)
 \]</div>
 <ol class="arabic simple" start="8">
-<li><p>中心化</p></li>
+<li><p><strong>中心化</strong></p></li>
 </ol>
 <ul class="simple">
-<li><p>样本中心化</p></li>
+<li><p><strong>样本中心化</strong></p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[
+<div class="math notranslate nohighlight" id="equation-sample-centering">
+<span class="eqno">(14)<a class="headerlink" href="#equation-sample-centering" title="Link to this equation">¶</a></span>\[
 \tilde{\phi}(\pmb{x})=\phi(\pmb{x})-\phi_S
 \]</div>
 <ul class="simple">
-<li><p>核函数中心化</p></li>
+<li><p><strong>核函数中心化</strong></p></li>
 </ul>
-<div class="math notranslate nohighlight">
-\[\begin{split}
+<div class="math notranslate nohighlight" id="equation-kernel-centering">
+<span class="eqno">(15)<a class="headerlink" href="#equation-kernel-centering" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
 \tilde{\kappa}(\pmb{x},\pmb{z})&amp;=\langle\phi(\pmb{x})-\phi_S,\phi(\pmb{x})-\phi_S\rangle\\
 &amp;=\kappa(\pmb{x},\pmb{z})-\frac1l\sum_{i=1}\kappa(\pmb{x}_i,\pmb{z})-\frac{1}{l}\kappa\sum_{i=1}\kappa(\pmb{x}_i,\pmb{x})+\frac{1}{l^2}\sum_{i,j=1}\kappa(\pmb{x}_i,\pmb{x}_j)\\
 \tilde{\pmb{K}}&amp;=\pmb{K}-\frac1l\pmb{K11}^\top-\frac1l\pmb{11}^\top\pmb{K}+\frac{1}{l^2}(\pmb{1}^\top\pmb{K}\pmb{1})\pmb{11}^\top
 \end{split}
 \end{split}\]</div>
-</section>
-<hr class="docutils" />
-<section id="id7">
-<h2><span class="section-number">1.3. </span>投影<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
-<p><span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的<strong>投影</strong><span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
-<div class="math notranslate nohighlight">
-\[
-P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
-\]</div>
-<p>如果<span class="math notranslate nohighlight">\(\pmb{w}\)</span>已单位化，则有，</p>
-<div class="math notranslate nohighlight">
-\[
-P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
-\]</div>
-<p>即，<strong>正交投影</strong><span class="math notranslate nohighlight">\( P_{\pmb{w}}^\bot \phi(\pmb{x}) \)</span> 为，</p>
-<div class="math notranslate nohighlight">
-\[
-P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
-\]</div>
 </section>
 </section>
 
@@ -348,8 +309,7 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6">1.2. 特征映射的基本运算</a></li>
-<li><a class="reference internal" href="#id7">1.3. 投影</a></li>
+<li><a class="reference internal" href="#id6">1.2. 特征空间的基本运算</a></li>
 </ul>
 </li>
 </ul>
@@ -362,8 +322,8 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
   </div>
   <div>
     <h4>下一主题</h4>
-    <p class="topless"><a href="RKHS.html"
-                          title="下一章"><span class="section-number">2. </span>再生核希尔伯特空间</a></p>
+    <p class="topless"><a href="base2.html"
+                          title="下一章"><span class="section-number">2. </span>核函数基础2</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
@@ -393,7 +353,7 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="RKHS.html" title="2. 再生核希尔伯特空间"
+          <a href="base2.html" title="2. 核函数基础2"
              >下一页</a> |</li>
         <li class="right" >
           <a href="../ml/biClustering.html" title="2. BiClustering"
