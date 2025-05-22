@@ -128,6 +128,54 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 \]</div>
 </section>
 </section>
+<section id="id5">
+<h2><span class="section-number">2.3. </span>广义特征值<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<p>  广义特征值问题如下，</p>
+<div class="math notranslate nohighlight" id="equation-generalised-eigenvalue">
+<span class="eqno">(12)<a class="headerlink" href="#equation-generalised-eigenvalue" title="Link to this equation">¶</a></span>\[
+\boxed{\pmb{Aw}=\lambda\pmb{Bw}}
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>均为对称矩阵，此外，<span class="math notranslate nohighlight">\(\pmb{B}\)</span>是正定的。标准特征值问题是上述问题的特殊形式，即<span class="math notranslate nohighlight">\(\pmb{B}=\pmb{I}\)</span>。对于<strong>广义Rayleigh商</strong>(generalized Rayleigh quotient)来说，</p>
+<div class="math notranslate nohighlight" id="equation-generalised-rayleigh">
+<span class="eqno">(13)<a class="headerlink" href="#equation-generalised-rayleigh" title="Link to this equation">¶</a></span>\[
+\rho(\pmb{w})=\frac{\pmb{w}^\top\pmb{Aw}}{\pmb{w}^\top\pmb{Bw}}
+\]</div>
+<p>广义特征值也是最大化广义Rayleigh商的解，即</p>
+<div class="math notranslate nohighlight" id="equation-max-generalised-rayleigh">
+<span class="eqno">(14)<a class="headerlink" href="#equation-max-generalised-rayleigh" title="Link to this equation">¶</a></span>\[\begin{split}
+\begin{split}
+\max\limits_{\pmb{w}}\quad &amp;\pmb{w}^\top\pmb{Aw}\\
+\textrm{s.t.}\quad &amp;\pmb{w}^\top\pmb{Bw}=1
+\end{split}
+\end{split}\]</div>
+<p>  式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>可以通过左乘矩阵<span class="math notranslate nohighlight">\(\pmb{B}^{-1}\)</span>转化为标准特征值问题，即</p>
+<div class="math notranslate nohighlight" id="equation-transform-generalised-eigenvalue">
+<span class="eqno">(15)<a class="headerlink" href="#equation-transform-generalised-eigenvalue" title="Link to this equation">¶</a></span>\[
+\pmb{B}^{-1}\pmb{Aw}=\lambda\pmb{w}
+\]</div>
+<p>然而，需要注意的是：虽然<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>都是对称矩阵，但<span class="math notranslate nohighlight">\(\pmb{B}^{-1}\pmb{A}\)</span>不一定是对称矩阵。<span class="math notranslate nohighlight">\(\pmb{B}\)</span>是正定的对称矩阵，因此，可以分解为<span class="math notranslate nohighlight">\(\pmb{B}^{1/2}\pmb{B}^{1/2}=\pmb{B}\)</span>（可通过特征值分解得到平方根）。</p>
+<p>  对式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>左乘<span class="math notranslate nohighlight">\(\pmb{B}^{-1/2}\)</span>，并令<span class="math notranslate nohighlight">\(\boxed{\pmb{w}=\pmb{B}^{-1/2}\pmb{v}}\)</span>，则可得到下标准特征值等式，</p>
+<div class="math notranslate nohighlight" id="equation-transform-generalized-eigenvalue-normalise">
+<span class="eqno">(16)<a class="headerlink" href="#equation-transform-generalized-eigenvalue-normalise" title="Link to this equation">¶</a></span>\[
+\boxed{\pmb{B}^{-1/2}\pmb{AB}^{-1/2}\pmb{v}=\lambda\pmb{v}}
+\]</div>
+<p>可以验证<span class="math notranslate nohighlight">\(\pmb{B}^{-1/2}\pmb{AB}^{-1/2}=(\pmb{B}^{-1/2}\pmb{AB}^{-1/2})^\top\)</span>，即结果矩阵为对称矩阵。对该矩阵使用特征值分解，即可得到正交的特征向量<span class="math notranslate nohighlight">\(\pmb{v}_i\)</span>及其对应的特征值<span class="math notranslate nohighlight">\(\lambda_i\)</span>，因此，式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>的解为，</p>
+<div class="math notranslate nohighlight" id="equation-solution-of-generalized-eigenvaleu">
+<span class="eqno">(17)<a class="headerlink" href="#equation-solution-of-generalized-eigenvaleu" title="Link to this equation">¶</a></span>\[
+\boxed{\pmb{w}_i=\pmb{B}^{-1/2}\pmb{v}_i}
+\]</div>
+<p>  <strong>广义特征值的性质</strong>:</p>
+<ol class="arabic simple">
+<li><p>如果特征值不相同，则在<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>定义的度量(metrics)中，特征向量具有以下正交性：</p></li>
+</ol>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\pmb{w}_i^\top\pmb{B}\pmb{w}_j=\delta_{ij}\)</span>，满足此性质的向量<span class="math notranslate nohighlight">\(\pmb{w}_i,\pmb{w}_j\)</span>也称为关于<span class="math notranslate nohighlight">\(\pmb{B}\)</span>的共轭向量。</p></li>
+<li><p><span class="math notranslate nohighlight">\(\pmb{w}_i^\top\pmb{A}\pmb{w}_j=\delta_{ij}\lambda_i\)</span></p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>可分解为：<span class="math notranslate nohighlight">\(\pmb{A}=\sum_{i=1}^n\lambda_i\pmb{Bw}_i\pmb{Bw}_i^\top\)</span>。</p></li>
+</ol>
+</section>
 </section>
 
 
@@ -146,6 +194,7 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 <li><a class="reference internal" href="#id4">2.2.1. 对偶形式</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id5">2.3. 广义特征值</a></li>
 </ul>
 </li>
 </ul>
