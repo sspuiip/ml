@@ -59,7 +59,7 @@ $$(maxi-covar-proj)
 &emsp;&emsp;若对$\pmb{C}_{xy}$进行SVD分解，可得到$\pmb{U,\Sigma,V^\top}=svd(\pmb{C}_{xy})$，则式{eq}`maxi-covar-proj`的解为，
 
 $$
-\pmb{w}_x=\pmb{u}_1,\quad\pmb{w}_y=\pmb{v}_1.
+\boxed{\pmb{w}_x=\pmb{u}_1,\quad\pmb{w}_y=\pmb{v}_1.}
 $$(sol-of-max-covar)
 
 注意：$\lVert\pmb{Uw}\rVert=\lVert\pmb{w}\rVert$，且$\pmb{U,V}$都是正交矩阵，因此$\pmb{w}_x$可以表示为$\pmb{u}_x$的形式$\pmb{Uu}_x$。
@@ -135,5 +135,89 @@ $$(solution-of-generalized-eigenvaleu)
 
 2. 矩阵$\pmb{A}$可分解为：$\pmb{A}=\sum_{i=1}^n\lambda_i\pmb{Bw}_i\pmb{Bw}_i^\top$。
 
+## CCA
+
+&emsp;&emsp;假设有样本集$S$,
+
+$$
+S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),...,(\phi_a(\pmb{x}_n),\phi_b(\pmb{x}_n))\}
+$$(paired-dataset)
+
+这类数据集也称为核函数$\kappa_a,\kappa_b$定义特征空间的成对或对齐数据集（paired or aligened dataset）。我们希望在投影方向$\pmb{w}_a,\pmb{w}_b$上最大化样本集两个子部分的相关性，即
+
+$$
+\max\rho=\frac{\hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}{   \hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_a(\pmb{x})^\top\pmb{w}_a] \hat{\mathbb{E}}[\pmb{w}_b^\top\phi_b(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}=\frac{\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b}{\sqrt{\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b}}
+$$(cca-def)
+
+&emsp;&emsp;**定义 （canonical correlation analysis, CCA）**. 给定一个成对或对齐数据集及其协方差矩阵$\pmb{C}_{ab}$，CCA的目标是寻找投影方向$\pmb{w}_a,\pmb{w}_b$最大化投影后的相关性，即，
+
+$$
+\begin{split}
+\max\limits_{\pmb{w}_a,\pmb{w}_b}\quad &\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b\\
+\textrm{s.t.}\quad &\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a=1,\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=1
+\end{split}
+$$(cca-def-normal)
+
+&emsp;&emsp;**CCA求解**. 使用拉格朗日乘子法求解，过程如下：
+
+1. 定义拉氏函数
+
+$$
+\mathcal{L}(\pmb{w}_a,\pmb{w}_b,\lambda,\mu)=\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b-\frac{\lambda}{2}(\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-1)-\frac{\mu}{2}(\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b-1)
+$$
+
+2. 求偏导，并令偏导=0，解出
+
+$$
+\pmb{C}_{ab}\pmb{w}_b=\lambda\pmb{C}_{aa}\pmb{w}_a,\quad \pmb{C}_{ba}\pmb{w}_a=\mu\pmb{C}_{bb}\pmb{w}_b
+$$
+
+将上式的第1个等式乘上$\pmb{w}_a^\top$减去第二个等式乘上$\pmb{w}_b^\top$，则可以得到，
+
+$$
+\lambda\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-\lambda\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=0
+$$
+
+这意味着$\lambda=\mu$。
+
+3. 解方程组，可得投影向量$\pmb{w}_a,\pmb{w}_b$
+
+$$
+\begin{bmatrix}\pmb{0}&\pmb{C}_{ab}\\ \pmb{C}_{ba}&\pmb{0} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\begin{bmatrix}\pmb{C}_{aa}&\pmb{0}\\ \pmb{0}&\pmb{C}_{bb} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
+$$
+
+可以看出，上式是一个广义特征值问题，即
+
+$$
+\pmb{A}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\pmb{B}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
+$$
+
+### KCCA
+
+- **CCA的对偶形式**
+
+&emsp;&emsp;考虑$\pmb{w}_a,\pmb{w}_b$分别为数据矩阵$\pmb{X}_a,\pmb{X}_b$的所有样本线性组合，即
+
+$$
+\pmb{w}_a=\pmb{X}_a^\top\pmb{\alpha}_a,\quad \pmb{w}_b=\pmb{X}_b^\top\pmb{\alpha}_b
+$$(kcca-proj-def)
+
+将{eq}`kcca-proj-def`代回式{eq}`cca-def-normal`，则可得到，
+
+$$
+\begin{split}
+\max\limits_{\pmb{\alpha}_a,\pmb{\alpha}_b}\quad &\pmb{\alpha}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{X}_b\pmb{X}_b^\top\pmb{\alpha}_b\\
+\textrm{s.t.}\quad &\pmb{\alpha}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{\alpha}_b=1
+\end{split}
+$$
+
+则可以得到Kernel CCA的一般形式，即
+
+$$
+\begin{split}
+\max\limits_{\pmb{\alpha}_a,\pmb{\alpha}_b}\quad &\pmb{\alpha}_a^\top\pmb{K}_a\pmb{K}_b\pmb{\alpha}_b\\
+\textrm{s.t.}\quad &\pmb{\alpha}_a^\top\pmb{K}_a^2\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{K}_b^2\pmb{\alpha}_b=1
+\end{split}
+$$
 
 
