@@ -106,7 +106,7 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 <p>  若对<span class="math notranslate nohighlight">\(\pmb{C}_{xy}\)</span>进行SVD分解，可得到<span class="math notranslate nohighlight">\(\pmb{U,\Sigma,V^\top}=svd(\pmb{C}_{xy})\)</span>，则式<a class="reference internal" href="#equation-maxi-covar-proj">(7)</a>的解为，</p>
 <div class="math notranslate nohighlight" id="equation-sol-of-max-covar">
 <span class="eqno">(8)<a class="headerlink" href="#equation-sol-of-max-covar" title="Link to this equation">¶</a></span>\[
-\pmb{w}_x=\pmb{u}_1,\quad\pmb{w}_y=\pmb{v}_1.
+\boxed{\pmb{w}_x=\pmb{u}_1,\quad\pmb{w}_y=\pmb{v}_1.}
 \]</div>
 <p>注意：<span class="math notranslate nohighlight">\(\lVert\pmb{Uw}\rVert=\lVert\pmb{w}\rVert\)</span>，且<span class="math notranslate nohighlight">\(\pmb{U,V}\)</span>都是正交矩阵，因此<span class="math notranslate nohighlight">\(\pmb{w}_x\)</span>可以表示为<span class="math notranslate nohighlight">\(\pmb{u}_x\)</span>的形式<span class="math notranslate nohighlight">\(\pmb{Uu}_x\)</span>。</p>
 <section id="id4">
@@ -176,6 +176,87 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 <li><p>矩阵<span class="math notranslate nohighlight">\(\pmb{A}\)</span>可分解为：<span class="math notranslate nohighlight">\(\pmb{A}=\sum_{i=1}^n\lambda_i\pmb{Bw}_i\pmb{Bw}_i^\top\)</span>。</p></li>
 </ol>
 </section>
+<section id="cca">
+<h2><span class="section-number">2.4. </span>CCA<a class="headerlink" href="#cca" title="Link to this heading">¶</a></h2>
+<p>  假设有样本集<span class="math notranslate nohighlight">\(S\)</span>,</p>
+<div class="math notranslate nohighlight" id="equation-paired-dataset">
+<span class="eqno">(18)<a class="headerlink" href="#equation-paired-dataset" title="Link to this equation">¶</a></span>\[
+S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),...,(\phi_a(\pmb{x}_n),\phi_b(\pmb{x}_n))\}
+\]</div>
+<p>这类数据集也称为核函数<span class="math notranslate nohighlight">\(\kappa_a,\kappa_b\)</span>定义特征空间的成对或对齐数据集（paired or aligened dataset）。我们希望在投影方向<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>上最大化样本集两个子部分的相关性，即</p>
+<div class="math notranslate nohighlight" id="equation-cca-def">
+<span class="eqno">(19)<a class="headerlink" href="#equation-cca-def" title="Link to this equation">¶</a></span>\[
+\max\rho=\frac{\hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}{   \hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_a(\pmb{x})^\top\pmb{w}_a] \hat{\mathbb{E}}[\pmb{w}_b^\top\phi_b(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}=\frac{\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b}{\sqrt{\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b}}
+\]</div>
+<p>  <strong>定义 （canonical correlation analysis, CCA）</strong>. 给定一个成对或对齐数据集及其协方差矩阵<span class="math notranslate nohighlight">\(\pmb{C}_{ab}\)</span>，CCA的目标是寻找投影方向<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>最大化投影后的相关性，即，</p>
+<div class="math notranslate nohighlight" id="equation-cca-def-normal">
+<span class="eqno">(20)<a class="headerlink" href="#equation-cca-def-normal" title="Link to this equation">¶</a></span>\[\begin{split}
+\begin{split}
+\max\limits_{\pmb{w}_a,\pmb{w}_b}\quad &amp;\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b\\
+\textrm{s.t.}\quad &amp;\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a=1,\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=1
+\end{split}
+\end{split}\]</div>
+<p>  <strong>CCA求解</strong>. 使用拉格朗日乘子法求解，过程如下：</p>
+<ol class="arabic simple">
+<li><p>定义拉氏函数</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\pmb{w}_a,\pmb{w}_b,\lambda,\mu)=\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b-\frac{\lambda}{2}(\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-1)-\frac{\mu}{2}(\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b-1)
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>求偏导，并令偏导=0，解出</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+\pmb{C}_{ab}\pmb{w}_b=\lambda\pmb{C}_{aa}\pmb{w}_a,\quad \pmb{C}_{ba}\pmb{w}_a=\mu\pmb{C}_{bb}\pmb{w}_b
+\]</div>
+<p>将上式的第1个等式乘上<span class="math notranslate nohighlight">\(\pmb{w}_a^\top\)</span>减去第二个等式乘上<span class="math notranslate nohighlight">\(\pmb{w}_b^\top\)</span>，则可以得到，</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-\lambda\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=0
+\]</div>
+<p>这意味着<span class="math notranslate nohighlight">\(\lambda=\mu\)</span>。</p>
+<ol class="arabic simple" start="3">
+<li><p>解方程组，可得投影向量<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{bmatrix}\pmb{0}&amp;\pmb{C}_{ab}\\ \pmb{C}_{ba}&amp;\pmb{0} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\begin{bmatrix}\pmb{C}_{aa}&amp;\pmb{0}\\ \pmb{0}&amp;\pmb{C}_{bb} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
+\end{split}\]</div>
+<p>可以看出，上式是一个广义特征值问题，即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{A}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\pmb{B}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
+\end{split}\]</div>
+<section id="kcca">
+<h3><span class="section-number">2.4.1. </span>KCCA<a class="headerlink" href="#kcca" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>CCA的对偶形式</strong></p></li>
+</ul>
+<p>  考虑<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>分别为数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}_a,\pmb{X}_b\)</span>的所有样本线性组合，即</p>
+<div class="math notranslate nohighlight" id="equation-kcca-proj-def">
+<span class="eqno">(21)<a class="headerlink" href="#equation-kcca-proj-def" title="Link to this equation">¶</a></span>\[
+\pmb{w}_a=\pmb{X}_a^\top\pmb{\alpha}_a,\quad \pmb{w}_b=\pmb{X}_b^\top\pmb{\alpha}_b
+\]</div>
+<p>将<a class="reference internal" href="#equation-kcca-proj-def">(21)</a>代回式<a class="reference internal" href="#equation-cca-def-normal">(20)</a>，则可得到，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\max\limits_{\pmb{\alpha}_a,\pmb{\alpha}_b}\quad &amp;\pmb{\alpha}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{X}_b\pmb{X}_b^\top\pmb{\alpha}_b\\
+\textrm{s.t.}\quad &amp;\pmb{\alpha}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{\alpha}_b=1
+\end{split}
+\end{split}\]</div>
+<p>则可以得到Kernel CCA的一般形式，即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+\max\limits_{\pmb{\alpha}_a,\pmb{\alpha}_b}\quad &amp;\pmb{\alpha}_a^\top\pmb{K}_a\pmb{K}_b\pmb{\alpha}_b\\
+\textrm{s.t.}\quad &amp;\pmb{\alpha}_a^\top\pmb{K}_a^2\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{K}_b^2\pmb{\alpha}_b=1
+\end{split}
+\end{split}\]</div>
+</section>
+</section>
 </section>
 
 
@@ -195,6 +276,10 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 </ul>
 </li>
 <li><a class="reference internal" href="#id5">2.3. 广义特征值</a></li>
+<li><a class="reference internal" href="#cca">2.4. CCA</a><ul>
+<li><a class="reference internal" href="#kcca">2.4.1. KCCA</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
