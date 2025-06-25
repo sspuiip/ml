@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>8. 表示学习 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>7. 表示学习 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -28,8 +28,8 @@
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 聚类(一)" href="cmeans.html" />
-    <link rel="prev" title="7. 神经网络" href="neuro_network.html" /> 
+    <link rel="next" title="1. 神经网络" href="neuro_network_mlp.html" />
+    <link rel="prev" title="6. 集成学习" href="ensemble.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -38,13 +38,13 @@
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="cmeans.html" title="1. 聚类(一)"
+          <a href="neuro_network_mlp.html" title="1. 神经网络"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="neuro_network.html" title="7. 神经网络"
+          <a href="ensemble.html" title="6. 集成学习"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>表示学习</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>表示学习</a></li> 
       </ul>
     </div>  
 
@@ -54,9 +54,9 @@
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">8. </span>表示学习<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<h1><span class="section-number">7. </span>表示学习<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="autoencoder">
-<h2><span class="section-number">8.1. </span>自编码器(AutoEncoder)<a class="headerlink" href="#autoencoder" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">7.1. </span>自编码器(AutoEncoder)<a class="headerlink" href="#autoencoder" title="Link to this heading">¶</a></h2>
 <p>  自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：</p>
 <ol class="arabic simple">
 <li><p>原码空间<span class="math notranslate nohighlight">\(\mathcal{X}\in\mathbb{R}^n\)</span>与编码空间<span class="math notranslate nohighlight">\(\mathcal{Z}\in\mathbb{R}^m\)</span>。</p></li>
@@ -95,7 +95,7 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
 \]</div>
 </section>
 <section id="variational-autoencoder">
-<h2><span class="section-number">8.2. </span>变分自编码器(Variational AutoEncoder)<a class="headerlink" href="#variational-autoencoder" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">7.2. </span>变分自编码器(Variational AutoEncoder)<a class="headerlink" href="#variational-autoencoder" title="Link to this heading">¶</a></h2>
 </section>
 </section>
 
@@ -109,9 +109,9 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">8. 表示学习</a><ul>
-<li><a class="reference internal" href="#autoencoder">8.1. 自编码器(AutoEncoder)</a></li>
-<li><a class="reference internal" href="#variational-autoencoder">8.2. 变分自编码器(Variational AutoEncoder)</a></li>
+<li><a class="reference internal" href="#">7. 表示学习</a><ul>
+<li><a class="reference internal" href="#autoencoder">7.1. 自编码器(AutoEncoder)</a></li>
+<li><a class="reference internal" href="#variational-autoencoder">7.2. 变分自编码器(Variational AutoEncoder)</a></li>
 </ul>
 </li>
 </ul>
@@ -119,13 +119,13 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
   </div>
   <div>
     <h4>上一主题</h4>
-    <p class="topless"><a href="neuro_network.html"
-                          title="上一章"><span class="section-number">7. </span>神经网络</a></p>
+    <p class="topless"><a href="ensemble.html"
+                          title="上一章"><span class="section-number">6. </span>集成学习</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
-    <p class="topless"><a href="cmeans.html"
-                          title="下一章"><span class="section-number">1. </span>聚类(一)</a></p>
+    <p class="topless"><a href="neuro_network_mlp.html"
+                          title="下一章"><span class="section-number">1. </span>神经网络</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
@@ -155,13 +155,13 @@ q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="cmeans.html" title="1. 聚类(一)"
+          <a href="neuro_network_mlp.html" title="1. 神经网络"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="neuro_network.html" title="7. 神经网络"
+          <a href="ensemble.html" title="6. 集成学习"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">8. </span>表示学习</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>表示学习</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">

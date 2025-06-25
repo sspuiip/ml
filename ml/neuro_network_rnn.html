@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>7. 神经网络 &#8212; Machine Learning Fundation 1.0 文档</title>
+    <title>3. 循环神经网络 &#8212; Machine Learning Fundation 1.0 文档</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -28,8 +28,8 @@
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
     <link rel="index" title="索引" href="../genindex.html" />
     <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="8. 表示学习" href="neuro_representation.html" />
-    <link rel="prev" title="6. 集成学习" href="ensemble.html" /> 
+    <link rel="next" title="1. 聚类(一)" href="cmeans.html" />
+    <link rel="prev" title="2. 卷积神经网络" href="neuro_network_cnn.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="Related">
       <h3>导航</h3>
@@ -38,13 +38,13 @@
           <a href="../genindex.html" title="总索引"
              accesskey="I">索引</a></li>
         <li class="right" >
-          <a href="neuro_representation.html" title="8. 表示学习"
+          <a href="cmeans.html" title="1. 聚类(一)"
              accesskey="N">下一页</a> |</li>
         <li class="right" >
-          <a href="ensemble.html" title="6. 集成学习"
+          <a href="neuro_network_cnn.html" title="2. 卷积神经网络"
              accesskey="P">上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>神经网络</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>循环神经网络</a></li> 
       </ul>
     </div>  
 
@@ -54,20 +54,41 @@
           <div class="body" role="main">
             
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">7. </span>神经网络<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
-<p>  神经网络。</p>
+<h1><span class="section-number">3. </span>循环神经网络<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<section id="word2vec">
+<h2><span class="section-number">3.1. </span>Word2Vec<a class="headerlink" href="#word2vec" title="Link to this heading">¶</a></h2>
+<p>  Word2Vec是语言模型的神经网络建模实现。其基本原理如下图所示：</p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/word2vec_cbow.png"><img alt="CBOW" src="../_images/word2vec_cbow.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">连续词袋模型的神经网络模型</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>上图中的模型假设单词向量(one-hot)长度为5，中间层长度为4。训练好之后的输入层与中间层之间的参数<span class="math notranslate nohighlight">\(\pmb{W}_{in}\)</span>即为所有单词的<strong>词向量</strong>表示。<strong>词向量表示类似于颜色空间的RGB表示</strong>。通过词向量间的运算可以得到类似词与词之间的距离，相似度等效果。例如：“国王 - 男人 + 女人 = 女王”、“猫”靠近“狗”等。 词向量实现了词到向量的转变，可直接迁移至下游任务（文本分类、机器翻译等），‌减少训练成本‌并提升数据集效果。</p>
+<section id="id2">
+<h3><span class="section-number">3.1.1. </span>语言模型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>  对于给定的单词序列<span class="math notranslate nohighlight">\(x_1,x_2,...,x_t\)</span>，其出现的概率可以使用联合概率来评估，即</p>
+<div class="math notranslate nohighlight" id="equation-joint-words-prob">
+<span class="eqno">(1)<a class="headerlink" href="#equation-joint-words-prob" title="Link to this equation">¶</a></span>\[
+P(x_1,x_2,...,x_t)
+\]</div>
+<p>该式<a class="reference internal" href="#equation-joint-words-prob">(1)</a>即为单词序列<span class="math notranslate nohighlight">\(x_1,x_2,...,x_t\)</span>出现的概率，也称之为<strong>语言模型</strong>。一个理想的语言模型可以根据训练好的式<a class="reference internal" href="#equation-joint-words-prob">(1)</a>生成文本。</p>
+</section>
+</section>
 <section id="rnn">
-<h2><span class="section-number">7.1. </span>RNN<a class="headerlink" href="#rnn" title="Link to this heading">¶</a></h2>
+<h2><span class="section-number">3.2. </span>RNN<a class="headerlink" href="#rnn" title="Link to this heading">¶</a></h2>
 <p>  循环神经网络。</p>
+</section>
 <section id="lstm">
-<h3><span class="section-number">7.1.1. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h3>
-<p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免梯度消失或梯度爆炸问题。</p>
+<h2><span class="section-number">3.3. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h2>
+<p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免<strong>梯度消失或梯度爆炸</strong>问题。</p>
 <p>  为了解决这类问题，发展出了一种称为LSTM的网络，也称为长短时记忆网络。该模型通过“门机制”解决了长期信息保存和短期输入缺失的问题。以下是模型图概况。</p>
-<figure class="align-default" id="id2">
+<figure class="align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/lstm.png"><img alt="LSTM" src="../_images/lstm.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
+<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -79,12 +100,12 @@
 </ul>
 <p>  LSTM中，隐状态<span class="math notranslate nohighlight">\(H_t\)</span>仅对记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>应用了tanh函数实现信息传递。如果考虑信息的重要性，可以添加一个门管理隐状态<span class="math notranslate nohighlight">\(H_t\)</span>的输出，这个门就是输出门，即，</p>
 <div class="math notranslate nohighlight" id="equation-output-gate">
-<span class="eqno">(1)<a class="headerlink" href="#equation-output-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(2)<a class="headerlink" href="#equation-output-gate" title="Link to this equation">¶</a></span>\[
 O_t = \sigma(x_tW_xo + H_{t-1}W_{ho} + b_o)
 \]</div>
 <p>因此，隐状态就相应的更新为，</p>
 <div class="math notranslate nohighlight" id="equation-hidden-state-with-o-gate">
-<span class="eqno">(2)<a class="headerlink" href="#equation-hidden-state-with-o-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-hidden-state-with-o-gate" title="Link to this equation">¶</a></span>\[
 H_t = \underbrace{\text{tanh}(C_t)\odot O_t}_{隐状态与记忆单元的关系}
 \]</div>
 <ul class="simple">
@@ -92,7 +113,7 @@ H_t = \underbrace{\text{tanh}(C_t)\odot O_t}_{隐状态与记忆单元的关系}
 </ul>
 <p>  同理，对于上一时序的记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来说，为了去除不必要的记忆元，可以通过遗忘门来实现，即</p>
 <div class="math notranslate nohighlight" id="equation-forget-gate">
-<span class="eqno">(3)<a class="headerlink" href="#equation-forget-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-forget-gate" title="Link to this equation">¶</a></span>\[
 F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 \]</div>
 <p>因此可以得到新记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来自于<span class="math notranslate nohighlight">\(C_{t-1}\)</span>的一部分，即<span class="math notranslate nohighlight">\(C_{t-1}\odot F_t\)</span>。</p>
@@ -101,7 +122,7 @@ F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 </ul>
 <p>  遗忘门删除了应该忘记的内容，如果不补充应当记忆的内容，则只会遗忘。为此，就当向<span class="math notranslate nohighlight">\(C_t\)</span>添加需要记忆的新信息，也就是候选记忆信息，即</p>
 <div class="math notranslate nohighlight" id="equation-candidate-memo-cell">
-<span class="eqno">(4)<a class="headerlink" href="#equation-candidate-memo-cell" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-candidate-memo-cell" title="Link to this equation">¶</a></span>\[
 \tilde{C}_t = \tanh(x_tW_{xc}+H_{t-1}W_{hc}+b_c)
 \]</div>
 <ul class="simple">
@@ -109,7 +130,7 @@ F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 </ul>
 <p>  候选记忆信息加入记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>时需取舍，因此可以根据门控机制添加一个输入门来控制，即</p>
 <div class="math notranslate nohighlight" id="equation-input-gate">
-<span class="eqno">(5)<a class="headerlink" href="#equation-input-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-input-gate" title="Link to this equation">¶</a></span>\[
 I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
 \]</div>
 <ul class="simple">
@@ -117,10 +138,9 @@ I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
 </ul>
 <p>  通过上述输入、遗忘操作可以得到新记忆单元，即</p>
 <div class="math notranslate nohighlight" id="equation-t-memo-cell">
-<span class="eqno">(6)<a class="headerlink" href="#equation-t-memo-cell" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(7)<a class="headerlink" href="#equation-t-memo-cell" title="Link to this equation">¶</a></span>\[
 C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C}_t }_{输入部分}
 \]</div>
-</section>
 </section>
 </section>
 
@@ -134,11 +154,13 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
   <div>
     <h3><a href="../index.html">目录</a></h3>
     <ul>
-<li><a class="reference internal" href="#">7. 神经网络</a><ul>
-<li><a class="reference internal" href="#rnn">7.1. RNN</a><ul>
-<li><a class="reference internal" href="#lstm">7.1.1. LSTM</a></li>
+<li><a class="reference internal" href="#">3. 循环神经网络</a><ul>
+<li><a class="reference internal" href="#word2vec">3.1. Word2Vec</a><ul>
+<li><a class="reference internal" href="#id2">3.1.1. 语言模型</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#rnn">3.2. RNN</a></li>
+<li><a class="reference internal" href="#lstm">3.3. LSTM</a></li>
 </ul>
 </li>
 </ul>
@@ -146,18 +168,18 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
   </div>
   <div>
     <h4>上一主题</h4>
-    <p class="topless"><a href="ensemble.html"
-                          title="上一章"><span class="section-number">6. </span>集成学习</a></p>
+    <p class="topless"><a href="neuro_network_cnn.html"
+                          title="上一章"><span class="section-number">2. </span>卷积神经网络</a></p>
   </div>
   <div>
     <h4>下一主题</h4>
-    <p class="topless"><a href="neuro_representation.html"
-                          title="下一章"><span class="section-number">8. </span>表示学习</a></p>
+    <p class="topless"><a href="cmeans.html"
+                          title="下一章"><span class="section-number">1. </span>聚类(一)</a></p>
   </div>
   <div role="note" aria-label="source link">
     <h3>本页</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/ml/neuro_network.md.txt"
+      <li><a href="../_sources/ml/neuro_network_rnn.md.txt"
             rel="nofollow">显示源代码</a></li>
     </ul>
    </div>
@@ -182,13 +204,13 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
           <a href="../genindex.html" title="总索引"
              >索引</a></li>
         <li class="right" >
-          <a href="neuro_representation.html" title="8. 表示学习"
+          <a href="cmeans.html" title="1. 聚类(一)"
              >下一页</a> |</li>
         <li class="right" >
-          <a href="ensemble.html" title="6. 集成学习"
+          <a href="neuro_network_cnn.html" title="2. 卷积神经网络"
              >上一页</a> |</li>
         <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>神经网络</a></li> 
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">3. </span>循环神经网络</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
