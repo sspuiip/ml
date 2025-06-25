@@ -21,15 +21,23 @@
    :caption: 监督学习
    :numbered:
 
-
    ml/dimension_reduce_2.md
    ml/decision_tree.md
    ml/bayes.md
    ml/EM.md
    ml/PGM.md
-   ml/ensemble.md   
-   ml/neuro_network.md
+   ml/ensemble.md      
    ml/neuro_representation.md
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 深度学习
+   :numbered:
+
+   ml/neuro_network_mlp.md
+   ml/neuro_network_cnn.md
+   ml/neuro_network_rnn.md
+
 
 .. toctree::
    :maxdepth: 2
