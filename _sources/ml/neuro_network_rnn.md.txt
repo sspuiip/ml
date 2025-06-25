@@ -17,10 +17,80 @@
 &emsp;&emsp;对于给定的单词序列$x_1,x_2,...,x_t$，其出现的概率可以使用联合概率来评估，即
 
 $$
-P(x_1,x_2,...,x_t)
+\begin{split}
+P(x_1,x_2,...,x_t)&=P(x_t|x_{t-1},...,x_1)P(x_{t-2},...,x_1)...P(x_2|x_1)P(x_1)\\
+&=\prod_{i=1}^t P(x_i|x_{i-1},...,x_1)
+\end{split}
 $$(joint-words-prob)
 
+
 该式{eq}`joint-words-prob`即为单词序列$x_1,x_2,...,x_t$出现的概率，也称之为**语言模型**。一个理想的语言模型可以根据训练好的式{eq}`joint-words-prob`生成文本。
+
+### CBOW应用于语言模型
+
+&emsp;&emsp;CBOW（Continuous Bag-of-Words，连续词袋模型）是基于上下文单词预测当前中心词的模型，与SKIP正好相反。例如：给定句子“the cat sat on the mat”，若中心词为“sat”，则上下文窗口（假设窗口大小为2）为["the", "cat", "on", "the"]，模型通过聚合这些上下文词的信息预测“sat”。CBOW应用于语言模型是指用固定窗口大小的单词依赖来近似式式{eq}`joint-words-prob`中的后验概率，即
+
+$$
+P(x_t|x_{t-1},...,x_1)\approx P(x_t|x_{t-1},x_{t-2},...,x_{t-k+1})
+$$(approx-posterior)
+
+其中$k$为固定窗口大小。窗口可以是单边，也可以是双边。以下是CBOW的简单示例。
+
+```python
+class SimpleCBOW:
+    def __init__(self, vocab_size, hidden_size):
+        V, H = vocab_size, hidden_size
+
+        # 初始化权重
+        W_in = 0.01 * np.random.randn(V, H).astype('f')
+        W_out = 0.01 * np.random.randn(H, V).astype('f')
+
+        # 生成层
+        self.in_layer0 = MatMul(W_in)
+        self.in_layer1 = MatMul(W_in)
+        self.out_layer = MatMul(W_out)
+        self.loss_layer = SoftmaxWithLoss()
+
+        # 将所有的权重和梯度整理到列表中
+        layers = [self.in_layer0, self.in_layer1, self.out_layer]
+        self.params, self.grads = [], []
+        for layer in layers:
+            self.params += layer.params
+            self.grads += layer.grads
+
+        # 将单词的分布式表示设置为成员变量
+        self.word_vecs = W_in
+
+    def forward(self, contexts, target):
+        h0 = self.in_layer0.forward(contexts[:, 0])
+        h1 = self.in_layer1.forward(contexts[:, 1])
+        h = (h0 + h1) * 0.5
+        score = self.out_layer.forward(h)
+        loss = self.loss_layer.forward(score, target)
+        return loss
+
+    def backward(self, dout=1):
+        ds = self.loss_layer.backward(dout)
+        da = self.out_layer.backward(ds)
+        da *= 0.5
+        self.in_layer1.backward(da)
+        self.in_layer0.backward(da)
+        return None
+```
+
+### 存在的问题
+
+&emsp;&emsp;CBOW用作语言模型存在以下问题：
+
+- **问题1**. 虽然CBOW可以设置任意窗口，但训练时必须使用固定的窗口大小。超过窗口长度的单词将无法作为上下文。
+
+&emsp;&emsp;该问题的一个简单解决方法是将CBOW的中间层拼接。但带来的后果是参数数量与上下文长度成比例增长。
+
+- **问题2**. CBOW忽略了上下文中单词的顺序。
+
+&emsp;&emsp;为了记住上下文，可以使用RNN（Recurrent Neural Network）来实现。无论上下文的长短，RNN都可以记住。
+
+
 
 ## RNN
 

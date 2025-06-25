@@ -58,11 +58,11 @@
 <section id="word2vec">
 <h2><span class="section-number">3.1. </span>Word2Vec<a class="headerlink" href="#word2vec" title="Link to this heading">¶</a></h2>
 <p>  Word2Vec是语言模型的神经网络建模实现。其基本原理如下图所示：</p>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id4">
 <a class="reference internal image-reference" href="../_images/word2vec_cbow.png"><img alt="CBOW" src="../_images/word2vec_cbow.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">连续词袋模型的神经网络模型</span><a class="headerlink" href="#id3" title="Link to this image">¶</a></p>
+<p><span class="caption-text">连续词袋模型的神经网络模型</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>上图中的模型假设单词向量(one-hot)长度为5，中间层长度为4。训练好之后的输入层与中间层之间的参数<span class="math notranslate nohighlight">\(\pmb{W}_{in}\)</span>即为所有单词的<strong>词向量</strong>表示。<strong>词向量表示类似于颜色空间的RGB表示</strong>。通过词向量间的运算可以得到类似词与词之间的距离，相似度等效果。例如：“国王 - 男人 + 女人 = 女王”、“猫”靠近“狗”等。 词向量实现了词到向量的转变，可直接迁移至下游任务（文本分类、机器翻译等），‌减少训练成本‌并提升数据集效果。</p>
@@ -70,10 +70,75 @@
 <h3><span class="section-number">3.1.1. </span>语言模型<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <p>  对于给定的单词序列<span class="math notranslate nohighlight">\(x_1,x_2,...,x_t\)</span>，其出现的概率可以使用联合概率来评估，即</p>
 <div class="math notranslate nohighlight" id="equation-joint-words-prob">
-<span class="eqno">(1)<a class="headerlink" href="#equation-joint-words-prob" title="Link to this equation">¶</a></span>\[
-P(x_1,x_2,...,x_t)
-\]</div>
+<span class="eqno">(1)<a class="headerlink" href="#equation-joint-words-prob" title="Link to this equation">¶</a></span>\[\begin{split}
+\begin{split}
+P(x_1,x_2,...,x_t)&amp;=P(x_t|x_{t-1},...,x_1)P(x_{t-2},...,x_1)...P(x_2|x_1)P(x_1)\\
+&amp;=\prod_{i=1}^t P(x_i|x_{i-1},...,x_1)
+\end{split}
+\end{split}\]</div>
 <p>该式<a class="reference internal" href="#equation-joint-words-prob">(1)</a>即为单词序列<span class="math notranslate nohighlight">\(x_1,x_2,...,x_t\)</span>出现的概率，也称之为<strong>语言模型</strong>。一个理想的语言模型可以根据训练好的式<a class="reference internal" href="#equation-joint-words-prob">(1)</a>生成文本。</p>
+</section>
+<section id="cbow">
+<h3><span class="section-number">3.1.2. </span>CBOW应用于语言模型<a class="headerlink" href="#cbow" title="Link to this heading">¶</a></h3>
+<p>  CBOW（Continuous Bag-of-Words，连续词袋模型）是基于上下文单词预测当前中心词的模型，与SKIP正好相反。例如：给定句子“the cat sat on the mat”，若中心词为“sat”，则上下文窗口（假设窗口大小为2）为[“the”, “cat”, “on”, “the”]，模型通过聚合这些上下文词的信息预测“sat”。CBOW应用于语言模型是指用固定窗口大小的单词依赖来近似式式<a class="reference internal" href="#equation-joint-words-prob">(1)</a>中的后验概率，即</p>
+<div class="math notranslate nohighlight" id="equation-approx-posterior">
+<span class="eqno">(2)<a class="headerlink" href="#equation-approx-posterior" title="Link to this equation">¶</a></span>\[
+P(x_t|x_{t-1},...,x_1)\approx P(x_t|x_{t-1},x_{t-2},...,x_{t-k+1})
+\]</div>
+<p>其中<span class="math notranslate nohighlight">\(k\)</span>为固定窗口大小。窗口可以是单边，也可以是双边。以下是CBOW的简单示例。</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span><span class="w"> </span><span class="nc">SimpleCBOW</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">):</span>
+        <span class="n">V</span><span class="p">,</span> <span class="n">H</span> <span class="o">=</span> <span class="n">vocab_size</span><span class="p">,</span> <span class="n">hidden_size</span>
+
+        <span class="c1"># 初始化权重</span>
+        <span class="n">W_in</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">H</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+        <span class="n">W_out</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">H</span><span class="p">,</span> <span class="n">V</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+
+        <span class="c1"># 生成层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_layer0</span> <span class="o">=</span> <span class="n">MatMul</span><span class="p">(</span><span class="n">W_in</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_layer1</span> <span class="o">=</span> <span class="n">MatMul</span><span class="p">(</span><span class="n">W_in</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">out_layer</span> <span class="o">=</span> <span class="n">MatMul</span><span class="p">(</span><span class="n">W_out</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loss_layer</span> <span class="o">=</span> <span class="n">SoftmaxWithLoss</span><span class="p">()</span>
+
+        <span class="c1"># 将所有的权重和梯度整理到列表中</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">in_layer0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_layer1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_layer</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grads</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">+=</span> <span class="n">layer</span><span class="o">.</span><span class="n">params</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grads</span> <span class="o">+=</span> <span class="n">layer</span><span class="o">.</span><span class="n">grads</span>
+
+        <span class="c1"># 将单词的分布式表示设置为成员变量</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_vecs</span> <span class="o">=</span> <span class="n">W_in</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">contexts</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="n">h0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_layer0</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">contexts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">h1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">in_layer1</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">contexts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">h0</span> <span class="o">+</span> <span class="n">h1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_layer</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">h</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_layer</span><span class="o">.</span><span class="n">forward</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">loss</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">ds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loss_layer</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">dout</span><span class="p">)</span>
+        <span class="n">da</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_layer</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">ds</span><span class="p">)</span>
+        <span class="n">da</span> <span class="o">*=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_layer1</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">in_layer0</span><span class="o">.</span><span class="n">backward</span><span class="p">(</span><span class="n">da</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><span class="section-number">3.1.3. </span>存在的问题<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>  CBOW用作语言模型存在以下问题：</p>
+<ul class="simple">
+<li><p><strong>问题1</strong>. 虽然CBOW可以设置任意窗口，但训练时必须使用固定的窗口大小。超过窗口长度的单词将无法作为上下文。</p></li>
+</ul>
+<p>  该问题的一个简单解决方法是将CBOW的中间层拼接。但带来的后果是参数数量与上下文长度成比例增长。</p>
+<ul class="simple">
+<li><p><strong>问题2</strong>. CBOW忽略了上下文中单词的顺序。</p></li>
+</ul>
+<p>  为了记住上下文，可以使用RNN（Recurrent Neural Network）来实现。无论上下文的长短，RNN都可以记住。</p>
 </section>
 </section>
 <section id="rnn">
@@ -84,11 +149,11 @@ P(x_1,x_2,...,x_t)
 <h2><span class="section-number">3.3. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h2>
 <p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免<strong>梯度消失或梯度爆炸</strong>问题。</p>
 <p>  为了解决这类问题，发展出了一种称为LSTM的网络，也称为长短时记忆网络。该模型通过“门机制”解决了长期信息保存和短期输入缺失的问题。以下是模型图概况。</p>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/lstm.png"><img alt="LSTM" src="../_images/lstm.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -100,12 +165,12 @@ P(x_1,x_2,...,x_t)
 </ul>
 <p>  LSTM中，隐状态<span class="math notranslate nohighlight">\(H_t\)</span>仅对记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>应用了tanh函数实现信息传递。如果考虑信息的重要性，可以添加一个门管理隐状态<span class="math notranslate nohighlight">\(H_t\)</span>的输出，这个门就是输出门，即，</p>
 <div class="math notranslate nohighlight" id="equation-output-gate">
-<span class="eqno">(2)<a class="headerlink" href="#equation-output-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-output-gate" title="Link to this equation">¶</a></span>\[
 O_t = \sigma(x_tW_xo + H_{t-1}W_{ho} + b_o)
 \]</div>
 <p>因此，隐状态就相应的更新为，</p>
 <div class="math notranslate nohighlight" id="equation-hidden-state-with-o-gate">
-<span class="eqno">(3)<a class="headerlink" href="#equation-hidden-state-with-o-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-hidden-state-with-o-gate" title="Link to this equation">¶</a></span>\[
 H_t = \underbrace{\text{tanh}(C_t)\odot O_t}_{隐状态与记忆单元的关系}
 \]</div>
 <ul class="simple">
@@ -113,7 +178,7 @@ H_t = \underbrace{\text{tanh}(C_t)\odot O_t}_{隐状态与记忆单元的关系}
 </ul>
 <p>  同理，对于上一时序的记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来说，为了去除不必要的记忆元，可以通过遗忘门来实现，即</p>
 <div class="math notranslate nohighlight" id="equation-forget-gate">
-<span class="eqno">(4)<a class="headerlink" href="#equation-forget-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-forget-gate" title="Link to this equation">¶</a></span>\[
 F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 \]</div>
 <p>因此可以得到新记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>来自于<span class="math notranslate nohighlight">\(C_{t-1}\)</span>的一部分，即<span class="math notranslate nohighlight">\(C_{t-1}\odot F_t\)</span>。</p>
@@ -122,7 +187,7 @@ F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 </ul>
 <p>  遗忘门删除了应该忘记的内容，如果不补充应当记忆的内容，则只会遗忘。为此，就当向<span class="math notranslate nohighlight">\(C_t\)</span>添加需要记忆的新信息，也就是候选记忆信息，即</p>
 <div class="math notranslate nohighlight" id="equation-candidate-memo-cell">
-<span class="eqno">(5)<a class="headerlink" href="#equation-candidate-memo-cell" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-candidate-memo-cell" title="Link to this equation">¶</a></span>\[
 \tilde{C}_t = \tanh(x_tW_{xc}+H_{t-1}W_{hc}+b_c)
 \]</div>
 <ul class="simple">
@@ -130,7 +195,7 @@ F_t = \sigma(x_tW_{xf} + H_{t-1}W_{hf} + b_f)
 </ul>
 <p>  候选记忆信息加入记忆单元<span class="math notranslate nohighlight">\(C_t\)</span>时需取舍，因此可以根据门控机制添加一个输入门来控制，即</p>
 <div class="math notranslate nohighlight" id="equation-input-gate">
-<span class="eqno">(6)<a class="headerlink" href="#equation-input-gate" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(7)<a class="headerlink" href="#equation-input-gate" title="Link to this equation">¶</a></span>\[
 I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
 \]</div>
 <ul class="simple">
@@ -138,7 +203,7 @@ I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
 </ul>
 <p>  通过上述输入、遗忘操作可以得到新记忆单元，即</p>
 <div class="math notranslate nohighlight" id="equation-t-memo-cell">
-<span class="eqno">(7)<a class="headerlink" href="#equation-t-memo-cell" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(8)<a class="headerlink" href="#equation-t-memo-cell" title="Link to this equation">¶</a></span>\[
 C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C}_t }_{输入部分}
 \]</div>
 </section>
@@ -157,6 +222,8 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
 <li><a class="reference internal" href="#">3. 循环神经网络</a><ul>
 <li><a class="reference internal" href="#word2vec">3.1. Word2Vec</a><ul>
 <li><a class="reference internal" href="#id2">3.1.1. 语言模型</a></li>
+<li><a class="reference internal" href="#cbow">3.1.2. CBOW应用于语言模型</a></li>
+<li><a class="reference internal" href="#id3">3.1.3. 存在的问题</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#rnn">3.2. RNN</a></li>
