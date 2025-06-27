@@ -58,11 +58,11 @@
 <section id="word2vec">
 <h2><span class="section-number">3.1. </span>Word2Vec<a class="headerlink" href="#word2vec" title="Link to this heading">¶</a></h2>
 <p>  Word2Vec是语言模型的神经网络建模实现。其基本原理如下图所示：</p>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id5">
 <a class="reference internal image-reference" href="../_images/word2vec_cbow.png"><img alt="CBOW" src="../_images/word2vec_cbow.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">连续词袋模型的神经网络模型</span><a class="headerlink" href="#id4" title="Link to this image">¶</a></p>
+<p><span class="caption-text">连续词袋模型的神经网络模型</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>上图中的模型假设单词向量(one-hot)长度为5，中间层长度为4。训练好之后的输入层与中间层之间的参数<span class="math notranslate nohighlight">\(\pmb{W}_{in}\)</span>即为所有单词的<strong>词向量</strong>表示。<strong>词向量表示类似于颜色空间的RGB表示</strong>。通过词向量间的运算可以得到类似词与词之间的距离，相似度等效果。例如：“国王 - 男人 + 女人 = 女王”、“猫”靠近“狗”等。 词向量实现了词到向量的转变，可直接迁移至下游任务（文本分类、机器翻译等），‌减少训练成本‌并提升数据集效果。</p>
@@ -149,11 +149,11 @@ P(x_t|x_{t-1},...,x_1)\approx P(x_t|x_{t-1},x_{t-2},...,x_{t-k+1})
 <h2><span class="section-number">3.3. </span>LSTM<a class="headerlink" href="#lstm" title="Link to this heading">¶</a></h2>
 <p>  RNN的<strong>不足</strong>：RNN层不能学习长期依赖。RNN通过向过去传递“有意义的梯度”，能学习时间方向上的依赖。梯度包含了应该学习到的有意义信息，通过将这些信息向过去传递，RNN层学习到长期依赖。但如果梯度在传递过程中变弱，则权重参数将不会更新。随着时间回溯，这个RNN层不能避免<strong>梯度消失或梯度爆炸</strong>问题。</p>
 <p>  为了解决这类问题，发展出了一种称为LSTM的网络，也称为长短时记忆网络。该模型通过“门机制”解决了长期信息保存和短期输入缺失的问题。以下是模型图概况。</p>
-<figure class="align-default" id="id5">
+<figure class="align-default" id="id6">
 <a class="reference internal image-reference" href="../_images/lstm.png"><img alt="LSTM" src="../_images/lstm.png" style="width: 500px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id5" title="Link to this image">¶</a></p>
+<p><span class="caption-text">长短时记忆网络</span><a class="headerlink" href="#id6" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <ul class="simple">
@@ -207,6 +207,23 @@ I_t = \sigma(x_tW_{xi} + H_{t-1}W_{hi} + b_i)
 C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C}_t }_{输入部分}
 \]</div>
 </section>
+<section id="id4">
+<h2><span class="section-number">3.4. </span>自动文本生成<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>  利用RNN生成文本，其基本原理如下图所示：</p>
+<figure class="align-default" id="id7">
+<a class="reference internal image-reference" href="../_images/rnn_gen_text.svg"><img alt="rnn_gen_text" src="../_images/rnn_gen_text.svg" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">循环神经网络生成文本</span><a class="headerlink" href="#id7" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>  文本生成的主要步骤如下：</p>
+<ol class="arabic simple">
+<li><p>语言模型根据已给出的单词序列，输出下一个候选单词的概率分布。</p></li>
+<li><p>根据步骤1所得到的概率分布，采样生成下一个单词<span class="math notranslate nohighlight">\(x_{t+1}\)</span>。</p></li>
+<li><p>将单词<span class="math notranslate nohighlight">\(x_{t+1}\)</span>输入语言模型，跳到步骤1，直到出现终止字符或满足终止条件。</p></li>
+</ol>
+</section>
 </section>
 
 
@@ -228,6 +245,7 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
 </li>
 <li><a class="reference internal" href="#rnn">3.2. RNN</a></li>
 <li><a class="reference internal" href="#lstm">3.3. LSTM</a></li>
+<li><a class="reference internal" href="#id4">3.4. 自动文本生成</a></li>
 </ul>
 </li>
 </ul>

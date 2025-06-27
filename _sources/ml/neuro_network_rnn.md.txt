@@ -160,3 +160,21 @@ $$(input-gate)
 $$
 C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C}_t }_{输入部分}
 $$(t-memo-cell)
+
+## 自动文本生成
+
+&emsp;&emsp;利用RNN生成文本，其基本原理如下图所示：
+
+:::{figure-md}
+![rnn_gen_text](../img/rnn_gen_text.svg){width=500px}
+
+循环神经网络生成文本
+:::
+
+&emsp;&emsp;文本生成的主要步骤如下：
+
+1. 语言模型根据已给出的单词序列，输出下一个候选单词的概率分布。
+
+2. 根据步骤1所得到的概率分布，采样生成下一个单词$x_{t+1}$。
+
+3. 将单词$x_{t+1}$输入语言模型，跳到步骤1，直到出现终止字符或满足终止条件。
