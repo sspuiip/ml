@@ -251,6 +251,46 @@ C_t=\underbrace{C_{t-1}\odot F_t}_{遗忘部分} +\underbrace{I_t \odot \tilde{C
 <section id="attention">
 <h2><span class="section-number">3.6. </span>Attention<a class="headerlink" href="#attention" title="Link to this heading">¶</a></h2>
 <p>  传统 Seq2Seq 模型用编码器将整个输入压缩成一个固定向量，这个向量可能会丢失信息，特别是在长序列中。Attention 机制可以让每一步解码时都重新看一遍输入的全部内容，并判断哪些部分重要。</p>
+<figure class="align-default" id="id9">
+<a class="reference internal image-reference" href="../_images/Attention.svg"><img alt="rnn_gen_text" src="../_images/Attention.svg" style="width: 700px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">带Attention的Seq2Seq模型</span><a class="headerlink" href="#id9" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>  从上图可以看出，相较于Seq2seq原始模型，解码器额外添加了Attention部分，编码器则额外输出了所有LSTM层的隐藏状态<span class="math notranslate nohighlight">\(\pmb{h}_s\)</span>。而最后一个隐藏状态<span class="math notranslate nohighlight">\(\pmb{h}_t\)</span>仍和原模型保持一致，即最后一个LSTM单元的隐藏单元仍作为解码器的连接桥梁。</p>
+<ul class="simple">
+<li><p><strong>重要元素的选择</strong></p></li>
+</ul>
+<p>  Attention模块的主要作用是从<span class="math notranslate nohighlight">\(\pmb{h}_s\)</span>中与当前目标<span class="math notranslate nohighlight">\(y_i\)</span>最相关的成员挑选出来。而挑选这个动作无法微分操作，因此选择一种类似加权累积和的作法替代。事实上，加权累积和是可以自动微分的。例如：假设有3个向量组成的<span class="math notranslate nohighlight">\(\pmb{h}_s\)</span>如下，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\pmb{h}_3=\begin{bmatrix}1&amp;2\\ 3&amp;4\\ 5&amp;6 \end{bmatrix}
+\end{split}\]</div>
+<p>如果我们想选择第1个向量<span class="math notranslate nohighlight">\([1,2]^\top\)</span>，可以设计一个权重向量<span class="math notranslate nohighlight">\(\pmb{a}=[0.9, 0.05,0.05]\)</span>并且将第1个元素的比例设置为较大，那么将两者相乘得到的结果与第1个向量<span class="math notranslate nohighlight">\([1,2]^\top\)</span>差别不会太大，即</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+[0.9, 0.05,0.05]\begin{bmatrix}1&amp;2\\ 3&amp;4\\ 5&amp;6 \end{bmatrix}=0.9\begin{bmatrix}1\\2 \end{bmatrix} + 0.05\begin{bmatrix}3\\4 \end{bmatrix} + 0.05\begin{bmatrix}5\\6 \end{bmatrix} =[1.3,2.3]
+\end{split}\]</div>
+<p>可见，通过上述计算，可以间接实现选择权重大的成员。对于权重向量<span class="math notranslate nohighlight">\(\pmb{a}\)</span>完全可以交于网络学习，达到误差最小。加权累积和的计算图如下所示：</p>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/weight_sum.svg"><img alt="rnn_gen_text" src="../_images/weight_sum.svg" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">加权累积和实现隐层<span class="math notranslate nohighlight">\(\pmb{h}_s\)</span>的元素选择</span><a class="headerlink" href="#id10" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>权重向量的生成</strong></p></li>
+</ul>
+<p>  对于权重向量<span class="math notranslate nohighlight">\(\pmb{a}\)</span>来说，与之相关的部分为解码器的当前时序隐藏状态<span class="math notranslate nohighlight">\(\pmb{h}\)</span>和编码器的所有隐藏状态<span class="math notranslate nohighlight">\(\pmb{h}_s\)</span>，其计算图如下所示：</p>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="../_images/attention_weight.svg"><img alt="rnn_gen_text" src="../_images/attention_weight.svg" style="width: 400px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">权重向量<span class="math notranslate nohighlight">\(\pmb{a}\)</span>的计算图</span><a class="headerlink" href="#id11" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 

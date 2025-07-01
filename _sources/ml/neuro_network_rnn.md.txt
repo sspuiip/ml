@@ -212,3 +212,44 @@ Seq2seq的左边为编码器（Encoder），右边为解码器（Decoder），�
 ## Attention
 
 &emsp;&emsp;传统 Seq2Seq 模型用编码器将整个输入压缩成一个固定向量，这个向量可能会丢失信息，特别是在长序列中。Attention 机制可以让每一步解码时都重新看一遍输入的全部内容，并判断哪些部分重要。
+
+:::{figure-md}
+![rnn_gen_text](../img/Attention.svg){width=700px}
+
+带Attention的Seq2Seq模型
+:::
+
+&emsp;&emsp;从上图可以看出，相较于Seq2seq原始模型，解码器额外添加了Attention部分，编码器则额外输出了所有LSTM层的隐藏状态$\pmb{h}_s$。而最后一个隐藏状态$\pmb{h}_t$仍和原模型保持一致，即最后一个LSTM单元的隐藏单元仍作为解码器的连接桥梁。
+
+- **重要元素的选择**
+
+&emsp;&emsp;Attention模块的主要作用是从$\pmb{h}_s$中与当前目标$y_i$最相关的成员挑选出来。而挑选这个动作无法微分操作，因此选择一种类似加权累积和的作法替代。事实上，加权累积和是可以自动微分的。例如：假设有3个向量组成的$\pmb{h}_s$如下，
+
+$$
+\pmb{h}_3=\begin{bmatrix}1&2\\ 3&4\\ 5&6 \end{bmatrix}
+$$
+
+如果我们想选择第1个向量$[1,2]^\top$，可以设计一个权重向量$\pmb{a}=[0.9, 0.05,0.05]$并且将第1个元素的比例设置为较大，那么将两者相乘得到的结果与第1个向量$[1,2]^\top$差别不会太大，即
+
+$$
+[0.9, 0.05,0.05]\begin{bmatrix}1&2\\ 3&4\\ 5&6 \end{bmatrix}=0.9\begin{bmatrix}1\\2 \end{bmatrix} + 0.05\begin{bmatrix}3\\4 \end{bmatrix} + 0.05\begin{bmatrix}5\\6 \end{bmatrix} =[1.3,2.3]
+$$
+
+可见，通过上述计算，可以间接实现选择权重大的成员。对于权重向量$\pmb{a}$完全可以交于网络学习，达到误差最小。加权累积和的计算图如下所示：
+
+:::{figure-md}
+![rnn_gen_text](../img/weight_sum.svg){width=400px}
+
+加权累积和实现隐层$\pmb{h}_s$的元素选择
+:::
+
+- **权重向量的生成**
+
+&emsp;&emsp;对于权重向量$\pmb{a}$来说，与之相关的部分为解码器的当前时序隐藏状态$\pmb{h}$和编码器的所有隐藏状态$\pmb{h}_s$，其计算图如下所示：
+
+:::{figure-md}
+![rnn_gen_text](../img/attention_weight.svg){width=400px}
+
+权重向量$\pmb{a}$的计算图
+:::
+
