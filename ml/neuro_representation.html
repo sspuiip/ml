@@ -57,14 +57,24 @@
 <h1><span class="section-number">7. </span>表示学习<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="autoencoder">
 <h2><span class="section-number">7.1. </span>自编码器(AutoEncoder)<a class="headerlink" href="#autoencoder" title="Link to this heading">¶</a></h2>
-<p>  自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：</p>
+<p>  自编码器（Autoencoder）是一种无监督学习的神经网络模型，用于学习输入数据的有效编码（表示）。它的基本目标是让输出尽可能地重构输入。自编码器通常包括二个部分：</p>
 <ol class="arabic simple">
-<li><p>原码空间<span class="math notranslate nohighlight">\(\mathcal{X}\in\mathbb{R}^n\)</span>与编码空间<span class="math notranslate nohighlight">\(\mathcal{Z}\in\mathbb{R}^m\)</span>。</p></li>
-<li><p>编码函数（参数为<span class="math notranslate nohighlight">\(\phi\)</span>）<span class="math notranslate nohighlight">\(E_\phi :\mathcal{X}\rightarrow\mathcal{Z}\)</span>与解码函数（参数为<span class="math notranslate nohighlight">\(\theta\)</span>）<span class="math notranslate nohighlight">\(D_\theta :\mathcal{Z}\rightarrow \mathcal{X}\)</span>.</p></li>
+<li><p>编码器（Encoder）：将原始输入数据压缩为一个低维的潜在表示（latent representation）。通常是一个神经网络。如：</p></li>
 </ol>
+<div class="math notranslate nohighlight" id="equation-encoder">
+<span class="eqno">(1)<a class="headerlink" href="#equation-encoder" title="Link to this equation">¶</a></span>\[
+\pmb{z} = E_\phi(\pmb{x}) = \sigma(\pmb{Wx} + \pmb{b})
+\]</div>
+<ol class="arabic simple" start="2">
+<li><p>解码器（Decoder）：将潜在表示解码回原始输入数据的近似值。通常也是一个神经网络。如：</p></li>
+</ol>
+<div class="math notranslate nohighlight" id="equation-decoder">
+<span class="eqno">(2)<a class="headerlink" href="#equation-decoder" title="Link to this equation">¶</a></span>\[
+\pmb{\hat{x}} = D_\theta(\pmb{z}) = \sigma(\pmb{Hz} + \pmb{d})
+\]</div>
 <p>  对于任意<span class="math notranslate nohighlight">\(\pmb{x}\in\mathcal{X}\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-auto-encoder">
-<span class="eqno">(1)<a class="headerlink" href="#equation-auto-encoder" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-auto-encoder" title="Link to this equation">¶</a></span>\[
 \pmb{z}\triangleq E_\phi(\pmb{x})=\sigma(\pmb{Wx}+\pmb{b}),\quad \pmb{\hat{x}}\triangleq D_\theta (\pmb{z})=\sigma(\pmb{Hz}+\pmb{d})
 \]</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{W},\pmb{H}\)</span>分别为编码层参数和解码层参数，<span class="math notranslate nohighlight">\(\sigma\)</span>为激活函数。</p>
@@ -80,17 +90,17 @@
 </ul>
 <p>  自编码器的目标是对于样本<span class="math notranslate nohighlight">\(\pmb{x}\sim q(\pmb{x}) \in\mathcal{X}\)</span>的重构误差测度<span class="math notranslate nohighlight">\(d:\pmb{X}\times\pmb{X}\rightarrow [0,\infty]\)</span>尽可能的小，即</p>
 <div class="math notranslate nohighlight" id="equation-ae-min0">
-<span class="eqno">(2)<a class="headerlink" href="#equation-ae-min0" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(4)<a class="headerlink" href="#equation-ae-min0" title="Link to this equation">¶</a></span>\[
 \min\limits_{\theta,\phi} \quad \mathcal{L}(\phi,\theta)=\mathbb{E}_{x\sim q}[d(\pmb{x},D_\theta (E_\phi (\pmb{x})))]
 \]</div>
 <p>  一般来说，<span class="math notranslate nohighlight">\(q(\pmb{x})\)</span>取值为经验分布，</p>
 <div class="math notranslate nohighlight" id="equation-ae-q">
-<span class="eqno">(3)<a class="headerlink" href="#equation-ae-q" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(5)<a class="headerlink" href="#equation-ae-q" title="Link to this equation">¶</a></span>\[
 q(\pmb{x})=\frac{1}{N}\sum_{i=1}^N \delta_{\pmb{x}_i}
 \]</div>
 <p>以及<span class="math notranslate nohighlight">\(d(\pmb{x},\pmb{x}')=\Vert \pmb{x}-\pmb{x}'\Vert_2^2\)</span>. 因此，寻找最估自编码器就等价于一个最小二乘优化，即</p>
 <div class="math notranslate nohighlight" id="equation-ae-min">
-<span class="eqno">(4)<a class="headerlink" href="#equation-ae-min" title="Link to this equation">¶</a></span>\[
+<span class="eqno">(6)<a class="headerlink" href="#equation-ae-min" title="Link to this equation">¶</a></span>\[
 \min\limits_{\theta,\phi}\quad\frac{1}{N}\sum_{i=1}^N \left\Vert \pmb{x}-D_\theta (E_\phi (\pmb{x}))\right\Vert_2^2
 \]</div>
 </section>
