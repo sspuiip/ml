@@ -4,11 +4,20 @@
 
 
 
-&emsp;&emsp;自编码器是一种神经网络架构，目标是将输入信息压缩到指定的维度空间。一般由由以下两部分组成：
+&emsp;&emsp;自编码器（Autoencoder）是一种无监督学习的神经网络模型，用于学习输入数据的有效编码（表示）。它的基本目标是让输出尽可能地重构输入。自编码器通常包括二个部分：
 
-1. 原码空间$\mathcal{X}\in\mathbb{R}^n$与编码空间$\mathcal{Z}\in\mathbb{R}^m$。
+1. 编码器（Encoder）：将原始输入数据压缩为一个低维的潜在表示（latent representation）。通常是一个神经网络。如：
 
-2. 编码函数（参数为$\phi$）$E_\phi :\mathcal{X}\rightarrow\mathcal{Z}$与解码函数（参数为$\theta$）$D_\theta :\mathcal{Z}\rightarrow \mathcal{X}$.
+$$
+\pmb{z} = E_\phi(\pmb{x}) = \sigma(\pmb{Wx} + \pmb{b})
+$$(encoder)
+
+2. 解码器（Decoder）：将潜在表示解码回原始输入数据的近似值。通常也是一个神经网络。如：
+
+$$
+\pmb{\hat{x}} = D_\theta(\pmb{z}) = \sigma(\pmb{Hz} + \pmb{d})
+$$(decoder)
+
 
 
 
