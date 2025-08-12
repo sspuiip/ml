@@ -100,6 +100,7 @@
    mathmodel/conjugate_dist.md
    mathmodel/mcmc.md
    mathmodel/RFF.md
+   mathmodel/gumbel_trick.md
    
 
 

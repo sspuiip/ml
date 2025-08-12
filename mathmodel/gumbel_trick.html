@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>7. Gumbel Trick &#8212; Machine Learning Fundation 1.0 文档</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="prev" title="6. Random Fourier features" href="RFF.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             accesskey="I">索引</a></li>
+        <li class="right" >
+          <a href="RFF.html" title="6. Random Fourier features"
+             accesskey="P">上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Gumbel Trick</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section class="tex2jax_ignore mathjax_ignore" id="gumbel-trick">
+<h1><span class="section-number">7. </span>Gumbel Trick<a class="headerlink" href="#gumbel-trick" title="Link to this heading">¶</a></h1>
+<p>  Gumbel Trick 是一种概率技术，主要用于处理离散分布的采样问题，尤其在深度学习（如强化学习、变分自编码器）中解决梯度不可导的挑战。其核心是通过引入 ‌Gumbel 分布噪声‌，将离散采样转化为可导操作，同时保持采样的随机性。Gumbel Trick 基于 ‌Gumbel 分布‌（极值分布），其累积分布函数（CDF）为：</p>
+<div class="math notranslate nohighlight">
+\[
+F(g)=e^{−e^{−(g−\mu)}}
+\]</div>
+<p>其中, <span class="math notranslate nohighlight">\(\mu\)</span>是位置参数，<span class="math notranslate nohighlight">\(\beta=1\)</span>。具体实现分为两步：</p>
+<ol class="arabic simple">
+<li><p>Gumbel-Max Trick. 目标为从<span class="math notranslate nohighlight">\(P(X=k)=\frac{a_k}{\sum_i a_i}\)</span>采样。</p>
+<ul class="simple">
+<li><p>生成独立同分布的Gumbel噪声<span class="math notranslate nohighlight">\(g_k=-\log(-\log(u_k))\)</span>，其中<span class="math notranslate nohighlight">\(u_k \sim U(0,1)\)</span>。</p></li>
+<li><p>计算加权得分：<span class="math notranslate nohighlight">\(s_k = \log(a_k) + g_k\)</span>。</p></li>
+<li><p>选择最大得分的索引：<span class="math notranslate nohighlight">\(k^* = \arg\max_k s_k\)</span>。</p></li>
+</ul>
+</li>
+<li><p>Gumbel-Softmax Trick. 目标为从<span class="math notranslate nohighlight">\(P(X=k)=\frac{a_k}{\sum_i a_i}\)</span>采样，并且需要可导。</p>
+<ul class="simple">
+<li><p>生成Gumbel噪声：<span class="math notranslate nohighlight">\(g_k = -\log(-\log(u_k))\)</span>。</p></li>
+<li><p>计算加权得分：<span class="math notranslate nohighlight">\(s_k = \log(a_k) + g_k\)</span>。</p></li>
+<li><p>使用Softmax函数平滑化采样：<span class="math notranslate nohighlight">\(p_k = \frac{\exp(s_k/\tau)}{\sum_j \exp(s_j/\tau)}\)</span>，其中 <span class="math notranslate nohighlight">\(\tau\)</span> 是温度参数，控制平滑程度。</p></li>
+</ul>
+</li>
+</ol>
+<div class="dropdown admonition">
+<p class="admonition-title"><strong>示例代码</strong>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn.functional</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">F</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">GumbelSoftmax</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tau</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tau</span> <span class="o">=</span> <span class="n">tau</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hard</span> <span class="o">=</span> <span class="n">hard</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">sample_gumbel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-20</span><span class="p">):</span>
+        <span class="n">U</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="o">-</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">U</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span> <span class="o">+</span> <span class="n">eps</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logits</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">hard</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">F</span><span class="o">.</span><span class="n">one_hot</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span> <span class="n">logits</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+        <span class="n">gumbels</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_gumbel</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">logits</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">logits</span> <span class="o">+</span> <span class="n">gumbels</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">tau</span>
+        <span class="n">y_soft</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">hard</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">y_soft</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">y_hard</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y_soft</span><span class="p">)</span><span class="o">.</span><span class="n">scatter_</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">y_hard</span> <span class="o">-</span> <span class="n">y_soft</span><span class="p">)</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span> <span class="o">+</span> <span class="n">y_soft</span>
+        <span class="k">return</span> <span class="n">y_soft</span>
+
+<span class="c1"># 演示反向传播</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># 创建可训练参数</span>
+    <span class="n">logits</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]]))</span>
+    <span class="n">gumbel_layer</span> <span class="o">=</span> <span class="n">GumbelSoftmax</span><span class="p">(</span><span class="n">tau</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">hard</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># 前向传播</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">gumbel_layer</span><span class="p">(</span><span class="n">logits</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Forward output:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+
+    <span class="c1"># 模拟损失函数</span>
+    <span class="n">target</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mse_loss</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+
+    <span class="c1"># 反向传播</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Gradients for logits:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">logits</span><span class="o">.</span><span class="n">grad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="gumbel">
+<h2><span class="section-number">7.1. </span><strong>Gumbel分布</strong><a class="headerlink" href="#gumbel" title="Link to this heading">¶</a></h2>
+<p>  Gumbel分布是极值理论中的重要分布，常用于描述极端事件的分布。其概率密度函数为</p>
+<div class="math notranslate nohighlight" id="equation-gumbel-density">
+<span class="eqno">(1)<a class="headerlink" href="#equation-gumbel-density" title="Link to this equation">¶</a></span>\[
+f(x) = \frac{1}{\beta} e^{-\left(z+e^{-z}\right)},\quad z=\frac{x-\mu}{\beta}, \quad x \in \mathbb{R}.
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\mu\)</span>为位置参数，<span class="math notranslate nohighlight">\(\beta\)</span>为尺度参数。Gumbel分布的分布函数为</p>
+<div class="math notranslate nohighlight" id="equation-gumbel-cdf">
+<span class="eqno">(2)<a class="headerlink" href="#equation-gumbel-cdf" title="Link to this equation">¶</a></span>\[
+F(x) = e^{-e^{-\left(\frac{x-\mu}{\beta}\right)}}, \quad x \in \mathbb{R}.
+\]</div>
+<p>其均值与方差为，</p>
+<div class="math notranslate nohighlight" id="equation-gumbel-mean-var">
+<span class="eqno">(3)<a class="headerlink" href="#equation-gumbel-mean-var" title="Link to this equation">¶</a></span>\[
+\mathbb{E}[X] = \mu + \beta \gamma, \quad \mathbb{V}[X] = \frac{\pi^2}{6} \beta^2,
+\]</div>
+<p>其中，<span class="math notranslate nohighlight">\(\gamma\)</span>为欧拉常数。</p>
+</section>
+<section id="id1">
+<h2><span class="section-number">7.2. </span>几个分布的关系<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3><span class="section-number">7.2.1. </span><strong>指数分布与均匀分布</strong>.<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<p>  若有随机变量<span class="math notranslate nohighlight">\(x\)</span>服从参数为<span class="math notranslate nohighlight">\(\lambda\)</span>的指数分布，即</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{x\sim \textrm{Expo}(\lambda)}
+\]</div>
+<p>则有,</p>
+<div class="math notranslate nohighlight">
+\[
+f(\pmb{x})=\lambda e^{-\lambda x}(x\ge 0);\quad F(x)=1-e^{-\lambda x}
+\]</div>
+<p>指数分布的分布函数逆函数为，</p>
+<div class="math notranslate nohighlight">
+\[
+F^{-1}(p)=\frac{-\log(1-p)}{\lambda}, \quad p\in[0,1]
+\]</div>
+<p>注意到<span class="math notranslate nohighlight">\(p\)</span>与<span class="math notranslate nohighlight">\(1-p\)</span>为同分布，故，<span class="math notranslate nohighlight">\(\frac{-\log(p)}{\lambda}\)</span>与<span class="math notranslate nohighlight">\(\frac{-\log(1-p)}{\lambda}\)</span>同分布。因此，若<span class="math notranslate nohighlight">\(p\)</span>服从<span class="math notranslate nohighlight">\(U(0,1)\)</span>均匀分布，则有</p>
+<div class="math notranslate nohighlight" id="equation-exp-inv-unif-relation">
+<span class="eqno">(4)<a class="headerlink" href="#equation-exp-inv-unif-relation" title="Link to this equation">¶</a></span>\[
+F^{-1}(p)=\boxed{\frac{-\log(p)}{\lambda}\sim \textrm{Expo}(\lambda)}
+\]</div>
+</section>
+<section id="id3">
+<h3><span class="section-number">7.2.2. </span><strong>指数分布与Gumbel分布</strong>.<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>  如果有随机变量<span class="math notranslate nohighlight">\(t\)</span>服从参数为<span class="math notranslate nohighlight">\(\exp(x)\)</span>的指数分布，即</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{t\sim \textrm{Expo}(\exp(x))}
+\]</div>
+<p>则有，<strong><span class="math notranslate nohighlight">\(\Gamma=-\log t- \gamma\)</span>服从参数为<span class="math notranslate nohighlight">\(x\)</span>的Gumbel分布</strong>，即</p>
+<div class="math notranslate nohighlight" id="equation-gumbel-from-exp-relation">
+<span class="eqno">(5)<a class="headerlink" href="#equation-gumbel-from-exp-relation" title="Link to this equation">¶</a></span>\[
+\Gamma=\boxed{-\log t - \gamma \sim \textrm{Gumbel}(x-\gamma,1)},\quad \mu=x-\gamma, \beta=1.
+\]</div>
+<p>注意：上式中<span class="math notranslate nohighlight">\(x=\log(\lambda)\)</span>。</p>
+<p>其概率密度函数为，</p>
+<div class="math notranslate nohighlight">
+\[
+f(\Gamma) = e^{-(\Gamma - (x-\gamma)) - e^{-(\Gamma - (x-\gamma))}}, \quad \Gamma \in \mathbb{R}.
+\]</div>
+</section>
+<section id="id4">
+<h3><span class="section-number">7.2.3. </span><strong>Gumbel分布与均匀分布</strong><a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>  综合上述关系，可知，</p>
+<div class="math notranslate nohighlight" id="equation-gumbel-unif-relation">
+<span class="eqno">(6)<a class="headerlink" href="#equation-gumbel-unif-relation" title="Link to this equation">¶</a></span>\[\begin{split}
+\begin{split}
+\Gamma &amp;= -\log t - \gamma \\
+&amp;= -\log \left(\frac{-\log p}{\lambda}\right) - \gamma \\
+&amp;= -\log(-\log p) - \log \lambda - \gamma \\
+&amp;= -\log(-\log p) + x - \gamma
+\end{split}
+\end{split}\]</div>
+<p>注意，上式第3行的<span class="math notranslate nohighlight">\(\lambda\)</span>，若取<span class="math notranslate nohighlight">\(\lambda=\exp(x)\)</span>，则可以得到第4行的结果。</p>
+</section>
+<section id="id5">
+<h3><span class="section-number">7.2.4. </span>定理<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p><strong>定理</strong>. 设有<span class="math notranslate nohighlight">\(n\)</span>个独立随机变量<span class="math notranslate nohighlight">\(T_i\sim\textrm{expo}(\lambda_i)\)</span>，则有<span class="math notranslate nohighlight">\(V=\min\{x_1,...,x_n\}\)</span>服从参数为<span class="math notranslate nohighlight">\(\sum_i\lambda_i\)</span>的指数分布，且最小值出现的位置<span class="math notranslate nohighlight">\(i^*\)</span>服从多项分布，概率为，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{\pi}=\left(\frac{\lambda_1}{\sum_i \lambda_i},...,\frac{\lambda_n}{\sum_i \lambda_i}\right)
+\]</div>
+<p>并且，<span class="math notranslate nohighlight">\(V\)</span>与位置<span class="math notranslate nohighlight">\(i^*\)</span>无关。</p>
+<div class="dropdown admonition">
+<p class="admonition-title"><strong>证明</strong>.</p>
+<p>  设<span class="math notranslate nohighlight">\(V=\min\{T_1,...,T_n\}\)</span>，则<span class="math notranslate nohighlight">\(V&gt;t\)</span>等价于<span class="math notranslate nohighlight">\(T_i&gt;t, \forall i\)</span>，因此，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+P(V&gt;t)&amp;=P(T_1&gt;t,...,T_n&gt;t)\\
+&amp;=\prod_{i=1}^n P(T_i&gt;t)\\
+&amp;=\prod_{i=1}^n (1-F_i(t))\\
+&amp;=\prod_{i=1}^n e^{-\lambda_i t}\\
+&amp;=e^{-\left(\sum_{i=1}^n \lambda_i\right) t}
+\end{split}
+\end{split}\]</div>
+<p>因此，<span class="math notranslate nohighlight">\(V\sim \textrm{Expo}(\sum_i \lambda_i)\)</span>。又因为，<span class="math notranslate nohighlight">\(V=T_{i^*}\)</span>，则有，</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split}
+P(i^*=k,V&gt;t)&amp;=P(T_k&gt;t, T_i&gt;T_k, \forall i\ne k)\\
+&amp;=P(T_k&gt;t)\prod_{i\ne k} P(T_i&gt;T_k)\\
+&amp;=P(T_k&gt;t)\prod_{i\ne k}\int_t^{\infty} \lambda_i e^{-\lambda_i s} ds\\
+&amp;=P(T_k&gt;t)\prod_{i\ne k} e^{-\lambda_i t}\\
+&amp;=P(T_k&gt;t) e^{-\left(\sum_{i\ne k} \lambda_i\right) t}\\
+&amp;=e^{-\lambda_k t} e^{-\left(\sum_{i\ne k} \lambda_i\right) t}\\
+&amp;=e^{-\left(\sum_{i=1}^n \lambda_i\right) t}
+\end{split} 
+\end{split}\]</div>
+<p>因此，<span class="math notranslate nohighlight">\(P(i^*=k|V&gt;t)=\frac{\lambda_k}{\sum_i \lambda_i}\)</span>，且与<span class="math notranslate nohighlight">\(t\)</span>无关。证毕。</p>
+</div>
+</section>
+<section id="id6">
+<h3><span class="section-number">7.2.5. </span>推论<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p><strong>推论</strong>. 设有<span class="math notranslate nohighlight">\(n\)</span>个独立随机变量<span class="math notranslate nohighlight">\(\Gamma_i\sim\textrm{Gumbel}(x_i,1)\)</span>，则有<span class="math notranslate nohighlight">\(M=\max\{\Gamma_1,...,\Gamma_n\}\)</span>服从参数为<span class="math notranslate nohighlight">\(\log(\sum_i \exp(x_i))\)</span>的Gumbel分布，且最大值出现的位置<span class="math notranslate nohighlight">\(i^*\)</span>服从多项分布，概率为，</p>
+<div class="math notranslate nohighlight">
+\[
+\pmb{\pi}=\left(\frac{\exp(x_1)}{\sum_i \exp(x_i)},...,\frac{\exp(x_n)}{\sum_i \exp(x_i)}\right)
+\]</div>
+<div class="dropdown admonition">
+<p class="admonition-title"><strong>证明</strong>.</p>
+<p>  <strong>1. 最大值 <span class="math notranslate nohighlight">\(M\)</span> 的分布证明</strong>. Gumbel的CDF性质.<span class="math notranslate nohighlight">\(\Gamma_i\)</span> 的累积分布函数（CDF）为：</p>
+<div class="math notranslate nohighlight">
+\[
+P(\Gamma_i \leq y) = \exp\left(-\exp\left(-(y - x_i)\right)\right).
+\]</div>
+<p>独立变量的最大值CDF. 由独立性：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned} P(M \leq y) &amp;= \prod_{i=1}^n P(\Gamma_i \leq y) \\ 
+&amp;=\exp\left(-\sum_{i=1}^n \exp\left(-(y - x_i)\right)\right) \\ 
+&amp;=\exp\left(-\exp(-y) \cdot S\right), \quad S = \sum_{i=1}^n \exp(x_i). \end{aligned}
+\end{split}\]</div>
+<p>标准化为Gumbel分布. 令 <span class="math notranslate nohighlight">\(\mu = \log S\)</span>，则：</p>
+<div class="math notranslate nohighlight">
+\[
+P(M \leq y) = \exp\left(-\exp\left(-(y - \mu)\right)\right),
+\]</div>
+<p>即 <span class="math notranslate nohighlight">\(M \sim \textrm{Gumbel}(\log S, 1)\)</span>。</p>
+<p>  <strong>2. 最大值位置 <span class="math notranslate nohighlight">\(i^*\)</span> 的分布证明</strong>.核心思想：<span class="math notranslate nohighlight">\(i^* = k\)</span> 当且仅当 <span class="math notranslate nohighlight">\(\Gamma_k &gt; \Gamma_j\)</span> 对所有 <span class="math notranslate nohighlight">\(j \neq k\)</span> 成立。条件概率分解. 固定 <span class="math notranslate nohighlight">\(\Gamma_k = y\)</span>，其他 <span class="math notranslate nohighlight">\(\Gamma_j\)</span> 需小于 <span class="math notranslate nohighlight">\(y\)</span>：</p>
+<div class="math notranslate nohighlight">
+\[
+P(i^* = k \mid \Gamma_k = y) = \prod_{j \neq k} P(\Gamma_j \le y) = \exp\left(-\sum_{j \neq k} \exp(-(y - x_j))\right).
+\]</div>
+<p>联合概率密度积分.结合 <span class="math notranslate nohighlight">\(\Gamma_k\)</span> 的密度 <span class="math notranslate nohighlight">\(f_k(y) = \exp\left(-(y - x_k) - \exp(-(y - x_k))\right)\)</span>：</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned} P(i^* = k) &amp;= \int_{-\infty}^\infty P(i^* = k \mid \Gamma_k = y) f_k(y) dy \\
+&amp;=\int_{-\infty}^\infty \exp\left(-(y - x_k) - \exp(-y)S \right) dy. \end{aligned}
+\end{split}\]</div>
+<p>变量替换与积分结果. 令 <span class="math notranslate nohighlight">\(t = \exp(-y)\)</span>，则：</p>
+<div class="math notranslate nohighlight">
+\[
+P(i^* = k) = \exp(x_k) \int_0^\infty e^{-S t} dt = \frac{\exp(x_k)}{S}.
+\]</div>
+<p>因此 <span class="math notranslate nohighlight">\(i^* \sim \textrm{Multinomial}(\pmb{\pi})\)</span>。</p>
+</div>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="../index.html">目录</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">7. Gumbel Trick</a><ul>
+<li><a class="reference internal" href="#gumbel">7.1. <strong>Gumbel分布</strong></a></li>
+<li><a class="reference internal" href="#id1">7.2. 几个分布的关系</a><ul>
+<li><a class="reference internal" href="#id2">7.2.1. <strong>指数分布与均匀分布</strong>.</a></li>
+<li><a class="reference internal" href="#id3">7.2.2. <strong>指数分布与Gumbel分布</strong>.</a></li>
+<li><a class="reference internal" href="#id4">7.2.3. <strong>Gumbel分布与均匀分布</strong></a></li>
+<li><a class="reference internal" href="#id5">7.2.4. 定理</a></li>
+<li><a class="reference internal" href="#id6">7.2.5. 推论</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>上一主题</h4>
+    <p class="topless"><a href="RFF.html"
+                          title="上一章"><span class="section-number">6. </span>Random Fourier features</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>本页</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/mathmodel/gumbel_trick.md.txt"
+            rel="nofollow">显示源代码</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">快速搜索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="提交" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>导航</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="总索引"
+             >索引</a></li>
+        <li class="right" >
+          <a href="RFF.html" title="6. Random Fourier features"
+             >上一页</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="section-number">7. </span>Gumbel Trick</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; 版权所有 2022-2024, SSPUIIP.
+      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
+    </div>
+  </body>
+</html>
