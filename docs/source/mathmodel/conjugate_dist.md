@@ -8,13 +8,25 @@
 
 $$
 \Gamma(x)=\int_0^{\infty} t^{x-1}e^{-t}dt
-\tag{1}
+$$(gamma-pdf)
+
+其导函数为，
+
 $$
+\frac{d\Gamma(x)}{dx}=\int_0^{\infty} \log(t)\times t^{x-1}e^{-t}dt
+$$(gamma-derivative)
 
 该函数有如下特点：
 
 - **递推性**. $\Gamma(x)=(x-1)\Gamma(x-1)$; 易知，$\Gamma(x) $实际上是阶乘在实数集上的扩展，即$\Gamma(x)=(x-1)!, \forall x\in\mathbb{R}$.
-- **特殊点**. $\Gamma(\frac12)=\pi^{1/2}$.
+- **特殊点**. $\Gamma'(1)=-\gamma$(欧拉常数)
+
+|$x$ | $\Gamma(x)$ |
+|:---:|:---:|
+| $x=1$ | 1 |
+| $x=\frac12$ | $\pi^{1/2}$ |
+
+
 
 ### Gamma分布
 
@@ -22,16 +34,15 @@ $$
 
 $$
 \mathrm{Ga}(x|\alpha)=\frac{x^{\alpha-1}e^{-x}}{\Gamma(\alpha)}
-\tag{2}
-$$
+$$(gamma-density)
 
 由$\int_0^{\infty} \frac{t^{x-1}e^{-t}}{\Gamma(x)}dt=1$，易知上式即为Gamma分布的概率密度函数。
 
 &emsp;&emsp;令$x=\beta t$，则可以得到更一般形式的Gamma分布，
 
 $$
-\mathrm{Ga}(t|\alpha,\beta)=\frac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma(\alpha)}\tag{3}
-$$
+\mathrm{Ga}(t|\alpha,\beta)=\frac{\beta^\alpha t^{\alpha-1} e^{-\beta t}}{\Gamma(\alpha)}
+$$(gamma-density-general)
 
 其中，$\alpha$称为shape参数，主要决定了分布曲线的形状；$\beta$称为rate参数，主要决定曲线的陡峭。
 
@@ -40,8 +51,8 @@ $$
 &emsp;&emsp;参数为$\lambda$的Poissson分布，其分布律为，
 
 $$
-\mathrm{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}\tag{4}
-$$
+\mathrm{Poi}(X=k|\lambda)=\frac{\lambda^k e^{-\lambda}}{k!}
+$$(poisson-density)
 
 若取$\alpha=k+1, \beta=1$，则有，
 
@@ -112,8 +123,8 @@ $$
 &emsp;&emsp;对上式，取$\alpha=k,\beta=n-k+1$，则可以得到**Beta分布的概率密度函数**，
 
 $$
-\mathrm{Beta}(x|\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\tag{5}
-$$
+\mathrm{Beta}(x|\alpha,\beta)=\frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}
+$$(beta-density)
 
 ### Beta-Binomial共轭
 
@@ -136,7 +147,7 @@ $$
 一般来说，对于非负实数$\alpha,\beta$，Beta分布有以下关系，
 
 $$
-\mathrm{Beta}(p|\alpha,\beta)+\textrm{BinomCount}(m_1,m_2)=\mathrm{Beta}(p|\alpha+m_1,\beta+m_2)\tag{6}
+\mathrm{Beta}(p|\alpha,\beta)+\textrm{BinomCount}(m_1,m_2)=\mathrm{Beta}(p|\alpha+m_1,\beta+m_2)
 $$
 
 &emsp;&emsp;该公式(6)实际上描述的就是Beta-Binomial共轭。**共轭**的意思就是：数据符合二项分布，参数的先验分布都能保持Beta分布的形式。好处是能够在先验分布中赋予参数明确的物理意义，该解释可以延续到后验分布。
@@ -146,18 +157,18 @@ $$
 &emsp;&emsp;Beta分布拓展到多维，称为Dirichlet分布，即，
 
 $$
-\mathrm{Dir}(\pmb{x}|\pmb{\alpha})=\frac{\Gamma(\alpha_1+\alpha_2+...+\alpha_n)}{\Gamma(\alpha_1)\Gamma(\alpha_2)...\Gamma(\alpha_n)}x_1^{\alpha_1-1}x_2^{\alpha_2-1}...x_n^{\alpha_n-1}\tag{7}
-$$
+\mathrm{Dir}(\pmb{x}|\pmb{\alpha})=\frac{\Gamma(\alpha_1+\alpha_2+...+\alpha_n)}{\Gamma(\alpha_1)\Gamma(\alpha_2)...\Gamma(\alpha_n)}x_1^{\alpha_1-1}x_2^{\alpha_2-1}...x_n^{\alpha_n-1}
+$$(dirichlet-density)
 
 与Beta分布类似，Dirichlet分布的共轭分布为Multinomial分布，
 
 $$
-\mathrm{Dir}(\pmb{p}|\pmb{\alpha})+\mathrm{MultCount}(\pmb{m})=\mathrm{Dir}(\pmb{p}|\pmb{\alpha}+\pmb{m}) \tag{8}
+\mathrm{Dir}(\pmb{p}|\pmb{\alpha})+\mathrm{MultCount}(\pmb{m})=\mathrm{Dir}(\pmb{p}|\pmb{\alpha}+\pmb{m}) 
 $$
 
 Multinomial分布为，
 
 $$
 \mathrm{Mult}(\pmb{n}|\pmb{p},N)=\begin{pmatrix} N\\ \pmb{n}\end{pmatrix}\prod_{k=1}^K p_k^{n_k}
-$$
+$$(multinomial-density)
 
