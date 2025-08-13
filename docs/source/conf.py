@@ -88,7 +88,7 @@ source_suffix = {
 #  'alabaster' 'sphinx_rtd_theme' 'sphinx_book_theme' 'furo' 'piccolo_theme' 
 #   classic scrolls sphinxdoc nature haiku bizstyle pyramid agogo traditional
 
-html_theme = 'nature'
+html_theme = 'furo'
 
 # html_theme = 'sphinx_adc_theme'
 # html_theme_path = [sphinx_adc_theme.get_html_theme_path()]

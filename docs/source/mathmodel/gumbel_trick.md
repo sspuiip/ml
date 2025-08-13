@@ -1,12 +1,61 @@
 # Gumbel Trick
 
-&emsp;&emsp;Gumbel Trick 是一种概率技术，主要用于处理离散分布的采样问题，尤其在深度学习（如强化学习、变分自编码器）中解决梯度不可导的挑战。其核心是通过引入 ‌Gumbel 分布噪声‌，将离散采样转化为可导操作，同时保持采样的随机性。Gumbel Trick 基于 ‌Gumbel 分布‌（极值分布），其累积分布函数（CDF）为：
+&emsp;&emsp;Gumbel Trick 是一种概率技术，主要用于处理离散分布的采样问题，尤其在深度学习（如强化学习、变分自编码器）中解决梯度不可导的挑战。考虑如下问题：如果给定$\pmb{x}\in\mathbb{R}^n$，如果从Gumbel分布独立采样$g_1,g_2,...,g_n$个样本，并将这些样本与$\pmb{x}$相加，得到新的向量$\pmb{y}=(x_1+g_1,...,x_n+g_n)$，则$\max(\pmb{y})$的分布是什么？以及$\arg\max(\pmb{y})$的分布是什么？Gumbel Trick给出了答案。
+
+&emsp;&emsp;由前提条件可知，
 
 $$
-F(g)=e^{−e^{−(g−\mu)}}
+\pmb{y} = \pmb{x} + \pmb{g},\quad \max\{y_1,y_2,...,y_n\} = \max_i (x_i + g_i)
 $$
 
-其中, $\mu$是位置参数，$\beta=1$。具体实现分为两步：
+对上式求期望，有，
+
+$$
+\begin{split}
+\mathbb{E}\max\{y_1,y_2,...,y_n\}&=\mathbb{E}\max\{x_1+g_1, x_2+g_2, ..., x_n+g_n\} \\
+&=\log\left( \sum_i \exp(x_i) \right)
+\end{split}
+$$(gumbel-trick-expectation-)
+
+其中，$x_i+g_i$均为Gumbel分布，且这$n$个随机变量的max函数仍为Gumbel分布，该分布的期望正是等式的最后一行所给出的表达式。从上式可以看出，Gumbel Trick将**最大值函数**的期望转化为**LogSumExp函数**，而LogSumExp函数是Softmax函数的对数形式，因此，Gumbel Trick在某种程度上实现了从**最大值函数**到**Softmax函数**的平滑过渡。
+
+
+- **最大值服从Gumbel分布，最大值的位置服从多项分布**
+
+&emsp;&emsp;Gumbel Trick的**核心**是通过引入 ‌Gumbel 分布噪声‌，将离散采样转化为可导操作，同时保持采样的随机性。假设有$(\pi_1,...,\pi_n)$为非负非全零实数，且$g_1,...,g_n$为独立随机变量且服从Gumbel(0,1)分布，则有，
+
+$$
+P\left\{ k=\arg\max_i (g_i + \log\pi_i) \right\} = \frac{\pi_k}{\sum_i \pi_i}
+$$(gumbel-max-trick)
+
+也就是说，**最大值出现的位置**$k$服从**多项分布**，其概率为 $\frac{\pi_k}{\sum_i \pi_i}$。而**最大值**服从$\textrm{Gumbel}\left( \log\left(\sum_i\pi_i\right), 1\right)$。证明过程见最后一个小节。这种方法被称为 **Gumbel-Max Trick**。
+
+&emsp;&emsp;同理，若给定$x_1,...,x_n\in\mathbb{R}$，则有，
+
+$$
+P\left\{ k=\arg\max_i (x_i + g_i) \right\} = \frac{\exp(x_k)}{\sum_i \exp(x_i)}
+$$(gumbel-max-trick-exp)
+
+
+&emsp;&emsp;若需要平滑化采样(可导，也就是可反向传播)，则可以使用 **Gumbel-Softmax Trick**，其公式为：
+
+$$
+p_k = \frac{\exp\left(\frac{g_k + \log\pi_k}{\tau}\right)}{\sum_j \exp\left(\frac{g_j + \log\pi_j}{\tau}\right)}
+$$(gumbel-softmax-trick)
+
+- **相关的等式**
+
+| 公式 | 服从分布 |
+| --- | --- |
+|如果$t\sim\textrm{Expo}(\lambda)$，则有$(-\log t -\gamma)$|$\sim\textrm{Gumbel}(\log\lambda - \gamma, 1)$|
+|$\arg\max_i (g_i+\log\pi_i)$|$\sim\textrm{Cat}\left(\frac{\pi_k}{\sum_i \pi_i}\right)$|
+|$\max_i (g_i+\log\pi_i)$|$\sim \textrm{Gumbel}\left( \log\left(\sum_i\pi_i\right), 1\right) $|
+|$\mathbb{E}[\max_i (g_i+\beta x_i)]=\log\left( \sum_i \exp(\beta\cdot x_i) \right)+\gamma$ | |
+
+
+
+
+- **Gumbel Trick 具体应用的两种情况**
 
 1. Gumbel-Max Trick. 目标为从$P(X=k)=\frac{a_k}{\sum_i a_i}$采样。
     - 生成独立同分布的Gumbel噪声$g_k=-\log(-\log(u_k))$，其中$u_k \sim U(0,1)$。
@@ -72,7 +121,7 @@ if __name__ == "__main__":
 :::
 
 
-## **Gumbel分布**
+## Gumbel分布
 
 &emsp;&emsp;Gumbel分布是极值理论中的重要分布，常用于描述极端事件的分布。其概率密度函数为
 
@@ -86,13 +135,29 @@ $$
 F(x) = e^{-e^{-\left(\frac{x-\mu}{\beta}\right)}}, \quad x \in \mathbb{R}.
 $$(gumbel-cdf)
 
-其均值与方差为，
+
+- **属性**.
+
+&emsp;&emsp;其**均值**与**方差**分别为，
 
 $$
 \mathbb{E}[X] = \mu + \beta \gamma, \quad \mathbb{V}[X] = \frac{\pi^2}{6} \beta^2,
 $$(gumbel-mean-var)
 
 其中，$\gamma$为欧拉常数。
+
+&emsp;&emsp;若$G_1,G_2,...,G_n$为**独立同分布**的Gumbel随机变量，则其**最大值**$M=\max\{G_1,G_2,...,G_n\}$服从参数为$\mu+\beta\log n$的Gumbel分布，即
+
+$$
+M \sim \textrm{Gumbel}(\mu + \beta \log n, \beta).
+$$(gumbel-max-same-distribution)
+
+&emsp;&emsp;**平移不变性**. 若$X\sim \textrm{Gumbel}(\mu, \beta)$，则对于任意常数$c$，有，
+
+$$
+X + c \sim \textrm{Gumbel}(\mu + c, \beta).
+$$(gumbel-translation)
+
 
 ## 几个分布的关系
 
@@ -119,7 +184,7 @@ $$
 注意到$p$与$1-p$为同分布，故，$\frac{-\log(p)}{\lambda}$与$\frac{-\log(1-p)}{\lambda}$同分布。因此，若$p$服从$U(0,1)$均匀分布，则有
 
 $$
-F^{-1}(p)=\boxed{\frac{-\log(p)}{\lambda}\sim \textrm{Expo}(\lambda)}
+F^{-1}(p)=\frac{-\log(1-p)}{\lambda}=\boxed{\frac{-\log(p)}{\lambda}\sim \textrm{Expo}(\lambda)}
 $$(exp-inv-unif-relation)
 
 
@@ -131,18 +196,58 @@ $$
 \boxed{t\sim \textrm{Expo}(\exp(x))}
 $$
 
-则有，**$\Gamma=-\log t- \gamma$服从参数为$x$的Gumbel分布**，即
+则有，**$\Gamma=-(\log t + \gamma)$服从参数为$x$的Gumbel分布**，即
 
 $$
-\Gamma=\boxed{-\log t - \gamma \sim \textrm{Gumbel}(x-\gamma,1)},\quad \mu=x-\gamma, \beta=1.
+\begin{split}
+P(\Gamma \leq g) &= P(-(\log t + \gamma) \leq g) \\
+&= P(t \geq e^{-(g-\gamma)}) \\
+&= e^{-\lambda\cdot e^{-(g-\gamma)}} \\
+&= e^{-\exp(x) \cdot e^{-(g-\gamma)}} \\
+&= \boxed{e^{-\exp\left\{-[g-(x-\gamma)]\right\}} \triangleq F(g)}
+\end{split}
 $$(gumbel-from-exp-relation)
 
-注意：上式中$x=\log(\lambda)$。
+因此，$\Gamma$服从参数为$x-\gamma$的Gumbel分布，即  
+
+$$
+\Gamma \sim \textrm{Gumbel}(x-\gamma, 1).
+$$
 
 其概率密度函数为，
 
 $$
 f(\Gamma) = e^{-(\Gamma - (x-\gamma)) - e^{-(\Gamma - (x-\gamma))}}, \quad \Gamma \in \mathbb{R}.
+$$
+
+&emsp;&emsp;**注意**：当$\gamma=x$时，$\Gamma$服从标准Gumbel分布，即$\Gamma \sim \textrm{Gumbel}(0, 1)$。
+
+| exponential distribution | Gumbel distribution |
+|-------------------------|---------------------|
+| $t\sim \textrm{Expo}(\lambda=\exp(x))$ | $-(\log t +\gamma)\sim\textrm{Gumbel}(x-\gamma, 1)$ |
+| $t\sim \textrm{Expo}(\lambda=\exp(x))$ | $-(\log t +x)\sim\textrm{Gumbel}(0, 1)$ |
+
+
+- **Gumbel随机变量最大值函数的分布**.
+
+&emsp;&emsp;设有$n$个独立随机变量$G_i \sim \textrm{Gumbel}(x_i, 1)$，则其最大值函数$M=\max\{x_1,x_2,...,x_n\}$服从参数为$\log(\sum_i \exp(x_i))$的Gumbel分布，即
+
+$$
+M \sim \textrm{Gumbel}\left[\log\left(\sum_i \exp(x_i)\right), 1\right].
+$$(gumbel-max-relation)
+
+&emsp;&emsp;**解**：由分布函数法可知，
+
+$$
+\begin{split}
+P(M \leq m) &= P(\max\{G_1, G_2, ..., G_n\} \leq m) \\
+&= P(G_1 \leq m, G_2 \leq m, ..., G_n \leq m) \\
+&= \prod_{i=1}^n P(G_i \leq m) \\
+&= \prod_{i=1}^n e^{-\exp(-(m - x_i))} \\
+&= e^{-\sum_{i=1}^n \exp(-(m - x_i))} \\
+&= e^{-\exp(-m) \cdot \sum_{i=1}^n \exp(x_i)} \\
+&= e^{-\exp\left\{-(m - \log(\sum_{i=1}^n \exp(x_i)))\right\}}\triangleq \textrm{Gumbel}(\log\left(\sum_{i=1}^n \exp(x_i)\right), 1).
+\end{split}
 $$
 
 ### **Gumbel分布与均匀分布**
@@ -226,7 +331,7 @@ $$
 $$
 \begin{aligned} P(M \leq y) &= \prod_{i=1}^n P(\Gamma_i \leq y) \\ 
 &=\exp\left(-\sum_{i=1}^n \exp\left(-(y - x_i)\right)\right) \\ 
-&=\exp\left(-\exp(-y) \cdot S\right), \quad S = \sum_{i=1}^n \exp(x_i). \end{aligned}
+&=\exp\left(-\exp(-y) \cdot S\right), \quad \boxed{S = \sum_{i=1}^n \exp(x_i)}. \end{aligned}
 $$
 
 标准化为Gumbel分布. 令 $\mu = \log S$，则：
