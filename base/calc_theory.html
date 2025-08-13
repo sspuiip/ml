@@ -1,104 +1,370 @@
-<!DOCTYPE html>
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="1. 数据降维" href="../ml/dimension_reduce_2.html" /><link rel="prev" title="3. 高斯过程" href="gaussian_process.html" />
 
-<html lang="zh-CN" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>4. 计算学习理论 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.07.19 -->
+        <title>4. 计算学习理论 - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=beaddf03"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="1. 数据降维" href="../ml/dimension_reduce_2.html" />
-    <link rel="prev" title="3. 高斯过程" href="gaussian_process.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="../ml/dimension_reduce_2.html" title="1. 数据降维"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="gaussian_process.html" title="3. 高斯过程"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>计算学习理论</a></li> 
-      </ul>
-    </div>  
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">基础知识</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">4. 计算学习理论</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce_2.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/decision_tree.html">2. 决策树</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">3. 贝叶斯分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">4. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">5. 概率图模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/ensemble.html">6. 集成学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">7. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">深度学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_mlp.html">1. 神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_cnn.html">2. 卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_rnn.html">3. 循环神经网络</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/cmeans.html">1. 聚类(一)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">2. BiClustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base2.html">2. 核函数基础2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">3. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">4. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">5. 协方差算子</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/gumbel_trick.html">7. Gumbel Trick</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/base/calc_theory.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">4. </span>计算学习理论<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  计算学习理论是指通过计算来学习的理论<a class="footnote-reference brackets" href="#mlzhou" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>。</p>
 <p>  假设有样本集<span class="math notranslate nohighlight">\(D=\{(\pmb{x}_1,y_1),(\pmb{x}_2,y_2),...,(\pmb{x}_m,y_m)\},\pmb{x}_i\in\mathcal{X}, y_i\in\mathcal{Y}\)</span>，所有样本服从一个隐含未知的分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>，<span class="math notranslate nohighlight">\(D\)</span>中所有样本都是独立地从这个分布上采样而来。</p>
 <p>  令<span class="math notranslate nohighlight">\(h:\mathcal{X}\rightarrow \mathcal{Y}\)</span>，则其<strong>泛化误差</strong>为，</p>
+<div class="math-wrapper docutils container" id="equation-gen-error">
 <div class="math notranslate nohighlight" id="equation-gen-error">
 <span class="eqno">(1)<a class="headerlink" href="#equation-gen-error" title="Link to this equation">¶</a></span>\[
 E[h;\mathcal{D}]=P_{\pmb{x}\in\mathcal{D}}[h(\pmb{x})\neq y]
 \]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(h\)</span>在<span class="math notranslate nohighlight">\(D\)</span>上的<strong>经验误差</strong>为，</p>
+<div class="math-wrapper docutils container" id="equation-exp-error">
 <div class="math notranslate nohighlight" id="equation-exp-error">
 <span class="eqno">(2)<a class="headerlink" href="#equation-exp-error" title="Link to this equation">¶</a></span>\[
 \hat{E}[h;D]=\frac{1}{m}\sum_{i=1}^m\mathbb{I}[h(\pmb{x}_i)\neq y_i]
 \]</div>
+</div>
 <p>由于<span class="math notranslate nohighlight">\(D\)</span>是<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>的独立同分布采样，因此<span class="math notranslate nohighlight">\(h\)</span>的经验误差的期望等于其泛化误差。若<span class="math notranslate nohighlight">\(h\)</span>在数据集<span class="math notranslate nohighlight">\(D\)</span>上的经验误差为0，则称<span class="math notranslate nohighlight">\(h\)</span>与<span class="math notranslate nohighlight">\(D\)</span><strong>一致</strong>，否则称其与<span class="math notranslate nohighlight">\(D\)</span><strong>不一致</strong>。任意两个映射<span class="math notranslate nohighlight">\(h_1,h_2\in \mathcal{X}\rightarrow\mathcal{Y}\)</span>，可以通过其<strong>不合</strong>来度量它们之间的差别，</p>
+<div class="math-wrapper docutils container" id="equation-eq-consistant">
 <div class="math notranslate nohighlight" id="equation-eq-consistant">
 <span class="eqno">(3)<a class="headerlink" href="#equation-eq-consistant" title="Link to this equation">¶</a></span>\[
 d(h_1,h_2)=P_{\pmb{x}\in\mathcal{D}}[h_1(\pmb{x})\neq h_2(\pmb{x})]
 \]</div>
+</div>
 <ol class="arabic">
 <li><p><strong>常用不等式</strong></p>
 <ul class="simple">
 <li><p>Jensen不等式。对于任意凸函数<span class="math notranslate nohighlight">\(f(x)\)</span>有，</p></li>
 </ul>
+<div class="math-wrapper docutils container" id="equation-eq-jensen">
 <div class="math notranslate nohighlight" id="equation-eq-jensen">
 <span class="eqno">(4)<a class="headerlink" href="#equation-eq-jensen" title="Link to this equation">¶</a></span>\[
    f(\mathbb{E}[x])\le\mathbb{E}[f(x)]
    \]</div>
+</div>
 <ul class="simple">
 <li><p>Hoeffding不等式。若<span class="math notranslate nohighlight">\(x_1,...,x_m\)</span>为<span class="math notranslate nohighlight">\(m\)</span>个独立随机变量，且满足<span class="math notranslate nohighlight">\(0\le x_i\le 1\)</span>，则对于任意<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>有，</p></li>
 </ul>
+<div class="math-wrapper docutils container" id="equation-eq-hoeffding">
 <div class="math notranslate nohighlight" id="equation-eq-hoeffding">
 <span class="eqno">(5)<a class="headerlink" href="#equation-eq-hoeffding" title="Link to this equation">¶</a></span>\[
    P\left(\frac1m\sum_{i=1}^m x_i-\frac1m\sum_{i=1}^m\mathbb{E}(x_i)\ge\epsilon \right)\le\exp(-2m\epsilon^2)
    \]</div>
+</div>
 <ul>
 <li><p>McDiamid不等式。若<span class="math notranslate nohighlight">\(x_1,...,x_m\)</span>为<span class="math notranslate nohighlight">\(m\)</span>个独立随机变量，且对于任意<span class="math notranslate nohighlight">\(1\le i\le m\)</span>，函数<span class="math notranslate nohighlight">\(f\)</span>满足，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
      \sup_{x_1,...,x_m,x_i'}\left| f(x_1,...,x_m)-f(x_1,...,x_{i-1},x_i',x_{i+1},...,x_m) \right|\le c_i
      \]</div>
+</div>
 <p>则对于任意<span class="math notranslate nohighlight">\(\epsilon&gt;0\)</span>，有</p>
+<div class="math-wrapper docutils container" id="equation-eq-mcdiamid">
 <div class="math notranslate nohighlight" id="equation-eq-mcdiamid">
 <span class="eqno">(6)<a class="headerlink" href="#equation-eq-mcdiamid" title="Link to this equation">¶</a></span>\[
      P\left( f(x_1,...,x_m) -\mathbb{E}[f(x_1,...,x_m)] \ge\epsilon\right)\le \exp\left(\frac{-2\epsilon^2}{\sum_i c_i^2}\right)
      \]</div>
+</div>
 </li>
 </ul>
 </li>
@@ -125,10 +391,12 @@ d(h_1,h_2)=P_{\pmb{x}\in\mathcal{D}}[h_1(\pmb{x})\neq h_2(\pmb{x})]
 <blockquote>
 <div><p><strong>定义</strong> (<strong>PAC辩识</strong>). 对于<span class="math notranslate nohighlight">\(0&lt;\epsilon, \delta&lt;1\)</span>，所有<span class="math notranslate nohighlight">\(c\in\mathcal{C}\)</span>和分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>，若存在学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>，其输出假设<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>满足</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-def-pac-identify">
 <div class="math notranslate nohighlight" id="equation-def-pac-identify">
 <span class="eqno">(7)<a class="headerlink" href="#equation-def-pac-identify" title="Link to this equation">¶</a></span>\[
 P(E(h)\le\epsilon)\ge 1-\delta
 \]</div>
+</div>
 <p>则称学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>能从假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中PAC辩识概念类<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>。</p>
 <blockquote>
 <div><p><strong>定义</strong> (<strong>PAC可学习</strong>). 令<span class="math notranslate nohighlight">\(m\)</span>表示从分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>中独立同分布采样得到的样例数目，<span class="math notranslate nohighlight">\(0&lt;\epsilon, \delta&lt;1\)</span>，对于所有分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>，若存在学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>和多项式函数<span class="math notranslate nohighlight">\(\textrm{ploy}()\)</span>，使得对于<strong>任何<span class="math notranslate nohighlight">\(m\ge \textrm{ploy}(1/\epsilon,1/\delta,size(x),size(c))\)</span></strong>，<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>能从假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中PAC辩识概念类<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>，则称概念类<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>对于假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>而言是PAC可学习的。也称之为概念类<span class="math notranslate nohighlight">\(\mathcal{C}\)</span>是PAC可学习的。</p>
@@ -149,6 +417,7 @@ P(E(h)\le\epsilon)\ge 1-\delta
 </ol>
 <p>  （1）模型。该情况下，使用“排除法”，给定<span class="math notranslate nohighlight">\(m\)</span>个样本集<span class="math notranslate nohighlight">\(D\)</span>可以找到满足误差参数<span class="math notranslate nohighlight">\(\epsilon\)</span>的假设<span class="math notranslate nohighlight">\(h\)</span>。首先排除与<span class="math notranslate nohighlight">\(D\)</span>不一致的假设，直到<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中只剩下1个为止。假设空间可能存在不止一个与<span class="math notranslate nohighlight">\(D\)</span>一致的等效假设，对这些假设，无法根据<span class="math notranslate nohighlight">\(D\)</span>来对它们的优劣进一步区分。</p>
 <p>  （2）样本数。到底需要多少样本才能学习到目标概念<span class="math notranslate nohighlight">\(c\)</span>的有效近似呢？对PAC来说，只要训练集<span class="math notranslate nohighlight">\(D\)</span>的规模能让学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>以概率<span class="math notranslate nohighlight">\(1-\delta\)</span>找到目标假设的<span class="math notranslate nohighlight">\(\epsilon\)</span>近似即可。首先估算泛化误差大于<span class="math notranslate nohighlight">\(\epsilon\)</span>但在数据集上仍表现完美的假设出现的概率，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -157,7 +426,9 @@ P[h(\pmb{x})=y]&amp;=1-P[h(\pmb{x})\neq y]\\
 &amp;\le 1-\epsilon
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  由于<span class="math notranslate nohighlight">\(D\)</span>包含了<span class="math notranslate nohighlight">\(m\)</span>个从<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>独立同分布采样而得的样例，因此，<span class="math notranslate nohighlight">\(h\)</span>与<span class="math notranslate nohighlight">\(D\)</span>表现一致的概率为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -165,7 +436,9 @@ P[h(\pmb{x}_1=y_1)\wedge h(\pmb{x}_2=y_2)\wedge ...\wedge h(\pmb{x}_m=y_m)]&amp;
 &amp;\le (1-\epsilon)^m
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  由于事先并不知道学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>输出<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中的哪个假设，但仅需保证泛化误差大于<span class="math notranslate nohighlight">\(\epsilon\)</span>，且在<span class="math notranslate nohighlight">\(D\)</span>表现完美的所有假设出现概率之和不大于<span class="math notranslate nohighlight">\(\delta\)</span>即可：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -173,16 +446,21 @@ P(h\in\mathcal{H}:E[h]&gt;\epsilon\wedge\hat{E}[h]=0)&amp;&lt;|\mathcal{H}|(1-\e
 &amp;&lt;\underbrace{|\mathcal{H}|e^{-m\epsilon}}_{e^{-x}&gt;1-x}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>只要令上式不大于<span class="math notranslate nohighlight">\(\delta\)</span>，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 |\mathcal{H}|e^{-m\epsilon}\le \delta
 \]</div>
+</div>
 <p>则可以得到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 m\ge \frac{1}{\epsilon}\left(\ln|\mathcal{H}|+\ln\frac{1}{\epsilon} \right)
 \]</div>
+</div>
 <p>  由此可知，有限假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>都是PAC可学习的，所需的样本数如上式所示，输出假设<span class="math notranslate nohighlight">\(h\)</span>的泛化误差随着样例数目的增多而收敛到0，收敛速率为<span class="math notranslate nohighlight">\(O(1/m)\)</span>。</p>
 <ol class="arabic simple" start="2">
 <li><p><strong>不可分情况</strong>(<span class="math notranslate nohighlight">\(c\notin\mathcal{H}\)</span>)</p></li>
@@ -191,6 +469,7 @@ m\ge \frac{1}{\epsilon}\left(\ln|\mathcal{H}|+\ln\frac{1}{\epsilon} \right)
 <blockquote>
 <div><p><strong>引理</strong> 1.若训练集<span class="math notranslate nohighlight">\(D\)</span>包含<span class="math notranslate nohighlight">\(m\)</span>个从分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>上独立同分布采样而得到的样例, <span class="math notranslate nohighlight">\(0&lt;\epsilon&lt;1\)</span>，则对于任意<span class="math notranslate nohighlight">\(h\in \mathcal{H}\)</span>有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-not-split">
 <div class="math notranslate nohighlight" id="equation-eq-not-split">
 <span class="eqno">(8)<a class="headerlink" href="#equation-eq-not-split" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -199,29 +478,36 @@ P(E(h)-\hat{E}(h)\ge\epsilon)&amp;\le\exp(-2m\epsilon^2)\\
 P(|\hat{E}(h)-E(h)|\ge\epsilon)&amp;\le 2\exp(-2m\epsilon^2)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><p><strong>推论</strong> 若训练集<span class="math notranslate nohighlight">\(D\)</span>包含<span class="math notranslate nohighlight">\(m\)</span>个从分布<span class="math notranslate nohighlight">\(D\)</span>上独立同分布采样而得到样本， <span class="math notranslate nohighlight">\(0&lt;\epsilon&lt;1\)</span>，则对任意<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>，下式至少以<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率成立，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-hyposis-error">
 <div class="math notranslate nohighlight" id="equation-eq-hyposis-error">
 <span class="eqno">(9)<a class="headerlink" href="#equation-eq-hyposis-error" title="Link to this equation">¶</a></span>\[
 \hat{E}(h)-\sqrt{\frac{\ln(2/\delta)}{2m}}\le E(h)\le \hat{E}(h)+\sqrt{\frac{\ln(2/\delta)}{2m}}
 \]</div>
+</div>
 <p>上式说明，样本数<span class="math notranslate nohighlight">\(m\)</span>较大时，<span class="math notranslate nohighlight">\(h\)</span>的经验误差是其泛化误差较好的近似。</p>
 <blockquote>
 <div><p><strong>定理</strong> 1 若<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>为有限假设空间，<span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，则对任意<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-thm-hyposis">
 <div class="math notranslate nohighlight" id="equation-thm-hyposis">
 <span class="eqno">(10)<a class="headerlink" href="#equation-thm-hyposis" title="Link to this equation">¶</a></span>\[
 P\left(|E(h)-\hat{E}(h)|\le\sqrt{\frac{\ln|\mathcal{H}|+\ln(2/\delta)}{2m}} \right)\ge1-\delta
 \]</div>
+</div>
 <p>  显然，当<span class="math notranslate nohighlight">\(c\notin\mathcal{H}\)</span>时，学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>无法学得目标概念<span class="math notranslate nohighlight">\(c\)</span>的近似。但是，当<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>给定时，必存在一个泛化误差最小的假设，找出此假设的<span class="math notranslate nohighlight">\(\epsilon\)</span>近似也不失为一个较好的目标。<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中泛化最小的假设是<span class="math notranslate nohighlight">\(\arg\min\limits_{h\in\mathcal{H}}E(h)\)</span>，于是，以此为目标可将PAC学习推广至<span class="math notranslate nohighlight">\(c\notin\mathcal{H}\)</span>的情况，这也称之为“不可知学习”(agnostic learning)，即</p>
 <blockquote>
 <div><p><strong>定义</strong> (<strong>不可知PAC学习</strong>). 若存在学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>和多项式函数<span class="math notranslate nohighlight">\(\text{ploy}()\)</span>，使得对于任意<span class="math notranslate nohighlight">\(m\ge\text{ploy}(1/\epsilon,1/\delta,size(\pmb{x}),size(c))\)</span>，<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>都能从假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>输出满足下式的假设<span class="math notranslate nohighlight">\(h\)</span>:</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-def-no-pac-learning">
 <div class="math notranslate nohighlight" id="equation-def-no-pac-learning">
 <span class="eqno">(11)<a class="headerlink" href="#equation-def-no-pac-learning" title="Link to this equation">¶</a></span>\[
 P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 \]</div>
+</div>
 <p>则称假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>是不可知PAC可学习的。</p>
 </section>
 </section>
@@ -233,22 +519,28 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <blockquote>
 <div><p><strong>定义</strong> (<strong>VC维</strong>). VC维就是假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能打散的最大示例集大小，即</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-vc">
 <div class="math notranslate nohighlight" id="equation-eq-vc">
 <span class="eqno">(12)<a class="headerlink" href="#equation-eq-vc" title="Link to this equation">¶</a></span>\[
 \text{VC}(\mathcal{H})=\max\limits_{m}\{m: \Pi_{\mathcal{H}}(m)=2^m\}
 \]</div>
+</div>
 <p>  所谓的<strong>打散</strong>是指：如果假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能对示例集<span class="math notranslate nohighlight">\(D\)</span>实现<em>所有不相同的对分</em>，则称为<span class="math notranslate nohighlight">\(D\)</span>能被<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>打散。而<strong>对分</strong>(赋予标记一次)是指假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的假设<span class="math notranslate nohighlight">\(h\)</span>对示例集<span class="math notranslate nohighlight">\(D\)</span>中示例赋予的一种结果。<span class="math notranslate nohighlight">\(\Pi_{\mathcal{H}}(m)\)</span>为<strong>增长函数</strong>，即</p>
 <blockquote>
 <div><p><strong>定义</strong> (<strong>增长函数</strong>). <span class="math notranslate nohighlight">\(\forall m\in\mathbb{N}\)</span>，设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的增长函数<span class="math notranslate nohighlight">\(\Pi_{\mathcal{H}}(m)\)</span>为，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-inc-fun">
 <div class="math notranslate nohighlight" id="equation-eq-inc-fun">
 <span class="eqno">(13)<a class="headerlink" href="#equation-eq-inc-fun" title="Link to this equation">¶</a></span>\[\Pi_{\mathcal{H}}(m)=\max\limits_{\{\pmb{x}_1,...,\pmb{x}_m\}\subseteq\mathcal{X}}\left|\{(h(\pmb{x}_1),...,h(\pmb{x}_m)|h\in\mathcal{H}\} \right|\]</div>
+</div>
 <p>  增长函数表示假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>对<span class="math notranslate nohighlight">\(m\)</span>个示例所能赋予标记的最大可能数目。这一结果越大，则<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的表示能力越强，对学习任务的适应能力越强。我们可以利用增长函数来估计经验误差与泛化误差之间的关系。</p>
 <blockquote>
 <div><p><strong>定理</strong> 2. 对假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>， <span class="math notranslate nohighlight">\(m\in\mathbb{N}, 0&lt;\epsilon&lt;1\)</span>和任意<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-inc-fun-error">
 <div class="math notranslate nohighlight" id="equation-inc-fun-error">
 <span class="eqno">(14)<a class="headerlink" href="#equation-inc-fun-error" title="Link to this equation">¶</a></span>\[P(|E(h)-\hat{E}(h)|&gt;\epsilon)\le 4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilon^2}{8} \right)\]</div>
+</div>
 <p>  (一) <strong>VC维计算</strong></p>
 <blockquote>
 <div><p>若存在大小为<span class="math notranslate nohighlight">\(d\)</span>的示例数据集能被<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>打散，但不存在任何大小为<span class="math notranslate nohighlight">\(d+1\)</span>的示例集被<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>打散，则<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的VC维是<span class="math notranslate nohighlight">\(d\)</span>。</p>
@@ -260,28 +552,36 @@ P\{E(h)-\arg\min\limits_{h'\in\mathcal{H}}E(h')\le\epsilon\}\ge 1-\delta
 <blockquote>
 <div><p><strong>定理 (Sauer引理)</strong>. 若假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的VC维为<span class="math notranslate nohighlight">\(d\)</span>，则对任意<span class="math notranslate nohighlight">\(m\in\mathbb{N}\)</span>有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-sauer">
 <div class="math notranslate nohighlight" id="equation-eq-sauer">
 <span class="eqno">(15)<a class="headerlink" href="#equation-eq-sauer" title="Link to this equation">¶</a></span>\[\begin{split}\Pi_{\mathcal{H}}(m)\le \sum_{i=0}^d\begin{pmatrix}m\\ i \end{pmatrix}\end{split}\]</div>
+</div>
 <p>证明略。由Sauer引理，可计算出增长函数的上界：</p>
 <blockquote>
 <div><p><strong>推论</strong>. 若假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的VC维为<span class="math notranslate nohighlight">\(d\)</span>，则对任意整数<span class="math notranslate nohighlight">\(m\ge d\)</span>有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-sauer-infer">
 <div class="math notranslate nohighlight" id="equation-sauer-infer">
 <span class="eqno">(16)<a class="headerlink" href="#equation-sauer-infer" title="Link to this equation">¶</a></span>\[\Pi_{\mathcal{H}}(m)\le \left(\frac{e\cdot m}{d}\right)^d\]</div>
+</div>
 <p>  (三) <strong>VC维与泛化误差界</strong></p>
 <blockquote>
 <div><p><strong>定理 3</strong>. 若假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的VC维为<span class="math notranslate nohighlight">\(d\)</span>，则对任意<span class="math notranslate nohighlight">\(m&gt;d,0&lt;\delta&lt;1\)</span>和<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>有</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-vc-error-relation">
 <div class="math notranslate nohighlight" id="equation-vc-error-relation">
 <span class="eqno">(17)<a class="headerlink" href="#equation-vc-error-relation" title="Link to this equation">¶</a></span>\[\boxed{
 P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   } \right) \ge 1-\delta}\]</div>
+</div>
 <p>证明. 令<span class="math notranslate nohighlight">\(\delta=4\Pi_{\mathcal{H}}(2m)\exp\left(-\frac{m\epsilon^2}{8}\right)\le 4 \left(\frac{e\cdot m}{d}\right)^d\exp\left(-\frac{m\epsilon^2}{8}\right)\)</span>，可解得<span class="math notranslate nohighlight">\(\epsilon = \sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac{4}{\delta}} {m}   }\)</span>。</p>
 <p>  由此可知，泛化误差界<a class="reference internal" href="#equation-vc-error-relation">(17)</a>只与样例数<span class="math notranslate nohighlight">\(m\)</span>有关，收敛速率为<span class="math notranslate nohighlight">\(O(\sqrt{\frac{1}{m}})\)</span>，与数据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>和样例集<span class="math notranslate nohighlight">\(D\)</span>无关。因此，基于VC维的泛化误差界是分布无关、数据独立的。</p>
 <blockquote>
 <div><p><strong>定义 (经验风险最小化)</strong>. 令<span class="math notranslate nohighlight">\(h\)</span>表示学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>输出的假设，若<span class="math notranslate nohighlight">\(h\)</span>满足</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-eq-exper-min">
 <div class="math notranslate nohighlight" id="equation-eq-exper-min">
 <span class="eqno">(18)<a class="headerlink" href="#equation-eq-exper-min" title="Link to this equation">¶</a></span>\[\hat{E}(h)=\min\limits_{h'\in\mathcal{H}}\hat{E}(h')\]</div>
+</div>
 <p>则称<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>为满足经验风险最小化原则的算法。</p>
 <p>  (四) <strong>VC维与PAC可学习</strong></p>
 <blockquote>
@@ -291,20 +591,25 @@ P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac
 <li><p><strong>样本量上界与VC维<a class="footnote-reference brackets" href="#myref" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></strong></p></li>
 </ul>
 <p>  如果<span class="math notranslate nohighlight">\(1\le d &lt;\infty\)</span>，那么学习<span class="math notranslate nohighlight">\(\epsilon,\delta\)</span>所需的样本量为，</p>
+<div class="math-wrapper docutils container" id="equation-sample-count-up">
 <div class="math notranslate nohighlight" id="equation-sample-count-up">
 <span class="eqno">(19)<a class="headerlink" href="#equation-sample-count-up" title="Link to this equation">¶</a></span>\[m\le\frac{64}{\epsilon^2}\left[2d\ln\left(\frac{12}{\epsilon} \right) +\ln\left(\frac{4}{\delta} \right) \right]\]</div>
+</div>
 <ul class="simple">
 <li><p><strong>样本量下界与VC维<a class="footnote-reference brackets" href="#myref" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></strong></p></li>
 </ul>
 <p>  如果<span class="math notranslate nohighlight">\(1\le d &lt;\infty\)</span>，那么学习<span class="math notranslate nohighlight">\(\epsilon&gt;0,\delta&lt;\frac{1}{64}\)</span>所需的样本量至少为<span class="math notranslate nohighlight">\(\frac{d}{320\epsilon^2}\)</span>，此外，如果<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中至少包含2个<span class="math notranslate nohighlight">\(h\)</span>，那么对于<span class="math notranslate nohighlight">\(0&lt;\epsilon&lt;1\)</span>和<span class="math notranslate nohighlight">\(0&lt;\delta&lt;\frac14\)</span>来说，样本量至少为</p>
+<div class="math-wrapper docutils container" id="equation-sample-count-up">
 <div class="math notranslate nohighlight" id="equation-sample-count-up">
 <span class="eqno">(20)<a class="headerlink" href="#equation-sample-count-up" title="Link to this equation">¶</a></span>\[m\ge 2\left[ \frac{1-\epsilon^2}{2\epsilon^2}\ln \left(\frac{1}{8\delta(1-2\delta)} \right) \right]\]</div>
+</div>
 </section>
 </section>
 <section id="rademacher">
 <h3><span class="section-number">4.1.3. </span>Rademacher复杂度<a class="headerlink" href="#rademacher" title="Link to this heading">¶</a></h3>
 <p>  基于VC维的泛化误差界是分布无关数据独立的，也就是说对任意数据分布都成立，使得基于VC维的可学习性分析结果具有一定的普适性；但从另一方面来说，由于没有考虑数据本身，基于VC维得到的泛化误差界比较松。Rademacher复杂度是另一种描述假设空间复杂度的途径，与VC维不同，它在一定程度上考虑了数据分布。</p>
 <p>  假设<span class="math notranslate nohighlight">\(h\)</span>的经验误差为，</p>
+<div class="math-wrapper docutils container" id="equation-hyposis-experi">
 <div class="math notranslate nohighlight" id="equation-hyposis-experi">
 <span class="eqno">(21)<a class="headerlink" href="#equation-hyposis-experi" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -313,62 +618,81 @@ P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac
 &amp;=\frac12-\frac{1}{2m}\sum_{i=1}^m y_ih(\pmb{x}_i)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)\)</span>体现了预测值<span class="math notranslate nohighlight">\(h(\pmb{x}_i)\)</span>与样例真实标记<span class="math notranslate nohighlight">\(y_i\)</span>之间的一致性，若对于所有<span class="math notranslate nohighlight">\(i\)</span>都有<span class="math notranslate nohighlight">\(h(\pmb{x}_i)=y_i\)</span>，则<span class="math notranslate nohighlight">\(\frac{1}{m}\sum_{i=1}^m y_ih(\pmb{x}_i)\)</span>取最大值1。换句话说，经验误差最小的假设满足下式，</p>
+<div class="math-wrapper docutils container" id="equation-exp-error-min">
 <div class="math notranslate nohighlight" id="equation-exp-error-min">
 <span class="eqno">(22)<a class="headerlink" href="#equation-exp-error-min" title="Link to this equation">¶</a></span>\[
 \arg\max\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m y_ih(\pmb{x}_i)
 \]</div>
+</div>
 <p>  然而，现实应用中，样本标记可能会受到噪声影响，也就是某些标记<span class="math notranslate nohighlight">\(y_i\)</span>可能受随机因素影响不再是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>的真实标记。<strong>这种情况下，选择假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>在训练集上表现良好的假设，有时还不如选择<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中事先已考虑了随机噪声影响的假设</strong>。</p>
 <p>  考虑随机变量<span class="math notranslate nohighlight">\(\sigma_i\)</span>，且<span class="math notranslate nohighlight">\(P(\sigma_i=+1)=0.5=P(\sigma_i=-1)\)</span>，称为<strong>Rademacher随机变量</strong>，将此变量引入<a class="reference internal" href="#equation-exp-error-min">(22)</a>，则有，</p>
+<div class="math-wrapper docutils container" id="equation-radermacher-error">
 <div class="math notranslate nohighlight" id="equation-radermacher-error">
 <span class="eqno">(23)<a class="headerlink" href="#equation-radermacher-error" title="Link to this equation">¶</a></span>\[
 \sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i)
 \]</div>
+</div>
 <p>考虑<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>中所有假设，可对式<a class="reference internal" href="#equation-radermacher-error">(23)</a>取期望，则有</p>
+<div class="math-wrapper docutils container" id="equation-all-rade-expectation">
 <div class="math notranslate nohighlight" id="equation-all-rade-expectation">
 <span class="eqno">(24)<a class="headerlink" href="#equation-all-rade-expectation" title="Link to this equation">¶</a></span>\[\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{h\in\mathcal{H}}\frac1m\sum_{i=1}^m\sigma_i h(\pmb{x}_i) \right]\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{\sigma}=\{\sigma_1,...,\sigma_m\}\)</span>。式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的取值范围是<span class="math notranslate nohighlight">\([0,1]\)</span>，它体现了假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的表示能力。例如：当<span class="math notranslate nohighlight">\(|\mathcal{H}|=1\)</span>时，只有一个假设，这时可计算出式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为0；当<span class="math notranslate nohighlight">\(|\mathcal{H}|=2^m\)</span>且<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>能打散<span class="math notranslate nohighlight">\(D\)</span>时，任意<span class="math notranslate nohighlight">\(\pmb{\sigma}\)</span>中总有一个假设使得<span class="math notranslate nohighlight">\(h(\pmb{x}_i)=\sigma_i (i=1,2,3...,m)\)</span>，此时式<a class="reference internal" href="#equation-all-rade-expectation">(24)</a>的值为1。</p>
 <blockquote>
 <div><p><strong>定义 (经验Rademacher复杂度)</strong>. 函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>关于样例集<span class="math notranslate nohighlight">\(Z\)</span>的经验Rademacher复杂度为，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-f-z-rade-comp">
 <div class="math notranslate nohighlight" id="equation-f-z-rade-comp">
 <span class="eqno">(25)<a class="headerlink" href="#equation-f-z-rade-comp" title="Link to this equation">¶</a></span>\[\hat{R}_Z (\mathcal{F})=\mathbb{E}_{\pmb{\sigma}}\left[\sup\limits_{f\in\mathcal{F}}\frac{1}{m} \sum_{i=1}^m\sigma_i f(\pmb{z}_i) \right]\]</div>
+</div>
 <blockquote>
 <div><p><strong>定义 (Rademacher复杂度)</strong>. 函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>关于<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>上分布<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>的Rademacher复杂度为，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-f-z-rade-comp">
 <div class="math notranslate nohighlight" id="equation-f-z-rade-comp">
 <span class="eqno">(26)<a class="headerlink" href="#equation-f-z-rade-comp" title="Link to this equation">¶</a></span>\[R_m (\mathcal{F})=\mathbb{E}_{Z\subseteq\mathcal{Z}:|Z|=m }\left[\hat{R}_Z (\mathcal{F}) \right]\]</div>
+</div>
 <p>  基于Rademacher复杂度可以得到关于函数空间<span class="math notranslate nohighlight">\(\mathcal{F}\)</span>的泛化误差界。</p>
 <blockquote>
 <div><p><strong>定理</strong>. 对实值函数空间<span class="math notranslate nohighlight">\(\mathcal{F}:\mathcal{Z}\rightarrow [0,1]\)</span>，根据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>从<span class="math notranslate nohighlight">\(\mathcal{Z}\)</span>中独立同分布采样得到示例集<span class="math notranslate nohighlight">\(Z=\{\pmb{z}_1,...,\pmb{z}_m\}, \pmb{z}_i\in\mathcal{Z}\)</span>，<span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，对任意<span class="math notranslate nohighlight">\(f\in\mathcal{F}\)</span>，以至少<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-rad-error-bound">
 <div class="math notranslate nohighlight" id="equation-rad-error-bound">
 <span class="eqno">(27)<a class="headerlink" href="#equation-rad-error-bound" title="Link to this equation">¶</a></span>\[\begin{split}\boxed{
 \begin{split}
 \mathbb{E}[f(\pmb{z})]&amp;\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2R_m(\mathcal{F})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
 \mathbb{E}[f(\pmb{z})]&amp;\le \frac1m\sum_{i=1}^m f(\pmb{z}_i) + 2\hat{R}_Z(\mathcal{F})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
 \end{split}}\end{split}\]</div>
+</div>
 <blockquote>
 <div><p><strong>定理</strong>. 对假设空间<span class="math notranslate nohighlight">\(\mathcal{H}:\mathcal{X}\rightarrow\{-1,+1\}\)</span>，根据分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>从<span class="math notranslate nohighlight">\(\mathcal{X}\)</span>中独立同分布采样得到示例集<span class="math notranslate nohighlight">\(D=\{\pmb{x}_1,...,\pmb{x}_m\}, \pmb{x}_i\in\mathcal{X}\)</span>，<span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，对任意<span class="math notranslate nohighlight">\(h\in\mathcal{H}\)</span>，以至少<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-rad-error-bound">
 <div class="math notranslate nohighlight" id="equation-rad-error-bound">
 <span class="eqno">(28)<a class="headerlink" href="#equation-rad-error-bound" title="Link to this equation">¶</a></span>\[\begin{split}\boxed{
 \begin{split}
 \mathbb{E}[h]&amp;\le \hat{E}(h)+ R_m(\mathcal{H})+\sqrt{\frac{\ln(1/\delta)}{2m}}\\
 \mathbb{E}[h]&amp;\le \hat{E}(h)+ \hat{R}_D(\mathcal{H})+3\sqrt{\frac{\ln(2/\delta)}{2m}}\\
 \end{split}}\end{split}\]</div>
+</div>
 <blockquote>
 <div><p><strong>定理</strong>.  假设空间<span class="math notranslate nohighlight">\(\mathcal{H}\)</span>的Rademacher复杂度<span class="math notranslate nohighlight">\(R_m(\mathcal{H})\)</span>与增长函数<span class="math notranslate nohighlight">\(\Pi_\mathcal{H}(m)\)</span>满足，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-rade-increase">
 <div class="math notranslate nohighlight" id="equation-rade-increase">
 <span class="eqno">(29)<a class="headerlink" href="#equation-rade-increase" title="Link to this equation">¶</a></span>\[R_m(\mathcal{H})\le \sqrt{\frac{2\ln\Pi_{\mathcal{H}}(m)}{m}}\]</div>
+</div>
 <p>  由此可知，从Rademacher复杂度和增长函数能推导出基于VC维的泛化误差界，</p>
+<div class="math-wrapper docutils container" id="equation-conclusion">
 <div class="math notranslate nohighlight" id="equation-conclusion">
 <span class="eqno">(30)<a class="headerlink" href="#equation-conclusion" title="Link to this equation">¶</a></span>\[
 \boxed{
   E(h)\le\hat{E}(h)+\sqrt{\frac{2d\ln\frac{em}{d}}{m}}+\sqrt{\frac{\ln(1/\delta)}{2m}}
 }
 \]</div>
+</div>
 <p>可以发现，无论是基于VC维还是Rademacher复杂度来推导泛化误差界，所得到的结果均与具体学习算法无关，对所有学习算法都适用。这使得人们能够脱离具体学习算法的设计来考虑学习问题本身的性质。</p>
 </section>
 <section id="id7">
@@ -377,14 +701,18 @@ P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac
 <blockquote>
 <div><p><strong>定义</strong> (<span class="math notranslate nohighlight">\(\beta\)</span>-均匀稳定性).  对任意<span class="math notranslate nohighlight">\(\pmb{x}\in\mathcal{X}, z=(\pmb{x},y)\)</span>，若学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>满足，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-beta-stability">
 <div class="math notranslate nohighlight" id="equation-beta-stability">
 <span class="eqno">(31)<a class="headerlink" href="#equation-beta-stability" title="Link to this equation">¶</a></span>\[|\ell(\mathfrak{L}_D,z) - \ell(\mathfrak{L}_{D^{\backslash i}}, z) |\le \beta\]</div>
+</div>
 <p>则称算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>关于损失<span class="math notranslate nohighlight">\(\ell\)</span>满足<span class="math notranslate nohighlight">\(\beta\)</span>-均匀稳定性。</p>
 <blockquote>
 <div><p><strong>定理</strong> (稳定性泛化误差界)  若算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>关于损失<span class="math notranslate nohighlight">\(\ell\)</span>满足<span class="math notranslate nohighlight">\(\beta\)</span>-均匀稳定性，且损失函数<span class="math notranslate nohighlight">\(\ell\)</span>的上界为<span class="math notranslate nohighlight">\(M\)</span>， <span class="math notranslate nohighlight">\(0&lt;\delta&lt;1\)</span>，则对于任意<span class="math notranslate nohighlight">\(m\ge 1\)</span>（<span class="math notranslate nohighlight">\(m\)</span>为从分布<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>上独立同分步采样得到的数据集<span class="math notranslate nohighlight">\(D\)</span>的大小），至少以<span class="math notranslate nohighlight">\(1-\delta\)</span>的概率有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container" id="equation-stability-error-bound">
 <div class="math notranslate nohighlight" id="equation-stability-error-bound">
 <span class="eqno">(32)<a class="headerlink" href="#equation-stability-error-bound" title="Link to this equation">¶</a></span>\[\ell(\mathfrak{L},D)\le\hat{\ell}(\mathfrak{L},D)+2\beta+(4m\beta+M)\sqrt{\frac{\ln(1/\delta)}{2m}}\]</div>
+</div>
 <p>  上述定理给出了基于稳定性分析推导出的学习算法<span class="math notranslate nohighlight">\(\mathfrak{L}\)</span>学习得到的假设的泛化误差界。稳定性分析不必考虑假设空间所有可能假设，只需要根据算法自身的稳定性来讨论输出假设<span class="math notranslate nohighlight">\(\mathfrak{L}_D\)</span>的泛化误差界。</p>
 </section>
 </section>
@@ -402,16 +730,61 @@ P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac
 </aside>
 </aside>
 
-
-            <div class="clearer"></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../ml/dimension_reduce_2.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">1. </span>数据降维</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="gaussian_process.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">3. </span>高斯过程</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
 <li><a class="reference internal" href="#">4. 计算学习理论</a><ul>
 <li><a class="reference internal" href="#id3">4.1. 概率近似正确学习理论</a><ul>
 <li><a class="reference internal" href="#pac">4.1.1. PAC</a><ul>
@@ -430,57 +803,28 @@ P\left(\left| E(h)-\hat{E}(h) \right|\le\sqrt{\frac{8d\ln\frac{2em}{d}+8\ln\frac
 </li>
 </ul>
 
-  </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="gaussian_process.html"
-                          title="上一章"><span class="section-number">3. </span>高斯过程</a></p>
-  </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="../ml/dimension_reduce_2.html"
-                          title="下一章"><span class="section-number">1. </span>数据降维</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/base/calc_theory.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+          </div>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="../ml/dimension_reduce_2.html" title="1. 数据降维"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="gaussian_process.html" title="3. 高斯过程"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">4. </span>计算学习理论</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
-    </div>
-  </body>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

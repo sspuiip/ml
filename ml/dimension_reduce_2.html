@@ -1,73 +1,328 @@
-<!DOCTYPE html>
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="2. 决策树" href="decision_tree.html" /><link rel="prev" title="4. 计算学习理论" href="../base/calc_theory.html" />
 
-<html lang="zh-CN" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>1. 数据降维 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.07.19 -->
+        <title>1. 数据降维 - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=beaddf03"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="2. 决策树" href="decision_tree.html" />
-    <link rel="prev" title="4. 计算学习理论" href="../base/calc_theory.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="decision_tree.html" title="2. 决策树"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="../base/calc_theory.html" title="4. 计算学习理论"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>数据降维</a></li> 
-      </ul>
-    </div>  
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">基础知识</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="decision_tree.html">2. 决策树</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bayes.html">3. 贝叶斯分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="EM.html">4. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PGM.html">5. 概率图模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ensemble.html">6. 集成学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuro_representation.html">7. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">深度学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="neuro_network_mlp.html">1. 神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuro_network_cnn.html">2. 卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="neuro_network_rnn.html">3. 循环神经网络</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cmeans.html">1. 聚类(一)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="biClustering.html">2. BiClustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base2.html">2. 核函数基础2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">3. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">4. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">5. 协方差算子</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/gumbel_trick.html">7. Gumbel Trick</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/ml/dimension_reduce_2.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">1. </span>数据降维<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  现实应用中，经常会遇到大量的高维数据。一方面来说，随着维度的增加，高维样本可以使得样本之间的区别更加显著。例如：只提供身高信息判断该样本是否为男性的判别问题中，如果仅依赖身高这个维度，则会有较大概率判断失误。在身高的基础之上，如果再添加头发长度、喉结、胸围等特征，则有较大概率判断正确。然而，维度的增加也不总是合理的。从另外一方面来说，若增加的维度超出了临界值高维空间也会还来一些不良的后果。例如：样本对之间的距离会迅速增大（稀疏）、距离不再具有区分性（所有点对之间都差不多远）、区别样本所需的数量呈指数级增长才能覆盖空间等。这些特性也称之为<strong>维度灾难</strong>。</p>
 <p>  为了避免维度灾难，以及找到问题求解最合适的数据表示形式，需要研究原有数据的表示问题（合适的维度），这一过程也称之为<strong>数据降维</strong>。</p>
 <section id="id2">
 <h2><span class="section-number">1.1. </span>主成分分析<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  主成分分析(Principal Component Analysis, PCA)是一种通过某种正交变换将一组可能存在相关关系的变量（<span class="math notranslate nohighlight">\(n\)</span>个维度为<span class="math notranslate nohighlight">\(n\)</span>变量）转换为一组线性不相关的变量（降维后的<span class="math notranslate nohighlight">\(d\)</span>个维度）。若有训练数据（<span class="math notranslate nohighlight">\(n\)</span>：维度，<span class="math notranslate nohighlight">\(m\)</span>：样本数），</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{n\times m}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{x}_i=(x_{i1},...,x_{in})^\top\)</span>。PCA的<strong>目标</strong>是找到一个基<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)=\pmb{W}_{n\times d}\)</span>，使得变换后样本集<span class="math notranslate nohighlight">\(\pmb{Z}=\pmb{W}^\top\pmb{X}\)</span>的重构矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{X}}=\pmb{WZ}\)</span>与原数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}\)</span>的误差尽可能的小，即<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>的误差最少。也就是说，投影的超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>使得投影后的数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>丢失的信息最少。</p>
 <p>  如何找到这个投影超平面<span class="math notranslate nohighlight">\(\pmb{W}\)</span>呢？一个可行的办法是比较<span class="math notranslate nohighlight">\(\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>之间的平均距离（<span class="math notranslate nohighlight">\(\frac1m\sum_i^m\parallel \pmb{x}_i-\hat{\pmb{x}}_i\parallel^2\)</span>），使得这个距离最小的超平面就是最优投影超平面。这是<strong>PCA的主要思想</strong>。</p>
 <p>  假设数据样本已<font color="red">中心化</font>(所有样本减去均值即为中心化；中心化之后再除以样本标准差即为标准化)，变换后的新坐标系为<span class="math notranslate nohighlight">\((\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_d)\)</span>，若丢弃部分坐标，将维度降至<span class="math notranslate nohighlight">\(d'&lt;d\)</span>，则样本在低维坐标系中的投影为<span class="math notranslate nohighlight">\(\pmb{z}_i=(z_{i1},z_{i2},...,z_{id'})\)</span> ，其中<span class="math notranslate nohighlight">\(z_{ij}=\langle \pmb{x}_i,\pmb{w}_j\rangle\)</span>是<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>在低维坐标系的第<span class="math notranslate nohighlight">\(j\)</span>维的坐标。若用<span class="math notranslate nohighlight">\(\pmb{z}_i\)</span>来重构<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>，则会有<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i=\sum_{j=1}^{d'}z_{ij}\pmb{w}_j=\pmb{W}\pmb{z}_i\)</span>。</p>
 <p>  对于整个数据集，原样本点<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>与投影重构<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>之间距离为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -77,7 +332,9 @@
 &amp;\propto-\text{tr}\left(\pmb{W}^\top\left(\sum_{i=1}^m \pmb{x}_i\pmb{x}_i^\top  \right)\pmb{W} \right)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>PCA的优化目标则变成，</p>
+<div class="math-wrapper docutils container" id="equation-pca-target">
 <div class="math notranslate nohighlight" id="equation-pca-target">
 <span class="eqno">(1)<a class="headerlink" href="#equation-pca-target" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -85,15 +342,19 @@
 \textrm{s.t.}\quad &amp;\pmb{W}^\top\pmb{W}=\pmb{I}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{X}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{x}_1&amp;\pmb{x}_2&amp;\dots&amp;\pmb{x}_m\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times m}, \qquad
 \pmb{W}=\begin{pmatrix}|&amp;|&amp;\dots&amp;|\\\pmb{w}_1&amp;\pmb{w}_2&amp;\dots&amp;x_{d'}\\ |&amp;|&amp;\dots&amp;| \end{pmatrix}_{d\times d'}
 \end{split}\]</div>
+</div>
 <section id="id3">
 <h3><span class="section-number">1.1.1. </span>优化问题的求解<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>  使用拉格朗日乘子法，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -101,21 +362,27 @@
 &amp;=\sum_{i=1}\pmb{w}_i^\top\pmb{XX}^\top\pmb{w}_i + \sum_{i=1}\lambda_i(\pmb{w}_i^\top\pmb{w}_i-1)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则有，<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}\)</span>,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=\pmb{XX}^\top\pmb{w}_i-\lambda_i\pmb{w}_i
 \]</div>
+</div>
 <p>令<span class="math notranslate nohighlight">\(\frac{\partial \mathcal{L}}{\partial \pmb{w}_i}=0\)</span>，则有</p>
+<div class="math-wrapper docutils container" id="equation-pca-solution">
 <div class="math notranslate nohighlight" id="equation-pca-solution">
 <span class="eqno">(2)<a class="headerlink" href="#equation-pca-solution" title="Link to this equation">¶</a></span>\[
 \pmb{X}\pmb{X}^\top\pmb{w}_i=\lambda_i\pmb{w}_i
 \]</div>
+</div>
 <p>于是，只要对样本协方差矩阵进行特征值分解，将求得的特征值排序后，取前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量构成<font color="red">投影矩阵<span class="math notranslate nohighlight">\(W^*=(w_1,w_2,...,w_{d'})\)</span></font>。该矩阵即为主成分分析的<strong>解</strong>。</p>
 </section>
 <section id="pca1">
 <h3><span class="section-number">1.1.2. </span>PCA算法1–特征值分解<a class="headerlink" href="#pca1" title="Link to this heading">¶</a></h3>
 <p>  通过样本协方差矩阵计算PCA。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：特征值分解p实现PCA</p></th>
@@ -126,6 +393,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 <ul class="simple">
 <li><p><strong>示例代码</strong></p></li>
 </ul>
@@ -182,27 +450,35 @@
 <section id="pca2svd">
 <h3><span class="section-number">1.1.3. </span>PCA算法2–SVD分解<a class="headerlink" href="#pca2svd" title="Link to this heading">¶</a></h3>
 <p>  PCA除了对于协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>进行特征值分解计算得到投影特征向量之外，还可以通过SVD矩阵分解技术得到投影向量。SVD矩阵分解如下式所示，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\pmb{X}}=\pmb{U\Sigma V}^\top, \quad \hat{\pmb{X}}^\top=\pmb{V\Sigma U}^\top
 \]</div>
+</div>
 <p>这里的<span class="math notranslate nohighlight">\(\hat{\pmb{X}}\)</span>是正常的数据集矩阵。即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \hat{\pmb{X}}=\begin{pmatrix}-&amp;\pmb{x}_1 &amp;-\\ -&amp;\pmb{x}_1 &amp;-\\ 
 \vdots&amp;\vdots &amp;\vdots\\ -&amp;\pmb{x}_m &amp;-\\ \end{pmatrix}
 \end{split}\]</div>
+</div>
 <p>  PCA中的<span class="math notranslate nohighlight">\(\pmb{X}=\hat{\pmb{X}}^\top\)</span>，因此有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{XX}^\top=\hat{\pmb{X}}^\top\hat{\pmb{X}}=\pmb{V\Sigma U}^\top \pmb{U\Sigma V}^\top=\pmb{V\Sigma}^2\pmb{V}^\top
 \]</div>
+</div>
 <p>  最终，<span class="math notranslate nohighlight">\(\pmb{V}\)</span>的最大前<span class="math notranslate nohighlight">\(d'\)</span>个特征值对应的特征向量所组成的矩阵即为变换矩阵<span class="math notranslate nohighlight">\(\pmb{W}^*=(\pmb{w}_1,\pmb{w}_2,...,\pmb{w}_{d'})\)</span>。而<span class="math notranslate nohighlight">\(\pmb{V}\)</span>可以通过SVD分解获得。</p>
 <p>  投影后的新数据(<span class="math notranslate nohighlight">\(d'&lt;n\)</span>)，</p>
+<div class="math-wrapper docutils container" id="equation-pca-svd-proj">
 <div class="math notranslate nohighlight" id="equation-pca-svd-proj">
 <span class="eqno">(3)<a class="headerlink" href="#equation-pca-svd-proj" title="Link to this equation">¶</a></span>\[
 \pmb{Z}=\pmb{X}^\top\pmb{W}^*=\pmb{U\Sigma V}^\top\pmb{W}^*\approx\pmb{U\Sigma}
 \]</div>
+</div>
 <ul class="simple">
 <li><p>示例</p></li>
 </ul>
@@ -271,26 +547,35 @@
 <p>  前面我们通过计算样本协方差矩阵<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量组成投影矩阵来实现PCA。对于核函数的隐式映射<span class="math notranslate nohighlight">\(\phi :\pmb{x}\rightarrow \phi(\pmb{x})\)</span>形成的映射数据矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，如何计算PCA。也就是映射后的协方差矩阵<span class="math notranslate nohighlight">\(\pmb{\Phi\Phi}^\top\)</span>如何分解出特征向量组成投影矩阵？针对这一问题，研究人员提出了核主成分分析(kernel PCA)。</p>
 <p>  <strong>首先考查核矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span>与协方差矩阵<span class="math notranslate nohighlight">\(\pmb{C}\triangleq\frac1m\pmb{XX}^\top\)</span>特征向量之间的关系</strong>。
 对实对称矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>进行特征值分解<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\pmb{U}=\pmb{U\Lambda}\)</span>，等式两边同时乘上<span class="math notranslate nohighlight">\(\pmb{X}\)</span>，则可以得到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 (\pmb{XX}^\top)(\pmb{XU})=(\pmb{XU})\pmb{\Lambda}
 \]</div>
+</div>
 <p>从上式可以得到<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的特征向量为<span class="math notranslate nohighlight">\(\pmb{V}\triangleq\pmb{XU}\)</span>，特征值对角矩阵为<span class="math notranslate nohighlight">\(\pmb{\Lambda}\)</span>。注意到特征向量的模长，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \Vert \pmb{v}_j\Vert^2=\pmb{u}_j^\top\pmb{X}^\top\pmb{X}\pmb{u}_j=\pmb{u}_j^\top\pmb{u}_j\lambda_j\pmb{u}_j^\top\pmb{u}_j=\lambda_j
 \]</div>
+</div>
 <p>可以得到单位化的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_{\textrm{pca}}=(\pmb{XU})\pmb{\Lambda}^{-1/2}\)</span>。</p>
 <p>  <strong>现在考虑Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}\triangleq\pmb{X}^\top\pmb{X}\)</span></strong>。根据Mercer定理，当使用一个核函数时，隐含了一个潜在的特征空间，因此，可以将<span class="math notranslate nohighlight">\(\pmb{x}_i\)</span>表示为<span class="math notranslate nohighlight">\(\pmb{\phi}_i\triangleq\phi(\pmb{x}_i)\)</span>。相应地，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}^\top\)</span>，协方差矩阵<span class="math notranslate nohighlight">\(\pmb{X}\pmb{X}^\top\)</span>映射为<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>。由<span class="math notranslate nohighlight">\(\pmb{X}^\top\pmb{X}\)</span>与<span class="math notranslate nohighlight">\(\pmb{XX}^\top\)</span>的关系可知，<span class="math notranslate nohighlight">\(\pmb{\Phi}\pmb{\Phi}^\top\)</span>的特征向量矩阵为</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\pmb{V}_{\textrm{kpca}}=\pmb{\Phi U\Lambda}^{-1/2}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(\pmb{U\Lambda}\)</span>分别为<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{\Phi}^\top\pmb{\Phi}\)</span>的特征向量矩阵以及对应的特征值。</p>
 <p>  根据上面计算的结果，从特征向量矩阵中取<span class="math notranslate nohighlight">\(k\)</span>个特征向量即可组成投影矩阵，经过数据投影即可得到样本的<span class="math notranslate nohighlight">\(k\)</span>维压缩表示。<strong>但是</strong>，映射<span class="math notranslate nohighlight">\(\phi()\)</span>可能没有显示表示，或难以直接计算。<strong>解决办法是使用核函数间接计算<span class="math notranslate nohighlight">\(\phi()\)</span></strong>。任意给定样本<span class="math notranslate nohighlight">\(\pmb{x}_*\)</span>，则其在特征空间的投影<span class="math notranslate nohighlight">\(\hat{\pmb{x}}_i\)</span>可通过以下方式计算。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \hat{\pmb{x}}_i=\phi(\pmb{x}_*)^\top\pmb{V}_{\textrm{kpca}}=\phi(\pmb{x}_*)^\top\pmb{\Phi U\Lambda}^{-1/2}=\pmb{k}_*^{\top}\pmb{U\Lambda}^{-1/2}
 \]</div>
+</div>
 <p>  最后要注意的是<span class="math notranslate nohighlight">\(\pmb{K}\)</span>在特征值分解之前，需要中心化。中心化可通过以下步骤计算得到。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -298,6 +583,7 @@
 &amp;=\pmb{K}-\pmb{KO}-\pmb{{OK}}+\pmb{OKO}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{O}=\frac1N \pmb{1}\pmb{1}^\top, \pmb{1}=[1,1,...,1]_{1\times N}^\top\)</span>。</p>
 <ul class="simple">
 <li><p>示例</p></li>
@@ -352,15 +638,18 @@
 <h2><span class="section-number">1.3. </span>多维缩放<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <p>  多维缩放(multiple dimensional scaling, MDS)的<strong>主要思想</strong>是原始空间中样本之间的距离在低维空间得以保持。</p>
 <p>  假设<span class="math notranslate nohighlight">\(m\)</span>个样本在原始空间(<span class="math notranslate nohighlight">\(d\)</span>维)的<strong>距离矩阵</strong>为<span class="math notranslate nohighlight">\(\pmb{D}\subseteq \mathbb{R}^{m\times m}\)</span>，样本集映射后在<span class="math notranslate nohighlight">\(d'\)</span>维空间的表示为<span class="math notranslate nohighlight">\(\pmb{Z}\in \mathbb{R}^{m\times d'}\)</span>。MDS的任务是获得<span class="math notranslate nohighlight">\(d'\)</span>维空间的数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>，且任意两个样本在<span class="math notranslate nohighlight">\(d'\)</span>维空间的欧式距离<span class="math notranslate nohighlight">\(\parallel\pmb{z}_i-\pmb{z}_j\parallel^2\)</span>等于原始空间的距离<span class="math notranslate nohighlight">\(D_{ij}\)</span>，即</p>
+<div class="math-wrapper docutils container" id="equation-mds-target">
 <div class="math notranslate nohighlight" id="equation-mds-target">
 <span class="eqno">(4)<a class="headerlink" href="#equation-mds-target" title="Link to this equation">¶</a></span>\[
 \boxed{
 \parallel \pmb{z}_i-\pmb{z}_j\parallel^2=D_{ij},\quad \forall i,j\in [1,m]. }
 \]</div>
+</div>
 <ul class="simple">
 <li><p><strong>映射前后样本距离保持一致</strong></p></li>
 </ul>
 <p>  <strong>求解</strong>MDS。假设映射<strong>且中心化</strong>后样本集<span class="math notranslate nohighlight">\(\pmb{Z}=\{\pmb{z}_i\}_{i=1}^m\)</span>的<strong>内积矩阵</strong>为<span class="math notranslate nohighlight">\(\pmb{B}\)</span>。根据条件，映射前后的距离要保持一致，可将等式<a class="reference internal" href="#equation-mds-target">(4)</a>左边改写为，</p>
+<div class="math-wrapper docutils container" id="equation-detailed-mds-target">
 <div class="math notranslate nohighlight" id="equation-detailed-mds-target">
 <span class="eqno">(5)<a class="headerlink" href="#equation-detailed-mds-target" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -369,7 +658,9 @@
 &amp;=D_{ij}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  数据矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>已中心化(样本=样本-样本均值)，则可得到以下结论，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -378,7 +669,9 @@
 \sum_{ij}D_{ij}&amp;=\sum_{ij} B_{ii}+B_{jj}-2B_{ij}=\sum_j\textrm{tr}(\pmb{B})+mB_{jj}=2m\cdot\textrm{tr}(\pmb{B})\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>令，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -387,7 +680,9 @@ D_{\cdot j}&amp;\triangleq\frac1m\sum_{i}D_{ij}\\
 D_{\cdot\cdot}&amp;\triangleq\frac{1}{m^2}\sum_i\sum_{j}D_{ij}\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>综合上述结论，代入等式<a class="reference internal" href="#equation-detailed-mds-target">(5)</a>，可得最终结论，</p>
+<div class="math-wrapper docutils container" id="equation-mds-solution">
 <div class="math notranslate nohighlight" id="equation-mds-solution">
 <span class="eqno">(6)<a class="headerlink" href="#equation-mds-solution" title="Link to this equation">¶</a></span>\[\begin{split}
 \boxed{
@@ -396,31 +691,39 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 &amp;=-\frac12\left(D_{ij}-D_{i\cdot}-D_{\cdot j}+D_{\cdot\cdot} \right)
 \end{split}}
 \end{split}\]</div>
+</div>
 <p>  等式<a class="reference internal" href="#equation-mds-solution">(6)</a><strong>说明</strong>：在保持映射前后样本距离不变的前提下，映射后的<span class="math notranslate nohighlight">\(d'\)</span>维空间样本的内积矩阵<span class="math notranslate nohighlight">\(\pmb{B}\)</span>与原<span class="math notranslate nohighlight">\(d\)</span>维空间样本的距离矩阵<span class="math notranslate nohighlight">\(\pmb{D}\)</span>的双中心化结果一致。这也是双中心化的意义，即距离信息可转化为内种形式（可表示为相似性）。</p>
 <ul class="simple">
 <li><p><strong>获得降维后的样本矩阵<span class="math notranslate nohighlight">\(\pmb{Z}\)</span></strong></p></li>
 </ul>
 <p>  对矩阵<span class="math notranslate nohighlight">\(\pmb{B}\)</span>（实对称矩阵）做特征值分解，<span class="math notranslate nohighlight">\(\pmb{B}=\pmb{V\Lambda V}^\top=\pmb{Z}^\top\pmb{Z}\)</span>。假设有<span class="math notranslate nohighlight">\(d_*\)</span>个非零特征值构成对角矩阵<span class="math notranslate nohighlight">\(\pmb{\Lambda}_*=\textrm{diag}(\lambda_1,\lambda_2,...,\lambda_{d_*})\)</span>,以及所对应的特征向量矩阵<span class="math notranslate nohighlight">\(\pmb{V}_*\)</span>，则<span class="math notranslate nohighlight">\(\pmb{Z}\)</span>可以表示为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Z}=\pmb{\Lambda}_*^{\frac{1}{2}}\pmb{V}_*^\top \in \mathbb{R}^{m\times d_*}
 \]</div>
+</div>
 <p>  现实应用中，可以选择<span class="math notranslate nohighlight">\(d'&lt;d\)</span>个最大特征值构成的对角阵<span class="math notranslate nohighlight">\(\hat{\pmb{\Lambda}}\)</span>及特征向量矩阵<span class="math notranslate nohighlight">\(\hat{\pmb{V}}\)</span>，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{Z}=\hat{\pmb{\Lambda}}^{\frac{1}{2}} \hat{\pmb{V}}^\top \in \mathbb{R}^{m\times d'}
 \]</div>
+</div>
 <section id="id6">
 <h3><span class="section-number">1.3.1. </span>中心化<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>中心化</strong></p></li>
 </ul>
 <p>  所谓<strong>中心化</strong>是指，对所有样本减去样本均值。定义以下矩阵为中心化矩阵，即</p>
+<div class="math-wrapper docutils container" id="equation-center-matrix">
 <div class="math notranslate nohighlight" id="equation-center-matrix">
 <span class="eqno">(7)<a class="headerlink" href="#equation-center-matrix" title="Link to this equation">¶</a></span>\[
 \pmb{H}\triangleq \pmb{I}_m-\frac1m\pmb{1}\pmb{1}^\top
 \]</div>
+</div>
 <p>  若有矩阵<span class="math notranslate nohighlight">\(\pmb{K}\in\mathbb{R}^{m\times m}\)</span>，则中心化矩阵有3种情形：</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-center"><p>中心化操作</p></th>
@@ -439,10 +742,12 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 </tr>
 </tbody>
 </table>
+</div>
 <ul class="simple">
 <li><p><strong>双中心化</strong></p></li>
 </ul>
 <p>  <strong>双中心化</strong>：若将距离矩阵进行双中心化，则可将距离信息转化为内积形式，这与多维缩放的结果一致。假设<span class="math notranslate nohighlight">\(D_{ij}=\parallel \pmb{x}_i-\pmb{x}_j\parallel^2\)</span>，数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}\in\mathbb{R}^{d\times m}\)</span>，中心化的样本<span class="math notranslate nohighlight">\(\pmb{x}_i^*=\pmb{x}_i-\bar{\pmb{x}}\)</span>，Gram矩阵<span class="math notranslate nohighlight">\(\pmb{K}=\pmb{X}^\top\pmb{X}\)</span>，则有，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -453,7 +758,9 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 &amp;=\pmb{K}-\frac1m\pmb{K}\pmb{1}\pmb{1}^\top-\frac1m\pmb{1}\pmb{1}^\top\pmb{K}+\frac{1}{m^2}\pmb{1}\pmb{1}^\top\pmb{K}\pmb{1}\pmb{1}^\top
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  若对<span class="math notranslate nohighlight">\(\pmb{D}\)</span>(实对称矩阵)进行双中心化(先中心化再乘上因子<span class="math notranslate nohighlight">\(-\frac12\)</span>)，则正好有以下结论，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -461,16 +768,20 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 &amp;=\pmb{D}-\frac1m\pmb{D}\pmb{1}\pmb{1}^\top-\frac1m\pmb{1}\pmb{1}^\top\pmb{D}+\frac{1}{m^2}\pmb{1}\pmb{1}^\top\pmb{D}\pmb{1}\pmb{1}^\top
 \end{split}
 \end{split}\]</div>
+</div>
 <p>即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \boxed{
 -\frac12\pmb{HDH}=\pmb{B}}
 \]</div>
+</div>
 <p>  这说明<strong>双中心化与多维缩放的结论是一致的</strong>。</p>
 </section>
 <section id="id7">
 <h3><span class="section-number">1.3.2. </span>算法<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：多维缩放</p></th>
@@ -481,6 +792,7 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 <section id="id8">
@@ -489,6 +801,7 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 <p>  <strong>如何计算测地线距离呢</strong>？利用流形在局部与欧氏空间同胚这个性质，对每个样本点基于欧氏距离找出其近邻点，建立一个近邻连接图。于是，计算两点之间的测地线距离的问题就转变为计算近邻连接图上两点之间最短路径的问题。近邻图计算两点之间的最短路径，可以采用Dijkstra算法或Floyd算法，在得到任意两点的距离之后，就可以用多维缩放(MDS)方法来获得样本点在低维空间的坐标。</p>
 <section id="isomap">
 <h3><span class="section-number">1.4.1. </span>Isomap算法<a class="headerlink" href="#isomap" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>算法：Isometric Mapping, Isomap</p></th>
@@ -499,6 +812,7 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="id9">
 <h3><span class="section-number">1.4.2. </span>流形<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
@@ -542,16 +856,61 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 </section>
 </section>
 
-
-            <div class="clearer"></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="decision_tree.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">2. </span>决策树</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../base/calc_theory.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">4. </span>计算学习理论</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
 <li><a class="reference internal" href="#">1. 数据降维</a><ul>
 <li><a class="reference internal" href="#id2">1.1. 主成分分析</a><ul>
 <li><a class="reference internal" href="#id3">1.1.1. 优化问题的求解</a></li>
@@ -575,57 +934,28 @@ B_{ij}&amp;=-\frac12(D_{ij}-B_{ii}-B_{jj})\\
 </li>
 </ul>
 
-  </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="../base/calc_theory.html"
-                          title="上一章"><span class="section-number">4. </span>计算学习理论</a></p>
-  </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="decision_tree.html"
-                          title="下一章"><span class="section-number">2. </span>决策树</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/ml/dimension_reduce_2.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+          </div>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="decision_tree.html" title="2. 决策树"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="../base/calc_theory.html" title="4. 计算学习理论"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">1. </span>数据降维</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
-    </div>
-  </body>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

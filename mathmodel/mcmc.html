@@ -1,63 +1,316 @@
-<!DOCTYPE html>
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="6. Random Fourier features" href="RFF.html" /><link rel="prev" title="4. 共轭分布" href="conjugate_dist.html" />
 
-<html lang="zh-CN" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>5. 随机模拟 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.07.19 -->
+        <title>5. 随机模拟 - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=beaddf03"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="6. Random Fourier features" href="RFF.html" />
-    <link rel="prev" title="4. 共轭分布" href="conjugate_dist.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="RFF.html" title="6. Random Fourier features"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="conjugate_dist.html" title="4. 共轭分布"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>随机模拟</a></li> 
-      </ul>
-    </div>  
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">基础知识</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce_2.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/decision_tree.html">2. 决策树</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">3. 贝叶斯分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">4. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">5. 概率图模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/ensemble.html">6. 集成学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">7. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">深度学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_mlp.html">1. 神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_cnn.html">2. 卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_rnn.html">3. 循环神经网络</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/cmeans.html">1. 聚类(一)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">2. BiClustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base2.html">2. 核函数基础2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">3. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">4. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">5. 协方差算子</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RFF.html">6. Random Fourier features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gumbel_trick.html">7. Gumbel Trick</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/mathmodel/mcmc.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">5. </span>随机模拟<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <p>  随机模拟方法的<strong>主要思想</strong>是通过概率模型（已知）随机生成样本，利用这些生成的样本完成近似计算的方法，也称为蒙特卡罗方法(Monte Carlo Simulation)。</p>
 <p>  一个常见的示例是用随机模拟的方法近拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。</p>
 <p>  <strong>例</strong>1. 随机模拟计算<span class="math notranslate nohighlight">\(\pi\)</span>的值。我们知道单位圆的面积<span class="math notranslate nohighlight">\(S=\pi r^2\)</span>，如果我们将<span class="math notranslate nohighlight">\(1/4\)</span>的单位圆置于边长为<span class="math notranslate nohighlight">\(1\)</span>的正方形中，并在此正方形内均匀地随机的生成一个样本集<span class="math notranslate nohighlight">\(\{(x,y)|x,y\sim\mathrm{Uniform}(0,1)\}\)</span>，则<span class="math notranslate nohighlight">\(\pi\)</span>可近似的计算如下：</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -65,6 +318,7 @@
 \pi&amp;\approx\frac{4*\#\{(x,y)|x^2+y^2 \le 1\}}{\#\{(x,y)\}}
 \end{split}
 \end{split}\]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(\#\{\}\)</span>为集合计数函数。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
@@ -83,11 +337,14 @@
 </div>
 <p>  从上例可以看出，通过<span class="math notranslate nohighlight">\((x,y)\)</span>各自在均匀分布<span class="math notranslate nohighlight">\([0,1]\)</span>生成样本，通过随机生成的样本计数达到计算<span class="math notranslate nohighlight">\(\pi\)</span>值的目标。一般来说，均匀分布的样本是相对容易生成。通过线性同余发生器可以生成伪随机数，这些伪随机数序列的各种统计指标和均匀分布是理论计算结果非常接近，可以用于真实的随机数使用。</p>
 <p>  <strong>例</strong>2. 计算以下积分，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 I=\int_a^b f(x)dx
 \]</div>
+</div>
 <p>其中<span class="math notranslate nohighlight">\(f(x)\)</span>形式复杂，不容易直接积分。对于难积分的函数<span class="math notranslate nohighlight">\(f(x)\)</span>，常用的方法是利用容易采样的分布生成随机样本，并利用这些样本达到计算积分的目的。<strong>Monte Carlo积分</strong>是一种常见的采样积分方法。通过对上式引入易采样分布<span class="math notranslate nohighlight">\(q(x)\)</span>，则原式可以写成，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -95,6 +352,7 @@ I&amp;=\int_a^b f(x)dx\\
 &amp;=\int_a^b \frac{f(x)}{q(x)}q(x)dx
 \end{split}
 \end{split}\]</div>
+</div>
 <p>这样可以通过<span class="math notranslate nohighlight">\(q(x)\)</span>抽取<span class="math notranslate nohighlight">\(n\)</span>个样本，计算<span class="math notranslate nohighlight">\(\frac{f(x)}{q(x)}\)</span>的均值即为原积分<span class="math notranslate nohighlight">\(I\)</span>的值。以下代码模拟计算<span class="math notranslate nohighlight">\(\int_1^3 3x^2dx=26\)</span>，取<span class="math notranslate nohighlight">\(q(x)\)</span>为均匀分布<span class="math notranslate nohighlight">\(\mathrm{Uniform}[1,3]\)</span>。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
@@ -119,6 +377,7 @@ I&amp;=\int_a^b f(x)dx\\
 </pre></div>
 </div>
 <p>  <strong>例</strong>3. 计算期望<span class="math notranslate nohighlight">\(\mathbb{E}[f(x)]\)</span>,</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -126,6 +385,7 @@ I&amp;=\int_a^b f(x)dx\\
 &amp;\approx \frac{1}{N}\sum_{i=1}^N f(x^{(i)}),\quad x^{(i)}\sim p(x)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <p>同理，上式仍然可以使用抽样的方法近似计算。Monte Carlo方法只需要从<span class="math notranslate nohighlight">\(p(x)\)</span>中采样<span class="math notranslate nohighlight">\(x'\)</span>，然后对这些样本计算<span class="math notranslate nohighlight">\(f(x')\)</span>并取均值即可得到期望的近似值。</p>
 <p>  随机采样的方法有很多种，比如：逆分布函数法、Box-Muller变换、Monte Carlo、接受-拒绝采样、重要性采样、Markov链等。常见的概率分布，都可以基于均匀分布生成样本.</p>
 <section id="box-muller">
@@ -133,6 +393,7 @@ I&amp;=\int_a^b f(x)dx\\
 <blockquote>
 <div><p><strong>定理</strong>. 如果随机变量<span class="math notranslate nohighlight">\(U_1,U_2\sim \mathrm{Uniform[0,1]}\)</span>且相互独立，则有，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -140,6 +401,7 @@ Z_0 &amp;=\sqrt{-2\ln U_1}\cos (2\pi U_2)\\
 Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 \end{split}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(Z_0,Z_1\)</span>相互独立且服从标准正态分布。</p>
 </div></blockquote>
@@ -208,6 +470,7 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <section id="id3">
 <h2><span class="section-number">5.3. </span>重要性采样<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  重要性采样(Importance sampling)和接受-拒绝采样相似，也是借助易采样分布<span class="math notranslate nohighlight">\(q(x)\)</span>来间接采样<span class="math notranslate nohighlight">\(p(x)\)</span>的样本。</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -216,6 +479,7 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 &amp;\approx \frac{1}{N}\sum_{i=1}^N \underbrace{\frac{p(x^{(i)})}{q(x^{(i)})}}_{\mathrm{importance\ weight}}f(x^{(i)}),\quad x^{(i)}\sim q(x)
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 <section id="mcmc">
 <h2><span class="section-number">5.4. </span>MCMC<a class="headerlink" href="#mcmc" title="Link to this heading">¶</a></h2>
@@ -223,15 +487,19 @@ Z_1 &amp;=\sqrt{-2\ln U_1}\sin (2\pi U_2)\\
 <section id="id4">
 <h3><span class="section-number">5.4.1. </span>马氏链<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>  简单地说，马氏链就是一个下一状态只与当前状态有关的随机过程，即，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
 \]</div>
+</div>
 <p>  <strong>例1</strong>. 社会学家经常把人按其经济状态分为3类：上层、中层、下层。决定一个人的收入阶层最重要的因素就是其父母的收入阶层。如果父母的收入属于下层类别，那么他的孩子属于下层收入的概率是0.65，属于中层的概率是0.28，属于上层收入的概率是0.07。事实上，从父代到子代，收入阶层的变化转移概率大致如下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{P}=\begin{bmatrix}0.65&amp;0.28&amp;0.07\\ 0.15&amp;0.67&amp;0.18\\ 0.12&amp;0.36&amp;0.52 \end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>假设当前这一代人处在下、中、上层的比例是概率分布向量<span class="math notranslate nohighlight">\(\pi_0=[\pi_0(1),\pi_0(2),\pi_0(3)]\)</span>，那么子代处于三层的比例分布为<span class="math notranslate nohighlight">\(\pi_1=\pi_0\pmb{P}\)</span>，后代的比例分布则是<span class="math notranslate nohighlight">\(\pi_n=\pi_{n-1}\pmb{P}=...=\pi_0\pmb{P}^n\)</span>。若有初始概率<span class="math notranslate nohighlight">\(\pi_0=[0.21,0.68,0.11]\)</span>，则可以计算前<span class="math notranslate nohighlight">\(n\)</span>代人的比例分布最终稳定在<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>，且这一稳定分布与初始概率无关。</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
@@ -267,10 +535,12 @@ P[X_{n+1}=j|X_n=i,X_{n-1}=i_{n-1},...,X_0=i_0]=P[X_{n+1}=j|X_n=i]
 </pre></div>
 </div>
 <p>  收敛行为主要由概率转移矩阵<span class="math notranslate nohighlight">\(P\)</span>决定，可以计算一下<span class="math notranslate nohighlight">\(P^n\)</span></p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0.488&amp; 0.225\\\end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>当<span class="math notranslate nohighlight">\(n\)</span>足够大时，<span class="math notranslate nohighlight">\(P^n\)</span>矩阵的每一行都是稳定地收敛到<span class="math notranslate nohighlight">\(\pi=[0.287, 0.488, 0.225]\)</span>这个分布。那么满足什么样的马氏链才能具有这一特征呢？</p>
 <blockquote>
 <div><p><strong>定理（马氏链收敛）</strong>. 如果一个非周期马氏链具有转移概率矩阵<span class="math notranslate nohighlight">\(P\)</span>，且它的任意两个状态是连通，那么<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n\)</span>存在且与<span class="math notranslate nohighlight">\(i\)</span>无关，记<span class="math notranslate nohighlight">\(\lim_{n\rightarrow \infty}P_{ij}^n=\pi(j)\)</span>，则有</p>
@@ -278,10 +548,12 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <li></li>
 </ol>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \lim_{n\rightarrow \infty}P_{ij}^n=\begin{bmatrix}\pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \pi(1)&amp;\pi(2)&amp;...&amp;\pi(j)&amp;...\\ ...&amp;...&amp;...&amp;...&amp;...\\ \end{bmatrix}
 \end{split}\]</div>
+</div>
 <blockquote>
 <div><ol class="arabic simple" start="2">
 <li><p><span class="math notranslate nohighlight">\(\pi(j)=\sum_{i=1}^\infty \pi(i)P_{ij}\)</span>；</p></li>
@@ -297,11 +569,13 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <blockquote>
 <div><p><strong>定理（细致平稳条件）</strong>. 如果非周期马氏链的转移矩阵<span class="math notranslate nohighlight">\(P\)</span>和分布<span class="math notranslate nohighlight">\(\pi(x)\)</span>满足，</p>
 </div></blockquote>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pi(i)P_{ij}=\pi(j)P_{ji},\quad \forall i,j
 \tag{1}
 \]</div>
+</div>
 <blockquote>
 <div><p>则<span class="math notranslate nohighlight">\(\pi(x)\)</span>是马氏链的平稳分布，该式也称为细致平稳条件(detailed balance condition)。</p>
 </div></blockquote>
@@ -309,21 +583,28 @@ P^{21}=...=P^{100}=...=\begin{bmatrix}0.287&amp; 0.488&amp; 0.225\\ 0.287&amp; 0
 <section id="metropolis-hasting">
 <h4><span class="section-number">5.4.2.1. </span>Metropolis-Hasting采样算法<a class="headerlink" href="#metropolis-hasting" title="Link to this heading">¶</a></h4>
 <p>  假设我们已经有了转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>，用<span class="math notranslate nohighlight">\(q(j|i)\)</span>表示从状态<span class="math notranslate nohighlight">\(i\)</span>转移到状态<span class="math notranslate nohighlight">\(j\)</span>的概率，通常情况下，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\neq p(j)q(i|j)
 \]</div>
+</div>
 <p>不满足细致平稳条件，所以<span class="math notranslate nohighlight">\(p(x)\)</span>不是这个马氏链的平稳分布。那么，能否改造一下使得条件满足呢？引入接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>，使得下式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\alpha(j|i)= p(j)q(i|j)\alpha(i|j)
 \]</div>
+</div>
 <p>显然，令<span class="math notranslate nohighlight">\(\alpha(j|i)=p(j)q(i|j), \alpha(i|j)=p(i)q(j|i)\)</span>，等式成立，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)\underbrace{q(j|i)\alpha(j|i)}_{q'(j|i)}=p(j)\underbrace{q(i|j)\alpha(i|j)}_{q'(i|j)}
 \]</div>
+</div>
 <p><span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的物理意义：状态<span class="math notranslate nohighlight">\(i\)</span>跳转到状态<span class="math notranslate nohighlight">\(j\)</span>时，以<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>的概率接受这个跳转。最终把原转移矩阵<span class="math notranslate nohighlight">\(Q\)</span>的一个马氏链改造成了具有转移矩阵<span class="math notranslate nohighlight">\(Q'\)</span>的马氏链，而<span class="math notranslate nohighlight">\(Q'\)</span>恰好满足细致平稳条件，因此马氏链<span class="math notranslate nohighlight">\(Q'\)</span>的平稳分布就是<span class="math notranslate nohighlight">\(p(x)\)</span>。把上述过程整理一下，就可以得到从<span class="math notranslate nohighlight">\(p(x)\)</span>分布采样的MCMC算法。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>MCMC采样算法</p></th>
@@ -336,22 +617,30 @@ p(i)\underbrace{q(j|i)\alpha(j|i)}_{q'(j|i)}=p(j)\underbrace{q(i|j)\alpha(i|j)}_
 </tr>
 </tbody>
 </table>
+</div>
 <p>  上述算法中，接受率<span class="math notranslate nohighlight">\(\alpha(j|i)\)</span>可能会偏小会导致马氏链拒绝大量的跳转，也就是到达收敛状态速度会太慢。假设<span class="math notranslate nohighlight">\(\alpha(j|i)=0.1, \alpha(i|j)=0.2\)</span>时满足细致平稳条件，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\times 0.1 = p(j)q(i|j)\times 0.2
 \]</div>
+</div>
 <p>上式左右两边同时扩大5倍，可以改写成</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(i)q(j|i)\times 0.5 = p(j)q(i|j)\times 1
 \]</div>
+</div>
 <p>可以看出，接受率提高了5倍，而细致平稳条件仍满足。这使得我们可以对接受率同比例放大，使得两个数中最大的一个先达到1，这样我们就提高了采样中的跳转接受率。所以可以考虑接受率，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \alpha(j|i)\triangleq\frac{\alpha(j|i)*K}{\alpha(i|j)*K}=\min\left\{ \frac{p(j)q(i|j)}{p(i)q(j|i)},1\right\}\tag{2}
 \]</div>
+</div>
 <p>  经过接受率放大后的MCMC算法就是所谓的<strong>Metropolis-Hasting算法</strong>。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>Metropolis-Hasting采样算法</p></th>
@@ -364,10 +653,12 @@ p(i)q(j|i)\times 0.5 = p(j)q(i|j)\times 1
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 <section id="gibbs">
 <h4><span class="section-number">5.4.2.2. </span>Gibbs采样算法<a class="headerlink" href="#gibbs" title="Link to this heading">¶</a></h4>
 <p>  对于上述接受率，一般都存在<span class="math notranslate nohighlight">\(\alpha&lt;1\)</span>的情况，能否找到一个转移矩阵，使得接受率<span class="math notranslate nohighlight">\(\alpha=1\)</span>成立呢？假设有一个二维概率分布<span class="math notranslate nohighlight">\(p(x,y)\)</span>，考查<span class="math notranslate nohighlight">\(x\)</span>坐标相同的两个点<span class="math notranslate nohighlight">\(A(x_1,y_1),B(x_1,y_2)\)</span>，我们发现有以下等式成立，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -375,12 +666,16 @@ p(x_1,y_1)p(y_2|x_1)&amp;=p(x_1)p(y_1|x_1)p(y_2|x_1)\\
 p(x_1,y_2)p(y_1|x_1)&amp;=p(x_1)p(y_2|x_1)p(y_1|x_1)
 \end{split}
 \end{split}\]</div>
+</div>
 <p>显然上述所有等式的右边都是相等的，因此，可得，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1),\quad \textrm{i.e.},\quad p(A)p(y_2|x_1)=p(B)p(y_1|x_1)
 \]</div>
+</div>
 <p>基于上述等式，对于<span class="math notranslate nohighlight">\(x=x_1\)</span>这个平行于<span class="math notranslate nohighlight">\(y\)</span>轴的直线上，如果使用条件分布<span class="math notranslate nohighlight">\(p(y|x_1)\)</span>做为直线上任意点之间的转移概率，那么该转移概率满足细致平稳条件。同理，对于<span class="math notranslate nohighlight">\(y=y_1\)</span>这条直线也成立。因此可以构造平面上任意两点之间的转移概率矩阵<span class="math notranslate nohighlight">\(Q\)</span>,</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p>跳转概率</p></th>
@@ -399,12 +694,16 @@ p(x_1,y_1)p(y_2|x_1)=p(x_1,y_2)p(y_1|x_1),\quad \textrm{i.e.},\quad p(A)p(y_2|x_
 </tr>
 </tbody>
 </table>
+</div>
 <p>对于上述转移矩阵，很容易验证对于平面上任意两点<span class="math notranslate nohighlight">\(X,Y\)</span>，满足细致平稳条件，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 p(X)Q(Y|X)=p(Y)Q(X|Y)
 \]</div>
+</div>
 <p>  采用上述转移矩阵的MCMC采样算法就是所谓的<strong>Gibbs Sampling算法</strong>。</p>
+<div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
 <tr class="row-odd"><th class="head text-left"><p><span class="math notranslate nohighlight">\(n\)</span>维Gibbs Sampling采样算法</p></th>
@@ -417,21 +716,67 @@ p(X)Q(Y|X)=p(Y)Q(X|Y)
 </tr>
 </tbody>
 </table>
+</div>
 </section>
 </section>
 </section>
 </section>
 
-
-            <div class="clearer"></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="RFF.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">6. </span>Random Fourier features</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="conjugate_dist.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">4. </span>共轭分布</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
 <li><a class="reference internal" href="#">5. 随机模拟</a><ul>
 <li><a class="reference internal" href="#box-muller">5.1. Box-Muller变换</a></li>
 <li><a class="reference internal" href="#id2">5.2. 接受-拒绝采样</a></li>
@@ -449,57 +794,28 @@ p(X)Q(Y|X)=p(Y)Q(X|Y)
 </li>
 </ul>
 
-  </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="conjugate_dist.html"
-                          title="上一章"><span class="section-number">4. </span>共轭分布</a></p>
-  </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="RFF.html"
-                          title="下一章"><span class="section-number">6. </span>Random Fourier features</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/mathmodel/mcmc.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+          </div>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="RFF.html" title="6. Random Fourier features"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="conjugate_dist.html" title="4. 共轭分布"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">5. </span>随机模拟</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
-    </div>
-  </body>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

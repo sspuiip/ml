@@ -1,101 +1,368 @@
-<!DOCTYPE html>
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="3. 再生核希尔伯特空间" href="RKHS.html" /><link rel="prev" title="1. 核函数基础" href="base.html" />
 
-<html lang="zh-CN" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>2. 核函数基础2 &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.07.19 -->
+        <title>2. 核函数基础2 - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script>let toggleHintShow = 'Click to show';</script>
-    <script>let toggleHintHide = 'Click to hide';</script>
-    <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
-    <script src="../_static/translations.js?v=beaddf03"></script>
-    <script src="../_static/design-tabs.js?v=f930bc37"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 再生核希尔伯特空间" href="RKHS.html" />
-    <link rel="prev" title="1. 核函数基础" href="base.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="RKHS.html" title="3. 再生核希尔伯特空间"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="base.html" title="1. 核函数基础"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>核函数基础2</a></li> 
-      </ul>
-    </div>  
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">基础知识</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce_2.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/decision_tree.html">2. 决策树</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">3. 贝叶斯分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">4. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">5. 概率图模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/ensemble.html">6. 集成学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">7. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">深度学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_mlp.html">1. 神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_cnn.html">2. 卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_rnn.html">3. 循环神经网络</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/cmeans.html">1. 聚类(一)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">2. BiClustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="base.html">1. 核函数基础</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">2. 核函数基础2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RKHS.html">3. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="MMD.html">4. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="covariance_operators.html">5. 协方差算子</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/bregman_divergence.html">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/mcmc.html">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/RFF.html">6. Random Fourier features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mathmodel/gumbel_trick.html">7. Gumbel Trick</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/kernel/base2.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">2. </span>核函数基础2<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
 <section id="id2">
 <h2><span class="section-number">2.1. </span>投影<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
 <p>  <strong>定义 （投影）</strong>. 投影<span class="math notranslate nohighlight">\(P\)</span>是一个映射，且满足以下条件：</p>
+<div class="math-wrapper docutils container" id="equation-vector-proj">
 <div class="math notranslate nohighlight" id="equation-vector-proj">
 <span class="eqno">(1)<a class="headerlink" href="#equation-vector-proj" title="Link to this equation">¶</a></span>\[
 P(\pmb{x})=P(P(\pmb{x}))\quad\wedge\quad\langle P(\pmb{x}),\pmb{x}-P(\pmb{x})\rangle=0
 \]</div>
+</div>
 <p>  <strong>定义 （正交投影）</strong>. 投影<span class="math notranslate nohighlight">\(P\)</span>的正交投影<span class="math notranslate nohighlight">\(P^\perp\)</span>为，</p>
+<div class="math-wrapper docutils container" id="equation-orthogonal-proj">
 <div class="math notranslate nohighlight" id="equation-orthogonal-proj">
 <span class="eqno">(2)<a class="headerlink" href="#equation-orthogonal-proj" title="Link to this equation">¶</a></span>\[
 P^\perp(\pmb{x}) \triangleq \pmb{x}-P(\pmb{x})
 \]</div>
+</div>
 <p>  <span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在向量<span class="math notranslate nohighlight">\(\pmb{w}\)</span>上的<strong>投影</strong><span class="math notranslate nohighlight">\(P_{\pmb{w}}(\phi(\pmb{x}))\)</span>为，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 P_{\pmb{w}}(\phi(\pmb{x}))=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert}\cdot\frac{\pmb{w}}{\Vert\pmb{w}\Vert}=\frac{\langle\phi(\pmb{x}),\pmb{w}\rangle}{\Vert\pmb{w}\Vert^2}\cdot\pmb{w}
 \]</div>
+</div>
 <p>如果<span class="math notranslate nohighlight">\(\pmb{w}\)</span>已单位化，则有，</p>
+<div class="math-wrapper docutils container" id="equation-feature-proj">
 <div class="math notranslate nohighlight" id="equation-feature-proj">
 <span class="eqno">(3)<a class="headerlink" href="#equation-feature-proj" title="Link to this equation">¶</a></span>\[
 P_{\pmb{w}}(\phi(\pmb{x}))=\langle\phi(\pmb{x}),\pmb{w}\rangle\cdot\pmb{w}=\pmb{w}\cdot\langle\phi(\pmb{x}),\pmb{w}\rangle=\pmb{w}\pmb{w}^\top\phi(\pmb{x})
 \]</div>
+</div>
 <p>因此，<strong>正交投影</strong><span class="math notranslate nohighlight">\( P_{\pmb{w}}^\bot \phi(\pmb{x}) \)</span> 为，</p>
+<div class="math-wrapper docutils container" id="equation-feature-orthogonal-proj">
 <div class="math notranslate nohighlight" id="equation-feature-orthogonal-proj">
 <span class="eqno">(4)<a class="headerlink" href="#equation-feature-orthogonal-proj" title="Link to this equation">¶</a></span>\[
 P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 \]</div>
+</div>
 </section>
 <section id="id3">
 <h2><span class="section-number">2.2. </span>最大协方差的投影<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>  假设有两个多维随机变量<span class="math notranslate nohighlight">\((\pmb{x},\pmb{y})\)</span>，以及各自的投影单位向量<span class="math notranslate nohighlight">\(\pmb{w}_x,\pmb{w}_y\)</span>，则可以将变量投至各自投影方向从而得到两个1维随机变量<span class="math notranslate nohighlight">\(\pmb{w}_x^\top\pmb{x},\pmb{w}_y^\top\pmb{y}\)</span>。这两个变量的协方差可计算如下，</p>
+<div class="math-wrapper docutils container" id="equation-proj-covar">
 <div class="math notranslate nohighlight" id="equation-proj-covar">
 <span class="eqno">(5)<a class="headerlink" href="#equation-proj-covar" title="Link to this equation">¶</a></span>\[
 \hat{\mathbb{E}}[\pmb{w}_x^\top\pmb{x}\pmb{w}_y^\top\pmb{y}]=\hat{\mathbb{E}}[\pmb{w}_x^\top\pmb{x}\pmb{y}^\top\pmb{w}_y]=\pmb{w}_x^\top\hat{\mathbb{E}}[\pmb{x}\pmb{y}^\top]\pmb{w}_y=\pmb{w}_x^\top \pmb{C}_{xy}\pmb{w}_y
 \]</div>
+</div>
 <p>其中，</p>
+<div class="math-wrapper docutils container" id="equation-covar-def">
 <div class="math notranslate nohighlight" id="equation-covar-def">
 <span class="eqno">(6)<a class="headerlink" href="#equation-covar-def" title="Link to this equation">¶</a></span>\[
 \pmb{C}_{xy}\triangleq \hat{\mathbb{E}}[\pmb{x}\pmb{y}^\top]=\frac1n\sum_{i=1}^n\pmb{x}_i\pmb{y}_i^\top
 \]</div>
+</div>
 <p>  投影单位向量<span class="math notranslate nohighlight">\(\pmb{w}_x,\pmb{w}_y\)</span>取什么值才能最大化投影后的协方差<a class="reference internal" href="#equation-proj-covar">(5)</a>呢？即有以下问题，</p>
+<div class="math-wrapper docutils container" id="equation-maxi-covar-proj">
 <div class="math notranslate nohighlight" id="equation-maxi-covar-proj">
 <span class="eqno">(7)<a class="headerlink" href="#equation-maxi-covar-proj" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -103,44 +370,58 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 \textrm{s.t.}\quad &amp;\lVert\pmb{w}_x\rVert_2=\lVert\pmb{w}_y\rVert_2=1
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  若对<span class="math notranslate nohighlight">\(\pmb{C}_{xy}\)</span>进行SVD分解，可得到<span class="math notranslate nohighlight">\(\pmb{U,\Sigma,V^\top}=svd(\pmb{C}_{xy})\)</span>，则式<a class="reference internal" href="#equation-maxi-covar-proj">(7)</a>的解为，</p>
+<div class="math-wrapper docutils container" id="equation-sol-of-max-covar">
 <div class="math notranslate nohighlight" id="equation-sol-of-max-covar">
 <span class="eqno">(8)<a class="headerlink" href="#equation-sol-of-max-covar" title="Link to this equation">¶</a></span>\[
 \boxed{\pmb{w}_x=\pmb{u}_1,\quad\pmb{w}_y=\pmb{v}_1.}
 \]</div>
+</div>
 <p>注意：<span class="math notranslate nohighlight">\(\lVert\pmb{Uw}\rVert=\lVert\pmb{w}\rVert\)</span>，且<span class="math notranslate nohighlight">\(\pmb{U,V}\)</span>都是正交矩阵，因此<span class="math notranslate nohighlight">\(\pmb{w}_x\)</span>可以表示为<span class="math notranslate nohighlight">\(\pmb{u}_x\)</span>的形式<span class="math notranslate nohighlight">\(\pmb{Uu}_x\)</span>。</p>
 <section id="id4">
 <h3><span class="section-number">2.2.1. </span>对偶形式<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>  如果我们不想计算<span class="math notranslate nohighlight">\(\pmb{C}_{xy}\)</span>的SVD分解，例如在核函数定义的特征空间，则可以利用<span class="math notranslate nohighlight">\(\pmb{C}_{xy}\pmb{C}_{xy}^\top\)</span>得到<span class="math notranslate nohighlight">\(\pmb{U}\)</span>以及<span class="math notranslate nohighlight">\(\pmb{C}_{xy}^\top\pmb{C}_{xy}\)</span>得到<span class="math notranslate nohighlight">\(\pmb{V}\)</span>。假设有，</p>
+<div class="math-wrapper docutils container" id="equation-dual-represent">
 <div class="math notranslate nohighlight" id="equation-dual-represent">
 <span class="eqno">(9)<a class="headerlink" href="#equation-dual-represent" title="Link to this equation">¶</a></span>\[
 \pmb{C}_{xy}^\top\pmb{C}_{xy}=\frac{1}{n^2}\pmb{Y}^\top\pmb{XX}^\top\pmb{Y}=\frac{1}{n^2}\pmb{Y}^\top\pmb{K}_x\pmb{Y}
 \]</div>
+</div>
 <p>与核PCA类似，投影方向<span class="math notranslate nohighlight">\(\pmb{u}_j\)</span>如下，</p>
+<div class="math-wrapper docutils container" id="equation-proj-of-direction">
 <div class="math notranslate nohighlight" id="equation-proj-of-direction">
 <span class="eqno">(10)<a class="headerlink" href="#equation-proj-of-direction" title="Link to this equation">¶</a></span>\[
 \pmb{u}_j=\frac{1}{\sigma_j}\pmb{C}_{xy}\pmb{v}_j
 \]</div>
+</div>
 <p>因此，新样本<span class="math notranslate nohighlight">\(\phi(\pmb{x})\)</span>在<span class="math notranslate nohighlight">\(\pmb{u}_j\)</span>上的投影为，</p>
+<div class="math-wrapper docutils container" id="equation-new-sample-proj">
 <div class="math notranslate nohighlight" id="equation-new-sample-proj">
 <span class="eqno">(11)<a class="headerlink" href="#equation-new-sample-proj" title="Link to this equation">¶</a></span>\[
 \pmb{u}_j^\top\phi(\pmb{x})=\frac{1}{n\sigma_j}\pmb{v}_j^\top\pmb{Y}^\top\pmb{X}\phi(\pmb{x})=\sum_{i=1}^n\left(\frac{1}{n\sigma_j}\pmb{Yv}_j\right)\kappa(\pmb{x}_i,\pmb{x})
 \]</div>
+</div>
 </section>
 </section>
 <section id="id5">
 <h2><span class="section-number">2.3. </span>广义特征值<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
 <p>  广义特征值问题如下，</p>
+<div class="math-wrapper docutils container" id="equation-generalised-eigenvalue">
 <div class="math notranslate nohighlight" id="equation-generalised-eigenvalue">
 <span class="eqno">(12)<a class="headerlink" href="#equation-generalised-eigenvalue" title="Link to this equation">¶</a></span>\[
 \boxed{\pmb{Aw}=\lambda\pmb{Bw}}
 \]</div>
+</div>
 <p>其中，<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>均为对称矩阵，此外，<span class="math notranslate nohighlight">\(\pmb{B}\)</span>是正定的。标准特征值问题是上述问题的特殊形式，即<span class="math notranslate nohighlight">\(\pmb{B}=\pmb{I}\)</span>。对于<strong>广义Rayleigh商</strong>(generalized Rayleigh quotient)来说，</p>
+<div class="math-wrapper docutils container" id="equation-generalised-rayleigh">
 <div class="math notranslate nohighlight" id="equation-generalised-rayleigh">
 <span class="eqno">(13)<a class="headerlink" href="#equation-generalised-rayleigh" title="Link to this equation">¶</a></span>\[
 \rho(\pmb{w})=\frac{\pmb{w}^\top\pmb{Aw}}{\pmb{w}^\top\pmb{Bw}}
 \]</div>
+</div>
 <p>广义特征值也是最大化广义Rayleigh商的解，即</p>
+<div class="math-wrapper docutils container" id="equation-max-generalised-rayleigh">
 <div class="math notranslate nohighlight" id="equation-max-generalised-rayleigh">
 <span class="eqno">(14)<a class="headerlink" href="#equation-max-generalised-rayleigh" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -148,22 +429,29 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 \textrm{s.t.}\quad &amp;\pmb{w}^\top\pmb{Bw}=1
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>可以通过左乘矩阵<span class="math notranslate nohighlight">\(\pmb{B}^{-1}\)</span>转化为标准特征值问题，即</p>
+<div class="math-wrapper docutils container" id="equation-transform-generalised-eigenvalue">
 <div class="math notranslate nohighlight" id="equation-transform-generalised-eigenvalue">
 <span class="eqno">(15)<a class="headerlink" href="#equation-transform-generalised-eigenvalue" title="Link to this equation">¶</a></span>\[
 \pmb{B}^{-1}\pmb{Aw}=\lambda\pmb{w}
 \]</div>
+</div>
 <p>然而，需要注意的是：虽然<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>都是对称矩阵，但<span class="math notranslate nohighlight">\(\pmb{B}^{-1}\pmb{A}\)</span>不一定是对称矩阵。<span class="math notranslate nohighlight">\(\pmb{B}\)</span>是正定的对称矩阵，因此，可以分解为<span class="math notranslate nohighlight">\(\pmb{B}^{1/2}\pmb{B}^{1/2}=\pmb{B}\)</span>（可通过特征值分解得到平方根）。</p>
 <p>  对式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>左乘<span class="math notranslate nohighlight">\(\pmb{B}^{-1/2}\)</span>，并令<span class="math notranslate nohighlight">\(\boxed{\pmb{w}=\pmb{B}^{-1/2}\pmb{v}}\)</span>，则可得到下标准特征值等式，</p>
+<div class="math-wrapper docutils container" id="equation-transform-generalized-eigenvalue-normalise">
 <div class="math notranslate nohighlight" id="equation-transform-generalized-eigenvalue-normalise">
 <span class="eqno">(16)<a class="headerlink" href="#equation-transform-generalized-eigenvalue-normalise" title="Link to this equation">¶</a></span>\[
 \boxed{\pmb{B}^{-1/2}\pmb{AB}^{-1/2}\pmb{v}=\lambda\pmb{v}}
 \]</div>
+</div>
 <p>可以验证<span class="math notranslate nohighlight">\(\pmb{B}^{-1/2}\pmb{AB}^{-1/2}=(\pmb{B}^{-1/2}\pmb{AB}^{-1/2})^\top\)</span>，即结果矩阵为对称矩阵。对该矩阵使用特征值分解，即可得到正交的特征向量<span class="math notranslate nohighlight">\(\pmb{v}_i\)</span>及其对应的特征值<span class="math notranslate nohighlight">\(\lambda_i\)</span>，因此，式<a class="reference internal" href="#equation-generalised-eigenvalue">(12)</a>的解为，</p>
+<div class="math-wrapper docutils container" id="equation-solution-of-generalized-eigenvaleu">
 <div class="math notranslate nohighlight" id="equation-solution-of-generalized-eigenvaleu">
 <span class="eqno">(17)<a class="headerlink" href="#equation-solution-of-generalized-eigenvaleu" title="Link to this equation">¶</a></span>\[
 \boxed{\pmb{w}_i=\pmb{B}^{-1/2}\pmb{v}_i}
 \]</div>
+</div>
 <p>  <strong>广义特征值的性质</strong>:</p>
 <ol class="arabic simple">
 <li><p>如果特征值不相同，则在<span class="math notranslate nohighlight">\(\pmb{A},\pmb{B}\)</span>定义的度量(metrics)中，特征向量具有以下正交性：</p></li>
@@ -179,16 +467,21 @@ P_{\pmb{w}}^\bot\phi(\pmb{x})=(\pmb{I}-\pmb{ww}^\top)\phi(\pmb{x})
 <section id="cca">
 <h2><span class="section-number">2.4. </span>CCA<a class="headerlink" href="#cca" title="Link to this heading">¶</a></h2>
 <p>  假设有样本集<span class="math notranslate nohighlight">\(S\)</span>,</p>
+<div class="math-wrapper docutils container" id="equation-paired-dataset">
 <div class="math notranslate nohighlight" id="equation-paired-dataset">
 <span class="eqno">(18)<a class="headerlink" href="#equation-paired-dataset" title="Link to this equation">¶</a></span>\[
 S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),...,(\phi_a(\pmb{x}_n),\phi_b(\pmb{x}_n))\}
 \]</div>
+</div>
 <p>这类数据集也称为核函数<span class="math notranslate nohighlight">\(\kappa_a,\kappa_b\)</span>定义特征空间的成对或对齐数据集（paired or aligened dataset）。我们希望在投影方向<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>上最大化样本集两个子部分的相关性，即</p>
+<div class="math-wrapper docutils container" id="equation-cca-def">
 <div class="math notranslate nohighlight" id="equation-cca-def">
 <span class="eqno">(19)<a class="headerlink" href="#equation-cca-def" title="Link to this equation">¶</a></span>\[
 \max\rho=\frac{\hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}{   \hat{\mathbb{E}}[\pmb{w}_a^\top\phi_a(\pmb{x})\phi_a(\pmb{x})^\top\pmb{w}_a] \hat{\mathbb{E}}[\pmb{w}_b^\top\phi_b(\pmb{x})\phi_b(\pmb{x})^\top\pmb{w}_b]}=\frac{\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b}{\sqrt{\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b}}
 \]</div>
+</div>
 <p>  <strong>定义 （canonical correlation analysis, CCA）</strong>. 给定一个成对或对齐数据集及其协方差矩阵<span class="math notranslate nohighlight">\(\pmb{C}_{ab}\)</span>，CCA的目标是寻找投影方向<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>最大化投影后的相关性，即，</p>
+<div class="math-wrapper docutils container" id="equation-cca-def-normal">
 <div class="math notranslate nohighlight" id="equation-cca-def-normal">
 <span class="eqno">(20)<a class="headerlink" href="#equation-cca-def-normal" title="Link to this equation">¶</a></span>\[\begin{split}
 \begin{split}
@@ -196,50 +489,64 @@ S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),
 \textrm{s.t.}\quad &amp;\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a=1,\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=1
 \end{split}
 \end{split}\]</div>
+</div>
 <p>  <strong>CCA求解</strong>. 使用拉格朗日乘子法求解，过程如下：</p>
 <ol class="arabic simple">
 <li><p>定义拉氏函数</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \mathcal{L}(\pmb{w}_a,\pmb{w}_b,\lambda,\mu)=\pmb{w}_a^\top\pmb{C}_{ab}\pmb{w}_b-\frac{\lambda}{2}(\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-1)-\frac{\mu}{2}(\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b-1)
 \]</div>
+</div>
 <ol class="arabic simple" start="2">
 <li><p>求偏导，并令偏导=0，解出</p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \pmb{C}_{ab}\pmb{w}_b=\lambda\pmb{C}_{aa}\pmb{w}_a,\quad \pmb{C}_{ba}\pmb{w}_a=\mu\pmb{C}_{bb}\pmb{w}_b
 \]</div>
+</div>
 <p>将上式的第1个等式乘上<span class="math notranslate nohighlight">\(\pmb{w}_a^\top\)</span>减去第二个等式乘上<span class="math notranslate nohighlight">\(\pmb{w}_b^\top\)</span>，则可以得到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[
 \lambda\pmb{w}_a^\top\pmb{C}_{aa}\pmb{w}_a-\lambda\pmb{w}_b^\top\pmb{C}_{bb}\pmb{w}_b=0
 \]</div>
+</div>
 <p>这意味着<span class="math notranslate nohighlight">\(\lambda=\mu\)</span>。</p>
 <ol class="arabic simple" start="3">
 <li><p>解方程组，可得投影向量<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span></p></li>
 </ol>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{bmatrix}\pmb{0}&amp;\pmb{C}_{ab}\\ \pmb{C}_{ba}&amp;\pmb{0} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\begin{bmatrix}\pmb{C}_{aa}&amp;\pmb{0}\\ \pmb{0}&amp;\pmb{C}_{bb} \end{bmatrix}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
 \end{split}\]</div>
+</div>
 <p>可以看出，上式是一个广义特征值问题，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \pmb{A}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}=\lambda\pmb{B}\begin{bmatrix}\pmb{w}_a\\ \pmb{w}_b\end{bmatrix}
 \end{split}\]</div>
+</div>
 <section id="kcca">
 <h3><span class="section-number">2.4.1. </span>KCCA<a class="headerlink" href="#kcca" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p><strong>CCA的对偶形式</strong></p></li>
 </ul>
 <p>  考虑<span class="math notranslate nohighlight">\(\pmb{w}_a,\pmb{w}_b\)</span>分别为数据矩阵<span class="math notranslate nohighlight">\(\pmb{X}_a,\pmb{X}_b\)</span>的所有样本线性组合，即</p>
+<div class="math-wrapper docutils container" id="equation-kcca-proj-def">
 <div class="math notranslate nohighlight" id="equation-kcca-proj-def">
 <span class="eqno">(21)<a class="headerlink" href="#equation-kcca-proj-def" title="Link to this equation">¶</a></span>\[
 \pmb{w}_a=\pmb{X}_a^\top\pmb{\alpha}_a,\quad \pmb{w}_b=\pmb{X}_b^\top\pmb{\alpha}_b
 \]</div>
+</div>
 <p>将<a class="reference internal" href="#equation-kcca-proj-def">(21)</a>代回式<a class="reference internal" href="#equation-cca-def-normal">(20)</a>，则可得到，</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -247,7 +554,9 @@ S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),
 \textrm{s.t.}\quad &amp;\pmb{\alpha}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{X}_a\pmb{X}_a^\top\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{X}_b\pmb{X}_b^\top\pmb{\alpha}_b=1
 \end{split}
 \end{split}\]</div>
+</div>
 <p>则可以得到Kernel CCA的一般形式，即</p>
+<div class="math-wrapper docutils container">
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{split}
@@ -255,20 +564,66 @@ S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),
 \textrm{s.t.}\quad &amp;\pmb{\alpha}_a^\top\pmb{K}_a^2\pmb{\alpha}_a=1,\quad \pmb{\alpha}_b^\top\pmb{K}_b^2\pmb{\alpha}_b=1
 \end{split}
 \end{split}\]</div>
+</div>
 </section>
 </section>
 </section>
 
-
-            <div class="clearer"></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="RKHS.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">3. </span>再生核希尔伯特空间</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="base.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">1. </span>核函数基础</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
           </div>
         </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
 <li><a class="reference internal" href="#">2. 核函数基础2</a><ul>
 <li><a class="reference internal" href="#id2">2.1. 投影</a></li>
 <li><a class="reference internal" href="#id3">2.2. 最大协方差的投影</a><ul>
@@ -284,57 +639,28 @@ S=\{(\phi_a(\pmb{x}_1),\phi_b(\pmb{x}_1)),(\phi_a(\pmb{x}_2),\phi_b(\pmb{x}_2)),
 </li>
 </ul>
 
-  </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="base.html"
-                          title="上一章"><span class="section-number">1. </span>核函数基础</a></p>
-  </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="RKHS.html"
-                          title="下一章"><span class="section-number">3. </span>再生核希尔伯特空间</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/kernel/base2.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
+          </div>
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="RKHS.html" title="3. 再生核希尔伯特空间"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="base.html" title="1. 核函数基础"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>核函数基础2</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
-    </div>
-  </body>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f115507d"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/translations.js?v=beaddf03"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
+    </body>
 </html>

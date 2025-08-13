@@ -1,19 +1,449 @@
-<!DOCTYPE html>
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html" /><link rel="search" title="搜索" href="../search.html" /><link rel="next" title="3. 信息熵" href="entropy.html" /><link rel="prev" title="1. 不确定模型" href="statistic_model.html" />
 
-<html lang="zh-CN" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>2. Bregman divergence &#8212; Machine Learning Fundation 1.0 文档</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/nature.css?v=279e0f84" />
+    <!-- Generated with Sphinx 8.1.3 and Furo 2025.07.19 -->
+        <title>2. Bregman divergence - Machine Learning Fundation 1.0 文档</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=25af2a20" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-    <script src="../_static/documentation_options.js?v=f115507d"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #2b2b2b;
+  --color-code-foreground: #f8f8f2;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Machine Learning Fundation 1.0 文档</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">Machine Learning Fundation 1.0 文档</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">基础知识</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../base/prob_dist.html">1. 概率及分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_model.html">2. 高斯模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/gaussian_process.html">3. 高斯过程</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base/calc_theory.html">4. 计算学习理论</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/dimension_reduce_2.html">1. 数据降维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/decision_tree.html">2. 决策树</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/bayes.html">3. 贝叶斯分类</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/EM.html">4. EM算法概述</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/PGM.html">5. 概率图模型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/ensemble.html">6. 集成学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_representation.html">7. 表示学习</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">深度学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_mlp.html">1. 神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_cnn.html">2. 卷积神经网络</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/neuro_network_rnn.html">3. 循环神经网络</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">无监督学习</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../ml/cmeans.html">1. 聚类(一)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ml/biClustering.html">2. BiClustering</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">核方法</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base.html">1. 核函数基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/base2.html">2. 核函数基础2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/RKHS.html">3. 再生核希尔伯特空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/MMD.html">4. 最大均值差</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../kernel/covariance_operators.html">5. 协方差算子</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">最优化</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_prob.html">1. 凸优化问题</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_solve.html">2. 优化问题求解(1)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../optimization/convex_neq_solve.html">3. 优化问题求解(2)</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">矩阵分析</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/base.html">1. 矩阵性能指标</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixoper.html">2. 矩阵运算</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/vectorspace.html">3. 向量空间</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/matrixdiff.html">4. 矩阵微分</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/special_matrix.html">5. 特殊矩阵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/subspace.html">6. 子空间分析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../matrix/decomposition.html">7. 矩阵分解</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">粗糙集</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../roughset/roughbase.html">1. 粗糙集基础</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">数学建模</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="statistic_model.html">1. 不确定模型</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">2. Bregman divergence</a></li>
+<li class="toctree-l1"><a class="reference internal" href="entropy.html">3. 信息熵</a></li>
+<li class="toctree-l1"><a class="reference internal" href="conjugate_dist.html">4. 共轭分布</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mcmc.html">5. 随机模拟</a></li>
+<li class="toctree-l1"><a class="reference internal" href="RFF.html">6. Random Fourier features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gumbel_trick.html">7. Gumbel Trick</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/mathmodel/bregman_divergence.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section class="tex2jax_ignore mathjax_ignore" id="bregman-divergence">
+<h1><span class="section-number">2. </span>Bregman divergence<a class="headerlink" href="#bregman-divergence" title="Link to this heading">¶</a></h1>
+<p>The surprising result - due to <a class="reference external" href="https://ieeexplore.ieee.org/document/1459065">Banerjee, Gou, and Wang 2005</a> is the following,</p>
+<blockquote>
+<div><p>If you have some abstract way of measuring the “distance” between any two points and, for any choice of distribution over points the mean point minimises the average distance to all the others, then your distance measure must be a Bregman divergence.</p>
+</div></blockquote>
+<section id="squared-euclidean-distance">
+<h2><span class="section-number">2.1. </span>Squared Euclidean Distance<a class="headerlink" href="#squared-euclidean-distance" title="Link to this heading">¶</a></h2>
+<p>One member of the Bregman divergence family is the squared Euclidean distance (SED), i.e.,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+d^2(\pmb{x},\pmb{y})=\sum_{i=1}^n(x_i-y_i)^2
+\]</div>
+</div>
+<p>SED can be represented as follow,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+d^2(\pmb{x},\pmb{y})=\Vert \pmb{x}-\pmb{y}\Vert^2=\Vert \pmb{x}\Vert^2-\Vert \pmb{y}\Vert^2-\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle
+\]</div>
+</div>
+<p>Obviously, the derivative of <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> is <span class="math notranslate nohighlight">\(2\pmb{y}\)</span>. Now, we take a look on the term <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle\)</span> which is the value of the tangent line to <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. This means the whole expression is just the difference between the function <span class="math notranslate nohighlight">\(f(\pmb{x})=\Vert \pmb{x}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{x}\)</span> and the value of <span class="math notranslate nohighlight">\(f\)</span>’s tangent at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. That is,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+d^2(\pmb{x},\pmb{y})=f(\pmb{x})-\underbrace{(f(\pmb{y})+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle)}_{\textrm{Tangent of $f$ at $\pmb{y}$ evaluated at $\pmb{x}$}}
+\]</div>
+</div>
+<p><img alt="Bregman Divergence" src="../_images/bregman.png" /></p>
+</section>
+<section id="bregman-divergences">
+<h2><span class="section-number">2.2. </span>Bregman divergences<a class="headerlink" href="#bregman-divergences" title="Link to this heading">¶</a></h2>
+<p>So far, the only one constraint which is placed on the distance measure <span class="math notranslate nohighlight">\(d^2\)</span> is that it be non-negative for all possible choices of point <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>. This is equivalent to the function <span class="math notranslate nohighlight">\(f\)</span> always sitting above its tangent, that is,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+f(x)\ge f(y)+\langle \nabla f(y),x-y\rangle, \quad \forall x,y\in\mathbb{R}^n.
+\]</div>
+</div>
+<p>Obviously, the above condition placed on the function <span class="math notranslate nohighlight">\(f\)</span> is equivalent to functions <span class="math notranslate nohighlight">\(f\)</span> being convex. This means that we can derive a distance measure <span class="math notranslate nohighlight">\(d_f\)</span> that has a similar stucture to the SED by simply choosing a convex function <span class="math notranslate nohighlight">\(f\)</span> and defining,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+\boxed{d_f(x,y)=f(x)-f(y)-\langle \nabla f(y), x-y\rangle}
+\]</div>
+</div>
+<p>Distance defined like this are precisely the <strong>Bregman divergence</strong> and the convexity of <span class="math notranslate nohighlight">\(f\)</span> guarantees they are non-negative for all <span class="math notranslate nohighlight">\(x,y\in\mathbb{R}^n\)</span>.</p>
+<ul class="simple">
+<li><p>Kullback-Leibler(KL) divergence can be expressed as a Bregman divergence using the convex function,</p></li>
+</ul>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[
+f_{KL}(p)=\sum_{i=1}^np_i\log p_i
+\]</div>
+</div>
+<p><img alt="Bregman divergences" src="../_images/bregmanfun.png" /></p>
+</section>
+<section id="reference">
+<h2><span class="section-number">2.3. </span>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://mark.reid.name/blog/meet-the-bregman-divergences.html">Meet the Bregman Divergences</a></p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="entropy.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title"><span class="section-number">3. </span>信息熵</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="statistic_model.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title"><span class="section-number">1. </span>不确定模型</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022-2024, SSPUIIP
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">2. Bregman divergence</a><ul>
+<li><a class="reference internal" href="#squared-euclidean-distance">2.1. Squared Euclidean Distance</a></li>
+<li><a class="reference internal" href="#bregman-divergences">2.2. Bregman divergences</a></li>
+<li><a class="reference internal" href="#reference">2.3. Reference</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=f115507d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -26,155 +456,5 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="../_static/mathjax/tex-chtml.js"></script>
-    <link rel="index" title="索引" href="../genindex.html" />
-    <link rel="search" title="搜索" href="../search.html" />
-    <link rel="next" title="3. 信息熵" href="entropy.html" />
-    <link rel="prev" title="1. 不确定模型" href="statistic_model.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             accesskey="I">索引</a></li>
-        <li class="right" >
-          <a href="entropy.html" title="3. 信息熵"
-             accesskey="N">下一页</a> |</li>
-        <li class="right" >
-          <a href="statistic_model.html" title="1. 不确定模型"
-             accesskey="P">上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Bregman divergence</a></li> 
-      </ul>
-    </div>  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section class="tex2jax_ignore mathjax_ignore" id="bregman-divergence">
-<h1><span class="section-number">2. </span>Bregman divergence<a class="headerlink" href="#bregman-divergence" title="Link to this heading">¶</a></h1>
-<p>The surprising result - due to <a class="reference external" href="https://ieeexplore.ieee.org/document/1459065">Banerjee, Gou, and Wang 2005</a> is the following,</p>
-<blockquote>
-<div><p>If you have some abstract way of measuring the “distance” between any two points and, for any choice of distribution over points the mean point minimises the average distance to all the others, then your distance measure must be a Bregman divergence.</p>
-</div></blockquote>
-<section id="squared-euclidean-distance">
-<h2><span class="section-number">2.1. </span>Squared Euclidean Distance<a class="headerlink" href="#squared-euclidean-distance" title="Link to this heading">¶</a></h2>
-<p>One member of the Bregman divergence family is the squared Euclidean distance (SED), i.e.,</p>
-<div class="math notranslate nohighlight">
-\[
-d^2(\pmb{x},\pmb{y})=\sum_{i=1}^n(x_i-y_i)^2
-\]</div>
-<p>SED can be represented as follow,</p>
-<div class="math notranslate nohighlight">
-\[
-d^2(\pmb{x},\pmb{y})=\Vert \pmb{x}-\pmb{y}\Vert^2=\Vert \pmb{x}\Vert^2-\Vert \pmb{y}\Vert^2-\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle
-\]</div>
-<p>Obviously, the derivative of <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> is <span class="math notranslate nohighlight">\(2\pmb{y}\)</span>. Now, we take a look on the term <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle\)</span> which is the value of the tangent line to <span class="math notranslate nohighlight">\(\Vert \pmb{y}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. This means the whole expression is just the difference between the function <span class="math notranslate nohighlight">\(f(\pmb{x})=\Vert \pmb{x}\Vert^2\)</span> at <span class="math notranslate nohighlight">\(\pmb{x}\)</span> and the value of <span class="math notranslate nohighlight">\(f\)</span>’s tangent at <span class="math notranslate nohighlight">\(\pmb{y}\)</span> evaluated at <span class="math notranslate nohighlight">\(\pmb{x}\)</span>. That is,</p>
-<div class="math notranslate nohighlight">
-\[
-d^2(\pmb{x},\pmb{y})=f(\pmb{x})-\underbrace{(f(\pmb{y})+\langle 2\pmb{y},\pmb{x}-\pmb{y}\rangle)}_{\textrm{Tangent of $f$ at $\pmb{y}$ evaluated at $\pmb{x}$}}
-\]</div>
-<p><img alt="Bregman Divergence" src="../_images/bregman.png" /></p>
-</section>
-<section id="bregman-divergences">
-<h2><span class="section-number">2.2. </span>Bregman divergences<a class="headerlink" href="#bregman-divergences" title="Link to this heading">¶</a></h2>
-<p>So far, the only one constraint which is placed on the distance measure <span class="math notranslate nohighlight">\(d^2\)</span> is that it be non-negative for all possible choices of point <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>. This is equivalent to the function <span class="math notranslate nohighlight">\(f\)</span> always sitting above its tangent, that is,</p>
-<div class="math notranslate nohighlight">
-\[
-f(x)\ge f(y)+\langle \nabla f(y),x-y\rangle, \quad \forall x,y\in\mathbb{R}^n.
-\]</div>
-<p>Obviously, the above condition placed on the function <span class="math notranslate nohighlight">\(f\)</span> is equivalent to functions <span class="math notranslate nohighlight">\(f\)</span> being convex. This means that we can derive a distance measure <span class="math notranslate nohighlight">\(d_f\)</span> that has a similar stucture to the SED by simply choosing a convex function <span class="math notranslate nohighlight">\(f\)</span> and defining,</p>
-<div class="math notranslate nohighlight">
-\[
-\boxed{d_f(x,y)=f(x)-f(y)-\langle \nabla f(y), x-y\rangle}
-\]</div>
-<p>Distance defined like this are precisely the <strong>Bregman divergence</strong> and the convexity of <span class="math notranslate nohighlight">\(f\)</span> guarantees they are non-negative for all <span class="math notranslate nohighlight">\(x,y\in\mathbb{R}^n\)</span>.</p>
-<ul class="simple">
-<li><p>Kullback-Leibler(KL) divergence can be expressed as a Bregman divergence using the convex function,</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[
-f_{KL}(p)=\sum_{i=1}^np_i\log p_i
-\]</div>
-<p><img alt="Bregman divergences" src="../_images/bregmanfun.png" /></p>
-</section>
-<section id="reference">
-<h2><span class="section-number">2.3. </span>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
-<p><a class="reference external" href="https://mark.reid.name/blog/meet-the-bregman-divergences.html">Meet the Bregman Divergences</a></p>
-</section>
-</section>
-
-
-            <div class="clearer"></div>
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="../index.html">目录</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">2. Bregman divergence</a><ul>
-<li><a class="reference internal" href="#squared-euclidean-distance">2.1. Squared Euclidean Distance</a></li>
-<li><a class="reference internal" href="#bregman-divergences">2.2. Bregman divergences</a></li>
-<li><a class="reference internal" href="#reference">2.3. Reference</a></li>
-</ul>
-</li>
-</ul>
-
-  </div>
-  <div>
-    <h4>上一主题</h4>
-    <p class="topless"><a href="statistic_model.html"
-                          title="上一章"><span class="section-number">1. </span>不确定模型</a></p>
-  </div>
-  <div>
-    <h4>下一主题</h4>
-    <p class="topless"><a href="entropy.html"
-                          title="下一章"><span class="section-number">3. </span>信息熵</a></p>
-  </div>
-  <div role="note" aria-label="source link">
-    <h3>本页</h3>
-    <ul class="this-page-menu">
-      <li><a href="../_sources/mathmodel/bregman_divergence.md.txt"
-            rel="nofollow">显示源代码</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">快速搜索</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="提交" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>导航</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="总索引"
-             >索引</a></li>
-        <li class="right" >
-          <a href="entropy.html" title="3. 信息熵"
-             >下一页</a> |</li>
-        <li class="right" >
-          <a href="statistic_model.html" title="1. 不确定模型"
-             >上一页</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Machine Learning Fundation 1.0 文档</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href=""><span class="section-number">2. </span>Bregman divergence</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; 版权所有 2022-2024, SSPUIIP.
-      由 <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3创建。
-    </div>
-  </body>
+    </body>
 </html>
